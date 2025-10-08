@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MediCase": {
+    "MediCaseFront": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -53,10 +53,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "MediCase:build:production"
+              "buildTarget": "MediCaseFront:build:production"
             },
             "development": {
-              "buildTarget": "MediCase:build:development"
+              "buildTarget": "MediCaseFront:build:development"
             }
           },
           "defaultConfiguration": "development"
