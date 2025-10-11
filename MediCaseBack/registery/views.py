@@ -43,17 +43,6 @@ class SignupViewSet(viewsets.GenericViewSet):
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
-# @authentication_classes([LoginAuthentication])
-# @api_view(["POST"])
-# def login(request):
-#     user = request.user
-    
-#     if not user.is_authenticated:
-#         return Response({"detail": "Authentication failed."}, status=status.HTTP_401_UNAUTHORIZED)
-
-#     login_serializer = LoginSerializer(user)
-#     return Response(login_serializer.data, status=status.HTTP_200_OK)
-
 class LoginView(generics.CreateAPIView):
     serializer_class = EmailLoginSerializer
     permission_classes = [permissions.AllowAny]
@@ -65,9 +54,9 @@ class LoginView(generics.CreateAPIView):
         
         email = serializer.validated_data['email']
         password = serializer.validated_data['password']  
-        print(email, password)
+
         user = authenticate(email=email, password=password)
-        print(user)
+
         if not user:
             return Response({"detail": "email or password is incorrect."}, status=status.HTTP_401_UNAUTHORIZED)
         
@@ -86,12 +75,3 @@ class LoginView(generics.CreateAPIView):
             'access': str(refresh.access_token),
             'refresh': str(refresh),
             }, status=status.HTTP_200_OK)
-
-
-# class LoginViewSet(viewsets.GenericViewSet):
-#     authentication_classes = [LoginAuthentication]
-#     serializer_class = [StudentNumberLoginSerializer]
-#     queryset = User.objects.all()
-    
-#     def login(self, request):
-        

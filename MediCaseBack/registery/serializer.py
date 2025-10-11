@@ -24,23 +24,22 @@ class RegisterSerializer(serializers.ModelSerializer):
             student_number=validated_data['student_number'],
             phone_number=validated_data.get('phone_number', '')
         )
-        return user
         
-        # def random_with_N_digits(n):
-        #     range_start = 10**(n-1)
-        #     range_end = (10**n)-1
-        #     return randint(range_start, range_end)
+        def random_with_N_digits(n):
+            range_start = 10**(n-1)
+            range_end = (10**n)-1
+            return randint(range_start, range_end)
 
-        # otp = random_with_N_digits(6)
-        # user.otp = otp
-        # user.save()
+        otp = random_with_N_digits(6)
+        user.otp = otp
+        user.save()
 
-        # subject = 'Please Confirm Your Account'
-        # message = 'Your 6 Digit Verification Pin: {}'.format(otp)
-        # email_from = '*****'
-        # recipient_list = [str(user.email), ]
-        # send_mail(subject, message, email_from, recipient_list)
-        # return user
+        subject = 'Please Confirm Your Account'
+        message = 'Your 6 Digit Verification Pin: {}'.format(otp)
+        email_from = '*****'
+        recipient_list = [str(user.email), ]
+        send_mail(subject, message, email_from, recipient_list)
+        return user
     
 class EmailLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
