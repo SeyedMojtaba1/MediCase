@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+
+
+@font-face {
+  font-family: "Vazir";
+  src: url('assets/fonts/Vazirmatn-Black.woff2') format('woff');
+  font-style: black;
+  font-weight: 900;
+}
+
+
+@font-face {
+  font-family: "Vazir";
+  src: url('assets/fonts/Vazirmatn-Bold.woff2') format('woff');
+  font-style: bold;
+  font-weight: 700;
+}
+
+
+@font-face {
+  font-family: "Vazir";
+  src: url('assets/fonts/Vazirmatn-Medium.woff2') format('woff');
+  font-style: medium;
+  font-weight: 500;
+}
+
+
+@font-face {
+  font-family: "Vazir";
+  src: url('assets/fonts/Vazirmatn-Regular.woff2') format('woff');
+  font-style: regular;
+  font-weight: 300;
+}
+
+
+@font-face {
+  font-family: "Vazir";
+  src: url('assets/fonts/Vazirmatn-Light.woff2') format('woff');
+  font-style: light;
+  font-weight: 200;
+}
+
