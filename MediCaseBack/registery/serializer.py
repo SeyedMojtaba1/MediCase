@@ -53,3 +53,47 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['user_id', 'email', 'student_number', 'username', 'first_name', 'last_name', 'phone_number', 'profile_image', 'date_joined', 'is_active', 'is_staff', 'is_superuser']
+        
+class SendResetOTPSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    
+    def send_otp(self, request):
+        email = request.data.get('email', None)
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User does not exist.")
+
+        otp = randint(100000, 999999)
+        user.otp = otp
+        user.save()
+
+        subject = 'Please Confirm Your Account'
+        message = f'Your 6-digit verification pin: {otp}'
+        email_from = '*****'
+        recipient_list = [user.email]
+        send_mail(subject, message, email_from, recipient_list)
+
+        return f"OTP sent to {email}"
+    
+
+class VerifyOTPResetPassSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.IntegerField()
+    new_password = serializers.CharField(min_length=8)
+        
+    def verify_otp(self, request):
+        email = request.data.get('email', None)
+        otp = request.data.get('otp', None)
+        new_password = request.data.get('new_password', None)
+        
+        try:
+            user = User.objects.get(email=email, otp=otp)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User or OTP is incorrect.")
+        
+        user.set_password(new_password)
+        user.save()
+        
+        return "Your password Changed successfuly."

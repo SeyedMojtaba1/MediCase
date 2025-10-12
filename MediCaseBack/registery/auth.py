@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
-class LoginAuthentication(BaseAuthentication):
+class RegisterAuthentication(BaseAuthentication):
     def authenticate(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
