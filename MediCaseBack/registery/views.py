@@ -1,20 +1,19 @@
 from .models import User, UserRole, Role
-from .auth import RegisterAuthentication
 
 from .serializer import (
     RegisterSerializer, 
-    EmailLoginSerializer, 
-    StudentNumberLoginSerializer, 
-    LoginSerializer,
+    EmailLoginSerializer,
     SendResetOTPSerializer,
     VerifyOTPResetPassSerializer,
+    ChengePassSerializer,
+    ProfileSerializer,
 )
 
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions
 
@@ -85,7 +84,6 @@ class LoginView(generics.CreateAPIView):
             'refresh': str(refresh),
             }, status=status.HTTP_200_OK)
 
-
 @api_view(['POST'])
 def send_reset_otp(request):
     serializer = SendResetOTPSerializer(data=request.data)
@@ -93,11 +91,22 @@ def send_reset_otp(request):
     message = serializer.send_otp(request=request)
     return Response({"message": message}, status=status.HTTP_200_OK)
 
-
 @api_view(["POST"])
 def verify_otp_reset_pass(request):
     serializer = VerifyOTPResetPassSerializer(data=request.data)
-    print("salam")
     serializer.is_valid(raise_exception=True)
     message = serializer.verify_otp(request=request)
     return Response({"message": message}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def chenge_pass(request):
+    serializer = ChengePassSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    message = serializer.validate_and_change_password(request=request)
+    return Response({"message": message}, status=status.HTTP_200_OK)
+
+class ProfileView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    permission_classes = [JWTAuthentication]
+    serializer_class = ProfileSerializer
+    lookup_field = "student_number"

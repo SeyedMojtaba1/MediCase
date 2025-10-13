@@ -2,8 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from random import randint
 from django.core.mail import send_mail
-from .models import UserRole, Role
-from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 
 User = get_user_model()
 
@@ -75,8 +74,7 @@ class SendResetOTPSerializer(serializers.Serializer):
         recipient_list = [user.email]
         send_mail(subject, message, email_from, recipient_list)
 
-        return f"OTP sent to {email}"
-    
+        return f"OTP sent to {email}"   
 
 class VerifyOTPResetPassSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -97,3 +95,48 @@ class VerifyOTPResetPassSerializer(serializers.Serializer):
         user.save()
         
         return "Your password Changed successfuly."
+    
+class ChengePassSerializer(serializers.Serializer):
+    student_number = serializers.CharField()
+    password = serializers.CharField(min_length=8)
+    new_password = serializers.CharField(min_length=8)
+    
+    def validate_and_change_password(self, request):
+        student_number = request.data.get('student_number', None)
+        password = request.data.get('password', None)
+        new_password = request.data.get('new_password', None)
+        
+        try:
+            user = User.objects.get(student_number=student_number)
+            if not check_password(password, user.password):
+                return "Password is incorrect."
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User does not exist.")
+        
+        user.set_password(new_password)
+        user.save()
+        
+        return "Your password Changed successfuly."
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "username",
+            "student_number",
+            "email",
+            "phone_number",
+            "last_login",
+            "date_joined",
+            "last_update",
+            "scenario_credit",
+            "is_active",
+            "is_ban",
+            "is_staff",
+            "is_superuser",
+            "profile_image",
+        ]
+
+
