@@ -16,6 +16,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 
 class SignupViewSet(viewsets.GenericViewSet):
     serializer_class = RegisterSerializer
@@ -84,6 +85,9 @@ class LoginView(generics.CreateAPIView):
             'refresh': str(refresh),
             }, status=status.HTTP_200_OK)
 
+@extend_schema(
+    request=SendResetOTPSerializer
+)
 @api_view(['POST'])
 def send_reset_otp(request):
     serializer = SendResetOTPSerializer(data=request.data)
@@ -91,6 +95,9 @@ def send_reset_otp(request):
     message = serializer.send_otp(request=request)
     return Response({"message": message}, status=status.HTTP_200_OK)
 
+@extend_schema(
+    request=VerifyOTPResetPassSerializer
+)
 @api_view(["POST"])
 def verify_otp_reset_pass(request):
     serializer = VerifyOTPResetPassSerializer(data=request.data)
@@ -98,6 +105,9 @@ def verify_otp_reset_pass(request):
     message = serializer.verify_otp(request=request)
     return Response({"message": message}, status=status.HTTP_200_OK)
 
+@extend_schema(
+    request=ChengePassSerializer
+)
 @api_view(["POST"])
 def chenge_pass(request):
     serializer = ChengePassSerializer(data=request.data)
