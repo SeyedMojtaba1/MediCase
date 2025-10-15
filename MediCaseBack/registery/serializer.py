@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from random import randint
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
+from .models import Role
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
@@ -11,7 +13,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['email', 'username', 'first_name', 'last_name', 'password', 'phone_number', 'student_number']
+        fields = ['email', 'username', 'first_name', 'last_name', 'password', 'phone_number', 'personal_number', "main_role"]
     
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -20,8 +22,9 @@ class RegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            student_number=validated_data['student_number'],
-            phone_number=validated_data.get('phone_number', '')
+            personal_number=validated_data['personal_number'],
+            phone_number=validated_data.get('phone_number', ''),
+            main_role=validated_data['main_role']
         )
         
         def random_with_N_digits(n):
@@ -44,14 +47,44 @@ class EmailLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=8)
     
-class StudentNumberLoginSerializer(serializers.Serializer):
-    student_number = serializers.CharField()
+class PersonalNumberLoginSerializer(serializers.Serializer):
+    personal_number = serializers.CharField()
     password = serializers.CharField(write_only=True, min_length=8)
     
-class LoginSerializer(serializers.ModelSerializer):
+class LoginSerializer(serializers.HyperlinkedModelSerializer):
+    main_role = serializers.HyperlinkedRelatedField(
+        view_name='role-detail',
+        read_only=True
+    )
+    access = serializers.SerializerMethodField()
+    refresh = serializers.SerializerMethodField()
+    
     class Meta:
         model = User
-        fields = ['user_id', 'email', 'student_number', 'username', 'first_name', 'last_name', 'phone_number', 'profile_image', 'date_joined', 'is_active', 'is_staff', 'is_superuser']
+        fields = [
+            'email', 
+            'personal_number', 
+            'username', 
+            'first_name', 
+            'last_name', 
+            'phone_number', 
+            'profile_image', 
+            'date_joined', 
+            'is_active', 
+            'is_staff', 
+            'is_superuser',
+            'access',
+            'refresh',
+            'main_role',
+            ]
+        
+    def get_access(self, obj):
+        refresh = RefreshToken.for_user(obj)
+        return str(refresh.access_token)
+
+    def get_refresh(self, obj):
+        refresh = RefreshToken.for_user(obj)
+        return str(refresh)
         
 class SendResetOTPSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -97,17 +130,17 @@ class VerifyOTPResetPassSerializer(serializers.Serializer):
         return "Your password Changed successfuly."
     
 class ChengePassSerializer(serializers.Serializer):
-    student_number = serializers.CharField()
+    personal_number = serializers.CharField()
     password = serializers.CharField(min_length=8)
     new_password = serializers.CharField(min_length=8)
     
     def validate_and_change_password(self, request):
-        student_number = request.data.get('student_number', None)
+        personal_number = request.data.get('personal_number', None)
         password = request.data.get('password', None)
         new_password = request.data.get('new_password', None)
         
         try:
-            user = User.objects.get(student_number=student_number)
+            user = User.objects.get(personal_number=personal_number)
             if not check_password(password, user.password):
                 return "Password is incorrect."
         except User.DoesNotExist:
@@ -118,14 +151,19 @@ class ChengePassSerializer(serializers.Serializer):
         
         return "Your password Changed successfuly."
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.HyperlinkedModelSerializer):
+    main_role = serializers.HyperlinkedRelatedField(
+        view_name='role-detail',
+        read_only=True
+    )
+    
     class Meta:
         model = User
         fields = [
             "first_name",
             "last_name",
             "username",
-            "student_number",
+            "personal_number",
             "email",
             "phone_number",
             "last_login",
@@ -137,7 +175,13 @@ class ProfileSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_superuser",
             "profile_image",
+            "main_role",
         ]
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = "__all__"
 
 class LogoutSerializer(serializers.Serializer):
     refresh=serializers.CharField()

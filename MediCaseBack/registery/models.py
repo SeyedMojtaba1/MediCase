@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
+class Role(models.Model):
+    role_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -41,7 +44,7 @@ class User(AbstractBaseUser):
         },
         blank=False
     )
-    student_number = models.CharField(max_length=12, unique=True)
+    personal_number = models.CharField(max_length=12, unique=True)
     email = models.EmailField(max_length=80, unique=True)
     phone_number = models.CharField(max_length=15, blank=True)
     last_login = models.DateTimeField(auto_now=True)
@@ -55,6 +58,7 @@ class User(AbstractBaseUser):
     profile_image = models.URLField(blank=True, null=True)
     verified = models.BooleanField(default=False)
     otp = models.IntegerField(null=True,blank=True)
+    main_role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, related_name='users')
     
     objects = UserManager()
     
@@ -65,11 +69,6 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
     
-class Role(models.Model):
-    role_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
-
-
 class UserRole(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -5,6 +5,13 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
+def create_initial_records(apps, schema_editor):
+    Category = apps.get_model('registery', 'Role')
+    Category.objects.get_or_create(name='student')
+    Category.objects.get_or_create(name='teacher')
+    Category.objects.get_or_create(name="teacher's assistant")
+    Category.objects.get_or_create(name='admin')
+    Category.objects.get_or_create(name='superadmin')
 
 class Migration(migrations.Migration):
 
@@ -15,6 +22,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Role',
+            fields=[
+                ('role_id', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=20)),
+            ],
+        ),
+        migrations.CreateModel(
             name='User',
             fields=[
                 ('user_id', models.AutoField(auto_created=True, primary_key=True, serialize=False)),
@@ -22,7 +36,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=40)),
                 ('last_name', models.CharField(max_length=40)),
                 ('username', models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()])),
-                ('student_number', models.CharField(default='11111', max_length=12, unique=True)),
+                ('personal_number', models.CharField(default='11111', max_length=12, unique=True)),
                 ('email', models.EmailField(max_length=80, unique=True)),
                 ('phone_number', models.CharField(blank=True, max_length=15)),
                 ('last_login', models.DateTimeField(auto_now=True)),
@@ -42,13 +56,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Role',
-            fields=[
-                ('role_id', models.AutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=20)),
-            ],
-        ),
-        migrations.CreateModel(
             name='UserRole',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
@@ -56,4 +63,5 @@ class Migration(migrations.Migration):
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
+        migrations.RunPython(create_initial_records),
     ]

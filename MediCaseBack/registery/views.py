@@ -2,11 +2,13 @@ from .models import User, UserRole, Role
 
 from .serializer import (
     RegisterSerializer, 
+    LoginSerializer,
     EmailLoginSerializer,
     SendResetOTPSerializer,
     VerifyOTPResetPassSerializer,
     ChengePassSerializer,
     ProfileSerializer,
+    RoleSerializer,
     LogoutSerializer,
 )
 
@@ -29,17 +31,9 @@ class SignupViewSet(viewsets.GenericViewSet):
         user = serializer.save()
         
         try:
-            role_name = request.data.get('role', None)
-            if not role_name:
-                raise ValueError("Role must be provided.")
-            role = Role.objects.get(name=role_name)
-            UserRole.objects.create(user=user, role=role)
+            role = Role.objects.get(role_id=serializer.validated_data['main_role'])
         except Role.DoesNotExist:
-            return Response({"detail": "Role does not exist."}, status=status.HTTP_404_NOT_FOUND)
-        except UserRole.DoesNotExist:
-            return Response({"detail": "UserRole does not exist."}, status=status.HTTP_404_NOT_FOUND)
-        except ValueError as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Role is not exist."}, status=status.HTTP_400_BAD_REQUEST)
         
         data = {
             "user": {
@@ -47,7 +41,7 @@ class SignupViewSet(viewsets.GenericViewSet):
                 "username": user.username,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "role": role.name,
+                "main_role": role.name,
             },
             "message": "ثبت نام با موفقیت انجام شد."
         }
@@ -72,19 +66,12 @@ class LoginView(generics.CreateAPIView):
         
         refresh = RefreshToken.for_user(user)
         
-        return Response({
-            'email': user.email,
-            'student_number': user.student_number,
-            'username': user.username,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'profile_image': user.profile_image,
-            'is_active': user.is_active,
-            'is_staff': user.is_staff,
-            'is_superuser': user.is_superuser,
-            'access': str(refresh.access_token),
-            'refresh': str(refresh),
-            }, status=status.HTTP_200_OK)
+        output_serializer = LoginSerializer(
+            user,
+            context={'request': request}
+        )
+        
+        return Response(output_serializer.data, status=status.HTTP_200_OK)
 
 @extend_schema(
     request=SendResetOTPSerializer
@@ -120,7 +107,12 @@ class ProfileView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     permission_classes = [JWTAuthentication]
     serializer_class = ProfileSerializer
-    lookup_field = "student_number"
+    lookup_field = "personal_number"
+
+class RoleViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RoleSerializer
+    queryset = Role.objects.all()
 
 class LogoutView(generics.GenericAPIView):
     permission_classes =[JWTAuthentication]
