@@ -139,4 +139,5 @@ class ProfileSerializer(serializers.ModelSerializer):
             "profile_image",
         ]
 
-
+class LogoutSerializer(serializers.Serializer):
+    refresh=serializers.CharField()

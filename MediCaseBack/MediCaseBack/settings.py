@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 import environ
 from datetime import timedelta
 
@@ -158,8 +157,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sm.tp.1382@gmail.com'
-EMAIL_HOST_PASSWORD = 'tuyn tujm ieun ajzu'
+EMAIL_HOST_USER = 'isfahan.medicase@gmail.com'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 
 SPECTACULAR_SETTINGS = {"TITLE": "MediCase Project APIs"}

@@ -7,6 +7,7 @@ from .serializer import (
     VerifyOTPResetPassSerializer,
     ChengePassSerializer,
     ProfileSerializer,
+    LogoutSerializer,
 )
 
 from rest_framework.response import Response
@@ -16,7 +17,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
+from drf_spectacular.utils import extend_schema
 
 class SignupViewSet(viewsets.GenericViewSet):
     serializer_class = RegisterSerializer
@@ -120,3 +121,21 @@ class ProfileView(generics.RetrieveAPIView):
     permission_classes = [JWTAuthentication]
     serializer_class = ProfileSerializer
     lookup_field = "student_number"
+
+class LogoutView(generics.GenericAPIView):
+    permission_classes =[JWTAuthentication]
+    serializer_class = LogoutSerializer
+    
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        refresh = serializer.validated_data['refresh']
+        
+        try:
+            token = RefreshToken(refresh)
+            token.blacklist()
+        except Exception:
+            return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
