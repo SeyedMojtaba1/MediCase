@@ -76,7 +76,6 @@ class LoginView(generics.CreateAPIView):
         response = Response(
             {
                 "user": output_serializer.data,
-                "access": access_token,
             },
             status=status.HTTP_200_OK
         )
@@ -91,7 +90,6 @@ class LoginView(generics.CreateAPIView):
         )
 
         return response
-
 
 @extend_schema(
     request=SendResetOTPSerializer
