@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from random import randint
+from django.utils import timezone
+from datetime import timedelta
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
 from .models import Role
@@ -13,7 +15,16 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['email', 'username', 'first_name', 'last_name', 'password', 'phone_number', 'personal_number', "main_role"]
+        fields = [
+            'email', 
+            'username', 
+            'first_name', 
+            'last_name', 
+            'password', 
+            'phone_number', 
+            'personal_number', 
+            'main_role',
+        ]
     
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -56,6 +67,18 @@ class LoginSerializer(serializers.HyperlinkedModelSerializer):
         view_name='role-detail',
         read_only=True
     )
+    university = serializers.HyperlinkedRelatedField(
+        view_name='university-detail',
+        read_only=True
+    )
+    faculty = serializers.HyperlinkedRelatedField(
+        view_name='faculty-detail',
+        read_only=True
+    )
+    department = serializers.HyperlinkedRelatedField(
+        view_name='department-detail',
+        read_only=True
+    )
     access = serializers.SerializerMethodField()
     refresh = serializers.SerializerMethodField()
     
@@ -76,6 +99,9 @@ class LoginSerializer(serializers.HyperlinkedModelSerializer):
             'access',
             'refresh',
             'main_role',
+            'university',
+            'faculty',
+            'department'
             ]
         
     def get_access(self, obj):
@@ -99,36 +125,74 @@ class SendResetOTPSerializer(serializers.Serializer):
 
         otp = randint(100000, 999999)
         user.otp = otp
+        user.otp_expiry = timezone.now() + timedelta(minutes=5)
         user.save()
 
         subject = 'Please Confirm Your Account'
-        message = f'Your 6-digit verification pin: {otp}'
+        message = f'Your 6-digit verification pin: {otp}\n\nThis code expires in 5 minutes.'
         email_from = '*****'
         recipient_list = [user.email]
         send_mail(subject, message, email_from, recipient_list)
 
         return f"OTP sent to {email}"   
 
-class VerifyOTPResetPassSerializer(serializers.Serializer):
+class VerifyOTPSerializer(serializers.Serializer):
     email = serializers.EmailField()
     otp = serializers.IntegerField()
-    new_password = serializers.CharField(min_length=8)
-        
-    def verify_otp(self, request):
-        email = request.data.get('email', None)
-        otp = request.data.get('otp', None)
-        new_password = request.data.get('new_password', None)
-        
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        otp = attrs.get("otp")
+
         try:
             user = User.objects.get(email=email, otp=otp)
         except User.DoesNotExist:
-            raise serializers.ValidationError("User or OTP is incorrect.")
-        
-        user.set_password(new_password)
+            raise serializers.ValidationError("Invalid email or OTP.")
+
+        if not user.otp_expiry or user.otp_expiry < timezone.now():
+            raise serializers.ValidationError("OTP has expired. Please request a new one.")
+
+        attrs["user"] = user
+        return attrs
+
+    def save(self):
+        user = self.validated_data["user"]
+
+        user.otp_verified = True
         user.save()
-        
-        return "Your password Changed successfuly."
-    
+
+        return "OTP verified successfully."
+
+class ResetPassSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    new_password = serializers.CharField(min_length=8)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User not found.")
+
+        if not user.otp_verified:
+            raise serializers.ValidationError("OTP not verified yet.")
+
+        attrs["user"] = user
+        return attrs
+
+    def save(self):
+        user = self.validated_data["user"]
+        new_password = self.validated_data["new_password"]
+
+        user.set_password(new_password)
+        user.otp = None
+        user.otp_expiry = None
+        user.otp_verified = False
+        user.save()
+
+        return "Password changed successfully."
+
 class ChengePassSerializer(serializers.Serializer):
     personal_number = serializers.CharField()
     password = serializers.CharField(min_length=8)
@@ -181,7 +245,10 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
-        fields = "__all__"
+        fields = ['name']
+        extra_kwargs = {
+            'url': {'lookup_field': 'name'}
+        }
 
 class LogoutSerializer(serializers.Serializer):
     refresh=serializers.CharField()

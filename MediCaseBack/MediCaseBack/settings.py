@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'registery',
-    "drf_spectacular",
+    'university',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [

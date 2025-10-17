@@ -21,12 +21,12 @@ from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 router = DefaultRouter()
-# router.register(r"login", LoginViewSet, basename="login")
-router.register(r"signup", SignupViewSet, basename="signup")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("registery/", include(router.urls)),
+    path("university/", include(router.urls)),
+    path("university/", include("university.urls")),
     path("registery/", include("registery.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/docs/", SpectacularSwaggerView.as_view(url_name="schema")),

@@ -1,11 +1,12 @@
-from .models import User, UserRole, Role
+from .models import User, Role
 
 from .serializer import (
     RegisterSerializer, 
     LoginSerializer,
     EmailLoginSerializer,
     SendResetOTPSerializer,
-    VerifyOTPResetPassSerializer,
+    VerifyOTPSerializer,
+    ResetPassSerializer,
     ChengePassSerializer,
     ProfileSerializer,
     RoleSerializer,
@@ -31,7 +32,7 @@ class SignupViewSet(viewsets.GenericViewSet):
         user = serializer.save()
         
         try:
-            role = Role.objects.get(role_id=serializer.validated_data['main_role'])
+            role = Role.objects.get(name=serializer.data['main_role'])
         except Role.DoesNotExist:
             return Response({"detail": "Role is not exist."}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -84,13 +85,23 @@ def send_reset_otp(request):
     return Response({"message": message}, status=status.HTTP_200_OK)
 
 @extend_schema(
-    request=VerifyOTPResetPassSerializer
+    request=VerifyOTPSerializer
 )
 @api_view(["POST"])
-def verify_otp_reset_pass(request):
-    serializer = VerifyOTPResetPassSerializer(data=request.data)
+def verify_otp(request):
+    serializer = VerifyOTPSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    message = serializer.verify_otp(request=request)
+    message = serializer.save()
+    return Response({"message": message}, status=status.HTTP_200_OK)
+
+@extend_schema(
+    request=ResetPassSerializer
+)
+@api_view(["POST"])
+def reset_pass(request):
+    serializer = ResetPassSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    message = serializer.save()
     return Response({"message": message}, status=status.HTTP_200_OK)
 
 @extend_schema(
@@ -113,6 +124,8 @@ class RoleViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
+    lookup_field = 'name'
+    lookup_value_regex = '[^/]+'
 
 class LogoutView(generics.GenericAPIView):
     permission_classes =[JWTAuthentication]
