@@ -63,6 +63,7 @@ class User(AbstractBaseUser):
     profile_image = models.URLField(blank=True, null=True)
     otp = models.IntegerField(null=True, blank=True)
     otp_expiry = models.DateTimeField(null=True, blank=True)
+    pass_expiry = models.DateTimeField(null=True, blank=True)
     otp_verified = models.BooleanField(default=False)
     main_role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, related_name='users')
     university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True, related_name='users_uni')

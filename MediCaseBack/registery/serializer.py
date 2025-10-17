@@ -12,6 +12,7 @@ User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
+    main_role = serializers.CharField()
     
     class Meta:
         model = User
@@ -35,8 +36,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name'],
             personal_number=validated_data['personal_number'],
             phone_number=validated_data.get('phone_number', ''),
-            main_role=validated_data['main_role']
         )
+        
+        try:
+            role = Role.objects.get(name=validated_data['main_role'])
+        except Role.DoesNotExist:
+            return "Role is not exist."
+        
+        user.main_role = role
         
         def random_with_N_digits(n):
             range_start = 10**(n-1)
@@ -159,6 +166,7 @@ class VerifyOTPSerializer(serializers.Serializer):
         user = self.validated_data["user"]
 
         user.otp_verified = True
+        user.pass_expiry = timezone.now() + timedelta(minutes=5)
         user.save()
 
         return "OTP verified successfully."
@@ -177,6 +185,9 @@ class ResetPassSerializer(serializers.Serializer):
 
         if not user.otp_verified:
             raise serializers.ValidationError("OTP not verified yet.")
+        
+        if not user.pass_expiry or user.pass_expiry < timezone.now():
+            raise serializers.ValidationError("OTP has expired. Please request a new one.")
 
         attrs["user"] = user
         return attrs
@@ -189,6 +200,7 @@ class ResetPassSerializer(serializers.Serializer):
         user.otp = None
         user.otp_expiry = None
         user.otp_verified = False
+        user.pass_expiry = None
         user.save()
 
         return "Password changed successfully."
