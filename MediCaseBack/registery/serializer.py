@@ -72,19 +72,23 @@ class PersonalNumberLoginSerializer(serializers.Serializer):
 class LoginSerializer(serializers.HyperlinkedModelSerializer):
     main_role = serializers.HyperlinkedRelatedField(
         view_name='role-detail',
-        read_only=True
+        read_only=True,
+        lookup_field='name'
     )
     university = serializers.HyperlinkedRelatedField(
         view_name='university-detail',
-        read_only=True
+        read_only=True,
+        lookup_field='name'
     )
     faculty = serializers.HyperlinkedRelatedField(
         view_name='faculty-detail',
-        read_only=True
+        read_only=True,
+        lookup_field='name'
     )
     department = serializers.HyperlinkedRelatedField(
         view_name='department-detail',
-        read_only=True
+        read_only=True,
+        lookup_field='name'
     )
     access = serializers.SerializerMethodField()
     refresh = serializers.SerializerMethodField()

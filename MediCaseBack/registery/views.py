@@ -66,13 +66,32 @@ class LoginView(generics.CreateAPIView):
             return Response({"detail": "email or password is incorrect."}, status=status.HTTP_401_UNAUTHORIZED)
         
         refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
         
         output_serializer = LoginSerializer(
             user,
             context={'request': request}
         )
         
-        return Response(output_serializer.data, status=status.HTTP_200_OK)
+        response = Response(
+            {
+                "user": output_serializer.data,
+                "access": access_token,
+            },
+            status=status.HTTP_200_OK
+        )
+
+        response.set_cookie(
+            key="refresh_token",
+            value=str(refresh),
+            httponly=True,
+            secure=True,
+            samesite="None",
+            max_age=7 * 24 * 60 * 60,
+        )
+
+        return response
+
 
 @extend_schema(
     request=SendResetOTPSerializer
