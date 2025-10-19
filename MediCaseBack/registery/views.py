@@ -65,7 +65,7 @@ class LoginView(generics.CreateAPIView):
         user = authenticate(email=email, password=password)
 
         if not user:
-            return Response({"detail": "email or password is incorrect."}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"detail": "email or password is incorrect."}, status=status.HTTP_400_BAD_REQUEST)
         
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
