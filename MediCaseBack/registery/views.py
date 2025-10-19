@@ -145,14 +145,16 @@ class ProfileView(generics.RetrieveAPIView):
         return self.request.user
 
 class RoleViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.AllowAny]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
     lookup_field = 'name'
     lookup_value_regex = '[^/]+'
 
 class LogoutView(generics.GenericAPIView):
-    permission_classes =[JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = LogoutSerializer
     
     def post(self, request):
