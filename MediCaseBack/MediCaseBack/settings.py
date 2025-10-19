@@ -77,8 +77,8 @@ AUTH_USER_MODEL = 'registery.User'
 
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'email',
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=10),
 }
 
 ROOT_URLCONF = 'MediCaseBack.urls'
