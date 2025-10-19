@@ -15,12 +15,14 @@ from .serializer import (
 
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions
 from drf_spectacular.utils import extend_schema
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 class SignupViewSet(viewsets.GenericViewSet):
     serializer_class = RegisterSerializer
@@ -76,6 +78,7 @@ class LoginView(generics.CreateAPIView):
         response = Response(
             {
                 "user": output_serializer.data,
+                "access_token": access_token,
             },
             status=status.HTTP_200_OK
         )
@@ -133,10 +136,12 @@ def chenge_pass(request):
     return Response({"message": message}, status=status.HTTP_200_OK)
 
 class ProfileView(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    permission_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ProfileSerializer
-    lookup_field = "personal_number"
+    
+    def get_object(self):
+        return self.request.user
 
 class RoleViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
@@ -162,3 +167,18 @@ class LogoutView(generics.GenericAPIView):
             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
         
         return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+
+class CookieTokenRefreshView(TokenRefreshView):
+    def post(self, request):
+        refresh = request.COOKIES.get('refresh_token')
+
+        if refresh is None:
+            return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        serializer = TokenRefreshSerializer(data={'refresh': refresh})
+        serializer.is_valid(raise_exception=True)
+
+        access = serializer.validated_data['access']
+
+        response = Response({'access': access}, status=status.HTTP_200_OK)
+        return response

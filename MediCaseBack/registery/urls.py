@@ -12,6 +12,8 @@ urlpatterns = [
    path('verifyotp/', views.verify_otp, name='verify_otp'),
    path('resetpass/', views.reset_pass, name='reset_pass'),
    path('chengepass/', views.chenge_pass, name='chenge_pass'),
-   path('userprofile/<str:personal_number>/', views.ProfileView.as_view(), name='user_profile'),
+   path('userprofile/', views.ProfileView.as_view(), name='user_profile'),
+   path('logout/', views.LogoutView.as_view(), name='logout'),
+   path('token/refresh/', views.CookieTokenRefreshView.as_view(), name='token_refresh'),
    path('', include(router.urls)),
 ]
