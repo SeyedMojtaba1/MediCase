@@ -155,21 +155,22 @@ class RoleViewSet(viewsets.ModelViewSet):
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = LogoutSerializer
     
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        
-        refresh = serializer.validated_data['refresh']
-        
+    def get(self, request):
+        refresh = request.COOKIES.get('refresh_token')
+        if not refresh:
+            return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
             token = RefreshToken(refresh)
             token.blacklist()
         except Exception:
             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
         
-        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+        response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+        response.delete_cookie('refresh_token')
+
+        return response
 
 class CookieTokenRefreshView(TokenRefreshView):
     def get(self, request):
