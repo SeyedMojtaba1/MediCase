@@ -127,7 +127,8 @@ def reset_pass(request):
 @extend_schema(
     request=ChengePassSerializer
 )
-@permission_classes([JWTAuthentication])
+@authentication_classes([JWTAuthentication])
+@permission_classes([permissions.IsAuthenticated])
 @api_view(["POST"])
 def chenge_pass(request):
     serializer = ChengePassSerializer(data=request.data)
@@ -169,7 +170,7 @@ class LogoutView(generics.GenericAPIView):
         return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
 
 class CookieTokenRefreshView(TokenRefreshView):
-    def post(self, request):
+    def get(self, request):
         refresh = request.COOKIES.get('refresh_token')
 
         if refresh is None:
