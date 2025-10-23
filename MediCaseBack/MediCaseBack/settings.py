@@ -30,11 +30,24 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# CORS_ALLOWED_ORIGINS = [
+#     "http://127.0.0.1:4200",
+#     "http://localhost:4200",
+#     "http://127.0.0.1:8000",
+#     "http://localhost:8000",
+#     "http://medicase.local:4200",
+#     "http://medicase.local:8000",
+# ]
+
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:4200",
     "http://localhost:4200",
-    "http://127.0.0.1:8000",
+    "http://127.0.0.1:4200",
+    "http://172.20.144.1:4200",
+    "http://django_medicase.local:4200",
     "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://172.20.144.1:8000",
+    "http://django_medicase.local:8000"
 ]
 
 
@@ -83,6 +96,31 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'ROTATE_REFRESH_TOKENS': True,
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+        },
+        "KEY_PREFIX": "myapp_cache"
+    },
+    "api_cache": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+        },
+        "KEY_PREFIX": "api_cache"
+    }
+}
+
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_TASK_ALWAYS_EAGER = False
 
 ROOT_URLCONF = 'MediCaseBack.urls'
 
@@ -172,3 +210,4 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 
 SPECTACULAR_SETTINGS = {"TITLE": "MediCase Project APIs"}
+

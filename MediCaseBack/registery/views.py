@@ -23,6 +23,9 @@ from rest_framework import generics, permissions
 from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
+from django.utils.decorators import method_decorator
 
 class SignupViewSet(viewsets.GenericViewSet):
     serializer_class = RegisterSerializer
@@ -101,7 +104,7 @@ class LoginView(generics.CreateAPIView):
 def send_reset_otp(request):
     serializer = SendResetOTPSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    message = serializer.send_otp(request=request)
+    message = serializer.send_otp()
     return Response({"message": message}, status=status.HTTP_200_OK)
 
 @extend_schema(
@@ -140,6 +143,11 @@ class ProfileView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ProfileSerializer
+    @method_decorator(cache_page(60 * 15, cache="api_cache"))
+    @method_decorator(vary_on_headers('Authorization',))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    
     
     def get_object(self):
         return self.request.user
