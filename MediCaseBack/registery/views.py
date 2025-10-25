@@ -148,7 +148,6 @@ class ProfileView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     
-    
     def get_object(self):
         return self.request.user
 
@@ -159,6 +158,9 @@ class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     lookup_field = 'name'
     lookup_value_regex = '[^/]+'
+    @method_decorator(cache_page(20 * 15, cache="api_cache"))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]

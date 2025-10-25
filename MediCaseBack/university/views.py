@@ -3,6 +3,9 @@ from rest_framework import permissions
 from .serializer import UniversitySerializer, FacultySerializer, DepartmentSerializer
 from .models import University, Faculty, Department
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
+from django.utils.decorators import method_decorator
 
 class UniversityViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
@@ -11,6 +14,9 @@ class UniversityViewSet(viewsets.ModelViewSet):
     queryset = University.objects.all()
     lookup_field = 'name'
     lookup_value_regex = '[^/]+'
+    @method_decorator(cache_page(20 * 15, cache="api_cache"))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 class FacultyViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
@@ -19,6 +25,9 @@ class FacultyViewSet(viewsets.ModelViewSet):
     queryset = Faculty.objects.all()
     lookup_field = 'name'
     lookup_value_regex = '[^/]+'
+    @method_decorator(cache_page(20 * 15, cache="api_cache"))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
@@ -27,3 +36,6 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     lookup_field = 'name'
     lookup_value_regex = '[^/]+'
+    @method_decorator(cache_page(20 * 15, cache="api_cache"))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)

@@ -30,24 +30,13 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://127.0.0.1:4200",
-#     "http://localhost:4200",
-#     "http://127.0.0.1:8000",
-#     "http://localhost:8000",
-#     "http://medicase.local:4200",
-#     "http://medicase.local:8000",
-# ]
-
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
     "http://127.0.0.1:4200",
-    "http://172.20.144.1:4200",
-    "http://django_medicase.local:4200",
-    "http://localhost:8000",
+    "http://localhost:4200",
     "http://127.0.0.1:8000",
-    "http://172.20.144.1:8000",
-    "http://django_medicase.local:8000"
+    "http://localhost:8000",
+    "http://medicase.local:4200",
+    "http://medicase.local:8000",
 ]
 
 
