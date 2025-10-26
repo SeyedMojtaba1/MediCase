@@ -8,7 +8,7 @@ class University(models.Model):
         ("Non-Profit Non-Governmental University", "Non-Profit Non-Governmental"),
         ("Payame Noor University", "Payame Noor", "Open/Distance University", "Open/Distance"),
         ("University of Applied Science and Technology"),
-        ("Technical and Vocational University", "Technical and Vocational")
+        ("Technical and Vocational University", "Technical and Vocational"),
     ]
     
     university_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

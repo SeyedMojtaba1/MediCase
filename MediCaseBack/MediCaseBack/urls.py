@@ -25,9 +25,11 @@ router = DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("registery/", include(router.urls)),
+    path("registery/", include("registery.urls")),
     path("university/", include(router.urls)),
     path("university/", include("university.urls")),
-    path("registery/", include("registery.urls")),
+    path("class/", include(router.urls)),
+    path("class/", include("class.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/docs/", SpectacularSwaggerView.as_view(url_name="schema")),
 ]
