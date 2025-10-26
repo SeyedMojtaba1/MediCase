@@ -75,27 +75,11 @@ class PersonalNumberLoginSerializer(serializers.Serializer):
     personal_number = serializers.CharField()
     password = serializers.CharField(write_only=True, min_length=8)
     
-class LoginSerializer(serializers.HyperlinkedModelSerializer):
-    main_role = serializers.HyperlinkedRelatedField(
-        view_name='role-detail',
-        read_only=True,
-        lookup_field='name'
-    )
-    university = serializers.HyperlinkedRelatedField(
-        view_name='university-detail',
-        read_only=True,
-        lookup_field='name'
-    )
-    faculty = serializers.HyperlinkedRelatedField(
-        view_name='faculty-detail',
-        read_only=True,
-        lookup_field='name'
-    )
-    department = serializers.HyperlinkedRelatedField(
-        view_name='department-detail',
-        read_only=True,
-        lookup_field='name'
-    )
+class LoginSerializer(serializers.ModelSerializer):
+    main_role = serializers.CharField(source='main_role.name', read_only=True)
+    university = serializers.CharField(source='university.name', read_only=True)
+    faculty = serializers.CharField(source='faculty.name', read_only=True)
+    department = serializers.CharField(source='department.name', read_only=True)
     
     class Meta:
         model = User
@@ -210,12 +194,11 @@ class ChengePassSerializer(serializers.Serializer):
         
         return "Your password Changed successfuly."
 
-class ProfileSerializer(serializers.HyperlinkedModelSerializer):
-    main_role = serializers.HyperlinkedRelatedField(
-        view_name='role-detail',
-        read_only=True,
-        lookup_field='name'
-    )
+class ProfileSerializer(serializers.ModelSerializer):
+    main_role = main_role = serializers.CharField(source='main_role.name', read_only=True)
+    university = serializers.CharField(source='university.name', read_only=True)
+    faculty = serializers.CharField(source='faculty.name', read_only=True)
+    department = serializers.CharField(source='department.name', read_only=True)
     
     class Meta:
         model = User
@@ -236,6 +219,9 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
             "is_superuser",
             "profile_image",
             "main_role",
+            "university",
+            "faculty",
+            "department",
         ]
 
 class RoleSerializer(serializers.ModelSerializer):
