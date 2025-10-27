@@ -3,15 +3,9 @@ from registery.models import User
 import uuid
 
 class Semester(models.Model):
-    SEASONS = [
-        ('Winter and Spring', 'WS'),
-        ('Summer', 'S'),
-        ('Fall', 'F'),
-    ]
-    
     semester_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    year = models.CharField(max_length=8)
-    season = models.CharField(max_length=25, choices=SEASONS)
+    code = models.CharField(max_length=8)
+    name = models.CharField(max_length=25)
 
 class Subject(models.Model):
     subject_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -49,7 +43,17 @@ class StudentSection(models.Model):
     ]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, related_name='sections')
-    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='students')
+    section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, related_name='sectionstudents')
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='studentsections')
     student_status = models.CharField(max_length=10, choices=STUDENT_STATUS)
     
+class StudentSubject(models.Model):
+    STUDENT_STATUS = [
+        ('Blocked', 'B'),
+        ('Active', 'A'),
+    ]
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, related_name='subjectstudents')
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='studentsubjects')
+    access_status = models.BooleanField(default=False)
