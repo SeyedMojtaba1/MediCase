@@ -1,10 +1,11 @@
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, generics, permissions, status
+from rest_framework.response import Response
 from .serializer import (
     SectionSerializer, 
     SemesterSerializer, 
     SubjectSerializer, 
     StudentSubjectSerializer,
+    StudentSubjectListSerializer,
 )
 from .models import Section, Semester, Subject, StudentSubject
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -40,21 +41,42 @@ class SubjectViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SubjectSerializer
     queryset = Subject.objects.all()
-    lookup_field = 'name'
+    lookup_field = 'english_name'
     lookup_value_regex = '[^/]+'
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     
-class StudentSubjectViewSet(viewsets.ModelViewSet):
+class StudentSubjectCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StudentSubjectSerializer
     queryset = StudentSubject.objects.all()
     
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        student_subject = serializer.save()
+        
+        data = {
+            "data": {
+                "subject": student_subject.subject.english_name,
+                "student": student_subject.student.personal_number,
+                "access_status": student_subject.access_status
+            },
+            "message": "ثبت اطلاعات با موفقیت انجام شد."
+        }
+        return Response(data, status=status.HTTP_201_CREATED)
+    
+class StudentSubjectListView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StudentSubjectListSerializer
+    queryset = StudentSubject.objects.all()
+
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @action(detail=False, methods=['get'], url_path='(?P<student>[^/]+)')
-    def by_student(self, request, student=None):
-        queryset = self.get_queryset().filter(student=student)
+    @method_decorator(vary_on_headers('Authorization',))
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(student=self.request.user)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

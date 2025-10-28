@@ -9,7 +9,8 @@ class Semester(models.Model):
 
 class Subject(models.Model):
     subject_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50, default=None, unique=True)
+    english_name = models.CharField(max_length=50, default=None, unique=True)
+    persian_name = models.CharField(max_length=50, default=None, unique=True)
     unit = models.IntegerField()
     description = models.TextField(max_length=1000)
     subject_image = models.URLField(blank=True, null=True)

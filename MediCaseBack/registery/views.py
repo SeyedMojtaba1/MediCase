@@ -92,7 +92,7 @@ class LoginView(generics.CreateAPIView):
             httponly=True,
             secure=True,
             samesite="None",
-            max_age = 10 * 60,
+            max_age = 7 * 24 * 60 * 60,
         )
 
         return response
