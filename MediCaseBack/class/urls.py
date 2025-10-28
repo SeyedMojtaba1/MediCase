@@ -11,4 +11,5 @@ urlpatterns = [
    path('', include(router.urls)),
    path('studentsubjectcreate/', views.StudentSubjectCreateView.as_view(), name='studentsubjectcreate'),
    path('studentsubjectlist/', views.StudentSubjectListView.as_view(), name='studentsubjectlist'),
+   path('studentsubjectretrieve/<str:subject>/', views.StudentSubjectRetrieveView.as_view(), name='studentsubjectretrieve'),
 ]

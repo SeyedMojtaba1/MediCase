@@ -8,6 +8,7 @@ from django.views.decorators.vary import vary_on_headers
 from django.utils.decorators import method_decorator
 
 class UniversityViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UniversitySerializer
@@ -19,6 +20,7 @@ class UniversityViewSet(viewsets.ModelViewSet):
         return super().get(request, *args, **kwargs)
 
 class FacultyViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FacultySerializer
@@ -30,6 +32,7 @@ class FacultyViewSet(viewsets.ModelViewSet):
         return super().get(request, *args, **kwargs)
 
 class DepartmentViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = DepartmentSerializer

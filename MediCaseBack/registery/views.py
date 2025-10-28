@@ -152,6 +152,7 @@ class ProfileView(generics.RetrieveAPIView):
         return self.request.user
 
 class RoleViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = RoleSerializer

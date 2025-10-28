@@ -6,6 +6,7 @@ from .serializer import (
     SubjectSerializer, 
     StudentSubjectSerializer,
     StudentSubjectListSerializer,
+    StudentSubjectRetrieveSerializer,
 )
 from .models import Section, Semester, Subject, StudentSubject
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -15,6 +16,7 @@ from django.utils.decorators import method_decorator
 from rest_framework.decorators import action
 
 class SectionViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SectionSerializer
@@ -26,6 +28,7 @@ class SectionViewSet(viewsets.ModelViewSet):
         return super().get(request, *args, **kwargs)
 
 class SemesterViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SemesterSerializer
@@ -37,6 +40,7 @@ class SemesterViewSet(viewsets.ModelViewSet):
         return super().get(request, *args, **kwargs)
 
 class SubjectViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SubjectSerializer
@@ -80,3 +84,31 @@ class StudentSubjectListView(generics.ListAPIView):
         queryset = self.get_queryset().filter(student=self.request.user)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
+class StudentSubjectRetrieveView(generics.RetrieveAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StudentSubjectRetrieveSerializer
+    queryset = StudentSubject.objects.all()
+    lookup_field = 'subject'
+    lookup_url_kwarg = 'subject'
+    lookup_value_regex = '[^/]+'
+
+    @method_decorator(cache_page(20 * 60, cache="api_cache"))
+    @method_decorator(vary_on_headers('Authorization',))
+    def retrieve(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        lookup_value = self.kwargs.get(self.lookup_field)
+        
+        try:
+            subject = Subject.objects.get(english_name=lookup_value)
+        except Subject.DoesNotExist:
+            return Response({"message": "Subject is not exist."})
+        
+        print(self.get_queryset())
+        
+        queryset = self.get_queryset().filter(student=self.request.user, subject=subject.subject_id).first()
+        serializer = StudentSubjectListSerializer(queryset)
+        
+        return Response(serializer.data)
+    

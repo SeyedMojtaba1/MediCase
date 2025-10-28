@@ -105,3 +105,18 @@ class StudentSubjectListSerializer(serializers.ModelSerializer):
             'student',
             'access_status',
         ]
+
+class StudentSubjectRetrieveSerializer(serializers.ModelSerializer):
+    subject = serializers.CharField(source='subject.english_name', read_only=True)
+    student = serializers.CharField(source='student.personal_number', read_only=True)
+    
+    class Meta:
+        model = StudentSubject
+        fields = [
+            'subject',
+            'student',
+            'access_status',
+        ]
+        extra_kwargs = {
+            'url': {'lookup_field': 'subject'}
+        }
