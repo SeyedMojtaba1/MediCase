@@ -31,13 +31,37 @@ def send_reset_otp_task(email):
 
     html_content = f"""
     <html lang="fa" dir="rtl">
-        <body style="font-family: Tahoma, 'Vazirmatn', sans-serif; background-color: #E0F2F1; padding: 30px;">
-            <div style="max-width: 520px; margin: auto; background-color: #fff; border-radius: 12px; padding: 35px 30px;">
-                <h2 style="color: #00695C; text-align: center;">تأیید حساب کاربری</h2>
-                <p>کد شما: <strong>{otp}</strong></p>
-                <p>این کد تا ۵ دقیقه دیگر منقضی می‌شود.</p>
-            </div>
-        </body>
+    <body style="font-family: Tahoma, 'Vazirmatn', sans-serif; background-color: #E0F2F1; padding: 30px; direction: rtl;">
+        <div style="max-width: 520px; margin: auto; background-color: #ffffff; border-radius: 12px; padding: 35px 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: right;">
+
+        <h2 style="color: #00695C; text-align: center; margin-bottom: 25px;">
+            تأیید حساب کاربری
+        </h2>
+
+        <p style="font-size: 16px; color: #444; line-height: 1.8;">
+            سلام <strong>{user.first_name or 'کاربر گرامی'}</strong> 🌷،<br><br>
+            رمز عبور یکبار مصرف (OTP) شما برای تأیید حساب:
+        </p>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <span style="display: inline-block; background-color: #009688; color: #fff; padding: 12px 26px; font-size: 22px; font-weight: bold; letter-spacing: 4px; border-radius: 8px;">
+            {otp}
+            </span>
+        </div>
+
+        <p style="font-size: 15px; color: #666; line-height: 1.7;">
+            ⚠️ این کد تا <strong>۵ دقیقه</strong> دیگر منقضی می‌شود.<br>
+            اگر شما این درخواست را انجام نداده‌اید، لطفاً این ایمیل را نادیده بگیرید.
+        </p>
+
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #e0e0e0;">
+
+        <p style="text-align: center; font-size: 13px; color: #999;">
+            &copy; {timezone.now().year} MediCase-Isfahan<br>
+            تمامی حقوق محفوظ است.
+        </p>
+        </div>
+    </body>
     </html>
     """
 
