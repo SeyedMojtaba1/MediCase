@@ -31,7 +31,6 @@ class SectionSerializer(serializers.ModelSerializer):
         }
 
 class SectionCreateSerializer(serializers.ModelSerializer):
-    teacher = serializers.CharField()
     semester_code = serializers.CharField()
     semester_name = serializers.CharField()
     
@@ -39,7 +38,6 @@ class SectionCreateSerializer(serializers.ModelSerializer):
         model = Section
         fields = [
             'name',
-            'teacher',
             'semester_code',
             'semester_name',
             'student_count',
@@ -52,11 +50,13 @@ class SectionCreateSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        teacher=validated_data["teacher"]
+        request = self.context.get('request')
+        teacher = request.user
+        
         semester_code=validated_data["semester_code"]
         
         try:
-            teacher = User.objects.get(personal_number=teacher)
+            teacher = User.objects.get(personal_number=teacher.personal_number)
         except User.DoesNotExist:
             raise serializers.ValidationError(
                 {"detail": "Teacher is not exist."}
