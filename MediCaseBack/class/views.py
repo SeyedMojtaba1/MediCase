@@ -2,6 +2,7 @@ from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
 from .serializer import (
     SectionSerializer, 
+    SectionCreateSerializer,
     SemesterSerializer, 
     SubjectSerializer, 
     StudentSubjectSerializer,
@@ -26,6 +27,19 @@ class SectionViewSet(viewsets.ModelViewSet):
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
+
+class SectionCreateView(generics.GenericAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SectionCreateSerializer
+    queryset = Section.objects.all()
+    
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        section = serializer.save()
+        
+        return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
 
 class SemesterViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']

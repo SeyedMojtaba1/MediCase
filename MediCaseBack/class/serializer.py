@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Section, Semester, Subject, StudentSubject
+from registery.models import Role
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -28,6 +29,70 @@ class SectionSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'name'}
         }
+
+class SectionCreateSerializer(serializers.ModelSerializer):
+    teacher = serializers.CharField()
+    semester_code = serializers.CharField()
+    semester_name = serializers.CharField()
+    
+    class Meta:
+        model = Section
+        fields = [
+            'name',
+            'teacher',
+            'semester_code',
+            'semester_name',
+            'student_count',
+            'status',
+            'start_date',
+            'end_date',
+            'created_date',
+            'last_update',
+            'description',
+        ]
+
+    def create(self, validated_data):
+        teacher=validated_data["teacher"]
+        semester_code=validated_data["semester_code"]
+        
+        try:
+            teacher = User.objects.get(personal_number=teacher)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(
+                {"detail": "Teacher is not exist."}
+            )
+
+        if not teacher.main_role or teacher.main_role.name.lower() != "teacher":
+            raise serializers.ValidationError(
+                {"detail": "This user is not assigned as a teacher."}
+            )
+        
+        try:
+            semester = Semester.objects.get(code=semester_code)
+        except Semester.DoesNotExist:
+            raise serializers.ValidationError(
+                {"detail": "Semester is not exist."}
+            )
+        
+        if Section.objects.filter(name=validated_data["name"], teacher=teacher, semester=semester).exists():
+            raise serializers.ValidationError(
+                {"detail": "This section is already registered."}
+            )
+        
+        section = Section.objects.create(
+            name=validated_data["name"],
+            teacher=teacher,
+            semester=semester,
+            student_count=0,
+            status="Created",
+            start_date=validated_data["start_date"],
+            end_date=validated_data["end_date"],
+            description=validated_data["description"],
+        )
+        
+        section.save()
+        
+        return section
 
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
