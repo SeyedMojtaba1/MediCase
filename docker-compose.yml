@@ -18,7 +18,7 @@ services:
     image: docker.arvancloud.ir/mysql:8.0
     container_name: django_mysql_db
     volumes:
-      - db_data:/var/lib/mysql
+      - ./data/db_data:/var/lib/mysql
     ports:
       - "3307:3306"
     healthcheck:
