@@ -39,8 +39,8 @@ class Section(models.Model):
     
 class StudentSection(models.Model):
     STUDENT_STATUS = [
-        ('Blocked', 'B'),
         ('Active', 'A'),
+        ('Blocked', 'B'),
     ]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
