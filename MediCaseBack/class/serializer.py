@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Section, Semester, Subject, StudentSubject
-from registery.models import Role
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+
 
 User = get_user_model()
 
@@ -30,17 +31,58 @@ class SectionSerializer(serializers.ModelSerializer):
             'url': {'lookup_field': 'name'}
         }
 
+class SectionUpdateSerializer(serializers.ModelSerializer):
+    new_name = serializers.CharField(write_only=True)
+    name = serializers.CharField(read_only=True)
+    semester_code = serializers.CharField(write_only=True)
+    semester = serializers.CharField(source='semester.code', read_only=True)
+    
+    class Meta:
+        model = Section
+        fields = [
+            'new_name',
+            'name',
+            'semester_code',
+            'semester',
+            'start_date',
+            'end_date',
+            'description',
+        ]
+        
+    def update(self, instance, validated_data):
+        request = self.context.get('request')
+        teacher = request.user
+
+        semester_code=validated_data["semester_code"]
+        
+        if not teacher.main_role or teacher.main_role.name.lower() != "teacher":
+            raise serializers.ValidationError({"detail": "This user is not assigned as a teacher."})
+
+        try:
+            semester = Semester.objects.get(code=semester_code)
+        except Semester.DoesNotExist:
+            raise serializers.ValidationError(
+                {"detail": "Semester is not exist."}
+            )
+            
+        instance.name = validated_data.get("new_name", instance.name)
+        instance.semester = semester
+        instance.start_date = validated_data.get("start_date", instance.start_date)
+        instance.end_date = validated_data.get("end_date", instance.end_date)
+        instance.description = validated_data.get("description", instance.description)
+        instance.last_update = timezone.now()
+
+        instance.save()
+        return instance
+
 class SectionCreateSerializer(serializers.ModelSerializer):
     semester_code = serializers.CharField()
-    semester_name = serializers.CharField()
     
     class Meta:
         model = Section
         fields = [
             'name',
             'semester_code',
-            'semester_name',
-            'student_count',
             'status',
             'start_date',
             'end_date',

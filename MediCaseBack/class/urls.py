@@ -10,6 +10,7 @@ router.register(r'subjects', views.SubjectViewSet, basename='subject')
 urlpatterns = [
    path('', include(router.urls)),
    path('sectioncreate/', views.SectionCreateView.as_view(), name='sectioncreate'),
+   path('sectionupdate/<str:old_name>', views.SectionUpdateViewSet.as_view({'put': 'update'}), name='sectionupdate'),
    path('studentsubjectcreate/', views.StudentSubjectCreateView.as_view(), name='studentsubjectcreate'),
    path('studentsubjectlist/', views.StudentSubjectListView.as_view(), name='studentsubjectlist'),
    path('studentsubjectretrieve/<str:subject>/', views.StudentSubjectRetrieveView.as_view(), name='studentsubjectretrieve'),

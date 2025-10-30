@@ -2,6 +2,7 @@ from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
 from .serializer import (
     SectionSerializer, 
+    SectionUpdateSerializer,
     SectionCreateSerializer,
     SemesterSerializer, 
     SubjectSerializer, 
@@ -15,6 +16,9 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from django.utils.decorators import method_decorator
 from rest_framework.decorators import action
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class SectionViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
@@ -27,6 +31,27 @@ class SectionViewSet(viewsets.ModelViewSet):
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
+
+class SectionUpdateViewSet(viewsets.ModelViewSet):
+    http_method_names = ['put']
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SectionUpdateSerializer
+    queryset = Section.objects.all()
+    lookup_field = 'name'
+    lookup_url_kwarg = 'old_name'
+    lookup_value_regex = '[^/]+'
+    
+    def put(self, request):
+        try:
+            user = User.objects.get(name=self.lookup_field)
+        except User.DoesNotExist:
+            return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
+        serializer = self.get_serializer(instance=user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        section = serializer.save()
+        
+        return Response({"message": "کلاس با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
 class SectionCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
@@ -49,6 +74,7 @@ class SemesterViewSet(viewsets.ModelViewSet):
     queryset = Semester.objects.all()
     lookup_field = 'code'
     lookup_value_regex = '[^/]+'
+    
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
@@ -61,6 +87,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     lookup_field = 'english_name'
     lookup_value_regex = '[^/]+'
+    
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
