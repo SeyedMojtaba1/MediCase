@@ -152,7 +152,7 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         section=validated_data['section']
         student=validated_data['student']
         try:
-            subject = Section.objects.get(name=section)
+            section = Section.objects.get(name=section)
         except Section.DoesNotExist:
             return "Section is not exist."
             

@@ -83,7 +83,7 @@ class StudentSectionCreateView(generics.GenericAPIView):
         data = {
             "data": {
                 "section": student_section.section.name,
-                "student": student_section.section.personal_number,
+                "student": student_section.student.personal_number,
                 "student_status": student_section.student_status,
             },
             "message": "ثبت اطلاعات با موفقیت انجام شد."
