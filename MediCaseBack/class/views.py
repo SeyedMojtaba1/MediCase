@@ -4,13 +4,16 @@ from .serializer import (
     SectionSerializer, 
     SectionUpdateSerializer,
     SectionCreateSerializer,
+    StudentSectionSerializer,
+    StudentSectionRetrieveSerializer,
+    StudentSectionListSerializer,
     SemesterSerializer, 
     SubjectSerializer, 
     StudentSubjectSerializer,
     StudentSubjectListSerializer,
     StudentSubjectRetrieveSerializer,
 )
-from .models import Section, Semester, Subject, StudentSubject
+from .models import Section, StudentSection, Semester, Subject, StudentSubject
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
@@ -66,6 +69,65 @@ class SectionCreateView(generics.GenericAPIView):
         
         return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
 
+class StudentSectionCreateView(generics.GenericAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StudentSubjectSerializer
+    queryset = StudentSection.objects.all()
+    
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        student_section = serializer.save()
+        
+        data = {
+            "data": {
+                "section": student_section.section.name,
+                "student": student_section.section.personal_number,
+                "student_status": student_section.student_status,
+            },
+            "message": "ثبت اطلاعات با موفقیت انجام شد."
+        }
+        return Response(data, status=status.HTTP_201_CREATED)
+
+class StudentSectionListView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StudentSectionListSerializer
+    queryset = StudentSection.objects.all()
+
+    @method_decorator(cache_page(20 * 60, cache="api_cache"))
+    @method_decorator(vary_on_headers('Authorization',))
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(student=self.request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+class StudentSectionRetrieveView(generics.RetrieveAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StudentSectionRetrieveSerializer
+    queryset = StudentSection.objects.all()
+    lookup_field = 'section'
+    lookup_url_kwarg = 'section'
+    lookup_value_regex = '[^/]+'
+
+    @method_decorator(cache_page(20 * 60, cache="api_cache"))
+    @method_decorator(vary_on_headers('Authorization',))
+    def retrieve(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        lookup_value = self.kwargs.get(self.lookup_field)
+        
+        try:
+            section = Section.objects.get(name=lookup_value)
+        except Section.DoesNotExist:
+            return Response({"message": "Section is not exist."})
+                
+        queryset = self.get_queryset().filter(student=self.request.user, section=section.section_id).first()
+        serializer = StudentSectionListSerializer(queryset)
+        
+        return Response(serializer.data)
+    
 class SemesterViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
@@ -145,9 +207,7 @@ class StudentSubjectRetrieveView(generics.RetrieveAPIView):
             subject = Subject.objects.get(english_name=lookup_value)
         except Subject.DoesNotExist:
             return Response({"message": "Subject is not exist."})
-        
-        print(self.get_queryset())
-        
+                
         queryset = self.get_queryset().filter(student=self.request.user, subject=subject.subject_id).first()
         serializer = StudentSubjectListSerializer(queryset)
         

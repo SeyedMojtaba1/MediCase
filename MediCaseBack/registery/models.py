@@ -61,7 +61,12 @@ class User(AbstractBaseUser):
     is_ban = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    profile_image = models.URLField(blank=True, null=True)
+    profile_image = models.ImageField(
+        upload_to='profile/',
+        blank=True,
+        null=True,
+        default='defaults/default_profile.png',
+    )
     otp = models.IntegerField(null=True, blank=True)
     otp_expiry = models.DateTimeField(null=True, blank=True)
     pass_expiry = models.DateTimeField(null=True, blank=True)

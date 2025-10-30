@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Section, Semester, Subject, StudentSubject
+from .models import Section, StudentSection, Semester, Subject, StudentSubject
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
@@ -135,6 +135,73 @@ class SectionCreateSerializer(serializers.ModelSerializer):
         section.save()
         
         return section
+
+class StudentSectionSerializer(serializers.ModelSerializer):
+    section = serializers.CharField()
+    student = serializers.CharField()
+    
+    class Meta:
+        model = StudentSection
+        fields = [
+            'section',
+            'student',
+            'student_status',
+        ]
+           
+    def create(self, validated_data):
+        section=validated_data['section']
+        student=validated_data['student']
+        try:
+            subject = Section.objects.get(name=subject)
+        except Subject.DoesNotExist:
+            return "Section is not exist."
+            
+        try:
+            student = User.objects.get(personal_number=student)
+        except User.DoesNotExist:
+            return "Student is not exist."
+        
+        if StudentSection.objects.filter(section=section, student=student).exists():
+            raise serializers.ValidationError(
+                {"detail": "This student is already registered for this section."}
+            )
+        
+        student_section = StudentSection.objects.create(
+            section=section,
+            student=student,
+            student_status=validated_data['student_status'],
+        )
+        
+        student_section.save()
+        
+        return student_section
+
+class StudentSectionListSerializer(serializers.ModelSerializer):
+    section = serializers.CharField(source='section.name', read_only=True)
+    student = serializers.CharField(source='student.personal_number', read_only=True)
+    
+    class Meta:
+        model = StudentSection
+        fields = [
+            'section',
+            'student',
+            'student_status',
+        ]
+
+class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
+    section = serializers.CharField(source='section.name', read_only=True)
+    student = serializers.CharField(source='student.personal_number', read_only=True)
+    
+    class Meta:
+        model = StudentSection
+        fields = [
+            'section',
+            'student',
+            'student_status',
+        ]
+        extra_kwargs = {
+            'url': {'lookup_field': 'section'}
+        }
 
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:

@@ -19,6 +19,8 @@ from django.urls import include, path
 from registery.views import SignupViewSet, RoleViewSet
 from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 
@@ -32,4 +34,4 @@ urlpatterns = [
     path("class/", include("class.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/docs/", SpectacularSwaggerView.as_view(url_name="schema")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
