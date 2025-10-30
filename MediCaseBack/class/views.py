@@ -72,7 +72,7 @@ class SectionCreateView(generics.GenericAPIView):
 class StudentSectionCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = StudentSubjectSerializer
+    serializer_class = StudentSectionSerializer
     queryset = StudentSection.objects.all()
     
     def post(self, request):
