@@ -29,7 +29,7 @@ class SectionViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SectionSerializer
     queryset = Section.objects.all()
-    lookup_field = 'name'
+    lookup_field = 'section_id'
     lookup_value_regex = '[^/]+'
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
@@ -41,16 +41,16 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SectionUpdateSerializer
     queryset = Section.objects.all()
-    lookup_field = 'name'
-    lookup_url_kwarg = 'old_name'
+    lookup_field = 'section_id'
+    lookup_url_kwarg = 'section_id'
     lookup_value_regex = '[^/]+'
     
     def put(self, request):
         try:
-            user = User.objects.get(name=self.lookup_field)
-        except User.DoesNotExist:
+            section = Section.objects.get(section_id=self.lookup_field)
+        except Section.DoesNotExist:
             return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
-        serializer = self.get_serializer(instance=user, data=request.data)
+        serializer = self.get_serializer(instance=section, data=request.data)
         serializer.is_valid(raise_exception=True)
         section = serializer.save()
         

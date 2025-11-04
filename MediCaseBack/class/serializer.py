@@ -7,13 +7,14 @@ from django.utils import timezone
 User = get_user_model()
 
 class SectionSerializer(serializers.ModelSerializer):
-    teacher = serializers.CharField(source='teacher.name', read_only=True)
+    teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
     semester_code = serializers.CharField(source='semester.code', read_only=True)
     semester_name = serializers.CharField(source='semester.name', read_only=True)
     
     class Meta:
         model = Section
         fields = [
+            'section_id',
             'name',
             'teacher',
             'semester_code',
@@ -28,20 +29,19 @@ class SectionSerializer(serializers.ModelSerializer):
             'description',
         ]
         extra_kwargs = {
-            'url': {'lookup_field': 'name'}
+            'url': {'lookup_field': 'section_id'}
         }
 
 class SectionUpdateSerializer(serializers.ModelSerializer):
     new_name = serializers.CharField(write_only=True)
-    name = serializers.CharField(read_only=True)
     semester_code = serializers.CharField(write_only=True)
     semester = serializers.CharField(source='semester.code', read_only=True)
     
     class Meta:
         model = Section
         fields = [
+            'section_id',
             'new_name',
-            'name',
             'semester_code',
             'semester',
             'start_date',
@@ -76,12 +76,15 @@ class SectionUpdateSerializer(serializers.ModelSerializer):
         return instance
 
 class SectionCreateSerializer(serializers.ModelSerializer):
+    teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
     semester_code = serializers.CharField()
     
     class Meta:
         model = Section
         fields = [
+            'section_id',
             'name',
+            'teacher',
             'semester_code',
             'status',
             'start_date',

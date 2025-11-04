@@ -3,6 +3,7 @@ from .models import User, Role
 from .serializer import (
     RegisterSerializer, 
     LoginSerializer,
+    SetProfileImageSerializer,
     EmailLoginSerializer,
     SendResetOTPSerializer,
     VerifyOTPSerializer,
@@ -96,6 +97,25 @@ class LoginView(generics.CreateAPIView):
         )
 
         return response
+
+class SetProfileImageViewSet(viewsets.ModelViewSet):
+    http_method_names = ['put']
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SetProfileImageSerializer
+    queryset = User.objects.all()
+    
+    def put(self, request):
+        try:
+            user = User.objects.get(personal_number=self.request.user.personal_number)
+        except User.DoesNotExist:
+            return Response({"message": "فردی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
+        serializer = self.get_serializer(instance=user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        section = serializer.save()
+        
+        return Response({"message": "تصویر با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
+
 
 @extend_schema(
     request=SendResetOTPSerializer

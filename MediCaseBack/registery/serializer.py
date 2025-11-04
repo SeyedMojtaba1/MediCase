@@ -96,10 +96,24 @@ class LoginSerializer(serializers.ModelSerializer):
             'is_staff', 
             'is_superuser',
             'main_role',
+            'profile_image',
             'university',
             'faculty',
             'department'
             ]
+
+class SetProfileImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['profile_image']
+    
+    def update(self, instance, validated_data):
+        profile_image=validated_data['profile_image']
+        
+        instance.profile_image = profile_image
+        
+        instance.save()
+        return instance
         
 class SendResetOTPSerializer(serializers.Serializer):
     email = serializers.EmailField()
