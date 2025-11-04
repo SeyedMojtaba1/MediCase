@@ -13,7 +13,12 @@ class Subject(models.Model):
     persian_name = models.CharField(max_length=50, default=None, unique=True)
     unit = models.IntegerField()
     description = models.TextField(max_length=1000)
-    subject_image = models.URLField(blank=True, null=True)
+    subject_image = models.ImageField(
+        upload_to='subject/',
+        blank=True,
+        null=True,
+        default='defaults/default_subject.jpg',
+    )
 
 class Section(models.Model):
     CLASS_STATUS = [
@@ -34,7 +39,12 @@ class Section(models.Model):
     end_date = models.DateField()
     created_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
-    section_image = models.URLField(blank=True, null=True)
+    section_image = models.ImageField(
+        upload_to='section/',
+        blank=True,
+        null=True,
+        default='defaults/default_section.jpg',
+    )
     description = models.TextField(max_length=1000)
     
 class StudentSection(models.Model):

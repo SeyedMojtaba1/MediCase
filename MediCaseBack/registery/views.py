@@ -116,7 +116,6 @@ class SetProfileImageViewSet(viewsets.ModelViewSet):
         
         return Response({"message": "تصویر با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
-
 @extend_schema(
     request=SendResetOTPSerializer
 )

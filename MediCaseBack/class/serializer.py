@@ -155,7 +155,7 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         section=validated_data['section']
         student=validated_data['student']
         try:
-            section = Section.objects.get(name=section)
+            section = Section.objects.get(section_id=section)
         except Section.DoesNotExist:
             return "Section is not exist."
             
@@ -175,12 +175,14 @@ class StudentSectionSerializer(serializers.ModelSerializer):
             student_status=validated_data['student_status'],
         )
         
+        section.student_count=section.student_count+1
+        section.save()
         student_section.save()
         
         return student_section
 
 class StudentSectionListSerializer(serializers.ModelSerializer):
-    section = serializers.CharField(source='section.name', read_only=True)
+    section = serializers.CharField(source='section.section_id', read_only=True)
     student = serializers.CharField(source='student.personal_number', read_only=True)
     
     class Meta:
@@ -192,7 +194,7 @@ class StudentSectionListSerializer(serializers.ModelSerializer):
         ]
 
 class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
-    section = serializers.CharField(source='section.name', read_only=True)
+    section = serializers.CharField(source='section.section_id', read_only=True)
     student = serializers.CharField(source='student.personal_number', read_only=True)
     
     class Meta:
@@ -203,7 +205,7 @@ class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
             'student_status',
         ]
         extra_kwargs = {
-            'url': {'lookup_field': 'section'}
+            'url': {'lookup_field': 'section_id'}
         }
 
 class SemesterSerializer(serializers.ModelSerializer):

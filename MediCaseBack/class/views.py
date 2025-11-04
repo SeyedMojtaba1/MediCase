@@ -82,7 +82,7 @@ class StudentSectionCreateView(generics.GenericAPIView):
         
         data = {
             "data": {
-                "section": student_section.section.name,
+                "section": student_section.section.section_id,
                 "student": student_section.student.personal_number,
                 "student_status": student_section.student_status,
             },
@@ -108,8 +108,8 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StudentSectionRetrieveSerializer
     queryset = StudentSection.objects.all()
-    lookup_field = 'section'
-    lookup_url_kwarg = 'section'
+    lookup_field = 'section_id'
+    lookup_url_kwarg = 'section_id'
     lookup_value_regex = '[^/]+'
 
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
@@ -119,7 +119,7 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
         lookup_value = self.kwargs.get(self.lookup_field)
         
         try:
-            section = Section.objects.get(name=lookup_value)
+            section = Section.objects.get(section_id=lookup_value)
         except Section.DoesNotExist:
             return Response({"message": "Section is not exist."})
                 
