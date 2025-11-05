@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Card} from '../../../../../layouts/card/card';
 
 @Component({
   selector: 'app-chart',
-  imports: [],
+  imports: [
+    Card
+  ],
   templateUrl: './chart.html',
   styleUrl: './chart.css'
 })

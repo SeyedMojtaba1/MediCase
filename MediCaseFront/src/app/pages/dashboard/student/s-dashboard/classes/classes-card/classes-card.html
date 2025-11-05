@@ -1,9 +1,9 @@
 <div class="flex flex-col h-full shadow-[0_0_5px_0_rgba(0,0,0,0.03)] bg-white rounded-lg justify-between">
   <div>
-    <img [src]="clas.image">
+    <img [src]="clas.section_image" class="cursor-pointer">
   </div>
   <div class="flex flex-col gap-2 p-5 items-center justify-between h-full">
-    <p class="text-center">{{ clas.name }}</p>
+    <p class="text-center cursor-pointer">{{ clas.name }}</p>
     <p class="text-gray-500 text-xs text-center">
       دکتر محمد علی علی زاده حسینی راد
     </p>
@@ -12,12 +12,12 @@
     <div class="w-full flex flex-row justify-between items-center mt-5">
       <div class="flex flex-row gap-1 items-center">
         <img src="images/svg/user.svg">
-        <p class="text-xs text-gray-400">54</p>
+        <p class="text-xs text-gray-400">{{ clas.student_count }}</p>
       </div>
 
       <div class="flex flex-row gap-1 items-center">
         <img src="images/svg/bill-line.svg">
-        <p class="text-xs text-gray-400">ترم پاییز 1404</p>
+        <p class="text-xs text-gray-400">{{ clas.semester_name }}</p>
       </div>
     </div>
 

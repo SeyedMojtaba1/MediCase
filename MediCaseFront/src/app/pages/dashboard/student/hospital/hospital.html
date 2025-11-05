@@ -1,1 +1,19 @@
-<p>hospital works!</p>
+<div class="w-full flex flex-col gap-10 p-10">
+
+  <app-dash-nav [welcome]="false" title="بیمارستان"></app-dash-nav>
+
+  <p class="text-gray-500 text-justify">
+    متن لورم ایپسوم برای توضیحات صفحه بیمارستان هستش این
+    متن لورم ایپسوم برای توضیحات صفحه بیمارستان هستش این
+    متن لورم ایپسوم برای توضیحات صفحه بیمارستان هستش این
+    متن لورم ایپسوم برای توضیحات صفحه بیمارستان هستش این
+    متن لورم ایپسوم برای توضیحات صفحه بیمارستان هستش این
+    متن لورم ایپسوم برای توضیحات صفحه بیمارستان هستش این
+  </p>
+
+  <div class="grid grid-cols-3 gap-10 items-stretch">
+    @for (sub of subjects; track sub) {
+      <app-hospital-card [sub]="sub" class="h-full"></app-hospital-card>
+    }
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="flex flex-row justify-between w-full items-center">
+
+  <div class="flex flex-col gap-2 " id="heading">
+    @if (welcome) {
+      <p class="text-xs text-[#148591]">خوش اومدی دکتر {{ last_name() }}</p>
+    } @else if (welcomeMsg) {
+      <p class="text-xs text-[#148591]">{{ welcomeMsg }}</p>
+    }
+    <p class="text-3xl font-black">{{ title }}</p>
+  </div>
+
+  <div class="py-3 px-5 rounded-full items-center flex flex-row gap-5 bg-gradient-to-l from-[#148691] to-[#216067]">
+    <img [src]="avatar" class="rounded-full w-10 h-auto border-2 border-white">
+    <p class="text-white">{{ first_name() + ' ' + last_name() }}</p>
+    <img class="w-6 h-auto cursor-pointer" src="images/svg/search.svg">
+    <img (click)="op.toggle($event)" class="w-6 h-auto cursor-pointer" src="images/svg/alarm.svg">
+
+    <img (click)="logout()" class="w-6 h-auto cursor-pointer invert-100" src="images/svg/logout-circle-line.svg">
+  </div>
+
+</div>
+
+
+<p-popover #op>
+  <div class="flex flex-col gap-4 w-80 p-3 font-[Vazir] ">
+    <div class="flex flex-row justify-between items-center">
+      <p>اطلاعیه ها</p>
+      <p class="text-xs text-gray-500">مشاهده همه</p>
+    </div>
+
+    <div class="flex flex-col w-full gap-3">
+      @for (alarm of alarms; track alarm) {
+        <div class="flex flex-row gap-3">
+          <img [src]="alarm.icon">
+          <div class="flex flex-col">
+            <div class="flex flex-row justify-between items-center">
+              <p class="text-sm">{{ alarm.title }}</p>
+              <p class="text-xs text-gray-500">{{ alarm.date }}</p>
+            </div>
+            <p class="text-xs text-gray-400">{{ alarm.description.slice(0, 50) + "..." }}</p>
+          </div>
+
+        </div>
+      }
+    </div>
+  </div>
+</p-popover>

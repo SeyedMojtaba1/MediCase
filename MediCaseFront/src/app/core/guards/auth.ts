@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,37 +9,42 @@ export class Auth {
   private role: 'student' | 'teacher' | null = null;
 
   constructor(private router: Router) {
-    const savedRole = localStorage.getItem('role');
-    if (savedRole === 'student' || savedRole === 'teacher') {
-      this.role = savedRole;
+    this.loadRoleFromStorage();
+  }
+
+  // متد برای لاگین با نقش دریافتی از API
+  login(role: 'student' | 'teacher', access_token: string) {
+    this.role = role;
+    localStorage.setItem('role', role);
+    localStorage.setItem('access_token', access_token);
+    // هدایت به داشبورد مناسب
+    if (role === 'student') {
+      this.router.navigateByUrl('/dashboard/s');
+    } else {
+      this.router.navigateByUrl('/dashboard/t');
     }
   }
 
-  loginAsStudent() {
-    this.role = 'student';
-    localStorage.setItem('role', 'student');
-    this.router.navigate(['/dashboard/s']);
-  }
-
-  loginAsTeacher() {
-    this.role = 'teacher';
-    localStorage.setItem('role', 'teacher');
-    this.router.navigate(['/dashboard/t']);
-  }
 
   logout() {
     this.role = null;
+    localStorage.removeItem('access_token');
     localStorage.removeItem('role');
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
   }
 
-  // گرفتن نقش فعلی کاربر
   getRole() {
     return this.role;
   }
 
-  // بررسی اینکه کاربر وارد شده یا نه
   isLoggedIn() {
     return this.role !== null;
+  }
+
+  private loadRoleFromStorage() {
+    const savedRole = localStorage.getItem('role');
+    if (savedRole === 'student' || savedRole === 'teacher') {
+      this.role = savedRole;
+    }
   }
 }

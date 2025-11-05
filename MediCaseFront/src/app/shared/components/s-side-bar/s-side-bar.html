@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-1">
-  @for(item of menu; track item) {
+  @for (item of menu; track item) {
     <a
       [routerLink]="item.link"
       class="group w-full text-[#148591]"
@@ -7,7 +7,7 @@
       [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
     >
       <div
-        class="p-5 rounded-xl w-full  cursor-pointer transition-all duration-300"
+        class="p-5 py-3 rounded-xl w-full  cursor-pointer transition-all duration-300"
       >
         <div class="flex flex-row justify-start gap-7 items-center">
           <img

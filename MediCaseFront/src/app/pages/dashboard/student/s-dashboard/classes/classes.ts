@@ -1,28 +1,37 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {ClassesCard} from './classes-card/classes-card';
+import {Card} from '../../../../../layouts/card/card';
+import {Master} from '../../../../../core/services/master';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-classes',
   imports: [
-    ClassesCard
+    ClassesCard,
+    Card,
+    RouterLink
   ],
   templateUrl: './classes.html',
   styleUrl: './classes.css'
 })
 export class Classes {
-  list = [
-    {name: 'درس ریه گروه 2', image: 'images/jpg/rie.jpg'},
-    {name: 'ریه', image: 'images/jpg/rie.jpg'},
-    {name: 'درس ریه این متن باید طولانی باشه', image: 'images/jpg/rie.jpg'},
-    {name: 'asd', image: 'images/jpg/rie.jpg'},
-    {name: 'asd', image: 'images/jpg/rie.jpg'},
-  ]
+  list: any = []
 
-  constructor(public changeDetector: ChangeDetectorRef) {
+  constructor(public changeDetector: ChangeDetectorRef, public master: Master) {
   }
 
   ngOnInit(): void {
-    this.list = this.list.slice(0, 3)
-    this.changeDetector.detectChanges()
+    this.master.sections().subscribe({
+      next: data => {
+        this.list = data.body;
+        this.list = this.list.slice(0, 3)
+      },
+      error: err => {
+        console.log(err);
+      },
+      complete: () => {
+        this.changeDetector.detectChanges();
+      }
+    })
   }
 }

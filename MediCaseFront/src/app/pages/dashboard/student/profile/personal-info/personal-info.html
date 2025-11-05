@@ -1,0 +1,80 @@
+<app-card class="w-full">
+
+  <div class="w-full justify-between items-center flex flex-row">
+    <p class="font-bold text-lg">اطلاعات کاربری</p>
+
+    <div class="flex flex-row items-center gap-5 text-xs ">
+      <p class=" cursor-pointer text-red-600">گزارش اشکال</p>
+      <p class=" cursor-pointer text-gray-500 ">ویرایش اطلاعات ورود</p>
+    </div>
+  </div>
+
+
+  <div class="grid-cols-3 grid gap-10 p-3">
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="username"> نام</label>
+      <input disabled id="username" pInputText pSize="small" value="اسم طرف"/>
+    </div>
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="username"> نام خانوادگی</label>
+      <input disabled id="username" pInputText pSize="small" value="فامیلی طرف"/>
+    </div>
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="username">کد ملی</label>
+      <input disabled id="username" pInputText pSize="small" value="12341624312"/>
+    </div>
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="username">تاریخ تولد</label>
+      <input disabled id="username" pInputText pSize="small" value="1384/01/30"/>
+    </div>
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="username">نام کاربری</label>
+      <input disabled id="username" pInputText pSize="small" value="12341624312"/>
+    </div>
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="username">رمز عبور</label>
+      <p-password [(ngModel)]="a1" [feedback]="false" autocomplete="off" disabled inputStyleClass="w-full"
+                  size="small"
+                  toggleMask="true"/>
+    </div>
+
+
+  </div>
+
+
+  <div class="grid grid-cols-2 gap-10 p-3">
+    <div class="flex flex-col gap-1">
+      <label class="text-gray-400 text-xs font-light">شماره موبایل</label>
+      <p-inputgroup>
+        <input disabled pInputText pSize="small" placeholder="09189002051"/>
+        <p-button label="تایید شده" severity="success" size="small"/>
+      </p-inputgroup>
+    </div>
+
+
+    <div class="flex flex-col gap-1">
+      <label class="text-gray-400 text-xs font-light">شماره موبایل</label>
+      <p-inputgroup>
+        <input disabled pInputText pSize="small" placeholder="aaaelmkhah@gmail.com"/>
+        <p-button label=" نیازمند تایید " severity="warn" size="small"/>
+      </p-inputgroup>
+    </div>
+  </div>
+</app-card>

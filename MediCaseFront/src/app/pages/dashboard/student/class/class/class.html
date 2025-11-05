@@ -1,0 +1,10 @@
+<div class="w-full flex flex-col gap-10 p-10">
+
+  <app-dash-nav [welcome]="false" title="کلاس ها"></app-dash-nav>
+
+  <div class="grid grid-cols-3 gap-10 items-stretch">
+    @for (c of classes; track c) {
+      <app-classes-card [clas]="c"></app-classes-card>
+    }
+  </div>
+</div>

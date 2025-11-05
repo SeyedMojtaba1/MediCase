@@ -1,0 +1,42 @@
+<div class="w-full flex flex-col gap-10 p-10">
+
+  <app-dash-nav [welcome]="false" title="بیمارستان" welcomeMsg="بیماران امروز منتظر شما هستند دکتر!"></app-dash-nav>
+
+  <div class="flex flex-row gap-10 mt-10">
+
+    <!--    سمت راست کادر-->
+    <div class="flex flex-col gap-10 w-3/5">
+      <h2 class="text-3xl">
+        {{ data.persian_name }}
+      </h2>
+      <p class="text-gray-600 text-justify">{{ data.description }}</p>
+
+
+      <!--      بخش دکمه ها-->
+      <div class="grid grid-cols-2 gap-10">
+        <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'تجزیه و تحلیل'"
+                    [url]="'/dashboard/s/stat'"></app-action>
+
+        <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'آغاز ویزیت'"
+                    [url]="'/dashboard/s/hospital/select/'+subject">>
+        </app-action>
+
+        <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'بخش بیماری ها'"
+                    [url]="'/dashboard/s/hospital'"></app-action>
+
+        <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'درسنامه'"
+                    [url]="'/blog'"></app-action>
+      </div>
+
+    </div>
+
+
+    <!--    سمت چپ کادر-->
+    <div class="flex flex-col gap-10 w-2/5">
+      <app-top [subject]="data.persian_name"></app-top>
+      <app-chart></app-chart>
+    </div>
+
+
+  </div>
+</div>
