@@ -78,6 +78,7 @@ class SectionUpdateSerializer(serializers.ModelSerializer):
 class SectionCreateSerializer(serializers.ModelSerializer):
     teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
     semester_code = serializers.CharField()
+    subject_name = serializers.CharField()
     
     class Meta:
         model = Section
@@ -85,10 +86,12 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             'section_id',
             'name',
             'teacher',
+            'subject_name',
             'semester_code',
             'status',
             'start_date',
             'end_date',
+            'section_image',
             'created_date',
             'last_update',
             'description',
@@ -99,6 +102,7 @@ class SectionCreateSerializer(serializers.ModelSerializer):
         teacher = request.user
         
         semester_code=validated_data["semester_code"]
+        subject_name=validated_data["subject_name"]
         
         try:
             teacher = User.objects.get(personal_number=teacher.personal_number)
@@ -124,10 +128,19 @@ class SectionCreateSerializer(serializers.ModelSerializer):
                 {"detail": "This section is already registered."}
             )
         
+        try:
+            subject = Subject.objects.get(english_name=subject_name)
+        except Subject.DoesNotExist:
+            raise serializers.ValidationError(
+                {"detail": "Subject is not exist."}
+            )
+        
         section = Section.objects.create(
             name=validated_data["name"],
             teacher=teacher,
             semester=semester,
+            subject=subject,
+            section_image=subject.subject_image,
             student_count=0,
             status="Created",
             start_date=validated_data["start_date"],
@@ -138,6 +151,19 @@ class SectionCreateSerializer(serializers.ModelSerializer):
         section.save()
         
         return section
+
+class SetSectionImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = ['section_image']
+    
+    def update(self, instance, validated_data):
+        section_image=validated_data['section_image']
+        
+        instance.section_image = section_image
+        
+        instance.save()
+        return instance
 
 class StudentSectionSerializer(serializers.ModelSerializer):
     section = serializers.CharField()
@@ -191,6 +217,29 @@ class StudentSectionListSerializer(serializers.ModelSerializer):
             'section',
             'student',
             'student_status',
+        ]
+
+class MembersSectionSerializer(serializers.ModelSerializer):
+    student_first_name = serializers.CharField(source='student.first_name', read_only=True)
+    student_last_name = serializers.CharField(source='student.last_name', read_only=True)
+    student_username = serializers.CharField(source='student.username', read_only=True)
+    student_personal_number = serializers.CharField(source='student.personal_number', read_only=True)
+    student_email = serializers.CharField(source='student.email', read_only=True)
+    student_scenario_credit = serializers.CharField(source='student.scenario_credit', read_only=True)
+    student_profile_image = serializers.CharField(source='student.profile_image', read_only=True)
+    student_main_role = serializers.CharField(source='student.main_role', read_only=True)
+    
+    class Meta:
+        model = StudentSection
+        fields = [
+            "student_first_name",
+            "student_last_name",
+            "student_username",
+            "student_personal_number",
+            "student_email",
+            "student_scenario_credit",
+            "student_profile_image",
+            "student_main_role",
         ]
 
 class StudentSectionRetrieveSerializer(serializers.ModelSerializer):

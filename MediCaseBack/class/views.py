@@ -4,9 +4,11 @@ from .serializer import (
     SectionSerializer, 
     SectionUpdateSerializer,
     SectionCreateSerializer,
+    SetSectionImageSerializer,
     StudentSectionSerializer,
     StudentSectionRetrieveSerializer,
     StudentSectionListSerializer,
+    MembersSectionSerializer,
     SemesterSerializer, 
     SubjectSerializer, 
     StudentSubjectSerializer,
@@ -15,6 +17,7 @@ from .serializer import (
 )
 from .models import Section, StudentSection, Semester, Subject, StudentSubject
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.exceptions import PermissionDenied
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from django.utils.decorators import method_decorator
@@ -68,6 +71,30 @@ class SectionCreateView(generics.GenericAPIView):
         section = serializer.save()
         
         return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
+
+class SetSectionImageViewSet(viewsets.ModelViewSet):
+    http_method_names = ['put']
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SetSectionImageSerializer
+    queryset = Section.objects.all()
+    lookup_field = 'section_id'
+    lookup_value_regex = '[^/]+'
+    
+    def put(self, request):
+        try:
+            section = Section.objects.get(section_id=self.lookup_field)
+        except Section.DoesNotExist:
+            return Response({"message": "کلاسی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
+        
+        if section.teacher != self.request.user:
+            raise PermissionDenied("You do not have permission to edit this object.")
+        
+        serializer = self.get_serializer(instance=section, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        section = serializer.save()
+        
+        return Response({"message": "تصویر با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
 class StudentSectionCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
@@ -128,6 +155,36 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
         
         return Response(serializer.data)
     
+class MembersSectionListView(generics.ListAPIView):
+    http_method_names = ['get']
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = MembersSectionSerializer
+    queryset = StudentSection.objects.all()
+    lookup_field = 'section_id'
+    lookup_url_kwarg = 'section_id'
+    lookup_value_regex = '[^/]+'
+    
+    @method_decorator(cache_page(20 * 60, cache="api_cache"))
+    @method_decorator(vary_on_headers('Authorization',))
+    def list(self, request, *args, **kwargs):
+        
+        section_id = self.kwargs.get(self.lookup_url_kwarg)
+        try:
+            section = Section.objects.get(section_id=section_id)
+        except Section.DoesNotExist:
+            return Response({"message": "کلاسی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if section.teacher.user_id != self.request.user.user_id and not StudentSection.objects.filter(section=section, student=self.request.user).exists():
+            return Response(
+                {"message": "شما در این کلاس عضویت ندارید."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        queryset = self.get_queryset().filter(section=section)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 class SemesterViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
@@ -153,7 +210,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
-    
+
 class StudentSubjectCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]

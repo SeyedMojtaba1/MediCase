@@ -65,7 +65,7 @@ class User(AbstractBaseUser):
         upload_to='profile/',
         blank=True,
         null=True,
-        default='defaults/default_profile.jpg',
+        default='defaults/profile/default_profile.jpg',
     )
     otp = models.IntegerField(null=True, blank=True)
     otp_expiry = models.DateTimeField(null=True, blank=True)

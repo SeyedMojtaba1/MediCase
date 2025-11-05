@@ -43,7 +43,6 @@ class Section(models.Model):
         upload_to='section/',
         blank=True,
         null=True,
-        default='defaults/default_section.jpg',
     )
     description = models.TextField(max_length=1000)
     
