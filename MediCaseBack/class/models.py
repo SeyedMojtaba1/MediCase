@@ -8,10 +8,15 @@ class Semester(models.Model):
     name = models.CharField(max_length=25)
 
 class Subject(models.Model):
+    SUBJECT_STATUS = [
+        ('Active', 'A'),
+        ('Inactive', 'I'),
+    ]
+    
     subject_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     english_name = models.CharField(max_length=50, default=None, unique=True)
     persian_name = models.CharField(max_length=50, default=None, unique=True)
-    unit = models.IntegerField()
+    unit = models.DecimalField(max_digits=3, decimal_places=1)
     description = models.TextField(max_length=1000)
     subject_image = models.ImageField(
         upload_to='subject/',
@@ -19,6 +24,7 @@ class Subject(models.Model):
         null=True,
         default='defaults/default_subject.jpg',
     )
+    subject_status = models.CharField(choices=SUBJECT_STATUS, max_length=10)
 
 class Section(models.Model):
     CLASS_STATUS = [
