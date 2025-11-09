@@ -3,7 +3,6 @@ from .models import Section, StudentSection, Semester, Subject, StudentSubject
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-
 User = get_user_model()
 
 class SectionSerializer(serializers.ModelSerializer):
@@ -219,27 +218,21 @@ class StudentSectionListSerializer(serializers.ModelSerializer):
             'student_status',
         ]
 
-class MembersSectionSerializer(serializers.ModelSerializer):
-    student_first_name = serializers.CharField(source='student.first_name', read_only=True)
-    student_last_name = serializers.CharField(source='student.last_name', read_only=True)
-    student_username = serializers.CharField(source='student.username', read_only=True)
-    student_personal_number = serializers.CharField(source='student.personal_number', read_only=True)
-    student_email = serializers.CharField(source='student.email', read_only=True)
-    student_scenario_credit = serializers.CharField(source='student.scenario_credit', read_only=True)
-    student_profile_image = serializers.CharField(source='student.profile_image', read_only=True)
-    student_main_role = serializers.CharField(source='student.main_role', read_only=True)
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url']
+        extra_kwargs = {
+            'url': {'view_name': 'user-detail'}
+        }
+
+class MembersSectionSerializer(serializers.HyperlinkedModelSerializer):
+    student = UserSerializer(read_only=True)
     
     class Meta:
         model = StudentSection
         fields = [
-            "student_first_name",
-            "student_last_name",
-            "student_username",
-            "student_personal_number",
-            "student_email",
-            "student_scenario_credit",
-            "student_profile_image",
-            "student_main_role",
+            "student"
         ]
 
 class StudentSectionRetrieveSerializer(serializers.ModelSerializer):

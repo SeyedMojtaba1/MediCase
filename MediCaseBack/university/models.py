@@ -12,7 +12,8 @@ class University(models.Model):
     ]
     
     university_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50, default=None, unique=True)
+    english_name = models.CharField(max_length=50, default=None, unique=True)
+    persian_name = models.CharField(max_length=50, default=None)
     type = models.CharField(choices=UNIVERSITY_TYPES),
     established_year = models.DateField()
     address = models.TextField(max_length=250)
@@ -25,7 +26,7 @@ class University(models.Model):
     description = models.TextField(blank=True, max_length=500)
     
     def __str__(self):
-        return self.name
+        return self.english_name
     
 class Faculty(models.Model):
     faculty_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

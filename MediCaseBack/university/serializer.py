@@ -5,7 +5,8 @@ class UniversitySerializer(serializers.ModelSerializer):
     class Meta:
         model = University
         fields = [
-            'name',
+            'english_name',
+            'persian_name',
             'type',
             'established_year',
             'address',

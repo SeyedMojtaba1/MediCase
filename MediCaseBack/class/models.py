@@ -73,3 +73,30 @@ class StudentSubject(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, related_name='subjectstudents')
     student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='studentsubjects')
     access_status = models.BooleanField(default=False)
+
+class Hospital(models.Model):
+    HOSPITAL_TYPE=[
+        ("Public Hospital", "Government Hospital"),
+        ("Private Hospital"),
+        ("Social Security Hospital"),
+        ("Charitable Hospital"),
+        ("Military Hospital"),
+        ("Semi-private Hospital"),
+    ]
+    
+    hospital_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    english_name = models.CharField(max_length=50, default=None, unique=True)
+    persian_name = models.CharField(max_length=50, default=None)
+    type = models.CharField(max_length=30, choices=HOSPITAL_TYPE),
+    address = models.CharField(max_length=250)
+    city = models.CharField(max_length=50)
+    province = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=15, blank=True)
+    email = models.EmailField()
+    website = models.URLField()
+    capacity = models.IntegerField()
+    description = models.TextField(blank=True, max_length=500)
+    
+    def __str__(self):
+        return self.english_name
+

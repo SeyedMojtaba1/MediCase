@@ -170,6 +170,16 @@ class ProfileView(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
+class UserViewSet(viewsets.ModelViewSet):
+    http_method_names = ["get"]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ProfileSerializer
+    queryset = User.objects.all()
+    @method_decorator(cache_page(20 * 15, cache="api_cache"))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
 class RoleViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
