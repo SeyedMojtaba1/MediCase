@@ -1,14 +1,18 @@
 from rest_framework import serializers
-from .models import Section, StudentSection, Semester, Subject, StudentSubject
+from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+import base64
+from .utils import decode_short_uuid, encode_short_uuid
 
 User = get_user_model()
 
-class SectionSerializer(serializers.ModelSerializer):
+class SectionListSerializer(serializers.ModelSerializer):
+    section_id = serializers.SerializerMethodField(read_only=True)
     teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
     semester_code = serializers.CharField(source='semester.code', read_only=True)
     semester_name = serializers.CharField(source='semester.name', read_only=True)
+    subject = serializers.CharField(source='subject.english_name', read_only=True)
     
     class Meta:
         model = Section
@@ -16,6 +20,39 @@ class SectionSerializer(serializers.ModelSerializer):
             'section_id',
             'name',
             'teacher',
+            'subject',
+            'semester_code',
+            'semester_name',
+            'student_count',
+            'status',
+            'start_date',
+            'end_date',
+            'created_date',
+            'last_update',
+            'section_image',
+            'description',
+        ]
+        extra_kwargs = {
+            'url': {'lookup_field': 'section_id'}
+        }
+        
+    def get_section_id(self, obj):
+        return base64.urlsafe_b64encode(obj.section_id.bytes).rstrip(b'=').decode('ascii')
+
+class SectionRetrieveSerializer(serializers.ModelSerializer):
+    section_id = serializers.SerializerMethodField()
+    teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
+    semester_code = serializers.CharField(source='semester.code', read_only=True)
+    semester_name = serializers.CharField(source='semester.name', read_only=True)
+    subject = serializers.CharField(source='subject.english_name', read_only=True)
+    
+    class Meta:
+        model = Section
+        fields = [
+            'section_id',
+            'name',
+            'teacher',
+            'subject',
             'semester_code',
             'semester_name',
             'student_count',
@@ -31,6 +68,9 @@ class SectionSerializer(serializers.ModelSerializer):
             'url': {'lookup_field': 'section_id'}
         }
 
+    def get_section_id(self, obj):
+        return encode_short_uuid(obj.section_id)
+    
 class SectionUpdateSerializer(serializers.ModelSerializer):
     new_name = serializers.CharField(write_only=True)
     semester_code = serializers.CharField(write_only=True)
@@ -75,6 +115,7 @@ class SectionUpdateSerializer(serializers.ModelSerializer):
         return instance
 
 class SectionCreateSerializer(serializers.ModelSerializer):
+    section_id = serializers.SerializerMethodField()
     teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
     semester_code = serializers.CharField()
     subject_name = serializers.CharField()
@@ -96,6 +137,9 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             'description',
         ]
 
+    def get_section_id(self, obj):
+        return base64.urlsafe_b64encode(obj.section_id.bytes).rstrip(b'=').decode('ascii')
+    
     def create(self, validated_data):
         request = self.context.get('request')
         teacher = request.user
@@ -157,6 +201,21 @@ class SetSectionImageSerializer(serializers.ModelSerializer):
         fields = ['section_image']
     
     def update(self, instance, validated_data):
+        request = self.context.get('request')
+        teacher = request.user
+        
+        try:
+            teacher = User.objects.get(personal_number=teacher.personal_number)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(
+                {"detail": "Teacher is not exist."}
+            )
+
+        if not teacher.main_role or teacher.main_role.name.lower() != "teacher":
+            raise serializers.ValidationError(
+                {"detail": "This user is not assigned as a teacher."}
+            )
+        
         section_image=validated_data['section_image']
         
         instance.section_image = section_image
@@ -177,10 +236,11 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         ]
            
     def create(self, validated_data):
-        section=validated_data['section']
         student=validated_data['student']
+        short_id=validated_data['section']
+        section_uuid = decode_short_uuid(short_id)
         try:
-            section = Section.objects.get(section_id=section)
+            section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
             return "Section is not exist."
             
@@ -200,9 +260,16 @@ class StudentSectionSerializer(serializers.ModelSerializer):
             student_status=validated_data['student_status'],
         )
         
+        student_subject = StudentSubject.objects.create(
+            subject=section.subject,
+            student=student,
+            access_status=True
+        )
+        
         section.student_count=section.student_count+1
         section.save()
         student_section.save()
+        student_subject.save()
         
         return student_section
 
@@ -340,4 +407,24 @@ class StudentSubjectRetrieveSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {
             'url': {'lookup_field': 'subject'}
+        }
+
+class HospitalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hospital
+        fields = [
+            'english_name',
+            'persian_name',
+            'type',
+            'address',
+            'city',
+            'province',
+            'phone_number',
+            'email',
+            'website',
+            'capacity',
+            'description',
+        ]
+        extra_kwargs = {
+            'url': {'lookup_field': 'english_name'}
         }

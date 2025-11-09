@@ -1,6 +1,6 @@
 from django.db import models
 from registery.models import User
-import uuid
+import uuid, base64
 
 class Semester(models.Model):
     semester_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

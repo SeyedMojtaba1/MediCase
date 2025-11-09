@@ -1,7 +1,8 @@
 from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
 from .serializer import (
-    SectionSerializer, 
+    SectionListSerializer,
+    SectionRetrieveSerializer, 
     SectionUpdateSerializer,
     SectionCreateSerializer,
     SetSectionImageSerializer,
@@ -14,29 +15,79 @@ from .serializer import (
     StudentSubjectSerializer,
     StudentSubjectListSerializer,
     StudentSubjectRetrieveSerializer,
+    HospitalSerializer,
 )
-from .models import Section, StudentSection, Semester, Subject, StudentSubject
+from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, NotFound
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from django.utils.decorators import method_decorator
 from rest_framework.decorators import action
 from django.contrib.auth import get_user_model
+from .utils import decode_short_uuid
 
 User = get_user_model()
 
-class SectionViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get']
+class SectionListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = SectionSerializer
+    serializer_class = SectionListSerializer
+    queryset = Section.objects.all()
+    
+    @method_decorator(cache_page(20 * 60, cache="api_cache"))
+    @method_decorator(vary_on_headers('Authorization',))
+    def list(self, request, *args, **kwargs):
+        user = self.request.user
+
+        if not user.main_role:
+            queryset = self.get_queryset().none()
+
+        role = user.main_role.name.lower()
+
+        if role == "superadmin":
+            queryset = self.get_queryset()
+        elif role == "teacher":
+            queryset = self.get_queryset().filter(teacher=user)
+        elif role == "student":
+            queryset = self.get_queryset().filter(sectionstudents__student=user)
+        else:
+            queryset = self.get_queryset().none()
+        
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+class SectionRetrieveView(generics.RetrieveAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SectionRetrieveSerializer
     queryset = Section.objects.all()
     lookup_field = 'section_id'
     lookup_value_regex = '[^/]+'
+    
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    @method_decorator(vary_on_headers('Authorization',))
+    def retrieve(self, request, *args, **kwargs):
+        user = self.request.user
+        short_id = self.kwargs.get(self.lookup_field)
+        section_uuid = decode_short_uuid(short_id)
+        
+        if not user.main_role:
+            return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
+
+        role = user.main_role.name.lower()
+
+        if role == "superadmin":
+            queryset = self.get_queryset(section_id=section_uuid).first()
+        elif role == "teacher":
+            queryset = self.get_queryset().filter(teacher=user, section_id=section_uuid).first()
+        elif role == "student":
+            queryset = self.get_queryset().filter(sectionstudents__student=user, section_id=section_uuid).first()
+        else:
+            return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = self.get_serializer(queryset)
+        return Response(serializer.data)
 
 class SectionUpdateViewSet(viewsets.ModelViewSet):
     http_method_names = ['put']
@@ -45,14 +96,16 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
     serializer_class = SectionUpdateSerializer
     queryset = Section.objects.all()
     lookup_field = 'section_id'
-    lookup_url_kwarg = 'section_id'
     lookup_value_regex = '[^/]+'
     
-    def put(self, request):
+    def put(self, request, *args, **kwargs):
+        short_id = kwargs.get(self.lookup_field)
+        section_uuid = decode_short_uuid(short_id)
         try:
-            section = Section.objects.get(section_id=self.lookup_field)
+            section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
             return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
+        
         serializer = self.get_serializer(instance=section, data=request.data)
         serializer.is_valid(raise_exception=True)
         section = serializer.save()
@@ -162,16 +215,15 @@ class MembersSectionListView(generics.ListAPIView):
     serializer_class = MembersSectionSerializer
     queryset = StudentSection.objects.all()
     lookup_field = 'section_id'
-    lookup_url_kwarg = 'section_id'
     lookup_value_regex = '[^/]+'
     
     @method_decorator(cache_page(20 * 60, cache="api_cache"))
     @method_decorator(vary_on_headers('Authorization',))
     def list(self, request, *args, **kwargs):
-        
-        section_id = self.kwargs.get(self.lookup_url_kwarg)
+        short_id = self.kwargs.get(self.lookup_field)
+        section_uuid = decode_short_uuid(short_id)
         try:
-            section = Section.objects.get(section_id=section_id)
+            section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
             return Response({"message": "کلاسی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -270,3 +322,15 @@ class StudentSubjectRetrieveView(generics.RetrieveAPIView):
         
         return Response(serializer.data)
     
+class HospitalViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = HospitalSerializer
+    queryset = Hospital.objects.all()
+    lookup_field = 'english_name'
+    lookup_value_regex = '[^/]+'
+    
+    @method_decorator(cache_page(20 * 60, cache="api_cache"))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
