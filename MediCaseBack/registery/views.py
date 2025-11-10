@@ -27,6 +27,7 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404
 
 class SignupViewSet(viewsets.GenericViewSet):
     serializer_class = RegisterSerializer
@@ -98,23 +99,24 @@ class LoginView(generics.CreateAPIView):
 
         return response
 
-class SetProfileImageViewSet(viewsets.ModelViewSet):
-    http_method_names = ['put']
+class SetProfileImageView(generics.UpdateAPIView):
+    serializer_class = SetProfileImageSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = SetProfileImageSerializer
     queryset = User.objects.all()
-    
-    def put(self, request):
-        try:
-            user = User.objects.get(personal_number=self.request.user.personal_number)
-        except User.DoesNotExist:
-            return Response({"message": "فردی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
+
+    def get_object(self):
+        return get_object_or_404(User, personal_number=self.request.user.personal_number)
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
         serializer = self.get_serializer(instance=user, data=request.data)
         serializer.is_valid(raise_exception=True)
-        section = serializer.save()
-        
-        return Response({"message": "تصویر با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
+        serializer.save()
+        return Response(
+            {"message": "تصویر با موفقیت ویرایش شد."},
+            status=status.HTTP_200_OK
+        )
 
 @extend_schema(
     request=SendResetOTPSerializer
