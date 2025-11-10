@@ -3,11 +3,10 @@ from . import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-# router.register(r'sections', views.SectionViewSet, basename='section')
 router.register(r'semesters', views.SemesterViewSet, basename='semester')
 router.register(r'subjects', views.SubjectViewSet, basename='subject')
 router.register(r"setsectionimage", views.SetSectionImageViewSet, basename="setsectionimage")
-# router.register(r"memberssectiontlist", views.MembersSectionListViewSet, basename="memberssectiontlist")
+router.register(r'hospitals', views.HospitalViewSet, basename='hospital')
 
 urlpatterns = [
    path('', include(router.urls)),

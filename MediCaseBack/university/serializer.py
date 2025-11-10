@@ -19,7 +19,7 @@ class UniversitySerializer(serializers.ModelSerializer):
             'description',
         ]
         extra_kwargs = {
-            'url': {'lookup_field': 'name'}
+            'url': {'lookup_field': 'english_name'}
         }
         
 class FacultySerializer(serializers.HyperlinkedIdentityField):

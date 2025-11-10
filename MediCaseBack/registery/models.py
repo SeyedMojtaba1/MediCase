@@ -34,6 +34,10 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractBaseUser):
+    MAJOR_TYPES=[
+        ('پزشکی', 'Medicine'),
+    ]
+    
     username_validator = UnicodeUsernameValidator()
 
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -75,6 +79,7 @@ class User(AbstractBaseUser):
     university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True, related_name='users_uni')
     faculty = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True, related_name='users_faculty')
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, related_name='users_department')
+    major = models.CharField(default='پزشکی', choices=MAJOR_TYPES, max_length=30)
     
     objects = UserManager()
     

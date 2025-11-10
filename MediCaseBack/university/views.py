@@ -13,7 +13,7 @@ class UniversityViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UniversitySerializer
     queryset = University.objects.all()
-    lookup_field = 'name'
+    lookup_field = 'english_name'
     lookup_value_regex = '[^/]+'
     @method_decorator(cache_page(20 * 15, cache="api_cache"))
     def get(self, request, *args, **kwargs):

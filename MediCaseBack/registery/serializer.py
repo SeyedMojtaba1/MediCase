@@ -31,6 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             'phone_number', 
             'personal_number', 
             'main_role',
+            'major',
         ]
     
     def create(self, validated_data):
@@ -42,6 +43,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name'],
             personal_number=validated_data['personal_number'],
             phone_number=validated_data.get('phone_number', ''),
+            major=validated_data['major'],
         )
         
         try:
@@ -51,20 +53,20 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         user.main_role = role
         
-        def random_with_N_digits(n):
-            range_start = 10**(n-1)
-            range_end = (10**n)-1
-            return randint(range_start, range_end)
+        # def random_with_N_digits(n):
+        #     range_start = 10**(n-1)
+        #     range_end = (10**n)-1
+        #     return randint(range_start, range_end)
 
-        otp = random_with_N_digits(6)
-        user.otp = otp
+        # otp = random_with_N_digits(6)
+        # user.otp = otp
         user.save()
 
-        subject = 'Please Confirm Your Account'
-        message = 'Your 6 Digit Verification Pin: {}'.format(otp)
-        email_from = '*****'
-        recipient_list = [str(user.email), ]
-        send_mail(subject, message, email_from, recipient_list)
+        # subject = 'Please Confirm Your Account'
+        # message = 'Your 6 Digit Verification Pin: {}'.format(otp)
+        # email_from = '*****'
+        # recipient_list = [str(user.email), ]
+        # send_mail(subject, message, email_from, recipient_list)
         return user
     
 class EmailLoginSerializer(serializers.Serializer):
@@ -77,7 +79,7 @@ class PersonalNumberLoginSerializer(serializers.Serializer):
     
 class LoginSerializer(serializers.ModelSerializer):
     main_role = serializers.CharField(source='main_role.name', read_only=True)
-    university = serializers.CharField(source='university.name', read_only=True)
+    university = serializers.CharField(source='university.english_name', read_only=True)
     faculty = serializers.CharField(source='faculty.name', read_only=True)
     department = serializers.CharField(source='department.name', read_only=True)
     
@@ -99,7 +101,8 @@ class LoginSerializer(serializers.ModelSerializer):
             'profile_image',
             'university',
             'faculty',
-            'department'
+            'department',
+            'major',
             ]
 
 class SetProfileImageSerializer(serializers.ModelSerializer):
@@ -210,7 +213,7 @@ class ChengePassSerializer(serializers.Serializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     main_role = main_role = serializers.CharField(source='main_role.name', read_only=True)
-    university = serializers.CharField(source='university.name', read_only=True)
+    university = serializers.CharField(source='university.english_name', read_only=True)
     faculty = serializers.CharField(source='faculty.name', read_only=True)
     department = serializers.CharField(source='department.name', read_only=True)
     
@@ -236,6 +239,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "university",
             "faculty",
             "department",
+            "major",
         ]
 
 class RoleSerializer(serializers.ModelSerializer):
