@@ -260,8 +260,13 @@ class StudentSectionSerializer(serializers.ModelSerializer):
             student_status=validated_data['student_status'],
         )
         
+        try:
+            subject = Subject.objects.get(subject_id=section.subject.subject_id)
+        except Subject.DoesNotExist:
+            return "Subject is not exist."
+        
         student_subject = StudentSubject.objects.create(
-            subject=section.subject,
+            subject=subject,
             student=student,
             access_status=True
         )
