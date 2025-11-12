@@ -35,8 +35,6 @@ class SectionListView(generics.ListAPIView):
     serializer_class = SectionListSerializer
     queryset = Section.objects.all()
     
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
     def list(self, request, *args, **kwargs):
         user = self.request.user
 
@@ -65,8 +63,6 @@ class SectionRetrieveView(generics.RetrieveAPIView):
     lookup_field = 'section_id'
     lookup_value_regex = '[^/]+'
     
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
     def retrieve(self, request, *args, **kwargs):
         user = self.request.user
         short_id = self.kwargs.get(self.lookup_field)
