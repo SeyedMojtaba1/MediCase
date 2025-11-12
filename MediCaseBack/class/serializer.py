@@ -3,7 +3,9 @@ from .models import Section, StudentSection, Semester, Subject, StudentSubject, 
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 import base64
-from .utils import decode_short_uuid, encode_short_uuid
+from .utils import decode_short_uuid, encode_short_uuid, update_section_statuses
+from datetime import date
+from celery import shared_task
 
 User = get_user_model()
 
@@ -70,7 +72,11 @@ class SectionRetrieveSerializer(serializers.ModelSerializer):
 
     def get_section_id(self, obj):
         return encode_short_uuid(obj.section_id)
-    
+
+@shared_task
+def update_section_statuses_task():
+    update_section_statuses()
+
 class SectionUpdateSerializer(serializers.ModelSerializer):
     new_name = serializers.CharField(write_only=True)
     semester_code = serializers.CharField(write_only=True)
@@ -104,10 +110,22 @@ class SectionUpdateSerializer(serializers.ModelSerializer):
                 {"detail": "Semester is not exist."}
             )
             
+        start_date = validated_data["start_date"]
+        end_date = validated_data["end_date"]
+        today = date.today()
+
+        if today < start_date:
+            status = "Created"
+        elif start_date <= today <= end_date:
+            status = "Active"
+        else:
+            status = "Finished"
+        
         instance.name = validated_data.get("new_name", instance.name)
         instance.semester = semester
         instance.start_date = validated_data.get("start_date", instance.start_date)
         instance.end_date = validated_data.get("end_date", instance.end_date)
+        instance.status = status
         instance.description = validated_data.get("description", instance.description)
         instance.last_update = timezone.now()
 
@@ -128,10 +146,8 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             'teacher',
             'subject_name',
             'semester_code',
-            'status',
             'start_date',
             'end_date',
-            'section_image',
             'created_date',
             'last_update',
             'description',
@@ -178,17 +194,27 @@ class SectionCreateSerializer(serializers.ModelSerializer):
                 {"detail": "Subject is not exist."}
             )
         
+        start_date = validated_data["start_date"]
+        end_date = validated_data["end_date"]
+        today = date.today()
+
+        if today < start_date:
+            status = "Created"
+        elif start_date <= today <= end_date:
+            status = "Active"
+        else:
+            status = "Finished"
+        
         section = Section.objects.create(
             name=validated_data["name"],
             teacher=teacher,
             semester=semester,
             subject=subject,
-            section_image=subject.subject_image,
             student_count=0,
-            status="Created",
+            status=status,
             start_date=validated_data["start_date"],
             end_date=validated_data["end_date"],
-            description=validated_data["description"],
+            description=validated_data.get("description", ""),
         )
         
         section.save()

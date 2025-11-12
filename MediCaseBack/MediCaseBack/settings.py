@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import environ
 from datetime import timedelta
-
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,6 +113,13 @@ CACHES = {
 CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 CELERY_TASK_ALWAYS_EAGER = False
+
+CELERY_BEAT_SCHEDULE = {
+    "update-section-statuses-every-midnight": {
+        "task": "class.tasks.update_section_statuses_task",
+        "schedule": crontab(hour=0, minute=0),
+    },
+}
 
 ROOT_URLCONF = 'MediCaseBack.urls'
 
