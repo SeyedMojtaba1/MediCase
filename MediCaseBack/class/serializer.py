@@ -198,6 +198,11 @@ class SectionCreateSerializer(serializers.ModelSerializer):
         end_date = validated_data["end_date"]
         today = date.today()
 
+        if today > start_date or end_date < start_date:
+            return serializers.ValidationError(
+                {"detail": "Wrong start or end date."}
+            )
+        
         if today < start_date:
             status = "Created"
         elif start_date <= today <= end_date:

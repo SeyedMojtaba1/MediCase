@@ -9,7 +9,7 @@ router.register(r"users", views.UserViewSet, basename='user')
 
 urlpatterns = [
    path('login/', views.LoginView.as_view(), name='login'),
-   path('setprofileimage', views.SetProfileImageView.as_view(), name='setprofileimage'),
+   path('setprofileimage/', views.SetProfileImageView.as_view(), name='setprofileimage'),
    path('sendresetotp/', views.send_reset_otp, name='send_reset_otp'),
    path('verifyotp/', views.verify_otp, name='verify_otp'),
    path('resetpass/', views.reset_pass, name='reset_pass'),

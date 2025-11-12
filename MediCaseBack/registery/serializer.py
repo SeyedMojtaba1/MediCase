@@ -241,6 +241,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             "department",
             "major",
         ]
+        extra_kwargs = {
+            'url': {'lookup_field': 'personal_number'}
+        }
 
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
