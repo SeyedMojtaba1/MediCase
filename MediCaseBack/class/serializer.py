@@ -263,7 +263,6 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         fields = [
             'section',
             'student',
-            'student_status',
         ]
            
     def create(self, validated_data):
@@ -288,7 +287,7 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         student_section = StudentSection.objects.create(
             section=section,
             student=student,
-            student_status=validated_data['student_status'],
+            student_status="Active",
         )
         
         try:
@@ -321,23 +320,6 @@ class StudentSectionListSerializer(serializers.ModelSerializer):
             'student_status',
         ]
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url']
-        extra_kwargs = {
-            'url': {'view_name': 'user-detail'}
-        }
-
-class MembersSectionSerializer(serializers.HyperlinkedModelSerializer):
-    student = UserSerializer(read_only=True)
-    
-    class Meta:
-        model = StudentSection
-        fields = [
-            "student"
-        ]
-
 class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
     section = serializers.CharField(source='section.section_id', read_only=True)
     student = serializers.CharField(source='student.personal_number', read_only=True)
@@ -352,6 +334,31 @@ class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'section_id'}
         }
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url']
+        extra_kwargs = {
+            'url': {'view_name': 'user-detail'}
+        }
+
+class MembersSectionSerializer(serializers.ModelSerializer):
+    personal_number = serializers.CharField(source='student.personal_number', read_only=True)
+    username = serializers.CharField(source='student.username', read_only=True)
+    done_scenarios = serializers.CharField(source='student.done_scenarios', read_only=True)
+    profile_image = serializers.CharField(source='student.profile_image', read_only=True)
+    main_role = serializers.CharField(source='student.main_role', read_only=True)
+    
+    class Meta:
+        model = StudentSection
+        fields = [
+            'personal_number',
+            'username',
+            'done_scenarios',
+            'profile_image',
+            'main_role',
+        ]
 
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
