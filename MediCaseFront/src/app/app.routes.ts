@@ -12,12 +12,26 @@ import {Changepass} from './pages/auth/changepass/changepass';
 import {Forget} from './pages/auth/forget/forget';
 import {LoginGuard} from './core/guards/login-guard';
 import {SubjectIntro} from './pages/dashboard/student/hospital/subject-intro/subject-intro';
-import {Class} from './pages/dashboard/student/class/class/class';
-import {ClassIntro} from './pages/dashboard/student/class/class-intro/class-intro';
 import {Select} from './pages/dashboard/student/hospital/select/select';
+import {PProfile} from './pages/dashboard/teacher/profile/profile';
+import {Statt} from './pages/dashboard/teacher/stat/stat';
+import {SectionPageT} from './pages/dashboard/teacher/class/section-page-t/section-page-t';
+import {Classs} from './pages/dashboard/teacher/class/class';
+import {Class} from './pages/dashboard/student/class/class/class';
 import {NotFound404} from './pages/auth/not-found404/not-found404';
+import {PublicProfile} from './shared/public-profile/public-profile';
+import {SectionPageS} from './pages/dashboard/student/class/section-page-s/section-page-s';
 
 export const routes: Routes = [
+
+  //پروفایل - صفحات عمومی
+  {
+    path: 'user', component: DashboardLayout, children: [
+      {path: '', component: NotFound404},
+      {path: ':id', component: PublicProfile, children: []}
+    ]
+  },
+
   // داشبورد دانشجو
   {
     path: 'dashboard/s',
@@ -33,14 +47,14 @@ export const routes: Routes = [
           {path: 'select/:sub', component: Select},
         ]
       },
-      {path: 'profile', component: Profile},
-      {path: 'stat', component: Stat},
       {
         path: 'class', children: [
           {path: '', component: Class},
-          {path: ':id', component: ClassIntro},
+          {path: ':id', component: SectionPageS},
         ]
-      }
+      }, {path: 'profile', component: Profile},
+      {path: 'stat', component: Stat},
+
     ]
   },
 
@@ -52,6 +66,14 @@ export const routes: Routes = [
     data: {role: 'teacher'},
     children: [
       {path: '', component: TDashboard},
+      {path: 'profile', component: PProfile},
+      {path: 'stat', component: Statt},
+      {
+        path: 'class', children: [
+          {path: '', component: Classs},
+          {path: ':id', component: SectionPageT},
+        ]
+      },
     ]
   },
 
@@ -65,6 +87,6 @@ export const routes: Routes = [
   {path: 'forget', component: Forget},
   {path: 'dashboard', redirectTo: 'dashboard/s', pathMatch: 'full'},
   {path: '', redirectTo: 'dashboard/s', pathMatch: 'full'},
-  {path: '**', redirectTo: '404'},
-  {path: '404', component: NotFound404},
+  // {path: '**', redirectTo: '404'},
+  // {path: '404', component: NotFound404},
 ];

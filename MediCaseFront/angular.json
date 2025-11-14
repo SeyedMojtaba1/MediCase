@@ -22,7 +22,11 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css"
+            ],
+            "scripts": [
+              "node_modules/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"
             ]
           },
           "configurations": {

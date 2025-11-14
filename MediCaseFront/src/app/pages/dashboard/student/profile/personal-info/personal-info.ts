@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Card} from '../../../../../layouts/card/card';
 import {InputText} from 'primeng/inputtext';
 import {Password} from 'primeng/password';
@@ -20,5 +20,13 @@ import {Button} from 'primeng/button';
   styleUrl: './personal-info.css'
 })
 export class PersonalInfo {
-  a1 = 'asdfasdf'
+  a1 = 'asfdasdfs'
+  @Input() user: any
+
+  constructor(public changeDetectorRef: ChangeDetectorRef) {
+  }
+
+  ngOnInit(): void {
+    this.changeDetectorRef.detectChanges();
+  }
 }

@@ -6,10 +6,10 @@
       <img [src]="APP_CONFIG.logoURL" alt="logo" class="h-15 object-contain">
     </div>
 
-    @if (isStudent) {
-      <app-s-side-bar></app-s-side-bar>
-    } @else {
+    @if (isTeacher) {
       <app-t-side-bar></app-t-side-bar>
+    } @else {
+      <app-s-side-bar></app-s-side-bar>
     }
   </div>
 

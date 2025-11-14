@@ -93,6 +93,7 @@ export class Forget implements OnDestroy {
 
   // بررسی امکان تایید
   canVerify(): boolean {
+    this.verificationCode.slice(0, 6);
     return this.codeSent &&
       this.verificationCode.length === 6 &&
       this.timerActive &&
@@ -101,7 +102,7 @@ export class Forget implements OnDestroy {
 
   // تایید کد
   verifyCode() {
-    if (!this.canVerify()) return;
+    // if (!this.canVerify()) return;
 
     this.verifying = true;
 
@@ -116,6 +117,7 @@ export class Forget implements OnDestroy {
       error: () => {
         this.verifying = false;
         this.verificationCode = ''; // پاک کردن کد برای ورود مجدد
+        this.toast.showError("کد وارد شده نادرست است")
       }
     });
 

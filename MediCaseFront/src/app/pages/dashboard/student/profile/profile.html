@@ -11,17 +11,23 @@
 
       <!--      باکس آواتار-->
       <div class="w-1/2 flex flex-col gap-2 items-center">
-        <img class="rounded-full border-2 border-white " src="images/jpg/avatar.jpg">
+        <img [src]="user.profile" class="rounded-full border-2 border-white ">
         <p class="text-gray-500 text-xs underline">تغییر آواتار</p>
       </div>
 
       <!--      باکس خلاصه اطلاعات کاربر-->
       <div class="w-1/2 flex flex-col text-gray-500 text-sm gap-3">
-        <p class="font-bold text-xl text-black self-center">{{ this.first_name() + ' ' + this.last_name() }}</p>
+        <p class="font-bold text-xl text-black self-center">{{ user.first_name + ' ' + user.last_name }}</p>
 
         <div class="flex flex-row gap-2 items-center">
           <img src="images/svg/user-follow-line.svg">
-          <p>نقش : دانشجو</p>
+          @if (user.role == 'student') {
+            <p>نقش : دانشجو</p>
+          } @else if (user.role == 'teacher') {
+            <p>نقش : استاد</p>
+          } @else {
+            <p>نقش : ادمین</p>
+          }
         </div>
         <div class="flex flex-row gap-2 items-center">
           <img src="images/svg/stethoscope-line.svg">
@@ -35,12 +41,12 @@
       </div>
     </div>
 
-    <app-personal-info class="w-2/3"></app-personal-info>
+    <app-personal-info [user]="user" class="w-2/3"></app-personal-info>
 
   </div>
 
   <!--  بخش دوم : اطلاعات تحصیلی-->
   <div class="flex w-full">
-    <app-eduction-info class="w-full"></app-eduction-info>
+    <app-eduction-info [user]="user" class="w-full"></app-eduction-info>
   </div>
 </div>

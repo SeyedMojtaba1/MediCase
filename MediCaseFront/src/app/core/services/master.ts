@@ -125,6 +125,26 @@ export class Master {
   // ***************************************************************************
   // اینجا اطلاعات بیماری ها، لیست رشته ها ، دروس و بیمارستان های قابل انتخاب میاد
 
+  createSection(data: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+    return this.http.post<any>(this.BASE_URL + 'class/sectioncreate/', {
+      name: data.name,
+      subject_name: data.subject,
+      status: 'Active',
+      semester_code: data.semester_code,
+      start_date: data.start_date,
+      end_date: data.end_date,
+      description: data.description,
+    }, {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    },)
+  }
+
   subjectList(): Observable<HttpResponse<any>> {
     {
       const headers = new HttpHeaders({
@@ -161,13 +181,25 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.get<any>(this.BASE_URL + 'class/sections/', {
+    return this.http.get<any>(this.BASE_URL + 'class/sectionlist/', {
       headers,
       observe: 'response',
       withCredentials: true
     });
   }
 
+  semesters(): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'class/semesters/', {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
 
   profile(): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders({
@@ -180,5 +212,63 @@ export class Master {
       observe: 'response',
       withCredentials: true
     });
+  }
+
+  user(id: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'registery/users/' + id + "/", {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  sectionRetrieve(id: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + '/class/sectionretrieve/' + id + '/', {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  memberSectionList(id: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + '/class/memberssectiontlist/' + id + '/', {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  addStudent(section: any, student: any): Observable<HttpResponse<any>> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.post<any>(this.BASE_URL + '/class/studentsectioncreate/', {
+      section: section,
+      student: student,
+      student_status: "Active"
+    }, {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+
   }
 }

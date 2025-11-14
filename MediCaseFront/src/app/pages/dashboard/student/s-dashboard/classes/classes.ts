@@ -16,6 +16,7 @@ import {RouterLink} from '@angular/router';
 })
 export class Classes {
   list: any = []
+  protected readonly localStorage = localStorage;
 
   constructor(public changeDetector: ChangeDetectorRef, public master: Master) {
   }

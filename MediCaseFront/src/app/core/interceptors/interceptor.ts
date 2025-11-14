@@ -41,9 +41,9 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
         router.navigateByUrl('/login');
 
       } else if (error.status === 404) {
-        alert(' داده مورد نظر یافت نشد.');
+        toast.showError('داده مورد نظر یافت نشد')
       } else if (error.status >= 500) {
-        alert(' خطای سرور رخ داده است.');
+        toast.showError('خطای سرور رخ داده است')
       }
 
       return throwError(() => error);

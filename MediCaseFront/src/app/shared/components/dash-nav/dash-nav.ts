@@ -2,11 +2,12 @@ import {Component, Input, signal} from '@angular/core';
 import {Master} from '../../../core/services/master';
 import {Auth} from '../../../core/guards/auth';
 import {PopoverModule} from 'primeng/popover';
+import {RouterLink} from '@angular/router';
 
 
 @Component({
   selector: 'app-dash-nav',
-  imports: [PopoverModule],
+  imports: [PopoverModule, RouterLink],
   templateUrl: './dash-nav.html',
   styleUrl: './dash-nav.css'
 })

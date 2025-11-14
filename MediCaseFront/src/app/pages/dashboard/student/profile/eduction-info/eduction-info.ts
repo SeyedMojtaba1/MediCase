@@ -1,18 +1,16 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Card} from '../../../../../layouts/card/card';
 import {InputText} from 'primeng/inputtext';
-import {Password} from 'primeng/password';
 
 @Component({
   selector: 'app-eduction-info',
   imports: [
     Card,
-    InputText,
-    Password
+    InputText
   ],
   templateUrl: './eduction-info.html',
   styleUrl: './eduction-info.css'
 })
 export class EductionInfo {
-
+  @Input() user: any
 }

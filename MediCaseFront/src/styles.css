@@ -41,3 +41,10 @@
   font-weight: 200;
 }
 
+
+.p-dialog-mask, .p-dialog {
+  z-index: 1000 !important;
+  font-family: "Vazir";
+}
+
+
