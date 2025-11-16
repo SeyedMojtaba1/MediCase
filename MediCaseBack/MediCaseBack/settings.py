@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'registery',
     'university',
     'class',
+    'pulmonology_scenario',
+    'tutorial',
     'drf_spectacular',
 ]
 

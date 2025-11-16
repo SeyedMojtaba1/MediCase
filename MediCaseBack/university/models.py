@@ -27,7 +27,7 @@ class University(models.Model):
     
     def __str__(self):
         return self.english_name
-    
+
 class Faculty(models.Model):
     faculty_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True, related_name='faculties')
@@ -38,7 +38,7 @@ class Faculty(models.Model):
     
     def __str__(self):
         return self.name
-    
+
 class Department(models.Model):
     department_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     faculty = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True, related_name='departments')

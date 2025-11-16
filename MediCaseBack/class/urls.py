@@ -17,6 +17,7 @@ urlpatterns = [
    path('studentsectioncreate/', views.StudentSectionCreateView.as_view(), name='studentsectioncreate'),
    path('studentsectionlist/', views.StudentSectionListView.as_view(), name='studentsectionlist'),
    path('studentsectionretrieve/<str:section_id>/', views.StudentSectionRetrieveView.as_view(), name='studentsectionretrieve'),
+   path('studentsectionremove/', views.StudentSectionRemoveView.as_view(), name='studentsectionremove'),
    path('memberssectiontlist/<str:section_id>/', views.MembersSectionListView.as_view(), name='memberssectionlist'),
    path('studentsubjectcreate/', views.StudentSubjectCreateView.as_view(), name='studentsubjectcreate'),
    path('studentsubjectlist/', views.StudentSubjectListView.as_view(), name='studentsubjectlist'),

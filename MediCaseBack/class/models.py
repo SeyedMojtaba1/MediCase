@@ -88,6 +88,7 @@ class Hospital(models.Model):
     english_name = models.CharField(max_length=50, default=None, unique=True)
     persian_name = models.CharField(max_length=50, default=None)
     type = models.CharField(max_length=30, choices=HOSPITAL_TYPE),
+    established_year = models.DateField()
     address = models.CharField(max_length=250)
     city = models.CharField(max_length=50)
     province = models.CharField(max_length=50)

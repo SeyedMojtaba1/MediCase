@@ -8,6 +8,7 @@ from .serializer import (
     SetSectionImageSerializer,
     StudentSectionSerializer,
     StudentSectionRetrieveSerializer,
+    StudentSectionRemoveSerializer,
     StudentSectionListSerializer,
     MembersSectionSerializer,
     SemesterSerializer, 
@@ -172,8 +173,6 @@ class StudentSectionListView(generics.ListAPIView):
     serializer_class = StudentSectionListSerializer
     queryset = StudentSection.objects.all()
 
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset().filter(student=self.request.user)
         serializer = self.get_serializer(queryset, many=True)
@@ -188,14 +187,14 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
     lookup_url_kwarg = 'section_id'
     lookup_value_regex = '[^/]+'
 
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
     def retrieve(self, request, *args, **kwargs):
+        short_id = kwargs.get(self.lookup_field)
+        section_uuid = decode_short_uuid(short_id)
         queryset = self.get_queryset()
         lookup_value = self.kwargs.get(self.lookup_field)
         
         try:
-            section = Section.objects.get(section_id=lookup_value)
+            section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
             return Response({"message": "Section is not exist."})
                 
@@ -204,6 +203,46 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
         
         return Response(serializer.data)
     
+class StudentSectionRemoveView(generics.GenericAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StudentSectionRemoveSerializer
+    queryset = StudentSection.objects.all()
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        short_id = serializer.data['section']
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            section = Section.objects.get(section_id=section_uuid)
+        except Section.DoesNotExist:
+            return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)   
+        
+        try:
+            student = User.objects.get(personal_number=serializer.data['student'])
+        except User.DoesNotExist:
+            return Response({"message": "کاربری با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)   
+        
+        student_section = self.get_queryset().filter(section=section, student=student)
+        if not student_section.exists():
+            return Response(
+                {"message": "ارتباط بین دانشجو و کلاس وجود ندارد."}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        student_section.delete()
+        
+        return Response({"message": "دانشجو از کلاس حذف شد."}, status=status.HTTP_200_OK)
+
 class MembersSectionListView(generics.ListAPIView):
     http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
@@ -213,8 +252,6 @@ class MembersSectionListView(generics.ListAPIView):
     lookup_field = 'section_id'
     lookup_value_regex = '[^/]+'
     
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
     def list(self, request, *args, **kwargs):
         short_id = self.kwargs.get(self.lookup_field)
         section_uuid = decode_short_uuid(short_id)
@@ -242,7 +279,6 @@ class SemesterViewSet(viewsets.ModelViewSet):
     lookup_field = 'code'
     lookup_value_regex = '[^/]+'
     
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
@@ -255,7 +291,6 @@ class SubjectViewSet(viewsets.ModelViewSet):
     lookup_field = 'english_name'
     lookup_value_regex = '[^/]+'
     
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
@@ -286,8 +321,6 @@ class StudentSubjectListView(generics.ListAPIView):
     serializer_class = StudentSubjectListSerializer
     queryset = StudentSubject.objects.all()
 
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset().filter(student=self.request.user)
         serializer = self.get_serializer(queryset, many=True)
@@ -302,8 +335,6 @@ class StudentSubjectRetrieveView(generics.RetrieveAPIView):
     lookup_url_kwarg = 'subject'
     lookup_value_regex = '[^/]+'
 
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
     def retrieve(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         lookup_value = self.kwargs.get(self.lookup_field)
@@ -327,6 +358,5 @@ class HospitalViewSet(viewsets.ModelViewSet):
     lookup_field = 'english_name'
     lookup_value_regex = '[^/]+'
     
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)

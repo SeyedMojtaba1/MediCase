@@ -335,6 +335,17 @@ class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
             'url': {'lookup_field': 'section_id'}
         }
 
+class StudentSectionRemoveSerializer(serializers.ModelSerializer):
+    student = serializers.CharField()
+    section = serializers.CharField()
+    
+    class Meta:
+        model = StudentSection
+        fields = [
+            "section",
+            "student",
+        ]
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
