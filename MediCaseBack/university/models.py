@@ -6,15 +6,15 @@ class University(models.Model):
         ("Public University", "Public"),
         ("Islamic Azad University", "Islamic Azad"),
         ("Non-Profit Non-Governmental University", "Non-Profit Non-Governmental"),
-        ("Payame Noor University", "Payame Noor", "Open/Distance University", "Open/Distance"),
-        ("University of Applied Science and Technology"),
+        ("Payame Noor University", "Payame Noor"),
+        ("Applied Science and Technology", "University of Applied Science and Technology"),
         ("Technical and Vocational University", "Technical and Vocational"),
     ]
     
     university_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    english_name = models.CharField(max_length=50, default=None, unique=True)
-    persian_name = models.CharField(max_length=50, default=None)
-    type = models.CharField(choices=UNIVERSITY_TYPES),
+    english_name = models.CharField(max_length=80, default=None, unique=True)
+    persian_name = models.CharField(max_length=100, default=None)
+    type = models.CharField(choices=UNIVERSITY_TYPES, max_length=80)
     established_year = models.DateField()
     address = models.TextField(max_length=250)
     city = models.CharField(max_length=50)
@@ -25,9 +25,6 @@ class University(models.Model):
     rector_name = models.CharField(max_length=80)
     description = models.TextField(blank=True, max_length=500)
     
-    def __str__(self):
-        return self.english_name
-
 class Faculty(models.Model):
     faculty_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True, related_name='faculties')

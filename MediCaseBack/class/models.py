@@ -77,17 +77,17 @@ class StudentSubject(models.Model):
 class Hospital(models.Model):
     HOSPITAL_TYPE=[
         ("Public Hospital", "Government Hospital"),
-        ("Private Hospital"),
-        ("Social Security Hospital"),
-        ("Charitable Hospital"),
-        ("Military Hospital"),
-        ("Semi-private Hospital"),
+        ("Private Hospital", "Private"),
+        ("Social Security Hospital", "Social Security"),
+        ("Charitable Hospital", "Charitable"),
+        ("Military Hospital", "Military"),
+        ("Semi-private Hospital", "Semi-private"),
     ]
     
     hospital_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     english_name = models.CharField(max_length=50, default=None, unique=True)
     persian_name = models.CharField(max_length=50, default=None)
-    type = models.CharField(max_length=30, choices=HOSPITAL_TYPE),
+    type = models.CharField(max_length=30, choices=HOSPITAL_TYPE)
     established_year = models.DateField()
     address = models.CharField(max_length=250)
     city = models.CharField(max_length=50)

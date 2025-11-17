@@ -289,7 +289,7 @@ class MembersSectionListView(generics.ListAPIView):
     lookup_value_regex = '[^/]+'
     
     def list(self, request, *args, **kwargs):
-        short_id = serializer.data['section']
+        short_id = self.kwargs.get(self.lookup_field)
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
