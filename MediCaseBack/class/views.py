@@ -67,7 +67,13 @@ class SectionRetrieveView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         user = self.request.user
         short_id = self.kwargs.get(self.lookup_field)
-        section_uuid = decode_short_uuid(short_id)
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
         
         if not user.main_role:
             return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
@@ -96,8 +102,14 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
     lookup_value_regex = '[^/]+'
     
     def put(self, request, *args, **kwargs):
-        short_id = kwargs.get(self.lookup_field)
-        section_uuid = decode_short_uuid(short_id)
+        short_id = self.kwargs.get(self.lookup_field)
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
@@ -132,8 +144,16 @@ class SetSectionImageViewSet(viewsets.ModelViewSet):
     lookup_value_regex = '[^/]+'
     
     def put(self, request):
+        short_id = self.kwargs.get(self.lookup_field)
         try:
-            section = Section.objects.get(section_id=self.lookup_field)
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        try:
+            section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
             return Response({"message": "کلاسی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
         
@@ -175,6 +195,11 @@ class StudentSectionListView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset().filter(student=self.request.user)
+        if not queryset.exists():
+            return Response(
+                {"message": "کاربری با این مشخصات وجود ندارد."}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -188,10 +213,16 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
     lookup_value_regex = '[^/]+'
 
     def retrieve(self, request, *args, **kwargs):
-        short_id = kwargs.get(self.lookup_field)
-        section_uuid = decode_short_uuid(short_id)
+        short_id = self.kwargs.get(self.lookup_field)
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
         queryset = self.get_queryset()
-        lookup_value = self.kwargs.get(self.lookup_field)
         
         try:
             section = Section.objects.get(section_id=section_uuid)
@@ -199,6 +230,11 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
             return Response({"message": "Section is not exist."})
                 
         queryset = self.get_queryset().filter(student=self.request.user, section=section.section_id).first()
+        if not queryset.exists():
+            return Response(
+                {"message": "ارتباط بین دانشجو و کلاس وجود ندارد."}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
         serializer = StudentSectionListSerializer(queryset)
         
         return Response(serializer.data)
@@ -253,8 +289,14 @@ class MembersSectionListView(generics.ListAPIView):
     lookup_value_regex = '[^/]+'
     
     def list(self, request, *args, **kwargs):
-        short_id = self.kwargs.get(self.lookup_field)
-        section_uuid = decode_short_uuid(short_id)
+        short_id = serializer.data['section']
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:

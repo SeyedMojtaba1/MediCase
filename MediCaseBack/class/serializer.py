@@ -364,6 +364,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         }
 
 class MembersSectionSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source='student.first_name', read_only=True)
+    last_name = serializers.CharField(source='student.last_name', read_only=True)
     personal_number = serializers.CharField(source='student.personal_number', read_only=True)
     username = serializers.CharField(source='student.username', read_only=True)
     done_scenarios = serializers.CharField(source='student.done_scenarios', read_only=True)
@@ -373,6 +375,8 @@ class MembersSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentSection
         fields = [
+            'first_name',
+            'last_name',
             'personal_number',
             'username',
             'done_scenarios',

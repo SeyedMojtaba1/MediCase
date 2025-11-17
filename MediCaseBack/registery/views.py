@@ -165,8 +165,7 @@ class ProfileView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ProfileSerializer
-    @method_decorator(cache_page(60 * 15, cache="api_cache"))
-    @method_decorator(vary_on_headers('Authorization',))
+    
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     
