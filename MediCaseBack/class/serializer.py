@@ -268,17 +268,26 @@ class StudentSectionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         student=validated_data['student']
         short_id=validated_data['section']
-        section_uuid = decode_short_uuid(short_id)
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            raise serializers.ValidationError(
+                {"detail": "شناسه کلاس (section ID) نامعتبر است."}
+            )
+        
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
-            return "Section is not exist."
+            raise serializers.ValidationError(
+                {"detail": "Section is not exist."}
+            )
             
         try:
             student = User.objects.get(personal_number=student)
         except User.DoesNotExist:
-            return "Student is not exist."
-        
+            raise serializers.ValidationError(
+                {"detail": "Student is not exist."}
+            )
         if StudentSection.objects.filter(section=section, student=student).exists():
             raise serializers.ValidationError(
                 {"detail": "This student is already registered for this section."}

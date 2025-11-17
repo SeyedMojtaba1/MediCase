@@ -245,6 +245,32 @@ class ProfileSerializer(serializers.ModelSerializer):
             'url': {'lookup_field': 'personal_number'}
         }
 
+class UserSerializer(serializers.ModelSerializer):
+    main_role = main_role = serializers.CharField(source='main_role.name', read_only=True)
+    university = serializers.CharField(source='university.english_name', read_only=True)
+    faculty = serializers.CharField(source='faculty.name', read_only=True)
+    department = serializers.CharField(source='department.name', read_only=True)
+    
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "username",
+            "personal_number",
+            "last_login",
+            "profile_image",
+            "main_role",
+            "university",
+            "faculty",
+            "department",
+            "major",
+        ]
+        extra_kwargs = {
+            'url': {'lookup_field': 'personal_number'}
+        }
+
+
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role

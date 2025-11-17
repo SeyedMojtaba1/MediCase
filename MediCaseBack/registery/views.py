@@ -10,6 +10,7 @@ from .serializer import (
     ResetPassSerializer,
     ChengePassSerializer,
     ProfileSerializer,
+    UserSerializer,
     RoleSerializer,
     LogoutSerializer,
 )
@@ -176,12 +177,11 @@ class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = ProfileSerializer
+    serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = 'personal_number'
     lookup_value_regex = '[^/]+'
     
-    @method_decorator(cache_page(20 * 15, cache="api_cache"))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
