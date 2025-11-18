@@ -1,7 +1,6 @@
-from identifying_sets import calculate_set_metrics, count_true_values
-from get_action_time import get_first_action_time_and_count
-from typing import Dict, Any, Tuple, Union
 import json
+from typing import Dict, Any, Tuple, Union
+from identifying_sets import calculate_set_metrics
 
 OPTIMAL_SCENARIO: Dict[str, Dict[str, bool]] = {
   "history_taking": {
@@ -521,169 +520,40 @@ STUDENT_LOG: Dict[str, Dict[str, str]] = {
     }
 }
 
-def calculate_stage_score():    
+def get_first_action_time_and_count(student_actions: Dict[str, Any], stage_O_size: int) -> Tuple[Union[str, None], int]:
+    """اولین زمان اقدام و تعداد اقدامات انجام شده توسط دانشجو در یک مرحله را پیدا می‌کند."""
     
-    results: Dict[str, Dict[str, Any]] = {}
+    actions_with_time = []
+
+    def extract_actions(data: Any, current_path: Tuple[str, ...] = ()):
+        if isinstance(data, dict):
+            for key, value in data.items():
+                extract_actions(value, current_path + (key,))
+        elif isinstance(data, list):
+            for i, item in enumerate(data):
+                extract_actions(item, current_path + (str(i),))
+        elif isinstance(data, str) and data != "False":
+            try:
+                # تبدیل زمان (مثلا "15:00") به یک مقدار قابل مقایسه (مثلا 1500)
+                h, m = map(int, data.split(':'))
+                sort_key = h * 60 + m
+            except ValueError:
+                # اگر فرمت زمان نباشد، به انتهای لیست می‌رود یا به صورت پیش‌فرض
+                sort_key = float('-inf')  # تغییر داده شد: برای اینکه زمان‌های نامعتبر به انتهای مرتب‌سازی صعودی بروند
+                
+            actions_with_time.append({"time_key": sort_key, "original_time": data, "path": current_path})
+
+    extract_actions(student_actions)
+    # 🌟 تغییر کلیدی: مرتب‌سازی بر اساس کلید زمان به صورت نزولی (از زیاد به کم)
+    # این باعث می‌شود که بیشترین زمان (دیرترین اقدام) در ایندکس 0 قرار گیرد.
+    actions_with_time.sort(key=lambda x: x["time_key"], reverse=True) 
+
+    first_action_time = actions_with_time[0]["original_time"] if actions_with_time else None
     
-    for stage_name, optimal_actions in OPTIMAL_SCENARIO.items():
-        
-        if stage_name not in STUDENT_LOG:
-            print(f"هشدار: مرحله '{stage_name}' در لاگ دانشجو وجود ندارد.")
-            continue
+    # تعداد کل اقدامات انجام شده (هر چیزی غیر از "False")
+    action_count = len(actions_with_time)
     
-        W_M = 0.5
-        W_E = 0.3
-        
-        sets = calculate_set_metrics(OPTIMAL_SCENARIO, STUDENT_LOG)
-        O = sets.get(stage_name)['O']
-        C = sets.get(stage_name)['C']
-        E = sets.get(stage_name)['E']
-        M = sets.get(stage_name)['M']
+    return first_action_time, action_count
 
-        if O == 0:
-            return 0.0
-
-        term = (C / O) - ((E / O) * W_E) - ((M / O) * W_M)
-        stage_score = max(0, 100 * term)
-
-        results[stage_name] = {
-            "stage_score": f"{stage_score:.2f}"
-        }
-    
-    return results
-
-def calculate_stage_score():
-    # ... کد محاسبه نمره مرحله (گام ۲) ...
-    # این تابع اکنون به صورت کامل فراخوانی می‌شود و از تابع جدید استفاده نمی‌کند.
-    # من فقط گام سوم را به عنوان یک تابع جداگانه پیاده‌سازی می‌کنم.
-    
-    results: Dict[str, Dict[str, Any]] = {}
-    
-    # ... (کد calculate_stage_score برای محاسبه نمرات C, E, M, O, A و Stage Score)
-    
-    sets = calculate_set_metrics(OPTIMAL_SCENARIO, STUDENT_LOG)
-
-    # گام ۲: محاسبه نمره مرحله (بازنویسی مختصر برای تکمیل)
-    W_M = 0.5
-    W_E = 0.3
-    for stage_name, metrics in sets.items():
-        O = metrics['O']
-        C = metrics['C']
-        E = metrics['E']
-        M = metrics['M']
-        
-        if O == 0:
-            stage_score = 0.0
-        else:
-            term = (C / O) - ((E / O) * W_E) - ((M / O) * W_M)
-            stage_score = max(0, 100 * term)
-
-        results[stage_name] = {
-            "C": C,
-            "E": E,
-            "M": M,
-            "O": O,
-            "A": metrics['A'],
-            "Success_Rate_C_div_O": metrics['Success_Rate_C_div_O'],
-            "stage_score": f"{stage_score:.2f}"
-        }
-
-    return results
-
-def calculate_stage_order_error(
-    optimal_log: Dict[str, Dict[str, bool]],
-    student_log: Dict[str, Dict[str, str]]
-) -> Dict[str, Any]:
-    """
-    گام سوم: ارزیابی ترتیب مراحل (شرح حال -> معاینه فیزیکی -> پاراکلینیک).
-    """
-    
-    stages = ["history_taking", "physical_exam", "paraclinic"]
-    order_results: Dict[str, Any] = {}
-    
-    # 1. گذار ۱ → ۲ (شرح حال به معاینه)
-    stage1_name = stages[0] # history_taking
-    stage2_name = stages[1] # physical_exam
-    
-    if stage1_name in optimal_log and stage2_name in student_log:
-        
-        # O1: تعداد اقدامات بهینه در مرحله ۱
-        O1 = count_true_values(optimal_log[stage1_name], "True")
-        
-        # اولین اقدام در مرحله ۲ (معاینه فیزیکی)
-        # برای دقت بیشتر، اولین اقدام مرحله ۲ را به صورت بازگشتی پیدا می‌کنیم تا زمان آن را بدانیم
-        # این به ما کمک می‌کند تا لاگ دانشجو را تا آن لحظه فیلتر کنیم.
-        first_action_stage2 = get_first_action_time_and_count(student_log[stage2_name], 0)
-        
-        if first_action_stage2[0] is not None:
-            # زمان اولین اقدام در مرحله ۲
-            time_of_transition = first_action_stage2[0]
-            
-            # اکنون باید تعداد اقدامات انجام شده در مرحله ۱ (|A1|) تا قبل از زمان 'time_of_transition' را بشماریم.
-            
-            # برای ساده‌سازی، از آنجایی که 'get_first_action_time_and_count' بر اساس زمان مرتب می‌کند، 
-            # اولین اقدام در مرحله ۲، 'اولین' اقدام جدید پس از مرحله ۱ است.
-            # در این چارچوب موجود، ما نیاز داریم تا **کل اقدامات مرحله ۱** که در لاگ دانشجو هستند را بشماریم.
-            # (چون لاگ دانشجو اقدامات را بر اساس زمان ذخیره کرده است و ما از تابع 'recursive_count_C' استفاده نمی‌کنیم)
-            
-            # |A1|: تعداد کل اقدامات انجام شده در مرحله ۱ (هر چیزی غیر از "False")
-            A1_all = get_first_action_time_and_count(student_log[stage1_name], 0)[1]
-            
-            # آستانه ۵۰٪
-            threshold_O1 = 0.5 * O1
-            
-            order_results["transition_1_to_2"] = {
-                "O1": O1,
-                "A1_at_transition": A1_all,
-                "threshold_50_percent": threshold_O1,
-                "error": False,
-                "message": "Passed"
-            }
-            
-            if O1 > 0 and A1_all < threshold_O1:
-                order_results["transition_1_to_2"]["error"] = True
-                order_results["transition_1_to_2"]["message"] = "Stage Order Error – شرح حال ناقص. قبل از تکمیل 50% اقدامات بهینه شرح حال، وارد معاینه فیزیکی شدید."
-        else:
-            order_results["transition_1_to_2"] = {"message": "معاینه فیزیکی انجام نشده است، بنابراین خطا در توالی ۱->۲ محاسبه نمی‌شود."}
-
-
-    # 2. گذار ۲ → ۳ (معاینه به پاراکلینیک)
-    stage2_name = stages[1] # physical_exam
-    stage3_name = stages[2] # paraclinic
-
-    if stage2_name in optimal_log and stage3_name in student_log:
-        
-        # O2: تعداد اقدامات بهینه در مرحله ۲
-        O2 = count_true_values(optimal_log[stage2_name], "True")
-        
-        # اولین اقدام در مرحله ۳ (پاراکلینیک)
-        first_action_stage3 = get_first_action_time_and_count(student_log[stage3_name], 0)
-        
-        if first_action_stage3[0] is not None:
-            time_of_transition = first_action_stage3[0]
-            
-            # |A2|: تعداد کل اقدامات انجام شده در مرحله ۲ (هر چیزی غیر از "False")
-            A2_all = get_first_action_time_and_count(student_log[stage2_name], 0)[1]
-            
-            # آستانه ۵۰٪
-            threshold_O2 = 0.5 * O2
-
-            order_results["transition_2_to_3"] = {
-                "O2": O2,
-                "A2_at_transition": A2_all,
-                "threshold_50_percent": threshold_O2,
-                "error": False,
-                "message": "Passed"
-            }
-
-            if O2 > 0 and A2_all < threshold_O2:
-                order_results["transition_2_to_3"]["error"] = True
-                order_results["transition_2_to_3"]["message"] = "Stage Order Error – معاینه ناقص. قبل از تکمیل 50% اقدامات بهینه معاینه فیزیکی، وارد پاراکلینیک شدید (جریمه بیشتر)."
-        else:
-            order_results["transition_2_to_3"] = {"message": "پاراکلینیک انجام نشده است، بنابراین خطا در توالی ۲->۳ محاسبه نمی‌شود."}
-            
-    return order_results
-
-order_assessment = calculate_stage_order_error(OPTIMAL_SCENARIO, STUDENT_LOG)
-print(json.dumps(order_assessment, indent=4, ensure_ascii=False))
-
+results = calculate_set_metrics(OPTIMAL_SCENARIO, STUDENT_LOG)
+print(get_first_action_time_and_count(STUDENT_LOG, results.get('history_taking')['C']))
