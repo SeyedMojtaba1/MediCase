@@ -43,6 +43,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://medicase.local:8000",
 ]
 
+ALLOWED_HOSTS = [
+    '89.42.211.35',
+    'medicase.local',
+]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
