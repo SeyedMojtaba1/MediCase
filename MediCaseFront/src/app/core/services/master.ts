@@ -96,6 +96,25 @@ export class Master {
     }, {observe: 'response', withCredentials: true},)
   }
 
+  setProfileImage(file: File): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    const formData = new FormData();
+    formData.append('profile_image', file);
+
+    return this.http.put<any>(
+      this.BASE_URL + '/registery/setprofileimage/',
+      formData,
+      {
+        headers,
+        observe: 'response',
+        withCredentials: true,
+      }
+    );
+  }
+
   signup(
     username: string,
     email: string,
@@ -133,7 +152,6 @@ export class Master {
     return this.http.post<any>(this.BASE_URL + 'class/sectioncreate/', {
       name: data.name,
       subject_name: data.subject,
-      status: 'Active',
       semester_code: data.semester_code,
       start_date: data.start_date,
       end_date: data.end_date,
@@ -246,7 +264,7 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.get<any>(this.BASE_URL + '/class/memberssectiontlist/' + id + '/', {
+    return this.http.get<any>(this.BASE_URL + 'class/memberssectiontlist/' + id + '/', {
       headers,
       observe: 'response',
       withCredentials: true
@@ -271,4 +289,23 @@ export class Master {
     });
 
   }
+
+  sectionUpdate(data: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+    return this.http.put<any>(this.BASE_URL + 'class/sectionupdate/' + data.sectionID + '/', {
+      new_name: data.new_name,
+      semester_code: data.semester_code,
+      start_date: data.start_date,
+      end_date: data.end_date,
+      description: data.description,
+    }, {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    },)
+  }
+
 }

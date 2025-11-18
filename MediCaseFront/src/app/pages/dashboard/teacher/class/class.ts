@@ -3,9 +3,6 @@ import {DashNavT} from '../../../../shared/components/dash-nav-t/dash-nav-t';
 import {Master} from '../../../../core/services/master';
 import {ClassesCard} from '../../student/s-dashboard/classes/classes-card/classes-card';
 import {Addsection} from './addsection/addsection';
-import {Button} from 'primeng/button';
-import {Dialog} from 'primeng/dialog';
-import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-class',
@@ -13,9 +10,6 @@ import {InputText} from 'primeng/inputtext';
     DashNavT,
     ClassesCard,
     Addsection,
-    Button,
-    Dialog,
-    InputText
   ],
   templateUrl: './class.html',
   styleUrl: './class.css'

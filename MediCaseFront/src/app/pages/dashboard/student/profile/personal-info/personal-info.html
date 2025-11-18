@@ -47,7 +47,7 @@
     <div class="flex flex-col gap-1">
       <label class="text-gray-400 text-xs font-light">شماره موبایل</label>
       <p-inputgroup>
-        <input disabled pInputText pSize="small" placeholder="09189002051"/>
+        <input [placeholder]="user.phone_number" disabled pInputText pSize="small"/>
         <p-button label="تایید شده" severity="success" size="small"/>
       </p-inputgroup>
     </div>

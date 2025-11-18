@@ -11,7 +11,7 @@
 
   <div class="py-3 px-5 rounded-full items-center flex flex-row gap-5 bg-gradient-to-l from-[#148691] to-[#216067]">
     <img [routerLink]="'/dashboard/t/profile'" [src]="avatar"
-         class="rounded-full cursor-pointer w-10 h-auto border-2 border-white">
+         class="rounded-full cursor-pointer object-cover w-10 h-10 border-2 border-white">
     <p [routerLink]="'/dashboard/t/profile'"
        class="text-white cursor-pointer">{{ first_name() + ' ' + last_name() }}</p>
     <img class="w-6 h-auto cursor-pointer" src="images/svg/search.svg">

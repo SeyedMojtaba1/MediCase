@@ -22,16 +22,36 @@ import {NotFound404} from './pages/auth/not-found404/not-found404';
 import {PublicProfile} from './shared/public-profile/public-profile';
 import {SectionPageS} from './pages/dashboard/student/class/section-page-s/section-page-s';
 
+import {Scenario} from './pages/scenario/scenario';
+import {ScenarioIntro} from './pages/scenario/scenario-intro/scenario-intro';
+
 export const routes: Routes = [
 
   //پروفایل - صفحات عمومی
   {
-    path: 'user', component: DashboardLayout, children: [
+    path: 'user',
+    // component: DashboardLayout,
+    loadComponent: () => import('./layouts/dashboard-layout/dashboard-layout').then(m => m.DashboardLayout),
+    children: [
       {path: '', component: NotFound404},
       {path: ':id', component: PublicProfile, children: []}
     ]
   },
 
+  // سناریو
+  {
+    path: 'scenario',
+    component: Scenario,
+    canActivate: [AuthGuard, RoleGuard],
+    data: {role: 'student'}
+  },
+
+  {
+    path: 'scenarioinit',
+    component: ScenarioIntro,
+    canActivate: [AuthGuard, RoleGuard],
+    data: {role: 'student'}
+  },
   // داشبورد دانشجو
   {
     path: 'dashboard/s',
@@ -87,6 +107,10 @@ export const routes: Routes = [
   {path: 'forget', component: Forget},
   {path: 'dashboard', redirectTo: 'dashboard/s', pathMatch: 'full'},
   {path: '', redirectTo: 'dashboard/s', pathMatch: 'full'},
-  // {path: '**', redirectTo: '404'},
-  // {path: '404', component: NotFound404},
+  {path: '**', redirectTo: '404'},
+  {
+    path: '404', component: DashboardLayout, children: [
+      {path: '', component: NotFound404},
+    ]
+  },
 ];

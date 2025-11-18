@@ -1,1 +1,22 @@
-<p>not-found404 works!</p>
+<!-- PrimeNG 404 Page Template -->
+
+
+<div class="flex flex-col items-center justify-center h-screen w-full p-6 ">
+  <p-card class="w-full max-w-lg shadow-2xl rounded-2xl">
+    <div class="text-center p-6">
+      <h1 class="text-7xl font-bold text-gray-800 mb-4">404</h1>
+      <h2 class="text-2xl font-semibold mb-3 text-gray-700">صفحه مورد نظر پیدا نشد</h2>
+      <p class="text-gray-500 mb-6">
+        ممکنه آدرس رو اشتباه وارد کرده باشی یا صفحه حذف شده باشه
+      </p>
+
+      @if (localStorage.getItem('role') == 'student') {
+        <p-button routerLink="/dashboard/s" class="p-button-rounded p-button-primary" icon="pi pi-home"
+                  label="بازگشت به پیشخوان"></p-button>
+      } @else {
+        <p-button routerLink="/dashboard/t" class="p-button-rounded p-button-primary" icon="pi pi-home"
+                  label="بازگشت به پیشخوان"></p-button>
+      }
+    </div>
+  </p-card>
+</div>

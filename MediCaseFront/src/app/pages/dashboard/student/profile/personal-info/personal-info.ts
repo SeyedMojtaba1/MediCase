@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Card} from '../../../../../layouts/card/card';
 import {InputText} from 'primeng/inputtext';
-import {Password} from 'primeng/password';
 import {FormsModule} from '@angular/forms';
 import {InputGroup} from 'primeng/inputgroup';
 import {Button} from 'primeng/button';
@@ -11,7 +10,6 @@ import {Button} from 'primeng/button';
   imports: [
     Card,
     InputText,
-    Password,
     FormsModule,
     InputGroup,
     Button

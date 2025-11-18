@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Card} from '../../../../../layouts/card/card';
-import {NgClass} from '@angular/common';
 import {RouterLink} from '@angular/router';
 
 
@@ -8,7 +7,6 @@ import {RouterLink} from '@angular/router';
   selector: 'app-hospital-card',
   imports: [
     Card,
-    NgClass,
     RouterLink
   ],
   templateUrl: './hospital-card.html',

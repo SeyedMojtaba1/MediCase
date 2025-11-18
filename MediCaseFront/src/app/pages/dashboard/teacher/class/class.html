@@ -15,11 +15,17 @@
         کلاس </p>
     </div>
 
-    <div class="grid grid-cols-3 gap-10 items-stretch px-10">
-      @for (c of classes; track c) {
-        <app-classes-card [clas]="c"></app-classes-card>
-      }
-    </div>
+    @if (classes.length != 0) {
+      <div class="grid grid-cols-3 gap-10 items-stretch px-10">
+        @for (c of classes; track c) {
+          <app-classes-card [clas]="c"></app-classes-card>
+        }
+      </div>
+    } @else {
+      <div class="w-full items-center flex flex-col">
+        <p class="text-gray-500">کلاسی یافت نشد</p>
+      </div>
+    }
 
   </div>
 

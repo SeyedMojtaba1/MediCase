@@ -3,42 +3,46 @@
   <!--  بخش هدر-->
   <app-dash-nav-t [welcome]="false" title="پروفایل کاربر مدیکیس"></app-dash-nav-t>
 
-  <!--  بخش محتوا-->
-  <div class="flex flex-col w-full gap-10">
 
-    <!--    باکس راست آواتار و نقش-->
-    <div class="flex flex-row gap-10 items-center w-1/3">
+  <!-- Header Cover -->
+  <div class="w-full h-50 bg-cover bg-center rounded-2xl"
+       style="background-image: url('https://www.psyoto.com/wp-content/uploads/2023/09/remover-banner-right.webp');"></div>
 
-      <!--      باکس آواتار-->
-      <div class="w-1/2 flex flex-col gap-2 items-center">
-        <img [src]="user.profile_image" class="rounded-full border-2 border-white ">
+  <!-- Profile Section -->
+  <div class=" w-full mx-auto -mt-20 p-4">
+    <div class="bg-white p-5 rounded-xl">
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <!-- Profile Image -->
+        <img
+          alt="profile image"
+          class="w-40 h-40 rounded-full shadow-lg object-cover border-4 border-white -mt-30"
+          src="{{ user.profile_image }}"
+        />
+
+        <!-- Info -->
+        <div class="flex-1">
+          <h1 class="text-2xl font-bold">{{ user.first_name }} {{ user.last_name }}</h1>
+          <p class="text-gray-600 mt-1">دانشجوی {{ user.major }}</p>
+
+          <div class="flex items-center gap-3 text-gray-500 text-sm mt-2 flex-wrap">
+            <span>@{{ user.username }}</span>
+            <span class="flex items-center gap-1">📧 {{ user.email }}</span>
+            <span class="flex items-center gap-1">📱 {{ user.phone_number }}</span>
+          </div>
+        </div>
       </div>
-
-      <!--      باکس خلاصه اطلاعات کاربر-->
-      <div class="w-1/2 flex flex-col text-gray-500 text-sm gap-3">
-        <p class="font-bold text-xl text-black self-center">{{ user.first_name + ' ' + user.last_name }}</p>
-
-        <div class="flex flex-row gap-2 items-center">
-          <img src="images/svg/user-follow-line.svg">
-          @if (user.main_role == 'student') {
-            <p>نقش : دانشجو</p>
-          } @else if (user.main_role == 'teacher') {
-            <p>نقش : استاد</p>
-          } @else {
-            <p>نقش : ادمین</p>
-          }
-        </div>
-        <div class="flex flex-row gap-2 items-center">
-          <img src="images/svg/stethoscope-line.svg">
-          <p>رشته : {{ user.major }}</p>
-        </div>
-        <div class="flex flex-row gap-2 items-center">
-          <img src="images/svg/hospital-line.svg">
-          <p>علوم پزشکی اصفهان</p>
-        </div>
-
+      <div>
+        dsf
+        <br>
+        asdf
+        <br>
+        asdf
       </div>
     </div>
 
   </div>
+
+
 </div>
+
+<button (click)="fireConfetti()">پخش افکت موفقیت 🎉</button>

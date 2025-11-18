@@ -159,6 +159,7 @@ export class Addsection implements AfterViewInit {
     this.master.createSection(this.data).subscribe({
       next: data => {
         this.toast.showSuccess("کلاس با موفقیت ایجاد شد");
+        this.router.navigateByUrl('/dashboard/t/class')
         this.close.emit();
       },
       error: err => {

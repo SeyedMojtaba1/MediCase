@@ -11,8 +11,12 @@
 
       <!--      باکس آواتار-->
       <div class="w-1/2 flex flex-col gap-2 items-center">
-        <img [src]="user.profile" class="rounded-full border-2 border-white ">
-        <p class="text-gray-500 text-xs underline">تغییر آواتار</p>
+        <img
+          [src]="user.profile"
+          class="w-40 h-40 object-cover rounded-full border-2 border-white"
+        />
+        <p (click)="isModalOpen=true; visible=true" class="cursor-pointer text-gray-500 text-xs underline">تغییر
+          آواتار</p>
       </div>
 
       <!--      باکس خلاصه اطلاعات کاربر-->
@@ -50,3 +54,9 @@
     <app-eduction-info [user]="user" class="w-full"></app-eduction-info>
   </div>
 </div>
+
+
+<app-set-profile-image
+  (close)="isModalOpen = false"
+  [show]="isModalOpen"
+></app-set-profile-image>

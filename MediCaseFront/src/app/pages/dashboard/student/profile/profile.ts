@@ -3,30 +3,25 @@ import {DashNav} from '../../../../shared/components/dash-nav/dash-nav';
 import {PersonalInfo} from './personal-info/personal-info';
 import {EductionInfo} from './eduction-info/eduction-info';
 import {Master} from '../../../../core/services/master';
+import {SetProfileImage} from '../../../../shared/components/set-profile-image/set-profile-image';
 
-// export interface User {
-//   first_name: string;
-//   last_name: string;
-//   major: string;
-//   role: string;
-//   university: string;
-//   profile: string;
-//   phone: string;
-//   email: string;
-//   national_code: string;
-// }
 
 @Component({
   selector: 'app-profile',
   imports: [
     DashNav,
     PersonalInfo,
-    EductionInfo
+    EductionInfo,
+    SetProfileImage
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
 export class Profile {
+
+
+  isModalOpen = false
+  visible = false;
 
   user: any = {
     first_name: '',
@@ -64,4 +59,6 @@ export class Profile {
       }
     });
   }
+
+
 }
