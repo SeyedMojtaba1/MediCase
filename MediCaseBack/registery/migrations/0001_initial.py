@@ -7,11 +7,10 @@ from django.conf import settings
 from django.db import migrations, models
 
 def create_initial_records(apps, schema_editor): 
-    Category = apps.get_model('registery', 'Role') 
-    Category.objects.get_or_create(name='student') 
-    Category.objects.get_or_create(name='teacher') 
-    Category.objects.get_or_create(name="teacher's assistant") 
-    Category.objects.get_or_create(name='admin') 
+    Category = apps.get_model('registery', 'Role')
+    Category.objects.get_or_create(name='student')
+    Category.objects.get_or_create(name='teacher')
+    Category.objects.get_or_create(name='admin')
     Category.objects.get_or_create(name='superadmin')
 
 class Migration(migrations.Migration):

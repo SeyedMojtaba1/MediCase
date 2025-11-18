@@ -198,9 +198,9 @@ class SectionCreateSerializer(serializers.ModelSerializer):
         end_date = validated_data["end_date"]
         today = date.today()
 
-        if today > start_date or end_date < start_date:
-            return serializers.ValidationError(
-                {"detail": "Wrong start or end date."}
+        if end_date < start_date:
+            raise serializers.ValidationError(
+                {"detail": "The end date cannot be before the start date."}
             )
         
         if today < start_date:
@@ -217,6 +217,7 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             subject=subject,
             student_count=0,
             status=status,
+            section_image=subject.subject_image,
             start_date=validated_data["start_date"],
             end_date=validated_data["end_date"],
             description=validated_data.get("description", ""),
