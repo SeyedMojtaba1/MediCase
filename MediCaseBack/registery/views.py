@@ -264,6 +264,7 @@ class RoleViewSet(viewsets.ModelViewSet):
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = LogoutSerializer
     
     def post(self, request):
         refresh = request.data.get('refresh_token')
