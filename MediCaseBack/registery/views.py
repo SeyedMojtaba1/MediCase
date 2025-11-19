@@ -93,7 +93,7 @@ class LoginView(generics.CreateAPIView):
             key="refresh_token",
             value=str(refresh),
             httponly=True,
-            secure=True,
+            # secure=True,
             samesite="None",
             max_age = 7 * 24 * 60 * 60,
         )
