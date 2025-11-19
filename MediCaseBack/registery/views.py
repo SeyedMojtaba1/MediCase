@@ -316,4 +316,12 @@ class CookieTokenRefreshView(TokenRefreshView):
         access = serializer.validated_data['access']
 
         response = Response({'access': access, "refresh": str(refresh)}, status=status.HTTP_200_OK)
+        response.set_cookie(
+            key="refresh_token",
+            value=str(refresh),
+            httponly=True,
+            secure=False,
+            samesite="Lax",
+            max_age = 7 * 24 * 60 * 60,
+        )
         return response
