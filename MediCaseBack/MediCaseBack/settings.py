@@ -45,17 +45,9 @@ CORS_ALLOWED_ORIGINS = [
 
 ALLOWED_HOSTS = [
     '89.42.211.35',
-    '89.42.211.35:8000',
-    '89.42.211.35:4200',
     'medicase.local',
-    'medicase.local:8000',
-    'medicase.local:4200',
     'localhost',
-    'localhost:4200',
-    'localhost:8000',
     '127.0.0.1',
-    '127.0.0.1:4200',
-    '127.0.0.1:8000',
 ]
 
 MEDIA_URL = '/media/'
