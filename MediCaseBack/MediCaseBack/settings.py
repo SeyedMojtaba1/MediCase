@@ -96,7 +96,7 @@ AUTH_USER_MODEL = 'registery.User'
 
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'email',
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "ACCESS_TOKEN_LIFETIME": timedelta(day=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     'BLACKLIST_AFTER_ROTATION': True,
     'ROTATE_REFRESH_TOKENS': True,
