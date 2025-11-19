@@ -212,11 +212,7 @@ class LogoutView(generics.GenericAPIView):
             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
         
         response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
-        response.delete_cookie(
-            'refresh_token', 
-            path='/', 
-            samesite='Lax'
-        )
+        response.delete_cookie('refresh_token')
 
         return response
 
