@@ -134,14 +134,14 @@ class LoginView(generics.CreateAPIView):
             status=status.HTTP_200_OK
         )
 
-        # response.set_cookie(
-        #     key="refresh_token",
-        #     value=str(refresh),
-        #     httponly=True,
-        #     secure=False,
-        #     samesite="Lax",
-        #     max_age = 7 * 24 * 60 * 60,
-        # )
+        response.set_cookie(
+            key="refresh_token",
+            value=str(refresh),
+            httponly=True,
+            secure=False,
+            samesite="Lax",
+            max_age = 7 * 24 * 60 * 60,
+        )
 
         return response
 
