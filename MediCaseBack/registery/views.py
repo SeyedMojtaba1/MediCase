@@ -196,12 +196,32 @@ class RoleViewSet(viewsets.ModelViewSet):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
+# class LogoutView(generics.GenericAPIView):
+#     authentication_classes = [JWTAuthentication]
+#     permission_classes = [permissions.IsAuthenticated]
+    
+#     def get(self, request):
+#         refresh = request.COOKIES.get('refresh_token')
+#         if not refresh:
+#             return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
+
+#         try:
+#             token = RefreshToken(refresh)
+#             token.blacklist()
+#         except Exception:
+#             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
+        
+#         response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+#         response.delete_cookie('refresh_token')
+
+#         return response
+
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     
     def get(self, request):
-        refresh = request.COOKIES.get('refresh_token')
+        refresh = request.data.get('refresh_token')
         if not refresh:
             return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -216,9 +236,24 @@ class LogoutView(generics.GenericAPIView):
 
         return response
 
+# class CookieTokenRefreshView(TokenRefreshView):
+#     def get(self, request):
+#         refresh = request.COOKIES.get('refresh_token')
+
+#         if refresh is None:
+#             return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         serializer = TokenRefreshSerializer(data={'refresh': refresh})
+#         serializer.is_valid(raise_exception=True)
+
+#         access = serializer.validated_data['access']
+
+#         response = Response({'access': access}, status=status.HTTP_200_OK)
+#         return response
+    
 class CookieTokenRefreshView(TokenRefreshView):
-    def get(self, request):
-        refresh = request.COOKIES.get('refresh_token')
+    def post(self, request):
+        refresh = request.data.get('refresh_token')
 
         if refresh is None:
             return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)

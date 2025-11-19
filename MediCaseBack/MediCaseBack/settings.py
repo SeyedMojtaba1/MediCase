@@ -30,18 +30,18 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://127.0.0.1:4200",
-#     "http://localhost:4200",
-#     "http://127.0.0.1:8000",
-#     "http://localhost:8000",
-#     "http://89.42.211.35:4200",
-#     "http://89.42.211.35:8000",
-#     "http://medicase.local:4200",
-#     "http://medicase.local:8000",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:4200",
+    "http://localhost:4200",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+    "http://89.42.211.35:4200",
+    "http://89.42.211.35:8000",
+    "http://medicase.local:4200",
+    "http://medicase.local:8000",
+]
 
 ALLOWED_HOSTS = [
     '89.42.211.35',
@@ -83,7 +83,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
