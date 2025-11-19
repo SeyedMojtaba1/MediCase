@@ -265,7 +265,7 @@ class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     
-    def get(self, request):
+    def post(self, request):
         refresh = request.data.get('refresh_token')
         if not refresh:
             return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
