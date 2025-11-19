@@ -45,6 +45,8 @@ CORS_ALLOWED_ORIGINS = [
 
 ALLOWED_HOSTS = [
     '89.42.211.35',
+    '89.42.211.35:8000',
+    '89.42.211.35:4200',
     'medicase.local',
     'localhost',
     '127.0.0.1',
