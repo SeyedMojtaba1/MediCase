@@ -267,7 +267,9 @@ class LogoutView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
     
     def post(self, request):
-        refresh = request.data.get('refresh_token')
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        refresh = serializer.data['refresh']
         if not refresh:
             return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -298,8 +300,12 @@ class LogoutView(generics.GenericAPIView):
 #         return response
     
 class CookieTokenRefreshView(TokenRefreshView):
+    serializer_class = LogoutSerializer
+    
     def post(self, request):
-        refresh = request.data.get('refresh_token')
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        refresh = serializer.data['refresh']
 
         if refresh is None:
             return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
