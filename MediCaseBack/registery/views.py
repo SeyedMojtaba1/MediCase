@@ -315,5 +315,5 @@ class CookieTokenRefreshView(TokenRefreshView):
 
         access = serializer.validated_data['access']
 
-        response = Response({'access': access}, status=status.HTTP_200_OK)
+        response = Response({'access': access, "refresh": str(refresh)}, status=status.HTTP_200_OK)
         return response
