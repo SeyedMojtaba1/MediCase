@@ -218,7 +218,7 @@ class LogoutView(generics.GenericAPIView):
 
 class CookieTokenRefreshView(TokenRefreshView):
     def get(self, request):
-        refresh = request.COOKIES.get('refresh_token')
+        refresh = self.request.COOKIES.get('refresh_token')
 
         if refresh is None:
             return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
