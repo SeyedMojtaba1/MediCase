@@ -93,8 +93,8 @@ class LoginView(generics.CreateAPIView):
             key="refresh_token",
             value=str(refresh),
             httponly=True,
-            secure=True,
-            samesite="None",
+            secure=False,
+            samesite="Lax",
             max_age = 7 * 24 * 60 * 60,
         )
 
@@ -212,7 +212,11 @@ class LogoutView(generics.GenericAPIView):
             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
         
         response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
-        response.delete_cookie('refresh_token')
+        response.delete_cookie(
+            'refresh_token', 
+            path='/', 
+            samesite='Lax'
+        )
 
         return response
 
