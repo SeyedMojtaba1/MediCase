@@ -31,23 +31,190 @@ def create_initial_records_subject(apps, schema_editor):
     Category.objects.get_or_create(english_name='Hematology-and-Oncology', persian_name='بیماری‌های خون و بدخیمی‌ها', unit=Decimal('1.9'), subject_status='Inactive', subject_image='subject/hematology-and-oncology-subject.jpg', description="هماتولوژی و انکولوژی شاخه‌ای از پزشکی است که به مطالعه، تشخیص و درمان بیماری‌های خون، مغز استخوان و بدخیمی‌ها می‌پردازد. سیستم خونی شامل سلول‌های قرمز، سفید و پلاکت‌ها است که وظیفه حمل اکسیژن، دفاع ایمنی و انعقاد خون را بر عهده دارند. اختلالات خونی می‌توانند شامل کم‌خونی‌ها، پلی‌سیتمی، لوسمی‌ها، لنفوم‌ها و اختلالات انعقادی باشند و علائمشان شامل خستگی، خونریزی، کبودی و افزایش عفونت‌هاست. بدخیمی‌ها شامل تومورهای جامد و خونی بوده و رشد کنترل‌نشده سلول‌ها و متاستاز ویژگی اصلی آن‌هاست. تشخیص بر اساس آزمایش‌های خون، بیوپسی مغز استخوان، نمونه‌گیری تومور و تصویربرداری انجام می‌شود. درمان شامل شیمی‌درمانی، رادیوتراپی، ایمنی‌درمانی، دارودرمانی هدفمند و در برخی موارد پیوند سلول‌های بنیادی است. مدیریت این بیماران نیازمند نظارت دقیق بر عوارض درمان، حمایت تغذیه‌ای و کنترل عفونت‌هاست و هدف آن بهبود بقای بیمار و کیفیت زندگی است.")
     Category.objects.get_or_create(english_name='Pediatrics', persian_name='بیماری‌های کودکان', unit=Decimal('1'), subject_status='Inactive', subject_image='subject/pediatrics-subject.jpg', description="پزشکی اطفال شاخه‌ای از پزشکی است که به مراقبت، پیشگیری، تشخیص و درمان بیماری‌های نوزادان، کودکان و نوجوانان می‌پردازد. کودکان دارای ویژگی‌های فیزیولوژیک، متابولیک و ایمنی متفاوتی نسبت به بزرگسالان هستند که در تشخیص و درمان بیماری‌ها اهمیت دارد. بیماری‌های شایع شامل عفونت‌های تنفسی و گوارشی، بیماری‌های متابولیک و غددی، اختلالات رشد و کم‌خونی‌هاست. نوزادان و کودکان همچنین در معرض بیماری‌های ژنتیکی و مادرزادی قرار دارند که می‌تواند بر اندام‌ها و عملکرد سیستمیک تأثیر بگذارد. علائم بالینی ممکن است شامل تب، استفراغ، اسهال، اختلال رشد، بی‌حالی و تغییر در الگوی تغذیه و خواب باشد. تشخیص بر اساس معاینه دقیق بالینی، آزمایش‌های خون و ادرار، تصویربرداری و در صورت نیاز تست‌های ژنتیکی انجام می‌شود. درمان شامل دارودرمانی، حمایت تغذیه‌ای، واکسیناسیون، توانبخشی و مراقبت‌های ویژه در نوزادان و کودکان است. پیشگیری، آموزش والدین و پیگیری رشد و نمو کودک از ارکان اصلی پزشکی اطفال محسوب می‌شوند.")
 
-# def create_initial_records_subject(apps, schema_editor): 
-#     Category = apps.get_model('class', 'Hospital') 
-#     Category.objects.get_or_create(english_name="alzahra" ,persian_name="مرکز آموزشی درمانی الزهرا(س)" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="seyed_o_shohada" ,persian_name="مجتمع آموزشی درمانی سیدالشهداء(ع)" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="emam_kazem" ,persian_name="مرکز آموزشی درمانی امام موسی کاظم(ع)" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="amin" ,persian_name="مرکز آموزشی درمانی امین" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="kashani" ,persian_name="مرکز آموزشی درمانی آیت الله کاشانی" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="emam_hossein" ,persian_name="مرکز کودکان حضرت امام حسین(ع)" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="eisa" ,persian_name="بیمارستان عیسی بن مریم(ع)" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="khorshid" ,persian_name="مرکز آموزشی درمانی خورشید" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="beheshti" ,persian_name="مرکز آموزشی درمانی شهید بهشتی" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="modarres" ,persian_name="بیمارستان شهید مدرس" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="chamran" ,persian_name="مرکز آموزشی درمانی و پژوهشی قلب شهید چمران" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="farabi" ,persian_name="مجتمع تخصصی و فوق تخصص فارابی" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="feiz" ,persian_name="مرکز آموزشی درمانی فیض" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="zeynab" ,persian_name="بیمارستان حضرت زینب" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
-#     Category.objects.get_or_create(english_name="soleymani" ,persian_name="بیمارستان سردار شهید قاسم سلیمانی" ,type= ,established_year= ,address= ,city= ,province= ,phone_number= ,email= ,website= ,capacity= ,description= )
+def create_initial_records_hospital(apps, schema_editor): 
+    Category = apps.get_model('class', 'Hospital') 
+    Category.objects.get_or_create(
+        english_name="alzahra",
+        persian_name="مرکز آموزشی درمانی الزهرا(س)",
+        type="public Hospital",
+        established_year="1986-01-01",
+        address="اصفهان، بلوار صفه، مرکز آموزشی درمانی الزهرا (س)",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03136202020",
+        email="",
+        website="alzahra.mui.ac.ir",
+        capacity=750,
+        description= "بیمارستان الزهرا (س) اصفهان یک مرکز آموزشی درمانی درجه یک وابسته به دانشگاه علوم پزشکی اصفهان است. این بیمارستان در وسعت ۲۷ هکتار و بنا به اطلاعات رسمی دارای ۷۵۰ تخت فعال و ۳۳ درمانگاه تخصصی است:]{. امکانات تخصصی شامل دستگاه‌های MRI، سی‌تی‌اسکن‌های ۱۶ و ۱۲۸ اسلایس، آنژیوگرافی قلب، بخش پیوند اعضا، و سایر بخش‌های تخصصی مانند جراحی قلب باز، جراحی اعصاب و پیوند مغز استخوان را در بر می‌گیرد. این مرکز علاوه بر خدمات عمومی، خدمات فوق تخصصی پزشکی (مانند پیوند کبد، جراحی‌های پیشرفته مغز و ستون فقرات و سایر تخصص‌ها) را نیز ارائه می‌دهد."
+    )
+    Category.objects.get_or_create(
+        english_name="seyed_o_shohada",
+        persian_name="مجتمع آموزشی درمانی سیدالشهداء(ع)",
+        type="public Hospital",
+        established_year="1971-01-01",
+        address="اصفهان، خیابان خیام، کوی نهر فرشادی، بیمارستان سیدالشهداء",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03132350218",
+        email="omid@mui.ac.ir",
+        website="omid.mui.ac.ir",
+        capacity=185,
+        description="مجتمع آموزشی درمانی سیدالشهداء (امید) اصفهان بیمارستان تخصصی سرطان و انکولوژی وابسته به دانشگاه علوم پزشکی اصفهان است."
+    )
+    Category.objects.get_or_create(
+        english_name="emam_kazem",
+        persian_name="مرکز آموزشی درمانی امام موسی کاظم(ع)",
+        type="public Hospital",
+        established_year="1990-01-01",
+        address="پل چمران، خیابان کاوه جنوبی، مرکز درمانی سوانح سوختگی امام موسی کاظم (ع)",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03133457670",
+        email="i.m.kazem.hospital@mui.ac.ir",
+        website="savaneh.mui.ac.ir",
+        capacity=100,
+        description="مرکز حوادث و حریق های شدید استان اصفهان"
+    )
+    Category.objects.get_or_create(
+        english_name="amin",
+        persian_name="مرکز آموزشی درمانی امین",
+        type="public Hospital",
+        established_year="1969-01-01",
+        address="اصفهان، خیابان ابن سینا، کوچه سنبلستان، بیمارستان امین",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03134455051",
+        email="amin@mui.ac.ir",
+        website="amin.mui.ac.ir",
+        capacity=181,
+        description="مرکز آموزشی درمانی امین اصفهان یکی از قدیمی‌ترین بیمارستان‌های عمومی اصفهان است که در سال ۱۳۴۸ (۱۹۶۹) تأسیس گردید. این بیمارستان که زیرنظر دانشگاه علوم پزشکی اصفهان اداره می‌شود، دارای ۱۸۱ تخت فعال می‌باشد. "
+    )
+    Category.objects.get_or_create(
+        english_name="kashani",
+        persian_name="مرکز آموزشی درمانی آیت الله کاشانی",
+        type="public Hospital",
+        established_year="1953-01-01",
+        address="اصفهان، خیابان آیت الله کاشانی جنوبی، بیمارستان آیت الله کاشانی",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03132330091",
+        email="kashani@mui.ac.ir",
+        website="kashani.mui.ac.ir",
+        capacity=181,
+        description=" "
+    )
+    Category.objects.get_or_create(
+        english_name="emam_hossein",
+        persian_name="مرکز کودکان حضرت امام حسین(ع)",
+        type="public Hospital",
+        established_year="2012-01-01",
+        address="اصفهان، کیلومتر ۱۰ خیابان امام خمینی، مرکز آموزشی درمانی کودکان حضرت امام حسین (ع)",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03133866266",
+        email="emamhossein_hospital@mui.ac.ir",
+        website="ehuch.mui.ac.ir",
+        capacity=168,
+        description="بیمارستان کودکان امام حسین(ع)"
+    )
+    Category.objects.get_or_create(
+        english_name="eisa",
+        persian_name="بیمارستان عیسی بن مریم(ع)",
+        type="public Hospital",
+        established_year="1904-01-01",
+        address="اصفهان - خیابان شمس آبادی - بیمارستان عیسی بن مریم (ع) ",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03132332065",
+        email="isa@mui.ac.ir",
+        website="isa.mui.ac.ir",
+        capacity=126,
+        description="بیمارستان عیسی بن مریم (ع) اصفهان، که سابقاً به عنوان بیمارستان مسیحی معروف بود، یک بیمارستان عمومی آموزشی وابسته به دانشگاه علوم پزشکی اصفهان است."
+    )
+    Category.objects.get_or_create(
+        english_name="khorshid",
+        persian_name="مرکز آموزشی درمانی خورشید",
+        type="public Hospital",
+        established_year="1921-01-01",
+        address="اصفهان - خیابان استانداری",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03133033740",
+        email="nour@mui.ac.ir",
+        website="nour.mui.ac.ir",
+        capacity=224,
+        description="بیمارستان خورشید (نور)"
+    )
+    Category.objects.get_or_create(
+        english_name="beheshti",
+        persian_name="مرکز آموزشی درمانی شهید بهشتی",
+        type="public Hospital",
+        established_year="1971-01-01",
+        address="اصفهان - پل فلزی - ابتدای خیابان مطهری",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03132367001",
+        email="beheshti@mui.ac.ir",
+        website="beheshti.mui.ac.ir",
+        capacity=120,
+        description=" "
+    )
+    Category.objects.get_or_create(
+        english_name="chamran",
+        persian_name="مرکز آموزشی درمانی و پژوهشی قلب شهید چمران",
+        type="public Hospital",
+        established_year="1966-01-01",
+        address="اصفهان - میدان بزرگمهر - خیابان مشتاق سوم",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03133033710",
+        email="chamran@mui.ac.ir",
+        website="chamran.mui.ac.ir",
+        capacity=224,
+        description="بیمارستان قلب شهید چمران"
+    )
+    Category.objects.get_or_create(
+        english_name="farabi",
+        persian_name="مجتمع تخصصی و فوق تخصص فارابی",
+        type="public Hospital",
+        established_year="1977-01-01",
+        address="اصفهان - خیابان مشتاق سوم - بلوار ارغوانیه",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03135312020",
+        email="farabi@mui.ac.ir",
+        website="farabi.mui.ac.ir",
+        capacity=342,
+        description="مجتمع تخصصی و فوق‌تخصصی فارابی اصفهان یک بیمارستان بزرگ تخصصی وابسته به دانشگاه علوم پزشکی اصفهان است"
+    )
+    Category.objects.get_or_create(
+        english_name="feiz",
+        persian_name="مرکز آموزشی درمانی فیض",
+        type="public Hospital",
+        established_year="1963-01-01",
+        address="اصفهان - میدان قدس - ابتدای خیابان مدرس",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03134452038",
+        email="feiz@mui.ac.ir",
+        website="feiz.mui.ac.ir",
+        capacity=118,
+        description="بیمارستان آموزشی درمانی فیض اصفهان یک مرکز تخصصی چشم و جراحی عمومی است"
+    )
+    Category.objects.get_or_create(
+        english_name="zeynab",
+        persian_name="بیمارستان حضرت زینب",
+        type="public Hospital",
+        established_year="1991-01-01",
+        address="اصفهان، زینبیه، چهارراه عاشق اصفهانی، خیابان آیت‌الله غفاری، بیمارستان حضرت زینب (س)",
+        city="اصفهان",
+        province="اصفهان",
+        phone_number="03135511195",
+        email="zeynabhospital@mui.ac.ir",
+        website="zeynabhospital.mui.ac.ir",
+        capacity=46,
+        description="بیمارستان حضرت زینب (س) اصفهان یک مرکز تخصصی زنان، زایمان و بهداشت مادران و نوزادان است"
+    )
 
 class Migration(migrations.Migration):
 
@@ -134,4 +301,5 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(create_initial_records_subject),
         migrations.RunPython(create_initial_records_semester),
+        migrations.RunPython(create_initial_records_hospital),
     ]

@@ -270,7 +270,6 @@ class UserSerializer(serializers.ModelSerializer):
             'url': {'lookup_field': 'personal_number'}
         }
 
-
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role

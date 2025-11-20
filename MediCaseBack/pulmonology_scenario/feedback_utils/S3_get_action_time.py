@@ -1,6 +1,6 @@
 import json
 from typing import Dict, Any, Tuple, Union
-from identifying_sets import calculate_set_metrics
+from S1_identifying_sets import calculate_set_metrics
 
 OPTIMAL_SCENARIO: Dict[str, Dict[str, bool]] = {
   "history_taking": {

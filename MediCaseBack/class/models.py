@@ -93,7 +93,7 @@ class Hospital(models.Model):
     city = models.CharField(max_length=50)
     province = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=15, blank=True)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     website = models.URLField()
     capacity = models.IntegerField()
     description = models.TextField(blank=True, max_length=500)
