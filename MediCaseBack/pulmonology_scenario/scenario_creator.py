@@ -1519,10 +1519,9 @@ def scenario_creator():
     input_variables=["disease"]
   )
   
-  final_prompt = prompt_template.format(disease=target_disease)
+  final_prompt = prompt_template.format(disease=f"{target_disease}")
 
   structured_chat_model = model.with_structured_output(json_schema)
   output = structured_chat_model.invoke(final_prompt)
   
   return output
-
