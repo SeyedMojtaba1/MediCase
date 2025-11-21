@@ -203,7 +203,7 @@ Asthma: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": ["True", "True", "False"],
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "False",
       "LFTs": "False",
@@ -456,11 +456,7 @@ Pneumonia: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": [
-        "True",
-        "True",
-        "True"
-      ],
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "True",
       "LFTs": "True",
@@ -713,11 +709,7 @@ COPD: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": {
-            "Hb": "True", 
-            "WBC": "True", 
-            "Plt": "False"
-        },
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "False",
       "LFTs": "False",
@@ -970,11 +962,7 @@ PTE: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": [
-        "True",
-        "True",
-        "True"
-      ],
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "True",
       "LFTs": "True",
@@ -1227,11 +1215,7 @@ IPF: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": [
-        "True",
-        "True",
-        "False"
-      ],
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "True",
       "LFTs": "True",
@@ -1484,11 +1468,7 @@ PH: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": [
-        "True",
-        "True",
-        "True"
-      ],
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "True",
       "LFTs": "True",
@@ -1741,11 +1721,7 @@ Pleural_Effusion: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": [
-        "True",
-        "True",
-        "True"
-      ],
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "True",
       "LFTs": "True",
@@ -1998,11 +1974,7 @@ ARDS: Dict[str, Dict[str, bool]] = {
   },
   "paraclinic": {
     "basic_blood_tests": {
-      "CBC": [
-        "True",
-        "True",
-        "True"
-      ],
+      "CBC": "True",
       "ESR/CRP": "True",
       "BMP": "True",
       "LFTs": "True",

@@ -5,7 +5,6 @@ from langchain_core.output_parsers import JsonOutputParser
 import json
 
 json_schema = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Clinical_Case_Feedback_Schema",
     "type": "object",
     "properties": {
@@ -14,15 +13,26 @@ json_schema = {
         "properties": {
         "strengths": {
             "type": "string",
-            "description": ""
+            "description": "از اطلاعات ارائه شده در evaluation (در بخش C و C_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و یک توضیح از نقاط قوت عملکرد دانشجو با ذکر اقدامات کلیدی که منجر به تشخیص دقیق و بهینه شده‌اند."
         },
         "weaknesses": {
-            "type": "string",
-            "description": ""
+            "type": "object",
+            "properties": {
+              "M": {
+                "title": "M",
+                "type": "string",
+                "description": "از اطلاعات ارائه شده در evaluation (در بخش M و M_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و یک توضیح از مهم‌ترین نقاط ضعف شامل (بخش های اشتباها انجام شده) که منجر به تأخیر در تشخیص یا اتلاف منابع شده‌اند."
+              },
+              "E": {
+                "title": "E",
+                "type": "string",
+                "description": "از اطلاعات ارائه شده در evaluation (در بخش E و E_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و یک توضیح از مهم‌ترین نقاط ضعف شامل (بخش‌های حیاتی انجام نشده) که منجر به تأخیر در تشخیص یا اتلاف منابع شده‌اند."
+              }
+            }
         },
         "educational_feedback": {
             "type": "string",
-            "description": ""
+            "description": "از اطلاعات ارائه شده در evaluation و transition استفاده کن در صورت نیاز به آنها اشاره کن و یک توضیح از توصیه‌های کلی برای بهبود مهارت‌های تریاژ و استدلال بالینی بر اساس تحلیل عملکرد"
         }
         },
         "required": [
@@ -36,15 +46,42 @@ json_schema = {
         "properties": {
         "strengths": {
             "type": "string",
-            "description": "بگو که انتخابات درستش (C)، چطور اون رو در تشخیص بیماری یاری دادن."
+            "description": "از اطلاعات ارائه شده در evaluation (در قسمت history_taking بخش C و C_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و لیستی از اقدامات صحیح دانشجو (C) در مرحله شرح حال."
         },
         "weaknesses": {
-            "type": "string",
-            "description": "اقدامات M (حذفیات) که موجب تأخیر در تشخیص شده‌اند و اقدامات E (اضافی) که منجر به اتلاف زمان یا انحراف از مسیر منطقی شده‌اند، ذکر بشن.اگر نقض توالی در گذار ۱←۲ رخ داده باشد، در این بخش تذکر داده می‌شود."
+            "type": "object",
+            "properties": {
+              "M": {
+                "title": "M",
+                "type": "string",
+                "description": "از اطلاعات ارائه شده در evaluation (در قسمت history_taking بخش M و M_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و لیستی از (بخش های اشتباها انجام شده) دانشجو در مرحله شرح حال."
+              },
+              "E": {
+                "title": "E",
+                "type": "string",
+                "description": "از اطلاعات ارائه شده در evaluation (در قسمت history_taking بخش E و E_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و لیستی از (بخش‌های حیاتی انجام نشده) دانشجو در مرحله شرح حال."
+              }
+            }
         },
         "educational_feedback": {
-            "type": "string",
-            "description": "دلایل اهمیت و یا عدم اهمیت هر یک از اقدامات M (حذفیات) و اقدامات E (اضافی) ذکر شود.توصیه هایی برای رخ ندادن اشتباهات M و E در آینده داده شود.چنانچه نقص توالی وجود داشت، دلیل اشتباه بودن آن شرح داده میشود و توصیه هایی برای رخ ندادن این اشتباهات در آینده داده شود."
+            "type": "object",
+            "properties": {
+              "why_M_was_important": {
+                "title": "why_M_was_important",
+                "type": "string",
+                "description": " توضیح دلایل اهمیت حیاتی هر یک از (بخش‌های حیاتی انجام نشده) در تشخیص بیماری {disease}از اطلاعات ارائه شده در evaluation (در قسمت history_taking بخش M و M_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و به صورت علمی و با نگاه بالینی."
+              },
+              "why_E_was_unnecessary": {
+                "title": "why_E_was_unnecessary",
+                "type": "string",
+                "description": "توضیح دلایل غیرمهم بودن یا اضافی بودن هر یک از (بخش های اشتباها انجام شده) و اینکه چگونه منجر به اتلاف زمان شده‌اند و ما را از تشخیص بیماری {disease}از اطلاعات ارائه شده در evaluation (در قسمت history_taking بخش E و E_items) و transition استفاده کن در صورت نیاز به آنها اشاره کن و دور می کنند. به صورت علمی و با نگاه بالینی."
+              },
+              "sequence_advice": {
+                "title": "sequence_advice",
+                "type": "string",
+                "description": "از اطلاعات ارائه شده در evaluation در قسمت history_taking و transition استفاده کن در صورت نیاز به آنها اشاره کن و در صورت وجود خطای توالی، دلیل اشتباه بودن آن و توصیه‌هایی برای رعایت توالی منطقی."
+              }
+            }
         }
         },
         "required": [
@@ -58,16 +95,43 @@ json_schema = {
         "properties": {
         "strengths": {
             "type": "string",
-            "description": "بگو که انتخابات درستش (C)، چطور اون رو در تشخیص بیماری یاری دادن."
+            "description": "لیستی ازاقدامات صحیح دانشجو (C) در مرحله معاینه فیزیکی."
         },
         "weaknesses": {
-            "type": "string",
-            "description": "اقدامات M (حذفیات) که موجب تأخیر در تشخیص شده‌اند و اقدامات E (اضافی) که منجر به اتلاف زمان یا انحراف از مسیر منطقی شده‌اند، ذکر بشن.نقض توالی در گذار ۲←۳ به عنوان خطای توالی در این بخش تذکر داده می‌شود."
+            "type": "object",
+            "properties": {
+              "M": {
+                "title": "M",
+                "type": "string",
+                "description": "لیستی از (بخش های اشتباها انجام شده) دانشجو در مرحله معاینه فیزیکی."
+              },
+              "E": {
+                "title": "E",
+                "type": "string",
+                "description": "لیستی از (بخش‌های حیاتی انجام نشده) دانشجو در مرحله معاینه فیزیکی."
+              }
+            }
         },
         "educational_feedback": {
-            "type": "string",
-            "description": "دلایل اهمیت و یا عدم اهمیت هر یک از اقدامات M (حذفیات) و اقدامات E (اضافی) ذکر شود.توصیه هایی برای رخ ندادن اشتباهات M و E در آینده داده شود.چنانچه نقص توالی وجود داشت، دلیل اشتباه بودن آن شرح داده میشود و توصیه هایی برای رخ ندادن این اشتباهات در آینده داده شود"
-        }
+            "type": "object",
+            "properties": {
+              "why_M_was_important": {
+                "title": "why_M_was_important",
+                "type": "string",
+                "description": " توضیح دلایل اهمیت حیاتی هر یک از (بخش‌های حیاتی انجام نشده) در تشخیص بیماری {disease} به صورت علمی و با نگاه بالینی."
+              },
+              "why_E_was_unnecessary": {
+                "title": "why_E_was_unnecessary",
+                "type": "string",
+                "description": "توضیح دلایل غیرمهم بودن یا اضافی بودن هر یک از (بخش های اشتباها انجام شده) و اینکه چگونه منجر به اتلاف زمان شده‌اند و ما را از تشخیص بیماری {disease} دور می کنند. به صورت علمی و با نگاه بالینی. و تأکید بر معاینه هدفمند."
+              },
+              "sequence_advice": {
+                "title": "sequence_advice",
+                "type": "string",
+                "description": "در صورت وجود خطای توالی، دلیل اشتباه بودن آن و توصیه‌هایی برای جلوگیری از آن."
+              }
+            }
+          }
         },
         "required": [
         "strengths",
@@ -80,16 +144,43 @@ json_schema = {
         "properties": {
         "strengths": {
             "type": "string",
-            "description": "بگو که انتخابات درستش (C)، چطور اون رو در تشخیص بیماری یاری دادن و هزینه های بیمار رو کاهش دادن."
+            "description": "لیستی ازاقدامات صحیح دانشجو (C)، با تأکید بر تست‌های طلایی یا تست‌های ردکننده که منجر به تأیید نهایی یا کاهش ریسک شده‌اند."
         },
         "weaknesses": {
-            "type": "string",
-            "description": "اقدامات M (حذفیات) که موجب تأخیر در تشخیص شده‌اند و اقدامات E (اضافی) که منجر به اتلاف زمان، پول یا انحراف از مسیر منطقی شده‌اند، ذکر بشن"
+            "type": "object",
+            "properties": {
+              "M": {
+                "title": "M",
+                "type": "string",
+                "description": "لیستی از (بخش های اشتباها انجام شده) دانشجو در مرحله پاراکلینیک."
+              },
+              "E": {
+                "title": "E",
+                "type": "string",
+                "description": "لیستی از (بخش‌های حیاتی انجام نشده) دانشجو در مرحله پاراکلینیک."
+              }
+            }
         },
         "educational_feedback": {
-            "type": "string",
-            "description": "دلایل اهمیت و یا عدم اهمیت هر یک از اقدامات M (حذفیات) و اقدامات E (اضافی) ذکر شود.توصیه هایی برای رخ ندادن اشتباهات M و E در آینده داده شود."
-        }
+            "type": "object",
+            "properties": {
+              "why_M_was_important": {
+                "title": "why_M_was_important",
+                "type": "string",
+                "description": " توضیح دلایل اهمیت حیاتی هر یک از (بخش‌های حیاتی انجام نشده) در تشخیص بیماری {disease} به صورت علمی و با نگاه بالینی."
+              },
+              "why_E_was_unnecessary": {
+                "title": "why_E_was_unnecessary",
+                "type": "string",
+                "description": "توضیح دلایل غیرمهم بودن یا اضافی بودن هر یک از (بخش های اشتباها انجام شده) و اینکه چگونه منجر به اتلاف زمان شده‌اند و ما را از تشخیص بیماری {disease} دور می کنند. به صورت علمی و با نگاه بالینی. و تأکید بر اصل «کمترین تهاجم و بیشترین ارزش تشخیصی»."
+              },
+              "sequence_advice": {
+                "title": "sequence_advice",
+                "type": "string",
+                "description": "در صورت وجود خطای توالی، دلیل اشتباه بودن آن و توصیه‌هایی برای رعایت توالی منطقی."
+              }
+            }
+          }
         },
         "required": [
         "strengths",
@@ -102,15 +193,37 @@ json_schema = {
         "properties": {
         "strengths": {
             "type": "string",
-            "description": "دانشجو را تشویق کن و بهش بگو که قدم‌های تو از اول تا به انتها داره به تشخیص درست رسونده. ازش تعریف کن و بگو که این یک گام بزرگ در ارتقای مهارت‌های بالینیش بود بهش بگو که این نشون می‌ده که فیلتر نهایی رو بر اساس داده‌های [مهم‌ترین یافته پاراکلینیک] به‌درستی انجام داده و منطق بالینیش قاطع بوده."
+            "description": "بیماری‌هایی که به درستی انتخاب (لیست اولیه) و/یا به درستی فیلتر (شواهد) شده‌اند."
         },
         "weaknesses": {
-            "type": "string",
-            "description": "نقاط ضعف را با توجه به این سه حالت بررسی کن و متناسب با حالت درست جواب بده: خطا در نتیجه‌گیری: با ابراز تاسف بگو که تشخیصی که در نهایت داده اشتباه بوده و در مدیریت این بیمار موفق ظاهر نشده اً بهش توصیه‌هایی بکن که چطور می‌تونه روی این بیماری مسلط‌تر بشه. یماری اصلی هرگز در لیست نبوده: با ابراز تاسف شدید بگو که بیماری که باید تشخیص داده می‌شده هیچ وقت در لیست تشخیص افتراقی‌هاش قرار نگرفته و این یعنی اینکه ز اون اول منطق فرضیه‌سازی و تحلیل بالینیش مشکل داشته و نیازمند تلاش و مطالعه بیشتری هست. خطا در فیلتر کردن: بهش بگو که بیماری‌هایی را در لیست تشخیص افتراقی‌ها داشتی که ارتباطی با بیماری اصلی مریضت نداشتند و باعث گمراه شدن تو در مسیر تشخیص بیماری می‌تونستن بشن بهش گوشزد کن که باید همیشه بر اساس شواهد تشخیص‌های افتراقی بزاریم و یازه که تسلط خودمون رو روی بیماری‌های مختلف افزایش بدیم."
+            "type": "object",
+            "properties": {
+              "M": {
+                "title": "M",
+                "type": "string",
+                "description": "اشتباهات در لیست اولیه (حذفیات M) و یا ضعف در فیلتر شواهد (حذف بیماری محتمل)."
+              },
+              "E": {
+                "title": "E",
+                "type": "string",
+                "description": "اشتباهات در لیست اولیه (انتخاب E) و یا ضعف در فیلتر شواهد (حفظ بیماری رد شده)."
+              }
+            }
         },
         "educational_feedback": {
-            "type": "string",
-            "description": "بر اساس ایراداتی که در این مرحله داشته بهش بازخوردهای عملی و توصیه‌های شخصی بکن که بتونه با استفاده از اون‌ها ر مدیریت بیماری‌ها پیشرفت بکنه[۱] تشخیص افتراقی‌ها باید مثل فیلتر عمل کنن، نه مثل لیست خرید. [۲] هر یافته‌ی جدید باید بتونه حداقل یه بیماری رو با قاطعیت حذف کنه. اگه حذف نمی‌کنی، داری آزمایش‌ها رو بیهوده انجام می‌دی. [۳] سؤال آخر: اگه می‌تونستی یه آزمایش رو دوباره تفسیر کنی، کدوم بیماری رو حذف می‌کردی تا به تشخیص نهایی برسی؟"
+            "type": "object",
+            "properties": {
+              "why_M_was_important": {
+                "title": "why_M_was_important",
+                "type": "string",
+                "description": "توضیح دلایل غیرمرتبط بودن بیماری‌های اضافی (بخش های اشتباه انجام شده) و اینکه چگونه نتایج پاراکلینیک باید برای رد قاطع آن‌ها استفاده می‌شد."
+              },
+              "why_E_was_unnecessary": {
+                "title": "why_E_was_unnecessary",
+                "type": "string",
+                "description": "توضیح دلایل غیرمرتبط بودن بیماری‌های اضافی (بخش های اشتباه انجام شده) و اینکه چگونه نتایج پاراکلینیک باید برای رد قاطع آن‌ها استفاده می‌شد."
+              }
+            }
         }
         },
         "required": [
@@ -415,6 +528,143 @@ prompt_template = PromptTemplate(
   }}
 }}
 
+evaluation:
+{{
+  "history_taking": {{
+    "C": 6,
+    "E": 0,
+    "M": 20,
+    "O": 26,
+    "A": 6,
+    "Success_Rate_C_div_O": "23.08%",
+    "C_items": [
+      "present_illness.question3",
+      "present_illness.question1",
+      "present_illness.question8",
+      "medical_history.question3",
+      "medical_history.question1.question1b",
+      "medical_history.question1.question1a"
+    ],
+    "E_items": [],
+    "M_items": [
+      "present_illness.question5",
+      "present_illness.question4",
+      "present_illness.question2",
+      "present_illness.question9",
+      "present_illness.question10",
+      "family_history.question3.question3a",
+      "family_history.question3.question3b",
+      "family_history.question1.question1b",
+      "family_history.question1.question1a",
+      "family_history.question2",
+      "medical_history.question4",
+      "medical_history.question6",
+      "drug_history.question1.question1c",
+      "drug_history.question1.question1b",
+      "drug_history.question1.question1a",
+      "social_history.question1.question1b",
+      "social_history.question1.question1a",
+      "ROS.question7",
+      "ROS.question6",
+      "ROS.question1"
+    ]
+  }},
+  "physical_exam": {{
+    "C": 4,
+    "E": 3,
+    "M": 16,
+    "O": 20,
+    "A": 7,
+    "Success_Rate_C_div_O": "20.00%",
+    "C_items": [
+      "cardiovascular_system.JVP_assessment",
+      "respiratory_system.auscultation.adventitious_sounds",
+      "respiratory_system.inspection.chest_shape_and_symmetry",
+      "respiratory_system.inspection.accessory_muscles"
+    ],
+    "E_items": [
+      "head_and_neck.eyes.pupils_reaction",
+      "head_and_neck.ears.eardrum_appearance",
+      "head_and_neck.head_and_face.tenderness"
+    ],
+    "M_items": [
+      "general_appearance.overall_appearance.nutritional_status",
+      "general_appearance.posture_and_position.position_of_comfort",
+      "general_appearance.level_of_consciousness_mood_and_behavior.level_of_consciousness",
+      "general_appearance.level_of_consciousness_mood_and_behavior.behavior",
+      "general_appearance.level_of_consciousness_mood_and_behavior.mood",
+      "general_appearance.cardiopulmonary_and_circulatory_clues.cyanosis",
+      "general_appearance.cardiopulmonary_and_circulatory_clues.dyspnea",
+      "general_appearance.cardiopulmonary_and_circulatory_clues.edema",
+      "cardiovascular_system.peripheral_pulses_and_extremities.extremities_edema",
+      "cardiovascular_system.peripheral_pulses_and_extremities.peripheral_pulses_symmetry_and_quality",
+      "cardiovascular_system.peripheral_pulses_and_extremities.extremities_color_and_trophic_changes",
+      "cardiovascular_system.auscultation.heart_sounds_s1_s2",
+      "respiratory_system.palpation.chest_expansion",
+      "respiratory_system.palpation.tactile_fremitus",
+      "respiratory_system.percussion",
+      "respiratory_system.auscultation.breath_sounds_intensity"
+    ]
+  }},
+  "paraclinic": {{
+    "C": 7,
+    "E": 0,
+    "M": 4,
+    "O": 12,
+    "A": 8,
+    "Success_Rate_C_div_O": "58.33%",
+    "C_items": [
+      "functional_tests.plethysmography",
+      "functional_tests.Spirometry",
+      "simple_imaging.Chest_X_Ray.Lateral",
+      "simple_imaging.Chest_X_Ray.PA",
+      "basic_blood_tests.CBC.Hb",
+      "basic_blood_tests.VBG",
+      "specialized_lung_tests.a1_antitrypsin_level"
+    ],
+    "E_items": [],
+    "M_items": [
+      "functional_tests.peak_flow",
+      "advanced_imaging.Chest_CT_CTPA",
+      "basic_blood_tests.CBC.WBC",
+      "basic_blood_tests.ESR/CRP"
+    ]
+  }},
+  "differential_diagnosis": {{
+    "C": 2,
+    "E": 2,
+    "M": 2,
+    "O": 4,
+    "A": 4,
+    "Success_Rate_C_div_O": "50.00%",
+    "C_items": ["disease5", "disease3"],
+    "E_items": ["disease2", "disease7"],
+    "M_items": ["disease6", "disease1"]
+  }}
+}}
+
+transition:
+{{
+    "transition_1_to_2": {{
+        "O1": 26,
+        "A1_at_transition": 6,
+        "threshold_50_percent": 13.0,
+        "error": true,
+        "message": "Stage Order Error – شرح حال ناقص. قبل از تکمیل 50% اقدامات بهینه شرح حال، وارد معاینه فیزیکی شدید."
+    }},
+    "transition_2_to_3": {{
+        "O2": 20,
+        "A2_at_transition": 7,
+        "threshold_50_percent": 10.0,
+        "error": true,
+        "message": "Stage Order Error – معاینه ناقص. قبل از تکمیل 50% اقدامات بهینه معاینه فیزیکی، وارد پاراکلینیک شدید (جریمه بیشتر)."
+    }}
+}}
+
+تو یک تحلیل کننده و بازخورددهنده به عملکرد یک دانشجوی پزشکی در یک اپلیکیشن شبیه ساز سناریو تشخیص بیماری های بخش ریه هستی.
+برای دادن این بازخورد به چندین اطلاعات نیاز داری که در اختیار تو قرار گرفته است. بخش اول اطلاعات scenario است که شامل سوالاتی است که دانشجو می تواند از بیمار بپرسد تا بیماری او را تشخیص دهد.
+بخش دوم اطلاعات evaluation می باشد که در اون تحلیلی از سوالاتی که دانشجو از بیمار پرسیده به تو داده شده. در این بخش A نشان دهنده تعداد سوالاتی است که دانشجو پرسیده است، O نشان دهنده تعداد سوالات بهینه و optimal است که دانشجو باید می پرسیده، C نشان دهنده تعداد سوالاتی که دانشجو از بین سوالات بهینه پرسیده و انتخاب درستی بوده، M تعداد سوالات بهینه ای است که از سوالات بهینه از دست داده و نپرسیده است و همچنین E نشان دهنده سوالاتی است که دانشجو از بین سوالات نامطلوب و غیربهینه انتخاب کرده و باید انتخاب نمی کرده. به علاوه در این بخش سوالاتی که در مجموعه های C و M و E قرار داشتند در C_items و M_items و E_items آمده تا بتوانی در بازخورد به آن ها اشاره کنی و توضیح بدی که دانشجو باید چه کاری انجام می داده که باعث تشخیص دقیق تر و بهتر میشده و کدام سوالات رو درست پرسیده و تشویق کنی.
+در بخش سوم اطلاعات یعنی بخش transition این موضوع که دانشجو چه موقع از مرحله گرفتن شرح حال به معاینه فیزیکی رفته و همینطور چه موقع از مرحله معاینه فیزیکی به پاراکلینیک وارد شده بررسی شده است. دانشجو باید حداقل 50 درصد سوالات بهینه را پرسیده باشد تا بتواند وارد بخش بعد شود و اگر قبل از آن چنین کاری انجام دهد به این معناست که زود قضاوت کرده است و این احتمال خطا در تشخیص بیماری را افزایش می دهد. تو می توانی در این اطلاعات در دادن بازخورد نهایی استفاده کنی و به او گوشزد کنی که عملکرد درست چیست.
 """,
     input_variables=["disease"]
 )

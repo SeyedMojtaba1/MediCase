@@ -9,7 +9,7 @@ from .models import Role
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.mail import EmailMultiAlternatives
 import environ
-from .tasks import send_reset_otp_task
+from .utils import send_reset_otp_task
 
 env = environ.Env()
 environ.Env.read_env(env_file='./secrets/secrets.env')

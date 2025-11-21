@@ -5,6 +5,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 import json
+import random
 
 json_schema = {
   "title": "MedicalCase",
@@ -43,7 +44,7 @@ json_schema = {
             "occupation": {
               "title": "Occupation",
               "type": "string",
-              "description": ""
+              "description": "شغل بیمار بیان شود و درصورت بازنشسته بودن بیمار شغلی که از آن بازنشسته شده است را بیان کن."
             },
             "place_of_birth": {
               "title": "Place Of Birth",
@@ -152,7 +153,7 @@ json_schema = {
             "question3": {
               "title": "Question3",
               "type": "string",
-              "description": "تنگی نفستون دائمیه یا دوره‌ای؟ و با فعالیت بدتر میشه یا در حالت استراحت هم وجود داره؟"
+              "description": "آیا تنگی نفس دارید؟ اگر بله تنگی نفستون دائمیه یا دوره‌ای؟ و با فعالیت بدتر میشه یا در حالت استراحت هم وجود داره؟"
             },
             "question4": {
               "title": "Question4",
@@ -262,7 +263,7 @@ json_schema = {
                 "question2b": {
                   "title": "Question2b",
                   "type": "string",
-                  "description": "اگر پاسخ question2a بله بود، دلیلش چه بوده و در چه سالی؟ همچنین، آیا تا به حال انتقال خون داشته‌اید؟"
+                  "description": "اگر پاسخ question2a بله بود، دلیلش چه بوده و دقیقا چند وقت پیش بوده است؟(چند سال و چند ماه) همچنین، آیا تا به حال انتقال خون داشته‌اید؟"
                 }
               },
               "required": [
@@ -372,7 +373,7 @@ json_schema = {
                 "question1a": {
                   "title": "Question1a",
                   "type": "string",
-                  "description": "آیا در خانواده درجه یک (پدر، مادر، خواهر یا برادر) شما، سابقه ابتلا به بیماری‌های مزمن و شایع زیر وجود دارد؟"
+                  "description": "آیا در خانواده درجه یک (پدر، مادر، خواهر یا برادر) شما، سابقه ابتلا به بیماری‌های مزمن و شایع وجود دارد؟"
                 },
                 "question1b": {
                   "title": "Question1b",
@@ -511,22 +512,22 @@ json_schema = {
             "question6": {
               "title": "Question6",
               "type": "string",
-              "description": "آیا سابقه درد قفسه سینه، تپش قلب، تنگی نفس با فعالیت، تنگی نفس در حالت خوابیده (ارتوپنه)، یا تورم پاها (ادم) دارید؟"
+              "description": "آیا سابقه درد قفسه سینه، تپش قلب، تنگی نفس با فعالیت، تنگی نفس در حالت خوابیده ، یا تورم پاها دارید؟"
             },
             "question7": {
               "title": "Question7",
               "type": "string",
-              "description": "آیا سابقه سرفه، خس‌خس سینه، خلط خونی (هموپتیزی)، یا تنگی نفس (به جز تنگی نفس مرتبط با فعالیت شدید) دارید؟"
+              "description": "آیا سابقه سرفه، خس‌خس سینه، خلط خونی ، یا تنگی نفس (به جز تنگی نفس مرتبط با فعالیت شدید) دارید؟"
             },
             "question8": {
               "title": "Question8",
               "type": "string",
-              "description": "آیا دچار حالت تهوع، استفراغ، سوزش سر دل، درد شکم، تغییر در عادات اجابت مزاج (اسهال یا یبوست)، خونریزی از مقعد، یا زردی پوست و چشم (یرقان) هستید؟"
+              "description": "آیا دچار حالت تهوع، استفراغ، سوزش سر دل، درد شکم، تغییر در عادات اجابت مزاج (اسهال یا یبوست)، خونریزی از مقعد، یا زردی پوست و چشم هستید؟"
             },
             "question9": {
               "title": "Question9",
               "type": "string",
-              "description": "آیا دچار درد یا سوزش حین ادرار کردن، تکرر ادرار، خون در ادرار (هماچوری)، مشکل در کنترل ادرار، یا ترشحات غیرعادی هستید؟"
+              "description": "آیا دچار درد یا سوزش حین ادرار کردن، تکرر ادرار، خون در ادرار، مشکل در کنترل ادرار، یا ترشحات غیرعادی هستید؟"
             },
             "question10": {
               "title": "Question10",
@@ -894,7 +895,7 @@ json_schema = {
                 "tactile_fremitus": {
                   "title": "Tactile Fremitus",
                   "type": "string",
-                  "description": "آیا لرزش‌های صوتی (Tactile Fremitus) در دو طرف قفسه سینه متقارن و طبیعی هستند؟"
+                  "description": "آیا لرزش‌های صوتی (Tactile Fremitus) در دو طرف قفسه سینه متقارن و طبیعی هستند؟ اسم علمی نوع لرزش ها رو به فارسی ترجمه نکن."
                 }
               },
               "required": [
@@ -905,7 +906,7 @@ json_schema = {
             "percussion": {
               "title": "Percussion",
               "type": "string",
-              "description": "در بیماری‌های ریوی بسته به نوع درگیری، الگوی صدای پرکاشن متفاوت است: در انسداد مزمن یا افزایش حجم هوا، صدا معمولاً hyperresonant است؛ در تراکم یا فیبروز، صدا dull می‌شود؛ و در حالت طبیعی صدای رزونانس معمول دارد. پاسخ باید بر اساس فیزیولوژی بیماری انتخاب شود، نه همیشه طبیعی."
+              "description": "در بیماری‌های ریوی بسته به نوع درگیری، الگوی صدای پرکاشن متفاوت است: در انسداد مزمن یا افزایش حجم هوا، صدا معمولاً hyperresonant است؛ در تراکم یا فیبروز، صدا dull می‌شود؛ و در حالت طبیعی صدای رزونانس معمول دارد. پاسخ باید بر اساس فیزیولوژی بیماری انتخاب شود، نه همیشه طبیعی. در پاسخ نام صدا ها رو به فارسی ترجمه نکن."
             },
             "auscultation": {
               "title": "Auscultation",
@@ -1273,7 +1274,7 @@ json_schema = {
             "VBG": {
               "title": "Vbg",
               "type": "string",
-              "description": "نتایج تست بر اساس بیماری {disease} داده شود."
+              "description": "نتایج تست PH, HCO3, PaCO2 بر اساس بیماری {disease} داده شود."
             }
           },
           "required": [
@@ -1292,27 +1293,27 @@ json_schema = {
             "Sputum_analysis": {
               "title": "Sputum Analysis",
               "type": "string",
-              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عدد نتایج نمایش داده شود و تفسیری وجود نداشته باشد."
+              "description": "Comprehensive sputum analysis findings including: 1) Macroscopic appearance (color, consistency), 2) Microscopic/Gram stain (WBC count, Epithelial cells, bacteria type), 3) Culture results (specific organism or normal flora), and 4) AFB/TB smear status if reported."
             },
             "Sputum_AFB": {
               "title": "Sputum Afb",
               "type": "string",
-              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عدد نتایج نمایش داده شود و تفسیری وجود نداشته باشد."
+              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عددی نمایش داده شود و تفسیری وجود نداشته باشد."
             },
             "a1_antitrypsin_level": {
               "title": "A1 Antitrypsin Level",
               "type": "string",
-              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عدد نتایج نمایش داده شود و تفسیری وجود نداشته باشد."
+              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عددی نمایش داده شود و تفسیری وجود نداشته باشد."
             },
             "D_dimer": {
               "title": "D Dimer",
               "type": "string",
-              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عدد نتایج نمایش داده شود و تفسیری وجود نداشته باشد."
+              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عددی نمایش داده شود و تفسیری وجود نداشته باشد."
             },
             "BNP_NT_proBNP": {
               "title": "Bnp Nt Pro Bnp",
               "type": "string",
-              "description": "نتایج تست بر اساس بیماری {disease} و به صورت عدد نتایج نمایش داده شود و تفسیری وجود نداشته باشد."
+              "description": "D-dimer test result. Extract the quantitative value (e.g., 500, 0.5) AND the unit (e.g., ng/mL, mg/L, ug/mL FEU)."
             }
           },
           "required": [
@@ -1336,70 +1337,12 @@ json_schema = {
             "Autoimmune_pannel_ANA_ANCA": {
               "title": "Autoimmune Pannel Ana Anca",
               "type": "string",
-              "description": "نتایج تست بر اساس بیماری {disease} داده شود."
+              "description": "Extract the complete Autoimmune Panel results. For the ANA test, extract three vital components: the qualitative result (Positive/Negative), the precise Titer (e.g., 1:160, 1:320), and the Immunofluorescence Pattern (e.g., Homogeneous, Speckled). For the ANCA test, ensure to report the status of c-ANCA and p-ANCA, along with the values of specific antibodies, Anti-MPO and Anti-PR3."
             }
           },
           "required": [
             "HIV_test",
             "Autoimmune_pannel_ANA_ANCA"
-          ]
-        },
-        "simple_imaging": {
-          "title": "Simple Imaging",
-          "description": "simple_imaging",
-          "type": "object",
-          "properties": {
-            "chest_X_Ray": {
-              "title": "Chest X Ray",
-              "description": "در رادیوگرافی قفسه سینه، بسته به نوع درگیری، یافته‌ها می‌تواند شامل افزایش حجم ریه‌ها و پایین‌رفتن دیافراگم (در بیماری‌های انسدادی)، نواحی سفیدی یا سایه (در تراکم یا عفونت)، یا الگوی طبیعی در شرایط غیرریوی باشد. تفسیر نتایج رو براساس بیماری تولید کن.",
-              "type": "object",
-              "properties": {
-                "PA": {
-                  "title": "Pa",
-                  "type": "string",
-                  "description": "در صورت diagnostic نبودن برای بیماری {disease}: رادیولوژیست نمی داند شما چرا درخواست CXR داده اید! با این حال نتایج نرمال هستند. در صورت diagnostic بودن تفسیر یک CXR تیپیک برای بیماری {disease} را خروجی بده."
-                },
-                "Lateral": {
-                  "title": "Lateral",
-                  "type": "string",
-                  "description": "در صورت diagnostic نبودن برای بیماری {disease}: رادیولوژیست نمی داند شما چرا درخواست CXR داده اید! با این حال نتایج نرمال هستند. در صورت diagnostic بودن تفسیر یک CXR تیپیک برای بیماری {disease} را خروجی بده."
-                }
-              },
-              "required": [
-                "PA",
-                "Lateral"
-              ]
-            }
-          },
-          "required": [
-            "chest_X_Ray"
-          ]
-        },
-        "advanced_imaging": {
-          "title": "Advanced Imaging",
-          "description": "advanced_imaging",
-          "type": "object",
-          "properties": {
-            "Chest_CT_CTPA": {
-              "title": "Chest Ct Ctpa",
-              "type": "string",
-              "description": "در صورت diagnostic نبودن برای بیماری {disease}: رادیولوژیست نمی داند شما چرا درخواست CT داده اید! با این حال نتایج نرمال هستند. در صورت diagnostic بودن تفسیر یک CT تیپیک برای بیماری {disease} را خروجی بده."
-            },
-            "MRI_chest": {
-              "title": "Mri Chest",
-              "type": "string",
-              "description": "در صورت diagnostic نبودن برای بیماری {disease}: رادیولوژیست نمی داند شما چرا درخواست MRI داده اید! با این حال نتایج نرمال هستند. در صورت diagnostic بودن تفسیر یک MRI تیپیک برای بیماری {disease} را خروجی بده."
-            },
-            "Pet_scan": {
-              "title": "Pet Scan",
-              "type": "string",
-              "description": "در صورت diagnostic نبودن برای بیماری {disease}: رادیولوژیست نمی داند شما چرا درخواست Pet scan داده اید! با این حال نتایج نرمال هستند. در صورت diagnostic بودن تفسیر یک Pet scan تیپیک برای بیماری {disease} را خروجی بده."
-            }
-          },
-          "required": [
-            "Chest_CT_CTPA",
-            "MRI_chest",
-            "Pet_scan"
           ]
         },
         "functional_tests": {
@@ -1409,18 +1352,84 @@ json_schema = {
           "properties": {
             "Spirometry": {
               "title": "Spirometry",
-              "type": "string",
-              "description": "در صورت diagnostic بودن تفسیر یک Spirometry تیپیک برای بیماری {disease} را خروجی بده."
+              "type": "object",
+              "fev1": {
+                "title": "FEV1",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, Predicted, % Predicted"
+              },
+              "fvc": {
+                "title": "FVC",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, Predicted, % Predicted"
+              },
+              "fev1/fvc": {
+                "title": "FEV1/FVC",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, Predicted, % Predicted"
+              },
             },
-            "peak_flow": {
-              "title": "Peak Flow",
-              "type": "string",
-              "description": "در صورت diagnostic بودن تفسیر یک peak flow تیپیک برای بیماری {disease} را خروجی بده. مقدار Peak Expiratory Flow نشان‌دهندهٔ شدت و نوع محدودیت جریان هواست. در بیماری‌های انسدادی معمولاً کاهش دارد، در محدودکننده‌ها ممکن است طبیعی یا کمی کاهش‌یافته باشد، و در افراد سالم در محدوده نرمال است. از مقادیر و توصیفات متناسب با نوع الگوی تنفسی استفاده کن."
+            "dlco": {
+              "title": "DLCO",
+              "type": "object",
+              "dlco": {
+                "title": "DLCO",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, % Predicted"
+              },
+              "dlco/va_ratio": {
+                "title": "DLCO/VA_Ratio",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, % Predicted"
+              }
             },
             "plethysmography": {
               "title": "Plethysmography",
-              "type": "string",
-              "description": "در صورت diagnostic بودن تفسیر یک plethysmography تیپیک برای بیماری {disease} را خروجی بده."
+              "type": "object",
+              "tls": {
+                "title": "TLC",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, % Predicted"
+              },
+              "rv": {
+                "title": "RV",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, % Predicted"
+              },
+              "frc": {
+                "title": "FRC",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Measured_Value, % Predicted"
+              },
+              "rv/tlc_ratio": {
+                "title": "RV/TLC Ratio",
+                "type": "string",
+                "description": "extract the RV/TLC Ratio."
+              }
             }
           },
           "required": [
@@ -1437,13 +1446,30 @@ json_schema = {
             "Bronchoscopy": {
               "title": "Bronchoscopy",
               "type": "string",
-              "description": "در صورت diagnostic نبودن نتایج را نشان بده با این حال اخطاری مبنی بر خطرات انجام این پروسیجر در نبود اندیکاسیون آن بده."
+              "description": "Extract the complete Bronchoscopy Report. Separate findings into three essential components: 1) **Visual/Endoscopic Findings** (location and detailed description of any mass, stricture, inflammation, or bleeding observed); 2) **Procedural Details** (which samples were taken: BAL, Biopsy, Brushings, TBNA, etc.); and 3) **Specimen Results** (the final pathology/histology diagnosis, cytology results, and culture/infection status from all retrieved samples)."
             },
-            "torachonthesis": {
-              "title": "Torachonthesis",
-              "type": "string",
-              "description": "در صورت diagnostic نبودن نتایج را نشان بده با این حال اخطاری مبنی بر خطرات انجام این پروسیجر در نبود اندیکاسیون آن بده."
-            }
+            "torachocenthesis": {
+              "title": "Torachocenthesis",
+              "type": "object",
+              "properties": {
+                "pleural_fluid": {
+                  "title": "Pleural Fluid",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "LDH, Protein, Albumin, Glucose"
+                },
+                "serum": {
+                  "title": "Serum",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "LDH, Protein, Albumin"
+                }
+              },
+            },
           },
           "required": [
             "Bronchoscopy",
@@ -1479,24 +1505,24 @@ json_schema = {
 
 model = init_chat_model(
   model="gpt-4o-mini",
-  base_url="https://api.avalai.ir/v1/chat/completions",
+  base_url="https://api.avalai.ir/v1",
   api_key="aa-bFHSFoxDcvBLcr9tEpySz5SIjvlHGBAmJ3nqgKALEgt5w8YH",
 )
 
-# gpt-4o-mini
-# aa-bFHSFoxDcvBLcr9tEpySz5SIjvlHGBAmJ3nqgKALEgt5w8YH
+OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH", "Pleural_Effusion", "ARDS"]
 
-target_disease = 'COPD'
-
-prompt_template = PromptTemplate(
+def scenario_creator():
+  target_disease = random.choice(OPTIMAL_SCENARIO)
+  
+  prompt_template = PromptTemplate(
     template="مطابق json زیر با در نظر گرفتن اینکه این موارد در رابطه با بیماری {disease} می‌باشند جوری کامل کن که یک پزشک بتواند با استفاده از این یافته‌ها به تشخیص برسد. به فارسی روان پاسخ یده اما اصطلاخات علمی را ترجمه نکن و به صورت انگلیسی در متن فارسی قرار بده.",
     input_variables=["disease"]
-)
+  )
+  
+  final_prompt = prompt_template.format(disease=target_disease)
 
-final_prompt = prompt_template.format(disease=target_disease)
+  structured_chat_model = model.with_structured_output(json_schema)
+  output = structured_chat_model.invoke(final_prompt)
+  
+  return output
 
-structured_chat_model = model.with_structured_output(json_schema)
-output = structured_chat_model.invoke(final_prompt)
-json_output = json.dumps(output, indent=4, ensure_ascii=False)
-
-print(json_output)
