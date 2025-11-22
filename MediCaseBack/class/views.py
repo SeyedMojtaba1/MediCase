@@ -17,8 +17,11 @@ from .serializer import (
     StudentSubjectListSerializer,
     StudentSubjectRetrieveSerializer,
     HospitalSerializer,
+    HospitalSubjectSerializer,
+    HospitalSubjectListSerializer,
+    HospitalSubjectRetrieveSerializer,
 )
-from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital
+from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import PermissionDenied, NotFound
 from django.views.decorators.cache import cache_page
@@ -402,3 +405,58 @@ class HospitalViewSet(viewsets.ModelViewSet):
     
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
+
+class HospitalSubjectCreateView(generics.GenericAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = HospitalSubjectSerializer
+    queryset = HospitalSubject.objects.all()
+    
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        hospital_subject = serializer.save()
+        
+        data = {
+            "data": {
+                "subject": hospital_subject.subject.english_name,
+                "hospital": hospital_subject.hospital.english_name,
+                "access_status": hospital_subject.access_status
+            },
+            "message": "ثبت اطلاعات با موفقیت انجام شد."
+        }
+        return Response(data, status=status.HTTP_201_CREATED)
+
+class HospitalSubjectListView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = HospitalSubjectListSerializer
+    queryset = HospitalSubject.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    
+class HospitalSubjectRetrieveView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = HospitalSubjectRetrieveSerializer
+    queryset = HospitalSubject.objects.all()
+    lookup_field = 'subject'
+    lookup_url_kwarg = 'subject'
+    lookup_value_regex = '[^/]+'
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        lookup_value = self.kwargs.get(self.lookup_field)
+        
+        try:
+            subject = Subject.objects.get(english_name=lookup_value)
+        except Subject.DoesNotExist:
+            return Response({"message": "Subject is not exist."})
+                
+        queryset = self.get_queryset().filter(subject=subject.subject_id)
+        serializer = StudentSubjectListSerializer(queryset, many=True)
+        
+        return Response(serializer.data)

@@ -101,3 +101,9 @@ class Hospital(models.Model):
     def __str__(self):
         return self.english_name
 
+class HospitalSubject(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, related_name='subjecthospitals')
+    hospital = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, related_name='hospitalsubjects')
+    access_status = models.BooleanField(default=False)

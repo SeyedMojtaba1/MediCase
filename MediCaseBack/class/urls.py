@@ -22,4 +22,7 @@ urlpatterns = [
    path('studentsubjectcreate/', views.StudentSubjectCreateView.as_view(), name='studentsubjectcreate'),
    path('studentsubjectlist/', views.StudentSubjectListView.as_view(), name='studentsubjectlist'),
    path('studentsubjectretrieve/<str:subject>/', views.StudentSubjectRetrieveView.as_view(), name='studentsubjectretrieve'),
+   path('hospitalsubjectcreate/', views.HospitalSubjectCreateView.as_view(), name='hospitalsubjectcreate'),
+   path('hospitalsubjectlist/', views.HospitalSubjectListView.as_view(), name='hospitalsubjectlist'),
+   path('hospitalsubjectretrieve/<str:subject>/', views.HospitalSubjectRetrieveView.as_view(), name='hospitalsubjectretrieve'),
 ]

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital
+from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 import base64
@@ -495,4 +495,71 @@ class HospitalSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {
             'url': {'lookup_field': 'english_name'}
+        }
+
+class HospitalSubjectSerializer(serializers.ModelSerializer):
+    subject = serializers.CharField()
+    hospital = serializers.CharField()
+    
+    class Meta:
+        model = HospitalSubject
+        fields = [
+            'subject',
+            'hospital',
+            'access_status',
+        ]
+           
+    def create(self, validated_data):
+        subject=validated_data['subject']
+        hospital=validated_data['hospital']
+        try:
+            subject = Subject.objects.get(english_name=subject)
+        except Subject.DoesNotExist:
+            return "Subject is not exist."
+            
+        try:
+            hospital = Hospital.objects.get(english_name=hospital)
+        except Hospital.DoesNotExist:
+            return "Student is not exist."
+        
+        if HospitalSubject.objects.filter(subject=subject, hospital=hospital).exists():
+            raise serializers.ValidationError(
+                {"detail": "This hospital is already registered for this subject."}
+            )
+        
+        hospital_subject = HospitalSubject.objects.create(
+            subject=subject,
+            hospital=hospital,
+            access_status=validated_data['access_status'],
+        )
+        
+        hospital_subject.save()
+        
+        return hospital_subject
+    
+class HospitalSubjectListSerializer(serializers.ModelSerializer):
+    subject = serializers.CharField(source='subject.english_name', read_only=True)
+    hospital = serializers.CharField(source='hospital.english_name', read_only=True)
+    
+    class Meta:
+        model = HospitalSubject
+        fields = [
+            'subject',
+            'hospital',
+            'access_status',
+        ]
+        
+class HospitalSubjectRetrieveSerializer(serializers.ModelSerializer):
+    subject = serializers.CharField(source='subject.english_name', read_only=True)
+    hospital = serializers.CharField(source='hospital.english_name', read_only=True)
+    
+    class Meta:
+        model = HospitalSubject
+        fields = [
+            'subject',
+            'hospital',
+            'access_status',
+        ]
+        extra_kwargs = {
+            'url': {'lookup_field': 'subject'}
         }
