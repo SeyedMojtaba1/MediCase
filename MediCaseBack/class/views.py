@@ -444,7 +444,6 @@ class HospitalSubjectRetrieveView(generics.ListAPIView):
     serializer_class = HospitalSubjectRetrieveSerializer
     queryset = HospitalSubject.objects.all()
     lookup_field = 'subject'
-    lookup_url_kwarg = 'subject'
     lookup_value_regex = '[^/]+'
 
     def list(self, request, *args, **kwargs):
@@ -457,6 +456,6 @@ class HospitalSubjectRetrieveView(generics.ListAPIView):
             return Response({"message": "Subject is not exist."})
                 
         queryset = self.get_queryset().filter(subject=subject.subject_id)
-        serializer = StudentSubjectListSerializer(queryset, many=True)
+        serializer = HospitalSubjectListSerializer(queryset, many=True)
         
         return Response(serializer.data)

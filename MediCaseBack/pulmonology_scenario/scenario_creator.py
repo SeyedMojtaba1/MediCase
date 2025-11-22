@@ -1524,4 +1524,4 @@ def scenario_creator():
   structured_chat_model = model.with_structured_output(json_schema)
   output = structured_chat_model.invoke(final_prompt)
   
-  return output
+  return output, target_disease

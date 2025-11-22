@@ -1,7 +1,10 @@
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-
+from .feedback_utils.S1_identifying_sets import calculate_set_metrics
+from .feedback_utils.S3_stage_score import calculate_stage_order_error
+from .feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
+from .feedback_utils.escape_json_braces import escape_json_braces
 import json
 
 json_schema = {
@@ -529,150 +532,29 @@ prompt_template = PromptTemplate(
 }}
 
 evaluation:
-{{
-  "history_taking": {{
-    "C": 6,
-    "E": 0,
-    "M": 20,
-    "O": 26,
-    "A": 6,
-    "Success_Rate_C_div_O": "23.08%",
-    "C_items": [
-      "present_illness.question3",
-      "present_illness.question1",
-      "present_illness.question8",
-      "medical_history.question3",
-      "medical_history.question1.question1b",
-      "medical_history.question1.question1a"
-    ],
-    "E_items": [],
-    "M_items": [
-      "present_illness.question5",
-      "present_illness.question4",
-      "present_illness.question2",
-      "present_illness.question9",
-      "present_illness.question10",
-      "family_history.question3.question3a",
-      "family_history.question3.question3b",
-      "family_history.question1.question1b",
-      "family_history.question1.question1a",
-      "family_history.question2",
-      "medical_history.question4",
-      "medical_history.question6",
-      "drug_history.question1.question1c",
-      "drug_history.question1.question1b",
-      "drug_history.question1.question1a",
-      "social_history.question1.question1b",
-      "social_history.question1.question1a",
-      "ROS.question7",
-      "ROS.question6",
-      "ROS.question1"
-    ]
-  }},
-  "physical_exam": {{
-    "C": 4,
-    "E": 3,
-    "M": 16,
-    "O": 20,
-    "A": 7,
-    "Success_Rate_C_div_O": "20.00%",
-    "C_items": [
-      "cardiovascular_system.JVP_assessment",
-      "respiratory_system.auscultation.adventitious_sounds",
-      "respiratory_system.inspection.chest_shape_and_symmetry",
-      "respiratory_system.inspection.accessory_muscles"
-    ],
-    "E_items": [
-      "head_and_neck.eyes.pupils_reaction",
-      "head_and_neck.ears.eardrum_appearance",
-      "head_and_neck.head_and_face.tenderness"
-    ],
-    "M_items": [
-      "general_appearance.overall_appearance.nutritional_status",
-      "general_appearance.posture_and_position.position_of_comfort",
-      "general_appearance.level_of_consciousness_mood_and_behavior.level_of_consciousness",
-      "general_appearance.level_of_consciousness_mood_and_behavior.behavior",
-      "general_appearance.level_of_consciousness_mood_and_behavior.mood",
-      "general_appearance.cardiopulmonary_and_circulatory_clues.cyanosis",
-      "general_appearance.cardiopulmonary_and_circulatory_clues.dyspnea",
-      "general_appearance.cardiopulmonary_and_circulatory_clues.edema",
-      "cardiovascular_system.peripheral_pulses_and_extremities.extremities_edema",
-      "cardiovascular_system.peripheral_pulses_and_extremities.peripheral_pulses_symmetry_and_quality",
-      "cardiovascular_system.peripheral_pulses_and_extremities.extremities_color_and_trophic_changes",
-      "cardiovascular_system.auscultation.heart_sounds_s1_s2",
-      "respiratory_system.palpation.chest_expansion",
-      "respiratory_system.palpation.tactile_fremitus",
-      "respiratory_system.percussion",
-      "respiratory_system.auscultation.breath_sounds_intensity"
-    ]
-  }},
-  "paraclinic": {{
-    "C": 7,
-    "E": 0,
-    "M": 4,
-    "O": 12,
-    "A": 8,
-    "Success_Rate_C_div_O": "58.33%",
-    "C_items": [
-      "functional_tests.plethysmography",
-      "functional_tests.Spirometry",
-      "simple_imaging.Chest_X_Ray.Lateral",
-      "simple_imaging.Chest_X_Ray.PA",
-      "basic_blood_tests.CBC.Hb",
-      "basic_blood_tests.VBG",
-      "specialized_lung_tests.a1_antitrypsin_level"
-    ],
-    "E_items": [],
-    "M_items": [
-      "functional_tests.peak_flow",
-      "advanced_imaging.Chest_CT_CTPA",
-      "basic_blood_tests.CBC.WBC",
-      "basic_blood_tests.ESR/CRP"
-    ]
-  }},
-  "differential_diagnosis": {{
-    "C": 2,
-    "E": 2,
-    "M": 2,
-    "O": 4,
-    "A": 4,
-    "Success_Rate_C_div_O": "50.00%",
-    "C_items": ["disease5", "disease3"],
-    "E_items": ["disease2", "disease7"],
-    "M_items": ["disease6", "disease1"]
-  }}
-}}
+{evaluation}
 
 transition:
-{{
-    "transition_1_to_2": {{
-        "O1": 26,
-        "A1_at_transition": 6,
-        "threshold_50_percent": 13.0,
-        "error": true,
-        "message": "Stage Order Error – شرح حال ناقص. قبل از تکمیل 50% اقدامات بهینه شرح حال، وارد معاینه فیزیکی شدید."
-    }},
-    "transition_2_to_3": {{
-        "O2": 20,
-        "A2_at_transition": 7,
-        "threshold_50_percent": 10.0,
-        "error": true,
-        "message": "Stage Order Error – معاینه ناقص. قبل از تکمیل 50% اقدامات بهینه معاینه فیزیکی، وارد پاراکلینیک شدید (جریمه بیشتر)."
-    }}
-}}
+{transition}
 
 تو یک تحلیل کننده و بازخورددهنده به عملکرد یک دانشجوی پزشکی در یک اپلیکیشن شبیه ساز سناریو تشخیص بیماری های بخش ریه هستی.
 برای دادن این بازخورد به چندین اطلاعات نیاز داری که در اختیار تو قرار گرفته است. بخش اول اطلاعات scenario است که شامل سوالاتی است که دانشجو می تواند از بیمار بپرسد تا بیماری او را تشخیص دهد.
 بخش دوم اطلاعات evaluation می باشد که در اون تحلیلی از سوالاتی که دانشجو از بیمار پرسیده به تو داده شده. در این بخش A نشان دهنده تعداد سوالاتی است که دانشجو پرسیده است، O نشان دهنده تعداد سوالات بهینه و optimal است که دانشجو باید می پرسیده، C نشان دهنده تعداد سوالاتی که دانشجو از بین سوالات بهینه پرسیده و انتخاب درستی بوده، M تعداد سوالات بهینه ای است که از سوالات بهینه از دست داده و نپرسیده است و همچنین E نشان دهنده سوالاتی است که دانشجو از بین سوالات نامطلوب و غیربهینه انتخاب کرده و باید انتخاب نمی کرده. به علاوه در این بخش سوالاتی که در مجموعه های C و M و E قرار داشتند در C_items و M_items و E_items آمده تا بتوانی در بازخورد به آن ها اشاره کنی و توضیح بدی که دانشجو باید چه کاری انجام می داده که باعث تشخیص دقیق تر و بهتر میشده و کدام سوالات رو درست پرسیده و تشویق کنی.
 در بخش سوم اطلاعات یعنی بخش transition این موضوع که دانشجو چه موقع از مرحله گرفتن شرح حال به معاینه فیزیکی رفته و همینطور چه موقع از مرحله معاینه فیزیکی به پاراکلینیک وارد شده بررسی شده است. دانشجو باید حداقل 50 درصد سوالات بهینه را پرسیده باشد تا بتواند وارد بخش بعد شود و اگر قبل از آن چنین کاری انجام دهد به این معناست که زود قضاوت کرده است و این احتمال خطا در تشخیص بیماری را افزایش می دهد. تو می توانی در این اطلاعات در دادن بازخورد نهایی استفاده کنی و به او گوشزد کنی که عملکرد درست چیست.
 """,
-    input_variables=["disease"]
+    input_variables=["disease", "evaluation", "transition"]
 )
 
-final_prompt = prompt_template.format(disease=target_disease)
+def feedback_generator(target_disease, STUDENT_LOG):
+  evaluation = calculate_set_metrics(OPTIMAL_SCENARIO[f"{target_disease}"], STUDENT_LOG)
+  transition = calculate_stage_order_error(OPTIMAL_SCENARIO[f"{target_disease}"], STUDENT_LOG)
+  
+  evaluation = escape_json_braces(evaluation)
+  transition = escape_json_braces(transition)
+  
+  final_prompt = prompt_template.format(disease=target_disease, evaluation=evaluation, transition=transition)
 
-structured_chat_model = model.with_structured_output(json_schema)
-output = structured_chat_model.invoke(final_prompt)
-json_output = json.dumps(output, indent=4, ensure_ascii=False)
+  structured_chat_model = model.with_structured_output(json_schema)
+  output = structured_chat_model.invoke(final_prompt)
 
-print(json_output)
+  return output

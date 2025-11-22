@@ -1,4 +1,4 @@
-from .models import PulmonologyScenario
+from .models import PulmonologyScenario, PulmonologyFeedback
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
@@ -24,6 +24,24 @@ class ScenarioRetrieveSerializer(serializers.ModelSerializer):
         model = PulmonologyScenario
         fields = [
             'scenario'
+        ]
+        extra_kwargs = {
+            "url": {'lookup_field': 'tracking_code'}
+        }
+
+class feedbackCreateSerializer(serializers.Serializer):
+    tracking_code = serializers.CharField()
+    
+class StudentLogSerializer(serializers.Serializer):
+    student_log = serializers.JSONField()
+    
+class FeedbackRetrieveSerializer(serializers.ModelSerializer):
+    feedback = serializers.JSONField()
+    
+    class Meta:
+        model = PulmonologyFeedback
+        fields = [
+            'feedback'
         ]
         extra_kwargs = {
             "url": {'lookup_field': 'tracking_code'}

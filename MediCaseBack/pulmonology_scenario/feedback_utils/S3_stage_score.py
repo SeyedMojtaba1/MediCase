@@ -1,6 +1,6 @@
-from S1_identifying_sets import calculate_set_metrics, count_true_values
-from S2_get_action_time import get_first_action_time_and_count
-from optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
+from .S1_identifying_sets import calculate_set_metrics, count_true_values
+from .S2_get_action_time import get_first_action_time_and_count
+from .optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
 from typing import Dict, Any
 import json
 
@@ -427,6 +427,4 @@ def calculate_stage_order_error(
             
     return order_results
 
-order_assessment = calculate_stage_order_error(OPTIMAL_SCENARIO["COPD"], STUDENT_LOG)
-print(json.dumps(order_assessment, indent=4, ensure_ascii=False))
 

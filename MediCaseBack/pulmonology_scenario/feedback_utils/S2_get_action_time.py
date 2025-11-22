@@ -1,6 +1,6 @@
 import json
 from typing import Dict, Any, Tuple, Union
-from S1_identifying_sets import calculate_set_metrics
+from .S1_identifying_sets import calculate_set_metrics
 
 OPTIMAL_SCENARIO: Dict[str, Dict[str, bool]] = {
   "history_taking": {
@@ -554,6 +554,4 @@ def get_first_action_time_and_count(student_actions: Dict[str, Any], stage_O_siz
     action_count = len(actions_with_time)
     
     return first_action_time, action_count
-
-results = calculate_set_metrics(OPTIMAL_SCENARIO, STUDENT_LOG)
-print(get_first_action_time_and_count(STUDENT_LOG, results.get('history_taking')['C']))
+  

@@ -28,6 +28,7 @@ class PulmonologyScenario(models.Model):
     scenario = models.JSONField()
     tracking_code = models.CharField(blank=True, max_length=10)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="userPulmonologyScenario")
+    disease = models.ForeignKey(PulmonologyDisease, on_delete=models.SET_NULL, null=True, related_name="pulmonologydiseasescenario")
     created_date = models.DateTimeField(auto_now_add=True)
 
 class StudentLog(models.Model):
@@ -39,5 +40,7 @@ class StudentLog(models.Model):
 class PulmonologyFeedback(models.Model):
     feedback_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     feedback = models.JSONField()
+    tracking_code = models.CharField(blank=True, max_length=10)
+    scenario = models.ForeignKey(PulmonologyScenario, on_delete=models.SET_NULL, null=True, related_name="feedbackpulmonologyscenario")
     created_date = models.DateTimeField(auto_now_add=True)
     

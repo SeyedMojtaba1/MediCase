@@ -3,11 +3,16 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from drf_spectacular.utils import extend_schema
-from .serializer import ScenarioCreateSerializer, ScenarioRetrieveSerializer
-from .models import PulmonologyScenario
-from .scenario_creator import scenario_creator
+from .serializer import (
+    ScenarioCreateSerializer, 
+    ScenarioRetrieveSerializer, 
+    feedbackCreateSerializer, 
+    StudentLogSerializer, 
+    FeedbackRetrieveSerializer,
+)
+from .models import PulmonologyScenario, PulmonologyFeedback
 from django.contrib.auth import get_user_model
-from .utils import senario_creator_celery
+from .utils import senario_creator_celery, feedback_creator_celery
 import secrets
 import string
 
@@ -52,7 +57,45 @@ class ScenarioRetrieveView(generics.RetrieveAPIView):
     lookup_field = 'tracking_code'
     lookup_value_regex = '[^/]+'
     
-    # def retrieve(self, request, *args, **kwargs):
-    #     serializer = self.get_queryset(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
+@extend_schema(
+    request=StudentLogSerializer,
+    responses=feedbackCreateSerializer
+)
+@authentication_classes([JWTAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+@api_view(['POST'])
+def feedback_create(request, *args, **kwargs):
+    user = request.user
+    scenario_tracking_code = request.parser_context['kwargs'].get('scenario_tracking_code')
+    serializer = StudentLogSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    student_log = serializer.data['student_log']
+    
+    try:
+        user = User.objects.get(personal_number=user.personal_number)
+    except User.DoesNotExist:
+        return Response(
+            {"detail": "User is not exist."}
+        )
         
+    try:
+        pulmonology_scenario = PulmonologyScenario.objects.get(tracking_code=scenario_tracking_code)
+    except PulmonologyScenario.DoesNotExist:
+        return Response(
+            {"detail": "Scenario is not exist."}
+        )
+    
+    disease = pulmonology_scenario.disease.english_name
+    
+    feedback_tracking_code = generate_tracking_code(10)
+    feedback_creator_celery.delay(feedback_tracking_code, scenario_tracking_code, disease, student_log)
+
+    return Response({"tracking_code": feedback_tracking_code}, status=status.HTTP_200_OK)
+
+class FeedbackRetrieveView(generics.RetrieveAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = FeedbackRetrieveSerializer
+    queryset = PulmonologyFeedback.objects.all()
+    lookup_field = 'tracking_code'
+    lookup_value_regex = '[^/]+'

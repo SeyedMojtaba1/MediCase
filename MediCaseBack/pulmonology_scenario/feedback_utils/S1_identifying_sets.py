@@ -629,5 +629,5 @@ def calculate_set_metrics(
         }
         
     return results
-
-print(calculate_set_metrics(OPTIMAL_SCENARIO, STUDENT_LOG))
+  
+  

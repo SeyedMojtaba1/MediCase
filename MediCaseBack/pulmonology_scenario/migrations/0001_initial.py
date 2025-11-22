@@ -3,6 +3,16 @@
 import uuid
 from django.db import migrations, models
 
+def create_initial_records_pulmonology_disease(apps, schema_editor): 
+    Category = apps.get_model('pulmonology_scenario', 'PulmonologyDisease') 
+    Category.objects.get_or_create(english_name='Asthma', persian_name='آسم')
+    Category.objects.get_or_create(english_name='Pneumonia', persian_name='ذات الریه')
+    Category.objects.get_or_create(english_name='COPD', persian_name='بیماری مزمن انسدادی ریه')
+    Category.objects.get_or_create(english_name='PTE', persian_name='ترومبواندارترکتومی ریوی')
+    Category.objects.get_or_create(english_name='IPF', persian_name='فیبروز ریوی ایدیوپاتیک')
+    Category.objects.get_or_create(english_name='PH', persian_name='فشار خون ریوی')
+    Category.objects.get_or_create(english_name='Pleural_Effusion', persian_name='پلورال افیوژن')
+    Category.objects.get_or_create(english_name='ARDS', persian_name='سندرم دیسترس تنفسی حاد')
 
 class Migration(migrations.Migration):
 
@@ -55,4 +65,5 @@ class Migration(migrations.Migration):
                 ('created_date', models.DateTimeField(auto_now_add=True)),
             ],
         ),
+        migrations.RunPython(create_initial_records_pulmonology_disease),
     ]
