@@ -1,86 +1,272 @@
 {
-  "total": {
-    "strengths": "شما به درستی بر روی سوالات کلیدی تمرکز کرده اید، به خصوص در مورد علائم تنفسی و تاریخچه بیماری. سوالاتی که در بخش C به آنها اشاره کرده‌اید، از جمله سوالات مناسبی برای جمع‌آوری اطلاعات ضروری بودند. این سوالات به شما کمک کردند تا بهترین تصویر از وضعیت بیمار به دست آورید و شما برای به‌دست‌آوردن اطلاعات ارزشمند از تاریخچه بیماری بیمار، به خوبی عمل کردید.",
-    "weaknesses": {
-      "E": "شما همچنین سوالاتی را پرسیده‌اید که به نظر نمی‌رسید در تشخیص بیماری ضروری باشند یا مفید نباشند. به‌خصوص سوالاتی که به شرایط خاصی مرتبط نبودند و ارزیابی بالینی را تحت تأثیر قرار دادند.",
-      "M": "شما تعدادی سوال کلیدی را پرسیده‌اید که می‌توانستند تشخیص شما را بهبود ببخشند. این شامل سوالاتی در مورد سابقه بیماری‌های خانوادگی، مصرف داروها و وجود بیماری‌های مزمن در تاریخچه فردی است. این سوالات می‌توانستند به شما در درک بهتر شرایط فعلی بیمار کمک کنند و شما را به سمت تشخیص‌های صحیح‌تر هدایت کنند."
+  "patient_profile": {
+    "personal_information": {
+      "first_name": "علی",
+      "last_name": "محمدی",
+      "age": "65",
+      "gender": "مرد",
+      "occupation": "راننده تاکسی",
+      "place_of_birth": "تهران",
+      "place_of_residence": "تهران",
+      "marital_status": "متاهل"
     },
-    "educational_feedback": "بهتر است بر روی دیدگاه بالینی خود کار کنید. برای نمونه، سوالاتی مانند \"آیا در روزهای اخیر تب، لرز یا تعریق شبانه داشتید؟\" می‌تواند تصویر واضح‌تری از وضعیت بیمار به شما بدهد و به تشخیص کمک کند. همچنین، سعی کنید تا حد امکان از سوالات نامناسب و غیرضروری اجتناب کنید تا بتوانید زمان و منابع خود را بهتر مدیریت کنید."
-  },
-  "paraclinic": {
-    "strengths": "شما بخش‌های کلیدی از آزمایش‌ها و بازرسی‌ها را برای اطمینان بیشتر از تشخیص بیماری در نظر گرفته‌اید. انجام آزمایشات اولیه مانند CBC و VBG می‌تواند به جمع‌آوری اطلاعات مهم از شرایط بیمار کمک کند.",
-    "weaknesses": {
-      "E": {
-        "type": "string",
-        "title": "E",
-        "description": "مراجعه به آزمایش‌هایی که در شرایط خاص وجود ندارند و احتمال تشخیص را تحت تاثیر قرار می‌دهند، وقت کشی محسوب می‌شود."
-      },
-      "M": {
-        "type": "string",
-        "title": "M",
-        "description": "حضور شما در تست‌های پیشرفته‌تر ضروری است، اما برای تکمیل آنها قبل از پی بردن به نیازهای بالینی باید آزمایشات را شنخته باشید."
-      }
-    },
-    "educational_feedback": {
-      "why_M_was_important": "توجه به تست‌های خاص مانند بررسی سابقه بیمار می‌تواند به کشف تشخیص‌های غیر منتظره (مانند پمپ های مایع یا آب آوردگی) کمک کند و پیش از هر نوع درمان یا تشخیص، به اطلاعات لازم دسترس پیدا کنید.",
-      "why_E_was_unnecessary": "فرآیندهای غیرضروری بدون زمینه قوی بالینی می‌توانند باعث عدم تمرکز بر روی نکات کلیدی و مهم شوند."
-    }
-  },
-  "physical_exam": {
-    "strengths": "شما تعدادی از سوالات معاینه فیزیکی را به درستی بیان کردید که با علائم بیمار و شرایط آن هماهنگ است و در زمینه تشخیص اولیه بسیار مهم است.",
-    "weaknesses": {
-      "E": {
-        "type": "string",
-        "title": "E",
-        "description": "شما باید از پرسش سوالاتی که می‌تواند اطلاعات غیرمربوط ارائه دهد، اجتناب می‌کردید."
-      },
-      "M": {
-        "type": "string",
-        "title": "M",
-        "description": "شما باید به جنبه‌های دیگری از معاینه توجه بیشتری می‌کردید، مانند بررسی نبض محیطی و دقیقا چگونگی وجود تورم در اندام‌ها."
-      }
-    },
-    "educational_feedback": {
-      "why_M_was_important": "شما توجه خود را به نشانه‌های کلیدی نظیر وجود صداهای تنفسی غیرعادی معطوف کردید که به بهبود تشخیص کمک می‌کند. انجام یک معاینه فیزیکی جامع می‌تواند در تشخیص نوع بیماری و برنامه‌ریزی درمانی تاثیر بگذارد.",
-      "why_E_was_unnecessary": "پرسش از جزئیات غیرضروری چه در تاریخچه و چه در معاینه، می‌تواند از فراهم‌سازی تصویر کلی درست در ارزیابی بیماری شما جلوگیری کند."
+    "chief_complaint": "سرفه مزمن، تنگی نفس و احساس فشار در قفسه سینه",
+    "vital_sign": {
+      "BP": "130/85 mmHg",
+      "T": "37.0 °C",
+      "PR": "80 bpm",
+      "RR": "20 breaths/min",
+      "SpO2": "92%",
+      "GCS": "15"
     }
   },
   "history_taking": {
-    "strengths": "برخی از سوالات شما مانند پرسش در مورد شروع علائم و مدت زمان آنها به بهبود تشخیص کمک کرد و نشان‌دهنده هوشمندی شما در نزدیک شدن به مسؤولیت بالینی‌تان است.",
-    "weaknesses": {
-      "E": {
-        "type": "string",
-        "title": "E",
-        "description": "انتخاب سوالات بی‌مورد از جمله سوالات 2 و 7 می‌تواند زمان مفید شما را به هدر دهد."
+    "present_illness": {
+      "question1": "حدود 3 سال است که سرفه مزمن و تولید خلط داشته‌ام.",
+      "question2": "تنگی نفس به تدریج در حال افزایش است، به ویژه هنگام فعالیت.",
+      "question3": "احساس فشاری در قفسه سینه را تجربه می‌کنم.",
+      "question4": "در شب‌ها بیشتر از روز دچار تنگی نفس می‌شوم.",
+      "question5": "ضربان قلبم به طور مرتب است و گاهی اوقات احساس تپش قلب می‌کنم.",
+      "question6": "سیگار کشیدن را از 30 سال پیش شروع کردم و به مصرف آن ادامه می‌دهم.",
+      "question7": "هیچ بیماری جدی دیگری ندارم.",
+      "question8": "در خانواده‌ام کسی دچار بیماری ریوی نیست.",
+      "question9": "به هیچ‌گونه آلرژی غذایی یا دارویی مبتلا نیستم.",
+      "question10": "داروهای خاصی مصرف نمی‌کنم."
+    },
+    "past_medical_history": {
+      "question1": {
+        "question1a": "آیا تاکنون به بیماری خاصی مبتلا بوده‌اید؟",
+        "question1b": "خیر"
       },
-      "M": {
-        "type": "string",
-        "title": "M",
-        "description": "شما نمی‌توانید هر دو سوال 3 و 6 را مطرح کنید، که می‌تواند به تصویری ناقص از جنبه‌های تنفسی بیمار منجر شود."
+      "question2": {
+        "question2a": "آیا هیچ عمل جراحی داشته‌اید؟",
+        "question2b": "خیر"
+      },
+      "question3": "مشکلات قبلی در مجاری تنفسی ندارم.",
+      "question4": "مبتلا به هیچ بیماری قلبی و دیابتی نیستم.",
+      "question5": "تاریخچه بیماری‌های ریوی در خانواده ندارم.",
+      "question6": "هیچ دارویی به صورت منظم مصرف نمی‌کنم."
+    },
+    "drug_history": {
+      "question1": {
+        "question1a": "آیا داروهای خاصی مصرف می‌کنید؟",
+        "question1b": "خیر",
+        "question1c": "فقط داروهای سرماخوردگی به صورت گه‌گاهی."
+      },
+      "question2": "هیچ دارویی وجود ندارد که با آن مشکل داشته باشم."
+    },
+    "allergies": {
+      "question1": {
+        "question1a": "آیا به چیز خاصی آلرژی دارید؟",
+        "question1b": "خیر، هیچ آلرژی ندارم."
       }
     },
-    "educational_feedback": {
-      "why_M_was_important": "در خصوص اهمیت سوالات پزشکی، توجه به سوالات جامع و کلی در تاریخچه پزشکی می‌تواند به شکل خاصی کمک‌کننده باشد. برای مثال، میل به دانستن اینکه آیا دیگر اعضای خانواده با شرایط مشابهی مواجه شده‌اند پیش از شروع درمان می‌تواند سودمند باشد و پیش‌زمینه‌ٔ تشخیص را غنی‌تر کند.",
-      "why_E_was_unnecessary": "سوالاتی که به علائم غیرمرتبط با شرایط بیمار اشاره دارند، از نظر زمان و منابع غیرمفید هستند. در یک محیط بالینی، تمرکز بر روی سوالاتی که به وضوح برای تشخیص مفید نیستند، می‌تواند به تشخیص غلط منجر شود."
+    "family_history": {
+      "question1": {
+        "question1a": "آیا کسی در خانواده‌تان به بیماری‌های ریوی مبتلا است؟",
+        "question1b": "خیر"
+      },
+      "question2": "هیچ بیماری خانوادگی خطرناک نداریم.",
+      "question3": {
+        "question3a": "آیا کسی در خانواده‌تان دچار بیماری‌های قلبی است؟",
+        "question3b": "خیر"
+      }
+    },
+    "social_history": {
+      "question1": {
+        "question1a": "سیگار می‌کشید؟",
+        "question1b": "بله، روزی یک بسته سیگار می‌کشم."
+      },
+      "question2": "از بخار و آلاینده‌ها دوری می‌کنم.",
+      "question3": {
+        "question3a": "آیا از مواد تفریحی استفاده می‌کنید؟",
+        "question3b": "خیر"
+      },
+      "question4": "زندگی اجتماعی خوبی دارم و دوستان زیادی دارم."
+    },
+    "ros": {
+      "question1": "برخورد با مشکلات تنفسی را در ativities روزمره تجربه می‌کنم.",
+      "question2": "عفونت‌های تنفسی مکرر دارم.",
+      "question3": "درد در ناحیه قفسه سینه را احساس کرده‌ام.",
+      "question4": "هیچ تغییراتی در وزن نداشته‌ام.",
+      "question5": "کمبود انرژی را حس می‌کنم.",
+      "question6": "خواب شب‌ها مختل نشده است.",
+      "question7": "مشکلات گوارشی ندارم.",
+      "question8": "کسل‌کننده نیستم.",
+      "question9": "احساس اضطراب یا افسردگی ندارم.",
+      "question10": "این مشکلات به تدریج در حال افزایش است.",
+      "question11": "عفونت‌های مزمن سینوسی ندارم.",
+      "question12": "عینک یا لنز استفاده نمی‌کنم.",
+      "question13": "کودکی سالمی داشته‌ام.",
+      "question14": "مشکلات ژنتیکی در خانواده ندارم."
     }
   },
-  "differential_diagnosis": {
-    "strengths": "شما به تشخیص‌های متفاوتی که شامل وضعیت بیمار است، به درستی پرداخته‌اید و برخی از آنها مهم هستند. هدف‌گذاری بر روی بیماری‌های شایع مانند آسم و ذات‌الریه نشان از تفکر درست شما دارد.",
-    "weaknesses": {
-      "E": {
-        "type": "string",
-        "title": "E",
-        "description": "شما سوالاتی را مطرح کرده‌اید که می‌تواند بر تشخیص غیردقیق بیافزاید."
+  "physical_exam": {
+    "general_appearance": {
+      "level_of_consciousness_mood_and_behavior": {
+        "level_of_consciousness": "هوشیار",
+        "mood": "طبیعی",
+        "behavior": "متعاون"
       },
-      "M": {
-        "type": "string",
-        "title": "M",
-        "description": "شما باید به این نکته توجه کنید که انتقال در تشخیص موارد کمتری به لحاظ شدت وجود دارد."
+      "posture_and_position": {
+        "position_of_comfort": "در حالت نشسته با کمی جلو افتادگی"
+      },
+      "overall_appearance": {
+        "nutritional_status": "نرمال"
+      },
+      "cardiopulmonary_and_circulatory_clues": {
+        "cyanosis": "بدون سیانوز",
+        "dyspnea": "تنگی نفس در هنگام صحبت",
+        "edema": "بدون ورم"
       }
     },
-    "educational_feedback": {
-      "why_M_was_important": "توجه به تشخیص‌های متفاوت، بسته به یک سری از علائم مشخص، می‌تواند فرآیند درمان را تسریع بخشد.",
-      "why_E_was_unnecessary": "شما از فرصتها برای تشخیص واقعی استفاده نکرده‌اید و این مسئله می‌تواند بر روند تصمیم‌گیری تاثیر بگذارد."
+    "head_and_neck": {
+      "head_and_face": {
+        "symmetry_and_lesions": "بدون ناهنجاری",
+        "tenderness": "بدون حساسیت"
+      },
+      "eyes": {
+        "sclera_and_conjunctiva": "سفید و بدون زردی",
+        "pupils_reaction": "نرمال",
+        "extraocular_movements": "طبیعی"
+      },
+      "ears": {
+        "external_and_tenderness": "بدون تغییرات و حساسیت",
+        "eardrum_appearance": "طبیعی"
+      },
+      "nose_and_sinuses": {
+        "septum_and_discharge": "بدون ترشح",
+        "sinus_tenderness": "بدون حساسیت"
+      },
+      "mouth_and_pharynx": {
+        "oral_mucosa_and_lesions": "طبیعی",
+        "pharynx_and_tonsils": "طبیعی"
+      },
+      "neck_and_lymphatics": {
+        "inspection": "بدون ورم غدد",
+        "tracheal_position": "در وسط",
+        "thyroid_gland": "طبیعی",
+        "carotid_bruit": "بدون صدا",
+        "lymph_nodes_size_consistency": "طبیعی",
+        "lymph_nodes_mobility_tenderness": "بدون حساسیت"
+      }
+    },
+    "respiratory_system": {
+      "inspection": {
+        "accessory_muscles": "استفاده از عضلات فرعی در تنفس",
+        "chest_shape_and_symmetry": "شکل قفسه سینه طبیعی."
+      },
+      "palpation": {
+        "chest_expansion": "کاهش در سمت راست",
+        "tactile_fremitus": "کاهش در سمت راست"
+      },
+      "percussion": "صدای خفیف در سمت راست.",
+      "auscultation": {
+        "breath_sounds_intensity": "کاهش صدای تنفسی",
+        "adventitious_sounds": "خروج صدای wheezing و crackles"
+      }
+    },
+    "cardiovascular_system": {
+      "JVP_assessment": "طبیعی",
+      "palpation": {
+        "precordial_palpation_heave_thrill": "بدون درب",
+        "pmi_assessment": "طبیعی"
+      },
+      "auscultation": {
+        "heart_sounds_s1_s2": "نرمال سمع",
+        "extra_sounds_s3_s4_murmurs": "بدون صداهای اضافی"
+      },
+      "peripheral_pulses_and_extremities": {
+        "peripheral_pulses_symmetry_and_quality": "حسن جریان در گردن و دست‌ها",
+        "extremities_color_and_trophic_changes": "بدون تغییر رنگ",
+        "extremities_temperature_and_cap_refill": "نرمال",
+        "extremities_edema": "بدون ورم"
+      }
+    },
+    "abdominal_system": {
+      "inspection": "بدون تورم شکمی.",
+      "auscultation": {
+        "bowel_sounds": "در حال حاضر طبیعی.",
+        "vascular_bruits": "بدون صدا"
+      },
+      "percussion": {
+        "general": "صدای طبیعی",
+        "organ_borders": "بدون تومور"
+      },
+      "palpation": {
+        "superficial_tenderness": "بدون حساسیت",
+        "deep_masses_and_organs": "بدون توده عمیق"
+      },
+      "peritoneal_signs": "منفی"
+    },
+    "neurological": {
+      "mental_status_and_LOC": "بدون تغییر",
+      "cranial_nerves": "طبیعی",
+      "motor_strength_and_tone": "بدون ضایعه",
+      "involuntary_movements": "بدون حرکات غیر ارادی",
+      "sensory_light_touch_and_pain": "طبیعی",
+      "deep_tendon_reflexes": "طبیعی",
+      "coordination_and_gait": "ثبات و راه رفتن طبیعی"
+    },
+    "musculoskeletal_system": {
+      "inspection": {
+        "joints": "بدون تغییر",
+        "muscles": "قدرت نرمال."
+      },
+      "palpation": {
+        "tenderness_and_crepitus": "بدون حساسیت"
+      },
+      "range_of_motion_active_passive": "حرکات طبیعی.",
+      "stability_and_function": "بدون تغییر"
+    }
+  },
+  "paraclinic": {
+    "basic_blood_tests": {
+      "CBC": [
+        "Hemoglobin: 14 g/dL",
+        "Hematocrit: 42%",
+        "WBC: 8,000 Cells/mm3",
+        "Platelet count: 250,000 Cells/mm3"
+      ],
+      "ESR_CRP": "ESR: 10 mm/hr, CRP: 2 mg/L",
+      "BMP": "Normal",
+      "LFTs": "Normal",
+      "VBG": "pH: 7.40, pCO2: 45 mmHg, HCO3: 24 mmol/L"
+    },
+    "specialized_lung_tests": {
+      "Sputum_analysis": "Presence of neutrophils.",
+      "Sputum_AFB": "Negative.",
+      "a1_antitrypsin_level": "Normal.",
+      "D_dimer": "Negative.",
+      "BNP_NT_proBNP": "Normal."
+    },
+    "immunity_and_serology": {
+      "HIV_test": "Negative.",
+      "Autoimmune_pannel_ANA_ANCA": "Negative."
+    },
+    "functional_tests": {
+      "Spirometry": {
+        "fev1": ["50% of predicted", "FEV1/FVC ratio: 65%"],
+        "fvc": ["75% of predicted"],
+        "fev1/fvc": ["65%"]
+      },
+      "dlco": {
+        "dlco": ["60% of predicted"],
+        "dlco/va_ratio": ["0.75"]
+      },
+      "plethysmography": {
+        "tls": ["80% of predicted"],
+        "rv": ["150% of predicted"],
+        "frc": ["200% of predicted"],
+        "rv/tlc_ratio": "0.65"
+      }
+    },
+    "procedures": {
+      "Bronchoscopy": "Normal findings.",
+      "torachocenthesis": {
+        "pleural_fluid": ["Clear, straw-colored"],
+        "serum": ["Normal proteins"]
+      }
     }
   }
 }

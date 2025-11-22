@@ -37,11 +37,15 @@ class StudentLogSerializer(serializers.Serializer):
     
 class FeedbackRetrieveSerializer(serializers.ModelSerializer):
     feedback = serializers.JSONField()
+    evaluation = serializers.JSONField()
+    transition = serializers.JSONField()
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
-            'feedback'
+            'feedback',
+            'evaluation',
+            'transition',
         ]
         extra_kwargs = {
             "url": {'lookup_field': 'tracking_code'}

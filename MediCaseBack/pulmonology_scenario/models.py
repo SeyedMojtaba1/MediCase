@@ -40,6 +40,8 @@ class StudentLog(models.Model):
 class PulmonologyFeedback(models.Model):
     feedback_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     feedback = models.JSONField()
+    evaluation = models.JSONField()
+    transition = models.JSONField()
     tracking_code = models.CharField(blank=True, max_length=10)
     scenario = models.ForeignKey(PulmonologyScenario, on_delete=models.SET_NULL, null=True, related_name="feedbackpulmonologyscenario")
     created_date = models.DateTimeField(auto_now_add=True)

@@ -99,3 +99,4 @@ class FeedbackRetrieveView(generics.RetrieveAPIView):
     queryset = PulmonologyFeedback.objects.all()
     lookup_field = 'tracking_code'
     lookup_value_regex = '[^/]+'
+

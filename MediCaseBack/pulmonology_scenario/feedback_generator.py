@@ -549,12 +549,12 @@ def feedback_generator(target_disease, STUDENT_LOG):
   evaluation = calculate_set_metrics(OPTIMAL_SCENARIO[f"{target_disease}"], STUDENT_LOG)
   transition = calculate_stage_order_error(OPTIMAL_SCENARIO[f"{target_disease}"], STUDENT_LOG)
   
-  evaluation = escape_json_braces(evaluation)
-  transition = escape_json_braces(transition)
+  escape_braces_evaluation = escape_json_braces(evaluation)
+  escape_braces_transition = escape_json_braces(transition)
   
-  final_prompt = prompt_template.format(disease=target_disease, evaluation=evaluation, transition=transition)
+  final_prompt = prompt_template.format(disease=target_disease, evaluation=escape_braces_evaluation, transition=escape_braces_transition)
 
   structured_chat_model = model.with_structured_output(json_schema)
   output = structured_chat_model.invoke(final_prompt)
 
-  return output
+  return output, evaluation, transition

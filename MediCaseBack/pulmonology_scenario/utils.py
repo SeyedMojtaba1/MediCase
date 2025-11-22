@@ -39,7 +39,7 @@ def senario_creator_celery(user, tracking_code):
     
 @shared_task
 def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, disease, student_log):
-    feedback = feedback_generator(disease, student_log)
+    feedback, evaluation, transition = feedback_generator(disease, student_log)
     
     try:
         scenario = PulmonologyScenario.objects.get(tracking_code=scenario_tracking_code)
@@ -55,6 +55,8 @@ def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, dise
     
     final_feedback = PulmonologyFeedback.objects.get_or_create(
         feedback = feedback,
+        evaluation = evaluation, 
+        transition = transition,
         tracking_code = feedback_tracking_code,
         scenario = scenario
     )
