@@ -356,7 +356,7 @@ OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH", "Pleural_
 
 def scenario_creator():
     # 1. انتخاب بیماری تصادفی
-    target_disease = OPTIMAL_SCENARIO['Asthma']
+    target_disease = OPTIMAL_SCENARIO[0]
   
     # 2. تعریف پرامپت
     # نکته: وقتی کلاس Pydantic را به مدل می‌دهیم، خود LangChain توضیحات فیلدها (Description)
