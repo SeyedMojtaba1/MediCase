@@ -40,8 +40,9 @@ export class Master {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
-    return this.http.get<any>(
+    return this.http.post<any>(
       this.BASE_URL + 'registery/logout/',
+      {refresh: localStorage.getItem('refresh_token')},
       {
         headers,
         observe: 'response',
@@ -51,18 +52,19 @@ export class Master {
   }
 
   refresh(): Observable<HttpResponse<any>> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    return this.http.get<any>(
+    return this.http.post<any>(
       this.BASE_URL + 'registery/token/refresh/',
+      {refresh: localStorage.getItem('refresh_token')},
       {
-        headers,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
         observe: 'response',
-        withCredentials: true
-      },
+        withCredentials: true,
+      }
     );
   }
+
 
   sendOTP(email: string): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
@@ -308,4 +310,68 @@ export class Master {
     },)
   }
 
+  studentSubjectList(): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'class/studentsubjectlist/', {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  selectHospital(id: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'class/hospitalsubjectretrieve/' + id + '/', {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+
+  // ***************************************************************************
+  // ***************************************************************************
+  //                              scenario
+  // ***************************************************************************
+  // ***************************************************************************
+  // اینجا اطلاعات بیماری ها، لیست رشته ها ، دروس و بیمارستان های قابل انتخاب میاد
+  // pulmonologyscenario
+
+
+  pulmonologyScenarioCreate(): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/scenariocreate/', {
+      headers,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
+  pulmonologyScenarioRetrieve(tracking_code: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/scenarioretrieve/' + tracking_code + '/', {
+      headers,
+      withCredentials: true
+    });
+  }
+
 }
+
+
+

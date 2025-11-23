@@ -49,6 +49,10 @@ export class AddStudent {
     this.master.addStudent(this.sectionID, this.code).subscribe({
       next: (data) => {
         this.toast.showSuccess('دانشجو با موفقیت به کلاس افزوده شد')
+        setTimeout(() => {
+            window.location.reload();
+          }, 200
+        )
       },
       error: err => {
       },

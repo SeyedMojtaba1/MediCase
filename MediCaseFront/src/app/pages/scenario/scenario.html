@@ -1,4 +1,4 @@
-<div class="w-full h-screen flex overflow-hidden">
+<div class="w-full h-screen flex">
 
   <!-- Right -->
   <div class="w-1/5 text-white p-6 flex flex-col">
@@ -7,15 +7,14 @@
     <div class="flex flex-col items-center gap-3 mb-6">
       <img [src]="logo" class="h-20"/>
       <img [src]="APP_CONFIG.olomURL" class="h-20">
-
     </div>
 
     <!-- Sections -->
     <div class="flex flex-col w-full gap-5">
       @for (section of sections; track section) {
         <button (click)="playClick(); selectSection(section)"
-                [ngClass]="activeSection==section.id ? 'bg-[#0f747c]' : 'bg-[#148591]' "
-                class=" cursor-pointer flex flex-row gap-3 items-center
+                [ngClass]="activeSection==section.id ? 'bg-[#148591]/50' : 'bg-[#148591]'  "
+                class="cursor-pointer flex flex-row gap-3 items-center
     bg-[#148591]
     text-white
     font-semibold
@@ -27,75 +26,268 @@
     active:translate-y-1
     active:shadow-[0_2px_0_#0f6c74]
     transition-all
-    duration-150
-  "
+    duration-150"
         >
           <i [class]="section.icon + ' text-2xl'"></i>
           <p>{{ section.title }}</p>
 
         </button>
       }
-      <p class="text-gray-500 text-sm underline text-center cursor-pointer">بازگشت به داشبورد</p>
 
+      <!--      <p class="text-gray-500 text-sm underline text-center cursor-pointer">بازگشت به داشبورد</p>-->
     </div>
 
   </div>
 
-  <div class="w-1/5 bg-[#148591] text-white p-6 flex flex-col overflow-y-auto">
-    <div class="flex flex-col gap-4">
+  <!-- Questions Sidebar -->
+  <div class="w-3/10 bg-[#148591] text-white p-6 flex flex-col overflow-y-auto">
 
-      @for (q of questions; track q) {
+    @if (activeSection == 1) {
+      <div class="w-full min-h-screen p-6 flex flex-col items-center justify-center text-white"
+           style="background-color: #148591;">
+
         <div
-          [ngClass]="q.visible ? 'bg-gray-400/50' : 'bg-[#0f6c74]/40' "
-          class="
-        text-white
-        rounded-2xl
-        shadow-[0_4px_0_#0f6c74]
-        transition-all duration-200
-        cursor-pointer
-      "
-          (click)="toggleQuestion(q)"
-        >
-          <!-- Question header -->
-          <div class="px-5 py-4 flex justify-between items-center">
-            <p class="font-light text-md">
-              {{ q.title }}
+          class="w-full max-w-lg p-8 rounded-2xl shadow-2xl bg-white/10 backdrop-blur-sm flex flex-col items-center gap-6">
+
+          <div class="flex flex-col items-center gap-2 border-b border-white/30 pb-4 w-full">
+            <p class="text-4xl font-extrabold tracking-wide">
+              {{ data.patient_profile.personal_information.first_name + ' ' + data.patient_profile.personal_information.last_name }}
             </p>
 
-            <i
-              class="pi"
+            <div class="flex gap-4 text-lg font-medium">
+              <span>{{ data.patient_profile.personal_information.gender + ' ' + data.patient_profile.personal_information.age + ' ساله' }}</span>
+              <span class="text-white/70">|</span>
+              <span>{{ data.patient_profile.personal_information.marital_status }}</span>
+            </div>
 
-              [ngClass]="q.visible ? q.open ? 'pi-chevron-up' : 'pi-chevron-down' : 'pi-lock'"
-            ></i>
+            <p class="text-base text-white/80 mt-1">
+              شغل: {{ data.patient_profile.personal_information.occupation }}
+            </p>
+
+            <p class="text-sm opacity-60 mt-2">
+              محل تولد: {{ data.patient_profile.personal_information.place_of_birth }} |
+              محل سکونت: {{ data.patient_profile.personal_information.place_of_residence }}
+            </p>
           </div>
 
-          <!-- Answer -->
-          @if (q.open) {
-            <div
-              class="bg-[#0f6c74] px-5 py-4 rounded-b-2xl animate-fadeIn"
-            >
-              <p class="text-white text-sm leading-7">
-                {{ q.answer }}
+          <div class="w-full p-4 rounded-xl bg-white/10 flex flex-col gap-1 items-center">
+            <span class="text-sm font-light opacity-80">شکایت اصلی:</span>
+            <span class="text-xl font-semibold text-center">{{ data.patient_profile.chief_complaint }}</span>
+          </div>
+
+          <p class="-mb-5">
+            علائم حیاتی
+          </p>
+
+          <div class="grid grid-cols-3 gap-x-4 gap-y-6 bg-white/10 p-5 rounded-xl mt-4 text-center">
+
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">T</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.T }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">BP</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.BP }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">PR</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.PR }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">RR</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.RR }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">GCS</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.GCS }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">SpO2</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.SpO2 }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    } @else if (activeSection == 2) {
+      <div class="flex flex-col w-full gap-3">
+
+        <!-- Present Illness -->
+        <p class="font-bold text-lg">وضعیت بیمار </p>
+        @for (q of questionsBySection['present_illness']; track q.id) {
+          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
+               (click)="handleQuestionClick(q, 'present_illness','history_taking')"><p class="">{{ q.title }}</p>
+
+            @if (q.open) {
+              <div class="w-full h-[1px] bg-white/50 my-2"></div>
+              <p class="text-sm text-gray-200 mt-2">
+                پاسخ: {{ q.answer }}
               </p>
+            }
+          </div>
+        }
+
+        <!-- Past Medical History -->
+        <p class="font-bold text-lg">سابقه بیماری قبلی</p>
+
+        @for (q of questionsBySection['past_medical_history']; track q.id) {
+          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
+               (click)="handleQuestionClick(q, 'past_medical_history','history_taking')"><p class="">{{ q.title }}</p>
+
+            @if (q.open) {
+              <div class="w-full h-[1px] bg-white/50 my-2"></div>
+              <p class="text-sm text-gray-200 mt-2">
+                پاسخ: {{ q.answer }}
+              </p>
+            }
+          </div>
+        }
+
+        <!-- Drug History -->
+        <p class="font-bold text-lg">سابقه دارویی</p>
+        @for (q of questionsBySection['drug_history']; track q.id) {
+          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
+               (click)="handleQuestionClick(q, 'drug_history','history_taking')"><p class="">{{ q.title }}</p>
+
+            @if (q.open) {
+              <div class="w-full h-[1px] bg-white/50 my-2"></div>
+              <p class="text-sm text-gray-200 mt-2">
+                پاسخ: {{ q.answer }}
+              </p>
+            }
+          </div>
+        }
+
+        <!-- Allergies -->
+        <div>
+          <p class="font-bold text-lg mb-2">حساسیت‌ها</p>
+
+          @for (q of questionsBySection['allergies']; track q.id) {
+            <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
+                 (click)="handleQuestionClick(q, 'allergies','history_taking')"><p class="">{{ q.title }}</p>
+
+              @if (q.open) {
+                <div class="w-full h-[1px] bg-white/50 my-2"></div>
+                <p class="text-sm text-gray-200 mt-2">
+                  پاسخ: {{ q.answer }}
+                </p>
+              }
             </div>
           }
         </div>
-      }
 
-    </div>
+        <!-- Family History -->
+        <p class="font-bold text-lg mb-2">سابقه خانوادگی</p>
 
+        @for (q of questionsBySection['family_history']; track q.id) {
+          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
+               (click)="handleQuestionClick(q, 'family_history','history_taking')"><p class="">{{ q.title }}</p>
+
+            @if (q.open) {
+              <div class="w-full h-[1px] bg-white/50 my-2"></div>
+              <p class="text-sm text-gray-200 mt-2">
+                پاسخ: {{ q.answer }}
+              </p>
+            }
+          </div>
+        }
+
+
+        <!-- Social History -->
+        <p class="font-bold text-lg mb-2">اطلاعات اجتماعی</p>
+
+        @for (q of questionsBySection['social_history']; track q.id) {
+          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
+               (click)="handleQuestionClick(q, 'social_history','history_taking')"><p class="">{{ q.title }}</p>
+
+            @if (q.open) {
+              <div class="w-full h-[1px] bg-white/50 my-2"></div>
+              <p class="text-sm text-gray-200 mt-2">
+                پاسخ: {{ q.answer }}
+              </p>
+            }
+          </div>
+        }
+
+
+        <!-- ROS -->
+        <p class="font-bold text-lg mb-2">دیگر سوالات (ROS)</p>
+
+        @for (q of questionsBySection['ros']; track q.id) {
+          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
+               (click)="handleQuestionClick(q, 'ros','history_taking')"><p class="">{{ q.title }}</p>
+
+            @if (q.open) {
+              <div class="w-full h-[1px] bg-white/50 my-2"></div>
+              <p class="text-sm text-gray-200 mt-2">
+                پاسخ: {{ q.answer }}
+              </p>
+            }
+          </div>
+        }
+
+
+      </div>
+    } @else if (activeSection == 3) {
+      <div>
+      </div>
+
+    } @else if (activeSection == 4) {
+      <div>
+      </div>
+    }
 
   </div>
-
 
   <!-- Left image -->
   <div
     [style.backgroundImage]="'url(images/jpg/rie.jpg)'"
-    class="w-3/5 h-full bg-cover bg-center"
+    class="w-1/2 h-full bg-cover bg-center relative flex flex-col overflow-visible"
   >
 
-    <div>
+    <!-- Profile box -->
+    <div
+      class="absolute top-5 left-5 py-3 px-6 rounded-full flex items-center gap-5
+      bg-gradient-to-l from-[#148691] to-[#216067] shadow-md"
+    >
+      <img [routerLink]="'/dashboard/s/profile'" [src]="sessionStorage.getItem('avatar')"
+           class="rounded-full cursor-pointer object-cover w-10 h-10 border-2 border-white">
+
+      <p [routerLink]="'/dashboard/s/profile'"
+         class="text-white cursor-pointer">
+        {{ sessionStorage.getItem('first_name') + ' ' + sessionStorage.getItem('last_name') }}
+      </p>
+
+      <img class="w-6 h-auto cursor-pointer" src="images/svg/search.svg">
+    </div>
+
+    <!-- Timer left -->
+    <div
+      class="absolute bottom-5 left-5 py-3 w-40 justify-center text-white rounded-full flex-row flex items-center gap-5 bg-gradient-to-l from-[#148691] to-[#216067] shadow-md">
+      <p>زمان : </p>
+      <p>{{ timer() }}</p>
+    </div>
+
+    <!-- Timer right with circular image -->
+    <div class="absolute bottom-5 right-5 justify-between  p-2 w-40 text-white rounded-full flex items-center gap-3
+      bg-gradient-to-l from-[#148691] to-[#216067] shadow-md overflow-visible">
+
+      <img
+        [src]="sessionStorage.getItem('avatar')"
+        class="w-12 h-12 rounded-full border-4 border-white shadow-lg z-10"
+      />
+
+      <p class="m-3">پزشکیار</p>
+
+      <!-- تصویر دایره‌ای -->
 
     </div>
   </div>
+
 </div>

@@ -1,0 +1,267 @@
+{
+  "patient_profile": {
+    "Personal Information": {
+      "First Name": "",
+      "Last Name": "",
+      "Age": "سن بیمار باید متناسب با شیوع بیماری انتخاب شود. در بیماری‌های مزمن تنفسی و قلبی معمولاً میانسالی تا سالمندی (حدود 45 تا 80 سال)، در بیماری‌های حاد یا ارثی ممکن است سن پایین‌تر باشد. برای تنوع، سن را در بازه منطقی بیماری انتخاب کن، نه مقدار ثابت.",
+      "Gender": "",
+      "Occupation": "شغل بیمار بیان شود و درصورت بازنشسته بودن بیمار شغلی که از آن بازنشسته شده است را بیان کن.",
+      "Place Of Birth": "",
+      "Place Of Residence": "",
+      "Marital Status": ""
+    },
+    "Chief Complaint": "شامل دلیل اصلی مراجعه بیمار و زمان شروع آن است",
+    "Vital Sign": {
+      "Bp": "Blood Pressure",
+      "T": "Temprature",
+      "Pr": "Pulse Rate",
+      "Rr": "Respiratory Rate",
+      "Spo2": "Saturation of O2",
+      "Gcs": "Level of Consiousness"
+    }
+  },
+  "history_taking": {
+    "present_illness": {
+      "question1": "علائم از چه زمانی شروع شدند و در طول زمان چه تغییری کردند؟",
+      "question2": "شروع علائم ناگهانی بوده یا تدریجی؟ بعد از اتفاق خاصی مثل عفونت یا تماس خاصی شروع شد؟",
+      "question3": "آیا تنگی نفس دارید؟ اگر بله تنگی نفستون دائمیه یا دوره‌ای؟ و با فعالیت بدتر میشه یا در حالت استراحت هم وجود داره؟",
+      "question4": "سرفه دارید؟ اگر بله، خشک است یا همراه با خلط؟ رنگ و حجم خلط چطور است؟",
+      "question5": "تا حالا خس‌خس یا صدای غیرعادی در تنفس شنیدید؟",
+      "question6": "احساس درد یا فشار در قفسه سینه دارید؟ با تنفس یا حرکت تغییر می‌کنه؟",
+      "question7": "در روزهای اخیر تب، لرز یا تعریق شبانه داشتید؟ ",
+      "question8": "تورم پا، تپش قلب یا احساس سبکی سر دارید؟",
+      "question9": "قبلاً هم چنین حمله یا علائمی داشتید؟ چه درمانی کمکتون کرده؟",
+      "question10": "احساس کاهش وزن، خستگی یا بی‌اشتهایی داشتید؟"
+    },
+    "past_medical_history": {
+      "question1": {
+        "question1a": "آیا بیماری طولانی مدت (مزمن) مثل قند (دیابت)، فشار خون، آسم، مشکل تیروئید، یا بیماری جدی کلیوی/کبدی دارید؟",
+        "question1b": "تشخیص این بیماری از چه موقع بوده است؟"
+      },
+      "question3": "آیا سابقه بیماری های قلبی، ریوی و مغزی را دارید؟",
+      "question4": "آیا در حال حاظر یا در گذشته سرطان فعال داشته‌اید؟",
+      "question5": "در دوران کودکی، آیا بیماری‌های خاصی (مثل تب روماتیسمی، سرخک شدید) گرفتید یا به دلیل بیماری بستری شدید؟",
+      "question6": "برنامه واکسن‌ها (مثل کزاز و آنفولانزا) شما کامل و به روز است؟",
+      "question2": {
+        "question2a": "آیا تا به حال عمل جراحی (بزرگ یا کوچک) داشته‌اید؟ و آیا تا به حال در بیمارستان بستری شده‌اید؟",
+        "question2b": "دلیلش چه بوده و دقیقا چند وقت پیش بوده است؟ همچنین، آیا تا به حال انتقال خون داشته‌اید؟"
+      }
+    },
+    "drug_history": {
+      "question1": {
+        "question1a": "لطفاً لیست تمام داروهایی که در حال حاضر به صورت مرتب (روزانه، هفتگی یا ماهانه) مصرف می‌کنید را به من بگویید.",
+        "question1b": "دوز هر دارو چقدر است و چند بار در روز مصرف می‌کنید؟",
+        "question1c": "آیا در چند روز گذشته، دوز یا زمان مصرف هیچ‌کدام از این داروها را تغییر داده‌اید؟"
+      },
+      "question2": "به صورت منظم داروهای بدون نسخه (OTC) (مثل داروهای سرماخوردگی، مسکن‌ها، آنتی‌اسیدها)، مکمل‌های غذایی، داروهای گیاهی یا خواب آور مصرف می‌کنید؟"
+    },
+    "allergies": {
+      "question1": {
+        "question1a": "آیا به دارو، غذا، یا ماده خاصی آلرژی (حساسیت) دارید؟",
+        "question1b": "اگر پاسخ question1a بله بود، دقیقاً چه دارو یا ماده‌ای است؟ و واکنش شما (مثل کهیر یا تنگی نفس) چگونه بوده است؟"
+      }
+    },
+    "family_history": {
+      "question2": "آیا در خانواده درجه یک شما، سابقه حمله قلبی (سکته قلبی)، سکته مغزی، یا نارسایی قلبی وجود دارد؟",
+      "question1": {
+        "question1a": "آیا در خانواده درجه یک (پدر، مادر، خواهر یا برادر) شما، سابقه ابتلا به بیماری‌های مزمن و شایع وجود دارد؟",
+        "question1b": "چه کسی و در چه سنی به آن مبتلا شده است؟"
+      },
+      "question3": {
+        "question3a": "آیا سابقه سرطان خاصی در خانواده درجه یک شما وجود دارد؟",
+        "question3b": " نوع سرطان چه بوده و در چه سنی تشخیص داده شده است؟"
+      }
+    },
+    "social_history": {
+      "question1": {
+        "question1a": "آیا تا به حال سیگار، قلیان، پیپ، یا هر نوع محصول نیکوتینی مصرف کرده‌اید؟",
+        "question1b": "اگر قبلاً مصرف می‌کردید، چه زمانی ترک کرده‌اید؟"
+      },
+      "question2": "آیا الکل مصرف می‌کنید؟ اگر بله، نوع و میزان مصرف آن در هفته چقدر است؟",
+      "question3": {
+        "question3a": "آیا تا به حال مواد مخدر مصرف کرده‌اید؟",
+        "question3b": "اگر مصرف داشته‌اید، نوع آن و آخرین باری که مصرف کرده‌اید چه زمانی بوده است؟"
+      },
+      "question4": "در خانه همراه چه کسانی زندگی می‌کنید؟"
+    },
+    "ros": {
+      "question1": "آیا اخیراً دچار تب، لرز، کاهش یا افزایش وزن ناخواسته، یا خستگی شدید و غیرمعمول شده‌اید؟",
+      "question2": "آیا سابقه راش، خارش، زخم‌های طولانی‌مدت، تغییر در رنگ یا بافت پوست/مو/ناخن، یا کبودی غیرعادی دارید؟",
+      "question3": "آیا اخیراً دچار سردرد، سرگیجه، سفتی گردن، یا بزرگ شدن غدد لنفاوی در گردن شده‌اید؟",
+      "question4": "آیا دچار تاری دید، دوبینی، درد چشم، قرمزی، یا کاهش دید ناگهانی شده‌اید؟",
+      "question5": "آیا دچار وزوز گوش، کاهش شنوایی، خونریزی بینی، گرفتگی مزمن بینی، گلودرد مزمن، مشکل در بلع (دیسفاژی)، یا آفت و زخم‌های دهانی مکرر هستید؟",
+      "question6": "آیا سابقه درد قفسه سینه، تپش قلب، تنگی نفس با فعالیت، تنگی نفس در حالت خوابیده ، یا تورم پاها دارید؟",
+      "question7": "آیا سابقه سرفه، خس‌خس سینه، خلط خونی ، یا تنگی نفس (به جز تنگی نفس مرتبط با فعالیت شدید) دارید؟",
+      "question8": "آیا دچار حالت تهوع، استفراغ، سوزش سر دل، درد شکم، تغییر در عادات اجابت مزاج (اسهال یا یبوست)، خونریزی از مقعد، یا زردی پوست و چشم هستید؟",
+      "question9": "آیا دچار درد یا سوزش حین ادرار کردن، تکرر ادرار، خون در ادرار، مشکل در کنترل ادرار، یا ترشحات غیرعادی هستید؟",
+      "question10": "آیا دچار درد مفاصل، سفتی صبحگاهی، تورم مفاصل، درد یا ضعف عضلانی، یا کمردرد مزمن هستید؟",
+      "question11": "آیا سابقه سردرد شدید یا جدید، تشنج، ضعف یا بی‌حسی در دست‌ها/پاها، مشکل در تعادل/هماهنگی، یا تغییر در حافظه دارید؟",
+      "question12": "آیا اخیراً احساس افسردگی، اضطراب، تغییرات شدید خلقی، یا مشکل در خواب (بی‌خوابی/پرخوابی) داشته‌اید؟",
+      "question13": "آیا دچار افزایش تشنگی، افزایش گرسنگی، افزایش ادرار (پلی اوری)، یا عدم تحمل گرما/سرما شده‌اید؟",
+      "question14": "آیا سابقه کبودی آسان، خونریزی طولانی‌مدت، بزرگ شدن غدد لنفاوی، یا کم‌خونی شدید دارید؟"
+    }
+  },
+  "Physical Exam": {
+    "General Appearance": {
+      "Level Of Consciousness Mood And Behavior": {
+        "Level Of Consciousness": "آیا بیمار هوشیار، گیج، خواب‌آلود (لتارژیک)، یا در حالت اغما (Comatose) است؟ آیا دستورات ساده را اجرا می‌کند؟",
+        "Mood": "آیا بیمار به نظر بیمار، مضطرب، یا در درد شدید است؟",
+        "Behavior": "آیا بیمار همکاری می‌کند؟ آیا مضطرب، افسرده، یا پرخاشگر است؟ آیا از نظر روانی وضعیت طبیعی دارد؟"
+      },
+      "Posture And Position": {
+        "Position Of Comfort": "آیا بیمار وضعیتی را برای کاهش درد یا تنگی نفس انتخاب کرده است؟"
+      },
+      "Overall Appearance": {
+        "Nutritional Status": "آیا بیمار لاغر (Cachectic)، چاق (Obese)، یا در وضعیت وزن طبیعی است؟"
+      },
+      "Cardiopulmonary And Circulatory Clues": {
+        "Cyanosis": "بررسی لب‌ها، زبان و بستر ناخن برای علائم کبودی.",
+        "Dyspnea": "آیا بیمار به سختی نفس می‌کشد؟",
+        "Edema": "وجود تورم در پاها، مچ پا یا اطراف چشم."
+      }
+    },
+    "Head And Neck": {
+      "Head And Face": {
+        "Symmetry And Lesions": "آیا سر و صورت بیمار متقارن است و شواهدی از زخم، توده یا ضایعات پوستی وجود دارد؟",
+        "Tenderness": "آیا در لمس جمجمه حساسیت به لمس یا درد وجود دارد؟"
+      },
+      "Eyes": {
+        "Sclera And Conjunctiva": "آیا در صلبیه (سفیدی چشم) زردی (یرقان) یا در ملتحمه (پلک پایین) رنگ‌پریدگی شدید (کم‌خونی) مشاهده می‌شود؟",
+        "Pupils Reaction": "آیا مردمک‌ها متقارن هستند و به نور واکنش طبیعی نشان می‌دهند؟",
+        "Extraocular Movements": "آیا حرکات چشمی در جهات مختلف کامل و هماهنگ هستند؟"
+      },
+      "Ears": {
+        "External And Tenderness": "آیا لاله گوش یا ناحیه ماستوئید (پشت گوش) متورم، قرمز یا دردناک هستند؟",
+        "Eardrum Appearance": "آیا پرده صماخ در اتوسکوپی ظاهر طبیعی دارد (شفاف، بدون التهاب یا پارگی)؟"
+      },
+      "Nose And Sinuses": {
+        "Septum And Discharge": "آیا تیغه بینی انحراف شدید دارد و آیا ترشحات غیرعادی (چرکی یا خونی) مشاهده می‌شود؟",
+        "Sinus Tenderness": "آیا در لمس یا دق بر روی سینوس‌های پیشانی و فکی (فرونتال و ماگزیلاری) درد وجود دارد؟"
+      },
+      "Mouth And Pharynx": {
+        "Oral Mucosa And Lesions": "آیا مخاط دهان (لثه‌ها، زیر زبان) مرطوب و بدون ضایعات غیرعادی (زخم یا آفت) است؟",
+        "Pharynx And Tonsils": "آیا حلق (گلو) قرمز یا متورم است و آیا لوزتین‌ها (Tonsils) بزرگ شده‌اند یا دارای ترشحات چرکی هستند؟"
+      },
+      "Neck And Lymphatics": {
+        "Inspection": "آیا در معاینه ظاهری گردن، تورم، قرمزی، توده، یا زخم قابل مشاهده‌ای وجود دارد؟",
+        "Tracheal Position": "آیا نای (Trachea) در خط وسط قرار دارد؟ آیا در لمس، انحراف یا جابه‌جایی نای (Tracheal Deviation) احساس می‌شود؟",
+        "Thyroid Gland": "آیا غده تیروئید (از پشت بیمار) بزرگ است (گواتر)؟ آیا در لمس، ندول (توده)، سفتی، یا حساسیت به لمس وجود دارد؟",
+        "Carotid Bruit": "آیا در سمع شریان‌های کاروتید، صدای وزوز (Bruit) شنیده می‌شود؟ (نشانه‌ی احتمالی تنگی شریان)",
+        "Lymph Nodes Size Consistency": "آیا غدد لنفاوی در نواحی مختلف (سرویکال، ساب‌ماندیبولار، سوپراکلاویکولار) بزرگ شده‌اند؟ (اندازه، قوام: نرم/سفت/لاستیکی)",
+        "Lymph Nodes Mobility Tenderness": "آیا غدد لنفاوی لمس شده، متحرک هستند یا ثابت و چسبیده به بافت زیرین؟ آیا در لمس، درد (Tenderness) دارند؟"
+      }
+    },
+    "Respiratory System": {
+      "Inspection": {
+        "Accessory Muscles": "آیا از عضلات کمکی تنفس استفاده می‌کند؟",
+        "Chest Shape And Symmetry": "آیا شکل قفسه سینه طبیعی است (بدون Barrel Chest یا کیفواسکولیوز) و حرکت قفسه سینه در دم و بازدم متقارن است؟"
+      },
+      "Palpation": {
+        "Chest Expansion": "آیا توسعه قفسه سینه در هنگام دم عمیق، متقارن و کامل است؟",
+        "Tactile Fremitus": "آیا لرزش‌های صوتی (Tactile Fremitus) در دو طرف قفسه سینه متقارن و طبیعی هستند؟ اسم علمی نوع لرزش ها رو به فارسی ترجمه نکن."
+      },
+      "Percussion": "در بیماری‌های ریوی بسته به نوع درگیری، الگوی صدای پرکاشن متفاوت است: در انسداد مزمن یا افزایش حجم هوا، صدا معمولاً hyperresonant است؛ در تراکم یا فیبروز، صدا dull می‌شود؛ و در حالت طبیعی صدای رزونانس معمول دارد. پاسخ باید بر اساس فیزیولوژی بیماری انتخاب شود، نه همیشه طبیعی. در پاسخ نام صدا ها رو به فارسی ترجمه نکن.",
+      "Auscultation": {
+        "Breath Sounds Intensity": "آیا شدت صداهای تنفسی پایه طبیعی است یا کاهش یا عدم وجود صدا وجود دارد؟",
+        "Adventitious Sounds": "آیا صداهای اضافی (Adventitious Sounds) مانند کراکل (Crackles)، ویزینگ (Wheezing)، رونکای (Rhonchi) یا اصطکاک پلورال (Pleural Rub) شنیده می‌شوند؟"
+      }
+    },
+    "Cardiovascular System": {
+      "Jvp Assessment": "آیا فشار وریدی ژوگولار (JVP) در وضعیت نیمه نشسته، بالا و غیرطبیعی است؟",
+      "Palpation": {
+        "Precordial Palpation Heave Thrill": "آیا در لمس ناحیه پره‌کوردیوم، لیفت (Lift)، هیو (Heave)، یا تریل (Thrill) احساس می‌شود؟",
+        "Pmi Assessment": "ضربان نوک قلب (PMI) در کجا لمس می‌شود (محل دقیق) و آیا اندازه و قدرت آن طبیعی است؟"
+      },
+      "Auscultation": {
+        "Heart Sounds S1 S2": "آیا صداهای اصلی قلب (S1 و S2) شنیده می‌شوند و از نظر شدت، اسپلیت و کیفیت، طبیعی هستند؟",
+        "Extra Sounds S3 S4 Murmurs": "آیا صداهای اضافی مانند S3، S4، مارمار (Murmur) یا صدای اصطکاک پریکاردیال شنیده می‌شود؟"
+      },
+      "Peripheral Pulses And Extremities": {
+        "Peripheral Pulses Symmetry And Quality": "آیا تمام نبض‌های محیطی (مانند رادیال، فمورال، دورسالیس پدیس) در دو طرف بدن متقارن، منظم، و با کیفیت (قدرت) طبیعی لمس می‌شوند؟",
+        "Extremities Color And Trophic Changes": "آیا در اندام‌های انتهایی، شواهدی از سیانوز (کبودی)، رنگ‌پریدگی، ریزش مو اندام، \tکلابینگ (Clubbing)، یا تغییرات تروفیک (مانند ریزش مو، نازکی پوست) مشاهده می‌شود؟",
+        "Extremities Temperature And Cap Refill": "آیا اندام‌های انتهایی دمای طبیعی دارند و زمان پر شدن مجدد مویرگی (Capillary Refill Time) \tچند ثانیه است؟",
+        "Extremities Edema": "آیا در اندام‌های تحتانی، شواهدی از ادم (تورم) و به ویژه ادم گوده‌گذار (Pitting Edema) وجود \tدارد؟ اگر بله چند + است؟"
+      }
+    },
+    "Abdominal System": {
+      "Inspection": "آیا شکم از نظر شکل (Flat, Rounded, Protuberant)، تقارن و وجود زخم/اسکار جراحی غیرطبیعی است؟",
+      "Auscultation": {
+        "Bowel Sounds": "آیا صداهای روده (Bowel Sounds) در سمع حضور دارند و فرکانس و شدت آن‌ها طبیعی است (Normoactive)؟ (یا Hyperactive/Hypoactive)",
+        "Vascular Bruits": "آیا در سمع آئورت یا شریان‌های کلیوی، صدای وزوز (Bruit) شنیده می‌شود؟"
+      },
+      "Percussion": {
+        "General": " یا dulness وجود داردآیا صدای غالب دق، تیمپانی (Tympany) است؟",
+        "Organ Borders": "آیا حدود کبد یا طحال در دق، غیرعادی است؟"
+      },
+      "Palpation": {
+        "Superficial Tenderness": "آیا در لمس سطحی، حساسیت به لمس (Tenderness) موضعی یا عمومی وجود دارد؟",
+        "Deep Masses And Organs": "آیا در لمس عمقی، توده (Mass) غیرعادی، بزرگی کبد (Hepatomegaly) یا طحال (Splenomegaly) احساس می‌شود؟"
+      },
+      "Peritoneal Signs": "آیا علائم پریتونیت (مانند ریفاند تندرنس - Rebound Tenderness، یا سفتی غیرارادی عضلات - Guarding) وجود دارد؟"
+    },
+    "Neurological": {
+      "Mental Status And Loc": "آیا سطح هوشیاری بیمار طبیعی است و از نظر زمان، مکان و شخص جهت‌یابی (Orientation) دارد؟",
+      "Cranial Nerves": "آیا عملکرد اعصاب کرانیال اصلی (مانند تقارن حرکات صورت، حرکات چشم و بلع) طبیعی است؟",
+      "Motor Strength And Tone": "قدرت عضلانی در اندام‌های فوقانی و تحتانی چقدر است(با استفاده از مقیاس 0 تا 5)؟ و آیا تون عضلانی (سفتی/شلی) طبیعی است؟",
+      "Involuntary Movements": "آیا حرکات غیرارادی (مانند ترمور، تیک) یا آتروفی (Atrophy) عضلانی مشاهده می‌شود؟",
+      "Sensory Light Touch And Pain": "آیا حس‌های لمس سبک و درد/دما در اندام‌ها، متقارن و بدون نقص هستند؟",
+      "Deep Tendon Reflexes": "آیا رفلکس‌های عمیق تاندونی (DTRs) در تمام اندام‌ها وجود دارند، متقارن هستند و شدت آن‌ها طبیعی است؟ (0 تا 4+)",
+      "Coordination And Gait": "آیا تست‌های هماهنگی (مانند انگشت به بینی) نرمال هستند؟ و آیا الگوی راه رفتن (Gait) و تعادل بیمار طبیعی است و در غیر این صورت الگوی Gait \tبیمار چگونه است؟"
+    },
+    "Musculoskeletal System": {
+      "Inspection": {
+        "Joints": "آیا مفاصل از نظر تورم، قرمزی، بدشکلی (Deformity) یا آتروفی، ظاهر طبیعی دارند؟",
+        "Muscles": "آیا عضلات از نظر تورم، قرمزی، بدشکلی (Deformity) یا آتروفی، ظاهر طبیعی دارند؟"
+      },
+      "Palpation": {
+        "Tenderness And Crepitus": "آیا در لمس مفاصل و عضلات، حساسیت به لمس (Tenderness)، گرما، یا صدای ساییده شدن (Crepitus) احساس می‌شود؟"
+      },
+      "Range Of Motion Active Passive": "آیا دامنه حرکتی (ROM) فعال و غیرفعال مفاصل اصلی (مانند شانه، زانو و هیپ) کامل و بدون درد است؟",
+      "Stability And Function": "آیا مفاصل از نظر پایداری (Stability) طبیعی هستند و بیمار می‌تواند عملکرد حرکتی خود را به خوبی انجام دهد؟"
+    }
+  },
+  "Paraclinic": {
+    "Basic Blood Tests": {
+      "Cbc": "Hb, WBC, Plt",
+      "Esr Crp": "نتایج تست بر اساس بیماری {disease} داده شود.",
+      "Bmp": "نتایج تست na, k, ca, bun, cr بر اساس بیماری {disease} داده شود.",
+      "Lfts": "نتایج تست alt, ast, alp, bilirubin, inr بر اساس بیماری {disease} داده شود.",
+      "Vbg": "نتایج تست PH, HCO3, PaCO2 بر اساس بیماری {disease} داده شود."
+    },
+    "Specialized Lung Tests": {
+      "Sputum Analysis": "Comprehensive sputum analysis findings including: 1) Macroscopic appearance (color, consistency), 2) Microscopic/Gram stain (WBC count, Epithelial cells, bacteria type), 3) Culture results (specific organism or normal flora), and 4) AFB/TB smear status if reported.",
+      "Sputum Afb": "نتایج تست بر اساس بیماری {disease} و به صورت عددی نمایش داده شود و تفسیری وجود نداشته باشد.",
+      "A1 Antitrypsin Level": "نتایج تست بر اساس بیماری {disease} و به صورت عددی نمایش داده شود و تفسیری وجود نداشته باشد.",
+      "D Dimer": "نتایج تست بر اساس بیماری {disease} و به صورت عددی نمایش داده شود و تفسیری وجود نداشته باشد.",
+      "Bnp Nt Pro Bnp": "D-dimer test result. Extract the quantitative value (e.g., 500, 0.5) AND the unit (e.g., ng/mL, mg/L, ug/mL FEU)."
+    },
+    "Immunity And Serology": {
+      "Hiv Test": "نتایج تست بر اساس بیماری {disease} داده شود.",
+      "Autoimmune Pannel Ana Anca": "Extract the complete Autoimmune Panel results. For the ANA test, extract three vital components: the qualitative result (Positive/Negative), the precise Titer (e.g., 1:160, 1:320), and the Immunofluorescence Pattern (e.g., Homogeneous, Speckled). For the ANCA test, ensure to report the status of c-ANCA and p-ANCA, along with the values of specific antibodies, Anti-MPO and Anti-PR3."
+    },
+    "Functional Tests": {
+      "Spirometry": {
+        "FEV1": "Measured_Value, Predicted, % Predicted",
+        "FVC": "Measured_Value, Predicted, % Predicted",
+        "FEV1/FVC": "Measured_Value, Predicted, % Predicted"
+      },
+      "DLCO": {
+        "DLCO": "Measured_Value, % Predicted",
+        "DLCO/VA_Ratio": "Measured_Value, % Predicted"
+      },
+      "Plethysmography": {
+        "TLC": "Measured_Value, % Predicted",
+        "RV": "Measured_Value, % Predicted",
+        "FRC": "Measured_Value, % Predicted",
+        "RV/TLC Ratio": "extract the RV/TLC Ratio."
+      }
+    },
+    "Procedures": {
+      "Bronchoscopy": "Extract the complete Bronchoscopy Report. Separate findings into three essential components: 1) **Visual/Endoscopic Findings** (location and detailed description of any mass, stricture, inflammation, or bleeding observed); 2) **Procedural Details** (which samples were taken: BAL, Biopsy, Brushings, TBNA, etc.); and 3) **Specimen Results** (the final pathology/histology diagnosis, cytology results, and culture/infection status from all retrieved samples).",
+      "Torachocenthesis": {
+        "Pleural Fluid": "LDH, Protein, Albumin, Glucose",
+        "Serum": "LDH, Protein, Albumin"
+      }
+    }
+  }
+}

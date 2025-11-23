@@ -17,7 +17,8 @@
         <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'تجزیه و تحلیل'"
                     [url]="'/dashboard/s/stat'"></app-action>
 
-        <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'آغاز ویزیت'"
+        <app-action [icon]="'images/svg/arrow-left-line.svg'"
+                    [ngClass]="{ 'opacity-50 pointer-events-none': !isActive }" [text]="'آغاز ویزیت'"
                     [url]="'/dashboard/s/hospital/select/'+subject">>
         </app-action>
 

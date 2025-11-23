@@ -96,6 +96,10 @@ export class EditSection {
     this.master.sectionUpdate(this.data).subscribe({
       next: (data) => {
         this.toast.showSuccess('اطلاعات کلاس با موفقیت به روز شد')
+        setTimeout(() => {
+            window.location.reload();
+          }, 200
+        )
       },
       error: err => {
         this.toast.showError('خطایی وجود دارد')

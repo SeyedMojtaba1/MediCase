@@ -93,5 +93,10 @@ export class DashNav {
         }
       }
     )
+    // this.master.refresh().subscribe({
+    //   next: data => {
+    //
+    //   },
+    // })
   }
 }

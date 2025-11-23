@@ -3,14 +3,14 @@ import {ActivatedRoute} from '@angular/router';
 import {Master} from '../../core/services/master';
 import {DashNavT} from '../components/dash-nav-t/dash-nav-t';
 import confetti from 'canvas-confetti';
-import {Card} from '../../layouts/card/card';
+import {ProgressBar} from 'primeng/progressbar';
 
 
 @Component({
   selector: 'app-public-profile',
   imports: [
     DashNavT,
-    Card
+    ProgressBar
   ],
   templateUrl: './public-profile.html',
   styleUrl: './public-profile.css'

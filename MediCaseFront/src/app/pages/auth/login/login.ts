@@ -51,7 +51,7 @@ export class Login {
           const userRole = res.body.user.main_role // response.role;
 
           if (userRole == 'student' || userRole == 'teacher') {
-            this.auth.login(userRole, res.body.access_token);
+            this.auth.login(userRole, res.body.access_token, res.body.refresh_token);
           } else {
             console.error('نقش کاربر نامعتبر است');
           }
