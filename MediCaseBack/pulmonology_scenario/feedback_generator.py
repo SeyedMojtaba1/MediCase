@@ -1,11 +1,11 @@
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
-from .feedback_utils.S1_identifying_sets import calculate_set_metrics
-from .feedback_utils.S3_stage_score import calculate_stage_order_error
-from .feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
-from .feedback_utils.escape_json_braces import escape_json_braces
-import json
+
+from feedback_utils.S1_identifying_sets import calculate_set_metrics
+from feedback_utils.S3_stage_score import calculate_stage_order_error
+from feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
+from feedback_utils.escape_json_braces import escape_json_braces
+from typing import Dict
 
 json_schema = {
     "title": "Clinical_Case_Feedback_Schema",
@@ -247,12 +247,12 @@ json_schema = {
 
 
 model = init_chat_model(
-        model="gpt-4o-mini",
-        base_url="https://api.avalai.ir/v1",
-        api_key="aa-bFHSFoxDcvBLcr9tEpySz5SIjvlHGBAmJ3nqgKALEgt5w8YH",
+  model="gpt-4o-mini",
+  base_url="https://api.avalai.ir/v1",
+  api_key="aa-bFHSFoxDcvBLcr9tEpySz5SIjvlHGBAmJ3nqgKALEgt5w8YH",
 )
 
-target_disease = 'COPD'
+
 
 prompt_template = PromptTemplate(
     template="""
@@ -558,3 +558,265 @@ def feedback_generator(target_disease, STUDENT_LOG):
   output = structured_chat_model.invoke(final_prompt)
 
   return output, evaluation, transition
+
+STUDENT_LOG: Dict[str, Dict[str, str]] = {
+    "history_taking": {
+        "present_illness": {
+            "question1": "15:00",
+            "question2": "False",
+            "question3": "14:00",
+            "question4": "False",
+            "question5": "False",
+            "question6": "False",
+            "question7": "False",
+            "question8": "13:00",
+            "question9": "False",
+            "question10": "False"
+        },
+        "medical_history": {
+            "question1": {
+                    "question1a": "14:30",
+                    "question1b": "14:35"
+                },
+            "question2": {
+                    "question2a": "False",
+                    "question2b": "False"
+                },
+            "question3": "12:30",
+            "question4": "False",
+            "question5": "False",
+            "question6": "False"
+        },
+        "drug_history": {
+            "question1": {
+                    "question1a": "False",
+                    "question1b": "False",
+                    "question1c": "False"
+                },
+            "question2": "False"
+        },
+        "allergies": {
+            "question1": {
+                "question1a": "False",
+                "question1b": "False"
+            }
+        },
+        "family_history": {
+            "question1": {
+                    "question1a": "False",
+                    "question1b": "False"
+                },
+            "question2": "False",
+            "question3": {
+                "question3a": "False",
+                "question3b": "False"
+            }
+        },
+        "social_history": {
+            "question1": {
+                    "question1a": "False",
+                    "question1b": "False"
+                },
+            "question2": "False",
+            "question3": {
+                    "question3a": "False",
+                    "question3b": "False"
+                },
+            "question4": "False"
+        },
+        "ROS": {
+            "question1": "False",
+            "question2": "False",
+            "question3": "False",
+            "question4": "False",
+            "question5": "False",
+            "question6": "False",
+            "question7": "False",
+            "question8": "False",
+            "question9": "False",
+            "question10": "False",
+            "question11": "False",
+            "question12": "False",
+            "question13": "False",
+            "question14": "False"
+        }
+    },
+    "physical_exam": {
+        "general_appearance": {
+            "level_of_consciousness_mood_and_behavior": {
+                "level_of_consciousness": "False",
+                "mood": "False",
+                "behavior": "False"
+            },
+            "posture_and_position": {
+                "position_of_comfort": "False"
+            },
+            "overall_appearance": {
+                "nutritional_status": "False"
+            },
+            "cardiopulmonary_and_circulatory_clues": {
+                "cyanosis": "False",
+                "dyspnea": "False",
+                "edema": "False"
+            }
+        },
+        "head_and_neck": {
+            "head_and_face": {
+                "symmetry_and_lesions": "False",
+                "tenderness": "ّFalse"
+            },
+            "eyes": {
+                "sclera_and_conjunctiva": "False",
+                "pupils_reaction": "ّFalse",
+                "extraocular_movements": "False"
+            },
+            "ears": {
+                "external_and_tenderness": "False",
+                "eardrum_appearance": "ّFalse"
+            },
+            "nose_and_sinuses": {
+                "septum_and_discharge": "False",
+                "sinus_tenderness": "False"
+            },
+            "mouth_and_pharynx": {
+                "oral_mucosa_and_lesions": "False",
+                "pharynx_and_tonsils": "False"
+            },
+            "neck_and_lymphatics": {
+                "inspection": "False",
+                "tracheal_position": "False",
+                "thyroid_gland": "False",
+                "carotid_bruit": "False",
+                "lymph_nodes_size_consistency": "False",
+                "lymph_nodes_mobility_tenderness": "False"
+            }
+        },
+        "respiratory_system": {
+            "inspection": {
+                "accessory_muscles": "12:00",
+                "chest_shape_and_symmetry": "12:05"
+            },
+            "palpation": {
+                "chest_expansion": "False",
+                "tactile_fremitus": "False"
+            },
+            "percussion": "False",
+            "auscultation": {
+                "breath_sounds_intensity": "False",
+                "adventitious_sounds": "11:30"
+            }
+        },
+        "cardiovascular_system": {
+            "JVP_assessment": "11:00",
+            "palpation": {
+                "precordial_palpation_heave_thrill": "False",
+                "pmi_assessment": "False"
+            },
+            "auscultation": {
+                "heart_sounds_s1_s2": "False",
+                "extra_sounds_s3_s4_murmurs": "False"
+            },
+            "peripheral_pulses_and_extremities": {
+                "peripheral_pulses_symmetry_and_quality": "False",
+                "extremities_color_and_trophic_changes": "False",
+                "extremities_temperature_and_cap_refill": "False",
+                "extremities_edema": "False"
+            },
+            "abdominal_system": {
+                "inspection": "False",
+                "auscultation": {
+                    "bowel_sounds": "False",
+                    "vascular_bruits": "False"
+                },
+                "percussion": {
+                    "general": "False",
+                    "organ_borders": "False"
+                },
+                "palpation": {
+                    "superficial_tenderness": "False",
+                    "deep_masses_and_organs": "False"
+                },
+                "peritoneal_signs": "False"
+            }
+        },
+        "neurological": {
+            "mental_status_and_LOC": "False",
+            "cranial_nerves": "False",
+            "motor_strength_and_tone": "False",
+            "involuntary_movements": "False",
+            "sensory_light_touch_and_pain": "False",
+            "deep_tendon_reflexes": "False",
+            "coordination_and_gait": "False"
+        },
+        "musculoskeletal_system": {
+            "inspection": {
+                "joints": "False",
+                "muscles": "False"
+            },
+            "palpation": {
+                "tenderness_and_crepitus": "False"
+            },
+            "range_of_motion_active_passive": "False",
+            "stability_and_function": "False"
+        }
+    },
+    "paraclinic": {
+        "basic_blood_tests": {
+            "CBC": {
+                "Hb": "9:30", 
+                "WBC": "False", 
+                "Plt": "False"
+            },
+            "ESR/CRP": "False",
+            "BMP": "False",
+            "LFTs": "False",
+            "VBG": "10:30"
+        },
+        "specialized_lung_tests": {
+            "Sputum_analysis": "False",
+            "Sputum_AFB": "False",
+            "a1_antitrypsin_level": "06:15",
+            "D_dimer": "False",
+            "BNP_NT_proBNP": "10:15"
+        },
+        "immunity_and_serology": {
+            "HIV_test": "False",
+            "Autoimmune_pannel_ANA_ANCA": "False"
+        },
+        "simple_imaging": {
+            "Chest_X_Ray": {
+                "PA": "10:00",
+                "Lateral": "10:05"
+            }
+        },
+        "advanced_imaging": {
+            "Chest_CT_CTPA": "False",
+            "MRI_chest": "False",
+            "Pet_scan": "False"
+        },
+        "functional_tests": {
+            "Spirometry": "08:00",
+            "peak_flow": "False",
+            "plethysmography": "07:00"
+        },
+        "procedures": {
+            "Bronchoscopy": "False",
+            "torachonthesis": "False"
+        }
+    },
+    "differential_diagnosis": {
+        "disease1": "False",
+        "disease2": "05:15",
+        "disease3": "05:30",
+        "disease4": "False",
+        "disease5": "05:10",
+        "disease6": "False",
+        "disease7": "05:00",
+        "disease8": "False"
+    },
+    "final_diagnosis": {
+        "disease3": "02:00"
+    }
+}
+
+print(feedback_generator('COPD', STUDENT_LOG))
