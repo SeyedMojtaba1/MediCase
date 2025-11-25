@@ -349,14 +349,15 @@ class MedicalCase(BaseModel):
 model = init_chat_model(
   model="gpt-4o-mini",
   base_url="https://api.avalai.ir/v1",
-  api_key="aa-bFHSFoxDcvBLcr9tEpySz5SIjvlHGBAmJ3nqgKALEgt5w8YH",
+  api_key="aa-3merXIxJbKqFQqE69uVBXvWAJXVg1OAD7e1Tqq2BttJmJoVj",
 )
 
 OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH", "Pleural_Effusion", "ARDS"]
 
 def scenario_creator():
     # 1. انتخاب بیماری تصادفی
-    target_disease = 'Asthma'
+    target_disease = "ADRS"
+    # random.choice(OPTIMAL_SCENARIO)
   
     # 2. تعریف پرامپت
     # نکته: وقتی کلاس Pydantic را به مدل می‌دهیم، خود LangChain توضیحات فیلدها (Description)
