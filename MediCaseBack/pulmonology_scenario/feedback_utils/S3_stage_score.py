@@ -2,7 +2,6 @@ from .S1_identifying_sets import calculate_set_metrics, count_true_values
 from .S2_get_action_time import get_first_action_time_and_count
 from .optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
 from typing import Dict, Any
-import json
 
 STUDENT_LOG: Dict[str, Dict[str, str]] = {
     "history_taking": {

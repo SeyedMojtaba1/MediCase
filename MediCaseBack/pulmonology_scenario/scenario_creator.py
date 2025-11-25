@@ -298,7 +298,6 @@ class ImmunityAndSerology(BaseModel):
 class Spirometry(BaseModel):
     fev1: List[str] = Field(..., description="Measured_Value, Predicted, % Predicted")
     fvc: List[str] = Field(..., description="Measured_Value, Predicted, % Predicted")
-    # "fev1/fvc" needs an alias because '/' is not allowed in python variables
     fev1_fvc: List[str] = Field(..., alias="fev1/fvc Measured_Value, Predicted, % Predicted")
 
 class DLCO(BaseModel):
@@ -331,8 +330,6 @@ class Paraclinic(BaseModel):
     functional_tests: FunctionalTests
     procedures: Procedures
 
-# --- ROOT MODEL ---
-
 class MedicalCase(BaseModel):
     patient_profile: PatientProfile
     history_taking: HistoryTaking
@@ -355,15 +352,8 @@ model = init_chat_model(
 OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH", "Pleural_Effusion", "ARDS"]
 
 def scenario_creator():
-    # 1. انتخاب بیماری تصادفی
-    target_disease = "ADRS"
-    # random.choice(OPTIMAL_SCENARIO)
+    target_disease = random.choice(OPTIMAL_SCENARIO)
   
-    # 2. تعریف پرامپت
-    # نکته: وقتی کلاس Pydantic را به مدل می‌دهیم، خود LangChain توضیحات فیلدها (Description)
-    # را به مدل زبانی منتقل می‌کند، بنابراین پرامپت می‌تواند ساده‌تر باشد.
-    # اما دستورالعمل‌های "فارسی روان" و "عدم ترجمه اصطلاحات" را حفظ می‌کنیم.
-    
     prompt_template = PromptTemplate(
         template="مطابق json زیر با در نظر گرفتن اینکه این موارد در رابطه با بیماری {disease} می‌باشند جوری کامل کن که یک پزشک بتواند با استفاده از این یافته‌ها به تشخیص برسد. به فارسی روان پاسخ یده اما اصطلاخات علمی را ترجمه نکن و به صورت انگلیسی در متن فارسی قرار بده.",
         input_variables=["disease"]
@@ -371,22 +361,15 @@ def scenario_creator():
   
     final_prompt = prompt_template.format(disease=f"{target_disease}")
 
-    # 3. اتصال مدل به ساختار Pydantic
-    # به جای دیکشنری json_schema، کلاس اصلی MedicalCase را پاس می‌دهیم
     structured_chat_model = model.with_structured_output(MedicalCase)
   
-    # 4. اجرای مدل
     try:
         output_pydantic_object = structured_chat_model.invoke(final_prompt)
         
-        # 5. تبدیل آبجکت Pydantic به دیکشنری پایتون (معادل JSON)
-        # از model_dump() استفاده می‌کنیم تا خروجی قابل سریالایز شدن باشد
-        # by_alias=True باعث می‌شود فیلدهایی مثل "fev1/fvc" که نام‌گذاری خاص داشتند درست برگردند
         output_dict = output_pydantic_object.model_dump(by_alias=True)
         
         return output_dict, target_disease
 
     except Exception as e:
         print(f"Error generating scenario: {e}")
-        # در صورت بروز خطا می‌توانید یک مقدار پیش‌فرض یا None برگردانید
         return None, target_disease
