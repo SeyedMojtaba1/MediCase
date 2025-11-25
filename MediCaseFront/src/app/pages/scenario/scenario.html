@@ -12,29 +12,57 @@
     <!-- Sections -->
     <div class="flex flex-col w-full gap-5">
       @for (section of sections; track section) {
-        <button (click)="playClick(); selectSection(section)"
-                [ngClass]="activeSection==section.id ? 'bg-[#148591]/50' : 'bg-[#148591]'  "
-                class="cursor-pointer flex flex-row gap-3 items-center
-    bg-[#148591]
-    text-white
-    font-semibold
-    px-6
-    py-3
-    rounded-2xl
-    shadow-[0_4px_0_#0f6c74]
-    hover:bg-[#0f747c]
-    active:translate-y-1
-    active:shadow-[0_2px_0_#0f6c74]
-    transition-all
-    duration-150"
-        >
-          <i [class]="section.icon + ' text-2xl'"></i>
-          <p>{{ section.title }}</p>
+        @if (section.id === 6) {
+          @let isSectionDisabled = true;
 
-        </button>
+          <button
+            (click)="selectSection(section)"
+            [disabled]="isSectionDisabled"
+            [ngClass]="{
+            'bg-[#4b4b4b] shadow-[0_4px_0_#333333] cursor-not-allowed': isSectionDisabled,
+            'bg-[#148591]/50': !isSectionDisabled && activeSection==section.id,
+            'bg-[#148591]': !isSectionDisabled && activeSection!=section.id,
+            'hover:bg-[#0f747c] active:translate-y-1 active:shadow-[0_2px_0_#0f6c74]': !isSectionDisabled
+        }"
+            class="flex flex-row gap-3 items-center
+               text-white
+               font-semibold
+               px-6
+               py-3
+               rounded-2xl
+               shadow-[0_4px_0_#0f6c74]
+               transition-all
+               duration-150"
+          >
+            <i [class]="section.icon + ' text-2xl'"></i>
+            <p>{{ section.title }}</p>
+          </button>
+
+        } @else {
+          @let isSectionDisabled = false;
+
+          <button (click)="playClick(); selectSection(section)"
+                  [ngClass]="activeSection==section.id ? 'bg-[#148591]/50' : 'bg-[#148591]'  "
+                  class="cursor-pointer flex flex-row gap-3 items-center
+                     bg-[#148591]
+                     text-white
+                     font-semibold
+                     px-6
+                     py-3
+                     rounded-2xl
+                     shadow-[0_4px_0_#0f6c74]
+                     hover:bg-[#0f747c]
+                     active:translate-y-1
+                     active:shadow-[0_2px_0_#0f6c74]
+                     transition-all
+                     duration-150"
+          >
+            <i [class]="section.icon + ' text-2xl'"></i>
+            <p>{{ section.title }}</p>
+
+          </button>
+        }
       }
-
-      <!--      <p class="text-gray-500 text-sm underline text-center cursor-pointer">بازگشت به داشبورد</p>-->
     </div>
 
   </div>
@@ -55,7 +83,9 @@
             </p>
 
             <div class="flex gap-4 text-lg font-medium">
-              <span>{{ data.patient_profile.personal_information.gender + ' ' + data.patient_profile.personal_information.age + ' ساله' }}</span>
+              <span>{{ data.patient_profile.personal_information.gender }}</span>
+              <span class="text-white/70">|</span>
+              <span>{{ data.patient_profile.personal_information.age }}</span>
               <span class="text-white/70">|</span>
               <span>{{ data.patient_profile.personal_information.marital_status }}</span>
             </div>
@@ -116,137 +146,449 @@
       </div>
 
     } @else if (activeSection == 2) {
-      <div class="flex flex-col w-full gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
 
-        <!-- Present Illness -->
-        <p class="font-bold text-lg">وضعیت بیمار </p>
-        @for (q of questionsBySection['present_illness']; track q.id) {
-          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
-               (click)="handleQuestionClick(q, 'present_illness','history_taking')"><p class="">{{ q.title }}</p>
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">وضعیت بیمار</h3>
+          @for (q of questionsBySection['present_illness']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'present_illness', 'history_taking')">
 
-            @if (q.open) {
-              <div class="w-full h-[1px] bg-white/50 my-2"></div>
-              <p class="text-sm text-gray-200 mt-2">
-                پاسخ: {{ q.answer }}
-              </p>
-            }
-          </div>
-        }
-
-        <!-- Past Medical History -->
-        <p class="font-bold text-lg">سابقه بیماری قبلی</p>
-
-        @for (q of questionsBySection['past_medical_history']; track q.id) {
-          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
-               (click)="handleQuestionClick(q, 'past_medical_history','history_taking')"><p class="">{{ q.title }}</p>
-
-            @if (q.open) {
-              <div class="w-full h-[1px] bg-white/50 my-2"></div>
-              <p class="text-sm text-gray-200 mt-2">
-                پاسخ: {{ q.answer }}
-              </p>
-            }
-          </div>
-        }
-
-        <!-- Drug History -->
-        <p class="font-bold text-lg">سابقه دارویی</p>
-        @for (q of questionsBySection['drug_history']; track q.id) {
-          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
-               (click)="handleQuestionClick(q, 'drug_history','history_taking')"><p class="">{{ q.title }}</p>
-
-            @if (q.open) {
-              <div class="w-full h-[1px] bg-white/50 my-2"></div>
-              <p class="text-sm text-gray-200 mt-2">
-                پاسخ: {{ q.answer }}
-              </p>
-            }
-          </div>
-        }
-
-        <!-- Allergies -->
-        <div>
-          <p class="font-bold text-lg mb-2">حساسیت‌ها</p>
-
-          @for (q of questionsBySection['allergies']; track q.id) {
-            <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
-                 (click)="handleQuestionClick(q, 'allergies','history_taking')"><p class="">{{ q.title }}</p>
+              <p class="font-semibold">{{ q.title }}</p>
 
               @if (q.open) {
-                <div class="w-full h-[1px] bg-white/50 my-2"></div>
                 <p class="text-sm text-gray-200 mt-2">
-                  پاسخ: {{ q.answer }}
+                  یافته: {{ q.answer }}
                 </p>
               }
             </div>
           }
         </div>
 
-        <!-- Family History -->
-        <p class="font-bold text-lg mb-2">سابقه خانوادگی</p>
 
-        @for (q of questionsBySection['family_history']; track q.id) {
-          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
-               (click)="handleQuestionClick(q, 'family_history','history_taking')"><p class="">{{ q.title }}</p>
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سابقه بیماری قبلی </h3>
+          @for (q of questionsBySection['past_medical_history']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'past_medical_history', 'history_taking')">
 
-            @if (q.open) {
-              <div class="w-full h-[1px] bg-white/50 my-2"></div>
-              <p class="text-sm text-gray-200 mt-2">
-                پاسخ: {{ q.answer }}
-              </p>
-            }
-          </div>
-        }
+              <p class="font-semibold">{{ q.title }}</p>
 
-
-        <!-- Social History -->
-        <p class="font-bold text-lg mb-2">اطلاعات اجتماعی</p>
-
-        @for (q of questionsBySection['social_history']; track q.id) {
-          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
-               (click)="handleQuestionClick(q, 'social_history','history_taking')"><p class="">{{ q.title }}</p>
-
-            @if (q.open) {
-              <div class="w-full h-[1px] bg-white/50 my-2"></div>
-              <p class="text-sm text-gray-200 mt-2">
-                پاسخ: {{ q.answer }}
-              </p>
-            }
-          </div>
-        }
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
 
 
-        <!-- ROS -->
-        <p class="font-bold text-lg mb-2">دیگر سوالات (ROS)</p>
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سابقه دارویی </h3>
+          @for (q of questionsBySection['drug_history']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'drug_history', 'history_taking')">
 
-        @for (q of questionsBySection['ros']; track q.id) {
-          <div class="bg-white/10 p-3 rounded-lg mb-2 cursor-pointer"
-               (click)="handleQuestionClick(q, 'ros','history_taking')"><p class="">{{ q.title }}</p>
+              <p class="font-semibold">{{ q.title }}</p>
 
-            @if (q.open) {
-              <div class="w-full h-[1px] bg-white/50 my-2"></div>
-              <p class="text-sm text-gray-200 mt-2">
-                پاسخ: {{ q.answer }}
-              </p>
-            }
-          </div>
-        }
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">حساسیت ها</h3>
+          @for (q of questionsBySection['allergies']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'allergies', 'history_taking')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سابقه خانوادگی</h3>
+          @for (q of questionsBySection['family_history']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'family_history', 'history_taking')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">اطلاعات عمومی</h3>
+          @for (q of questionsBySection['social_history']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'social_history', 'history_taking')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">دیگر سوالات (ROS)</h3>
+          @for (q of questionsBySection['ros']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'ros', 'history_taking')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
 
 
       </div>
+
     } @else if (activeSection == 3) {
-      <div>
+      <h2 class="text-3xl font-bold mb-6 text-center">🩺 معاینه فیزیکی (Physical Exam)</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سیستم عصبی (Neurological)</h3>
+          @for (q of physicalExamBySection['neurological']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'neurological', 'physical_exam')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سر و گردن (Head and Neck)</h3>
+          @for (q of physicalExamBySection['head_and_neck']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  **یافته:** {{ q.answer }}
+                  <span class="float-left text-xs opacity-50"> زمان مشاهده: {{ q.answer_time }} </span>
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سیستم تنفسی (Respiratory System)</h3>
+          @for (q of physicalExamBySection['respiratory_system']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'respiratory_system', 'physical_exam')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  **یافته:** {{ q.answer }}
+                  <span class="float-left text-xs opacity-50"> زمان مشاهده: {{ q.answer_time }} </span>
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سیستم قلبی عروقی (Cardiovascular System)</h3>
+          @for (q of physicalExamBySection['cardiovascular_system']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'cardiovascular_system', 'physical_exam')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  **یافته:** {{ q.answer }}
+                  <span class="float-left text-xs opacity-50"> زمان مشاهده: {{ q.answer_time }} </span>
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">معاینه عمومی (General Appearance)</h3>
+          @for (q of physicalExamBySection['general_appearance']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'general_appearance', 'physical_exam')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  **یافته:** {{ q.answer }}
+                  <span class="float-left text-xs opacity-50"> زمان مشاهده: {{ q.answer_time }} </span>
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سیستم شکمی (Abdominal System)</h3>
+          @for (q of physicalExamBySection['abdominal_system']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'abdominal_system', 'physical_exam')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  **یافته:** {{ q.answer }}
+                  <span class="float-left text-xs opacity-50"> زمان مشاهده: {{ q.answer_time }} </span>
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سیستم عضلانی-اسکلتی (Musculoskeletal)</h3>
+          @for (q of physicalExamBySection['musculoskeletal_system']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'musculoskeletal_system', 'physical_exam')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  **یافته:** {{ q.answer }}
+                  <span class="float-left text-xs opacity-50"> زمان مشاهده: {{ q.answer_time }} </span>
+                </p>
+              }
+            </div>
+          }
+        </div>
+
       </div>
 
     } @else if (activeSection == 4) {
-      <div>
+
+
+      <h2 class="text-3xl font-bold mb-6 text-center">🩺 معاینه فیزیکی (Physical Exam)</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">آزمایش های پایه خون</h3>
+          @for (q of paraclinicBySection['basic_blood_tests']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'basic_blood_tests', 'paraclinic')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">آزمایش های تخصصی ریه</h3>
+          @for (q of paraclinicBySection['specialized_lung_tests']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'specialized_lung_tests', 'paraclinic')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">ایمنی و سرولوژی</h3>
+          @for (q of paraclinicBySection['immunity_and_serology']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'immunity_and_serology', 'paraclinic')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">تست های عملکردی</h3>
+          @for (q of paraclinicBySection['functional_tests']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'functional_tests', 'paraclinic')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">پراسیجر ها</h3>
+          @for (q of paraclinicBySection['procedures']; track q.id) {
+            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                 (click)="handleQuestionClick(q, 'procedures', 'paraclinic')">
+
+              <p class="font-semibold">{{ q.title }}</p>
+
+              @if (q.open) {
+                <p class="text-sm text-gray-200 mt-2">
+                  یافته: {{ q.answer }}
+                </p>
+              }
+            </div>
+          }
+        </div>
+
+
       </div>
+
+    } @else {
+      <div class="w-full min-h-screen p-6 flex flex-col items-center justify-center text-white"
+           style="background-color: #148591;">
+
+        <div
+          class="w-full max-w-lg p-8 rounded-2xl shadow-2xl bg-white/10 backdrop-blur-sm flex flex-col items-center gap-6">
+
+          <div class="flex flex-col items-center gap-2 border-b border-white/30 pb-4 w-full">
+            <p class="text-4xl font-extrabold tracking-wide">
+              {{ data.patient_profile.personal_information.first_name + ' ' + data.patient_profile.personal_information.last_name }}
+            </p>
+
+            <div class="flex gap-4 text-lg font-medium">
+              <span>{{ data.patient_profile.personal_information.gender }}</span>
+              <span class="text-white/70">|</span>
+              <span>{{ data.patient_profile.personal_information.age }}</span>
+              <span class="text-white/70">|</span>
+              <span>{{ data.patient_profile.personal_information.marital_status }}</span>
+            </div>
+
+            <p class="text-base text-white/80 mt-1">
+              شغل: {{ data.patient_profile.personal_information.occupation }}
+            </p>
+
+            <p class="text-sm opacity-60 mt-2">
+              محل تولد: {{ data.patient_profile.personal_information.place_of_birth }} |
+              محل سکونت: {{ data.patient_profile.personal_information.place_of_residence }}
+            </p>
+          </div>
+
+          <div class="w-full p-4 rounded-xl bg-white/10 flex flex-col gap-1 items-center">
+            <span class="text-sm font-light opacity-80">شکایت اصلی:</span>
+            <span class="text-xl font-semibold text-center">{{ data.patient_profile.chief_complaint }}</span>
+          </div>
+
+          <p class="-mb-5">
+            علائم حیاتی
+          </p>
+
+          <div class="grid grid-cols-3 gap-x-4 gap-y-6 bg-white/10 p-5 rounded-xl mt-4 text-center">
+
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">T</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.T }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">BP</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.BP }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">PR</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.PR }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">RR</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.RR }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">GCS</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.GCS }}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <p class="text-sm opacity-70">SpO2</p>
+              <p class="font-bold text-lg">{{ data.patient_profile.vital_sign.SpO2 }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     }
 
   </div>
 
   <!-- Left image -->
   <div
+    (click)="console.log(Log)"
     [style.backgroundImage]="'url(images/jpg/rie.jpg)'"
     class="w-1/2 h-full bg-cover bg-center relative flex flex-col overflow-visible"
   >
@@ -291,3 +633,97 @@
   </div>
 
 </div>
+
+
+@if (showDifferentialDiagnosisModal) {
+  <div class="fixed inset-0 bg-black/50 bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl text-white w-full max-w-lg">
+
+      <h3 class="text-2xl font-bold mb-6 text-center border-b border-white/30 pb-3">
+        تشخیص افتراقی (Differential Diagnosis)
+      </h3>
+
+      @if (differentialDiagnosisStage === 1) {
+        <div>
+          <p class="mb-4 text-center">
+            لطفاً 4 بیماری را از لیست زیر برای تشخیص افتراقی انتخاب کنید.
+            <span class="font-bold text-yellow-400">({{ selectedDifferentialDiseases.length }} / 4)</span>
+          </p>
+
+          <div class="grid grid-cols-2 gap-3 mb-6">
+            @for (disease of diseases; track disease.name) {
+              <button
+                (click)="toggleDiseaseSelection(disease)"
+                [ngClass]="{
+        'bg-[#148591] hover:bg-[#0f747c] shadow-[0_3px_0_#0f6c74]': selectedDifferentialDiseases.includes(disease),
+        'bg-gray-600 hover:bg-gray-700 shadow-[0_3px_0_#4a4a4a]': !selectedDifferentialDiseases.includes(disease)
+      }"
+                class="py-2 rounded-lg font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]"
+              >
+                {{ disease.name.replace('_', ' ') }}
+              </button>
+            }
+          </div>
+
+          <button (click)="goToFinalDiagnosisStage()"
+                  [disabled]="selectedDifferentialDiseases.length !== 4"
+                  [ngClass]="{
+                    'bg-green-600 hover:bg-green-700': selectedDifferentialDiseases.length === 4,
+                    'bg-gray-500 cursor-not-allowed': selectedDifferentialDiseases.length !== 4
+                  }"
+                  class="mt-4 w-full py-3 text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#0a522e] active:translate-y-1 active:shadow-[0_2px_0_#0a522e]"
+          >
+            ادامه (انتخاب تشخیص نهایی)
+          </button>
+        </div>
+      } @else if (differentialDiagnosisStage === 2) {
+        <div>
+          <p class="mb-4 text-center">
+            از بین ۴ تشخیص افتراقی، **تشخیص نهایی** را انتخاب کنید.
+          </p>
+
+          <div class="grid grid-cols-2 gap-3 mb-6">
+            @for (disease of selectedDifferentialDiseases; track disease.name) {
+              <button
+                (click)="setFinalDiagnosis(disease.name)"
+                [ngClass]="{
+                  'bg-yellow-500 text-gray-900 font-extrabold shadow-[0_3px_0_#9a7000]': finalDiagnosis === disease.name,
+                  'bg-gray-600 hover:bg-gray-700 shadow-[0_3px_0_#4a4a4a]': finalDiagnosis !== disease.name
+                }"
+                class="py-2 rounded-lg font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]"
+              >
+                {{ disease.name.replace('_', ' ') }}
+              </button>
+            }
+          </div>
+
+          <button (click)="finishScenario()"
+                  [disabled]="!finalDiagnosis"
+                  [ngClass]="{
+                    'bg-red-600 hover:bg-red-700': finalDiagnosis,
+                    'bg-gray-500 cursor-not-allowed': !finalDiagnosis
+                  }"
+                  class="mt-4 w-full py-3 text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#8c160b] active:translate-y-1 active:shadow-[0_2px_0_#8c160b]"
+          >
+            پایان سناریو و ذخیره تشخیص نهایی
+          </button>
+
+          <button (click)="differentialDiagnosisStage = 1; finalDiagnosis = null"
+                  class="mt-3 w-full py-2 text-sm bg-gray-700 hover:bg-gray-600 rounded-lg transition duration-150">
+            بازگشت به مرحله انتخاب ۴ بیماری
+          </button>
+        </div>
+      }
+
+      <button (click)="closeDifferentialDiagnosisModal()"
+              class="mt-6 w-full py-2 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition duration-150">
+        بستن پنجره
+      </button>
+
+    </div>
+  </div>
+}
+
+
+
+

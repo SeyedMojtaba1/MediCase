@@ -371,6 +371,31 @@ export class Master {
     });
   }
 
+  pulmonologyScenarioFeedbackRetrieve(tracking_code: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/feedbackretrieve/' + tracking_code + '/', {
+      headers,
+      withCredentials: true
+    });
+  }
+
+  pulmonologyScenarioFeedbackCreate(tracking_code: any, log: any): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.post<any>(this.BASE_URL + 'pulmonologyscenario/feedbackcreate/' + tracking_code,
+      {student_log: log}
+      , {
+        headers,
+        withCredentials: true
+      });
+  }
 }
 
 

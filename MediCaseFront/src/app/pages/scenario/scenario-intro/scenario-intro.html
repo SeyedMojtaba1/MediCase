@@ -1,1 +1,85 @@
-<p>scenario-intro works!</p>
+<div class="p-4 sm:p-8 bg-gray-50 min-h-screen text-gray-800" dir="rtl">
+
+  <h1 class="text-3xl font-extrabold mb-8 text-center text-blue-800">
+    گزارش ارزیابی سناریوی بالینی 📋
+  </h1>
+
+  <div class="max-w-3xl mx-auto mb-8 bg-white rounded-xl shadow-lg p-6 space-y-4">
+    <h2 class="text-xl font-bold border-b pb-2 text-right text-gray-700">🗣️ بازخورد و تحلیل عملکرد</h2>
+
+    <div class="bg-green-50 border-r-4 border-green-600 p-3 rounded-md">
+      <h3 class="font-bold text-green-800">✅ نقاط قوت (Strengths)</h3>
+      <p class="text-sm text-gray-700 mt-1">{{ feedback.feedback.total.strengths }}</p>
+    </div>
+
+    <div class="bg-yellow-50 border-r-4 border-yellow-600 p-3 rounded-md">
+      <h3 class="font-bold text-yellow-800">🔻 اقدامات از دست رفته (M)</h3>
+      <p class="text-sm text-gray-700 mt-1">{{ feedback.feedback.total.weaknesses.M.description }}</p>
+    </div>
+
+    <div class="bg-red-50 border-r-4 border-red-600 p-3 rounded-md">
+      <h3 class="font-bold text-red-800">❌ اقدامات غیرضروری (E)</h3>
+      <p class="text-sm text-gray-700 mt-1">{{ feedback.feedback.total.weaknesses.E.description }}</p>
+    </div>
+
+    <div class="bg-blue-50 border-r-4 border-blue-600 p-3 rounded-md">
+      <h3 class="font-bold text-blue-800">💡 توصیه‌های آموزشی</h3>
+      <p class="text-sm text-gray-700 mt-1 whitespace-pre-line">{{ feedback.feedback.educational_feedback }}</p>
+    </div>
+
+  </div>
+
+  <div class="max-w-3xl mx-auto mb-8 bg-white rounded-xl shadow-lg overflow-hidden">
+    <h2 class="text-xl font-bold p-4 border-b text-right bg-gray-100 text-blue-800">
+      📊 خلاصه عملکرد در مراحل مختلف
+    </h2>
+
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-blue-50">
+      <tr>
+        <th class="px-3 py-3 text-right text-sm font-semibold text-gray-700">بخش</th>
+        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">درست (C)</th>
+        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">از دست رفته (M)</th>
+        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">امتیاز (A)</th>
+        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">نرخ موفقیت</th>
+      </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+      <!--        @for (key of sectionKeys; track key) {-->
+      <!--          @let section = feedback.evaluation[key];-->
+      <!--          <tr>-->
+      <!--            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">-->
+      <!--            </td>-->
+      <!--            <td class="px-3 py-2 whitespace-nowrap text-sm text-center text-green-600 font-bold">{{ section.C }}</td>-->
+      <!--            <td class="px-3 py-2 whitespace-nowrap text-sm text-center text-red-600 font-bold">{{ section.M }}</td>-->
+      <!--            <td class="px-3 py-2 whitespace-nowrap text-sm text-center font-bold text-blue-700">{{ section.A }}</td>-->
+      <!--            <td class="px-3 py-2 whitespace-nowrap text-sm text-center font-bold">{{ section.Success_Rate_C_div_O }}-->
+      <!--            </td>-->
+      <!--          </tr>-->
+      <!--        }-->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 space-y-4">
+    <h2 class="text-xl font-bold border-b pb-2 text-right text-gray-700">🛑 خطاهای ترتیب مراحل (Transition)</h2>
+
+    @for (key of ['transition_1_to_2', 'transition_2_to_3']; track key) {
+      @let transition = feedback.transition[key];
+
+      @if (transition.error) {
+        <div class="border-r-4 border-red-800 bg-red-100 p-3 rounded-md">
+          <h3 class="font-bold text-red-900">
+            {{ transition.message }}
+          </h3>
+          <p class="text-xs text-gray-800 mt-1">
+            **آستانه مورد نیاز:** {{ transition.threshold_50_percent }} اقدام.
+            <span class="mr-3">**اقدامات انجام‌شده:** {{ transition.A1_at_transition || transition.A2_at_transition }}
+              مورد.</span>
+          </p>
+        </div>
+      }
+    }
+  </div>
+
+</div>
