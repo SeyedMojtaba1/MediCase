@@ -1,1 +1,182 @@
-{'total': {'strengths': 'شما در مورد وضعیت بیمار سوالات خیلی خوبی پرسیدید. به خصوص در مورد تنگی نفس و سابقه بیماری های خانوادگی، سوالات مناسبی مطرح کردید که به تشخیص بهتر کمک می کند. پرسش شما در مورد علائم تنفسی و سابقه ی بیماری های قلبی بسیار مهم بود.', 'weaknesses': {'M': 'شما در پرسش های خود، به موارد مهمی مانند سابقه سکته قلبی در خانواده توجه نکردید که می توانست به شما در ارزیابی ریسک بیشتر کمک کند. همچنین به برخی از سوالات در مورد علائم تنفسی (مثل سرفه و حساسیت) که می توانستند اطلاعات بیشتری به شما بدهند، پاسخ ندادید.', 'E': 'شما برخی سوالات غیرضروری را نیز پرسیدید، به ویژه در مورد سابقه استفاده از مواد مخدر که به این شرایط خاص مربوط نمی\u200cشود و نمی\u200cتوانسته به تشخیص کمک کند.'}, 'educational_feedback': 'بهتر است اولویت پرسش های مربوط به علائم مهم همچون تنگی نفس، سرفه و سابقه بیماری های قلبی را در نظر بگیرید. همچنین در طول مصاحبه توجه کنید تا به حداقل 50% سوالات بهینه برسید تا بتوانید به مرحله بعدی به درستی منتقل شوید.'}, 'history_taking': {'strengths': {'present_illness': {'level_of_consciousness': 'شما سوالات مربوط به تنگی نفس و سرفه را به خوبی مطرح کردید، که از جمله سوالات کلیدی است.'}, 'medical_history': {'question1': {'question1a': 'شما پرسیدید که آیا بیمار سابقه بیماری های مزمن دارد؟ که این اطلاعات کمک کننده است.'}}}, 'weaknesses': {'M': {'question1': {'question1a': 'نبود سوال در مورد سابقه سکته قلبی در خانواده، عدم بررسی مهمی است.'}, 'question4': 'سؤال در مورد سرفه و حجم خلط می\u200cتوانسته بهتر باشد.'}, 'E': {}, 'educational_feedback': 'بهتر است هر مرحله را با دقت بیشتری پیش ببرید و برای ابتدای بررسی سوالات کلیدی مربوط به علائم و سوابق بیماری را به یاد داشته باشید.'}, 'physical_exam': {'strengths': {'B': {'cumulative': 4, 'meaning': 'شما به بررسی اولیه خوب از نظر وضعیت عمومی بیمار و نشانه\u200cهای حیاتی پرداخته\u200cاید.'}, 'C': {'adventitious_sounds': 'شما به صداهای غیرعادی تنفسی به ویژه ویزینگ توجه کردید که علامتی کلیدی برای بیماری\u200cهای تنفسی است.'}}, 'weaknesses': {'M': {'general_appearance': {'level_of_consciousness': 'باید به وضعیت هوشیاری بیمار در انتخاب سوالات توجه بیشتری می\u200cکردید.'}, 'E': {}}, 'educational_feedback': 'بسیار مهم است که درصد بالایی از سوالات بهینه دنبال شود. به بررسی وضعیت عمومی بیمار و علایم حیاتی توجه داشته باشید تا در تشخیص بهبود یابید.'}, 'paraclinic': {'strengths': {'C': {'cumulative': 6, 'meaning': 'شما تست\u200cهای مربوط به وضعیت تنفسی و آزمایش\u200cهای پایه را با دقت انتخاب کردید.'}, 'basic_blood_tests': {'CBC': 'شما تست\u200cهای خونی مربوط به ارزیابی وضعیت عمومی بیمار و التهاب را درخواست کردید می\u200c تواند به تشخیص بهتر کمک کند.'}}, 'weaknesses': {'M': {'VBG': 'آزمایش VBG به خوبی انجام نشد که باید تحت بررسی قرار گیرد.'}, 'E': {}, 'educational_feedback': 'توجه بیشتر به مراحل آزمایش ها و انتخاب تست های مناسب می تواند روند تشخیص را سریعتر و دقیق تر کند.'}, 'differential_diagnosis': {'strengths': 'شما به درستی بیماری های COPD و PTE را به عنوان تشخیص های دیفرانسیل اصلی شناسایی کردید که قابل توجه است.', 'weaknesses': {'M': 'برخی از بیماری\u200cها مثل بیماری\u200cهای قلبی و ریوی دیگر را در نظر نگرفتید و در انتخاب آنها خساست نشان دادید.', 'E': {}, 'educational_feedback': 'در ارزیابی بیماری\u200cها اطمینان حاصل کنید که همه گزینه\u200cهای ممکن به طور کامل بررسی شوند.'}, 'transition': {'transition_1_to_2': {'error': True, 'message': 'شما زودتر از کاملا از معرفی به مرحله معاینه فیزیکی وارد شدید.'}, 'transition_2_to_3': {'error': True, 'message': 'در مرحله معاینه فیزیکی، شما حداقل 50% سوالات بهینه را نپرسیدید.'}}}}}}}, {'history_taking': {'C': 6, 'E': 0, 'M': 20, 'O': 26, 'A': 6, 'Success_Rate_C_div_O': '23.08%', 'C_items': ['present_illness.question8', 'present_illness.question3', 'present_illness.question1', 'medical_history.question3', 'medical_history.question1.question1a', 'medical_history.question1.question1b'], 'E_items': [], 'M_items': ['family_history.question2', 'family_history.question1.question1a', 'family_history.question1.question1b', 'family_history.question3.question3a', 'family_history.question3.question3b', 'social_history.question1.question1a', 'social_history.question1.question1b', 'ROS.question6', 'ROS.question7', 'ROS.question1', 'present_illness.question2', 'present_illness.question9', 'present_illness.question4', 'present_illness.question5', 'present_illness.question10', 'medical_history.question6', 'medical_history.question4', 'drug_history.question1.question1a', 'drug_history.question1.question1b', 'drug_history.question1.question1c']}, 'physical_exam': {'C': 4, 'E': 3, 'M': 16, 'O': 20, 'A': 7, 'Success_Rate_C_div_O': '20.00%', 'C_items': ['cardiovascular_system.JVP_assessment', 'respiratory_system.inspection.chest_shape_and_symmetry', 'respiratory_system.inspection.accessory_muscles', 'respiratory_system.auscultation.adventitious_sounds'], 'E_items': ['head_and_neck.ears.eardrum_appearance', 'head_and_neck.head_and_face.tenderness', 'head_and_neck.eyes.pupils_reaction'], 'M_items': ['cardiovascular_system.peripheral_pulses_and_extremities.extremities_color_and_trophic_changes', 'cardiovascular_system.peripheral_pulses_and_extremities.peripheral_pulses_symmetry_and_quality', 'cardiovascular_system.peripheral_pulses_and_extremities.extremities_edema', 'cardiovascular_system.auscultation.heart_sounds_s1_s2', 'respiratory_system.palpation.tactile_fremitus', 'respiratory_system.palpation.chest_expansion', 'respiratory_system.percussion', 'respiratory_system.auscultation.breath_sounds_intensity', 'general_appearance.level_of_consciousness_mood_and_behavior.level_of_consciousness', 'general_appearance.level_of_consciousness_mood_and_behavior.behavior', 'general_appearance.level_of_consciousness_mood_and_behavior.mood', 'general_appearance.posture_and_position.position_of_comfort', 'general_appearance.overall_appearance.nutritional_status', 'general_appearance.cardiopulmonary_and_circulatory_clues.dyspnea', 'general_appearance.cardiopulmonary_and_circulatory_clues.cyanosis', 'general_appearance.cardiopulmonary_and_circulatory_clues.edema']}, 'paraclinic': {'C': 6, 'E': 0, 'M': 3, 'O': 11, 'A': 6, 'Success_Rate_C_div_O': '54.55%', 'C_items': ['simple_imaging.Chest_X_Ray.PA', 'simple_imaging.Chest_X_Ray.Lateral', 'specialized_lung_tests.a1_antitrypsin_level', 'basic_blood_tests.VBG', 'functional_tests.Spirometry', 'functional_tests.plethysmography'], 'E_items': [], 'M_items': ['advanced_imaging.Chest_CT_CTPA', 'basic_blood_tests.ESR/CRP', 'functional_tests.peak_flow']}, 'differential_diagnosis': {'C': 2, 'E': 2, 'M': 2, 'O': 4, 'A': 4, 'Success_Rate_C_div_O': '50.00%', 'C_items': ['disease5', 'disease3'], 'E_items': ['disease2', 'disease7'], 'M_items': ['disease6', 'disease1']}}, {'transition_1_to_2': {'O1': 26, 'A1_at_transition': 6, 'threshold_50_percent': 13.0, 'error': True, 'message': 'Stage Order Error – شرح حال ناقص. قبل از تکمیل 50% اقدامات بهینه شرح حال، وارد معاینه فیزیکی شدید.'}, 'transition_2_to_3': {'O2': 20, 'A2_at_transition': 7, 'threshold_50_percent': 10.0, 'error': True, 'message': 'Stage Order Error – معاینه ناقص. قبل از تکمیل 50% اقدامات بهینه معاینه فیزیکی، وارد پاراکلینیک شدید (جریمه بیشتر).'}}
+{
+  "patient_profile": {
+    "first_name": "شهرام",
+    "last_name": "کاظمی",
+    "age": "66 ساله",
+    "gender": "مرد",
+    "occupation": "بازنشسته ارتش",
+    "place_of_birth": "اهواز",
+    "place_of_residence": "تهران",
+    "marital_status": "متأهل",
+    "diagnosis": "Chronic Obstructive Pulmonary Disease (COPD)",
+    "phenotype": "Emphysema Dominant",
+    "gold_stage": "GOLD 2",
+    "cor_pulmonale": "Absent",
+    "chief_complaint": "سرفه مزمن خلط دار که سال‌هاست وجود دارد."
+  },
+  "history_taking": {
+    "present_illness": {
+      "question1": "مدت‌هاست که تنگی نفس دارم و به‌تدریج در حال بدتر شدن است. حتی کارهای روزمره‌ای که قبلاً برایم آسان بود، اکنون سخت شده‌اند.",
+      "question2": "شروع نشانه‌ها به تدریج بوده و من متوجه شدم که روز به روز شرایط بدتر می‌شود. هیچ حمله ناگهانی‌ای احساس نمی‌کنم.",
+      "question3": "وقتی که در حال انجام فعالیت بدنی هستم، به شدت دچار تنگی نفس می‌شوم. گاهی اوقات احساس می‌کنم حتی در حال استراحت هم مشکل تنفسی دارم.",
+      "question4": "سرفه مزمن هم دارم که معمولاً خلط شفاف است. این سرفه همواره با من است و گاهی اوقات شدت آن افزایش می‌یابد.",
+      "question5": "گاهی اوقات صدای خروش در سینه دارم، مخصوصاً وقتی که هوای مرطوب می‌شود.",
+      "question6": "احساس درد قفسه سینه ندارم، اما گاهی اوقات احساس فشار یا ناراحتی در سینه دارم.",
+      "question7": "تب، لرز و تعریق شبانه ندارم، اما اگر این علائم شروع شوند، نگران کننده خواهد بود.",
+      "question8": "متوجه ورم پاهایم هستم، این مسئله سبب نگرانی‌ام شده است.",
+      "question9": "در سال‌های اخیر دچار افت وزنی نشده‌ام، اما احساس خستگی مداوم دارم.",
+      "question10": "می‌دانم که وزنم ثابت مانده است، اما به شدت احساس خواب آلودگی و خستگی می‌کنم."
+    },
+    "past_medical_history": {
+      "question1": {
+        "question1a": "سال‌هاست که به فشار خون مبتلا هستم. وضعیت من معمولاً تحت کنترل است.",
+        "question1b": "همچنین، بیماری قلبی در خانواده ما وجود دارد و این وضعیت بیشتر از ۵ سال است که ادامه دارد."
+      },
+      "question2": {
+        "question2a": "دو بار به خاطر مشکلات تنفسی به بیمارستان مراجعه کرده‌ام.",
+        "question2b": "هیچ‌وقت نیاز به بستری شدن برای جراحی نداشته‌ام."
+      },
+      "question3": "گاهی اوقات به تنگی نفس دچار می‌شوم که فکر می‌کنم از عوارض بیماری قلبی من ناشی می‌شود.",
+      "question4": "هیچ مشکلی با سرطان ریه نداشته‌ام، اما می‌دانم که در خانواده بعضی‌ها با این بیماری دست و پنجه نرم کرده‌اند.",
+      "question5": "به یاد دارم که در دوران کودکی دچار عفونت‌های تنفسی شده بودم.",
+      "question6": "واکسیناسیون آنفلوانزا و ذات‌الریه را انجام داده‌ام."
+    },
+    "drug_history": {
+      "question1": {
+        "question1a": "به‌طور مرتب از داروهای استنشاقی استفاده می‌کنم، اما بعضی اوقات همچنان از داروهای تسکین‌دهنده هم استفاده می‌کنم.",
+        "question1b": "هنوز در استفاده از داروها دچار مشکل نشده‌ام و همچنین نمی‌خواهم دوز داروهایم را تغییر دهم.",
+        "question1c": "از میکولیتیک‌ها استفاده نمی‌کنم."
+      },
+      "question2": "از داروهای سرماخوردگی هم در مواقع لازم استفاده می‌کنم."
+    },
+    "allergies": {
+      "question1": {
+        "question1a": "به بعضی از داروها حساسیت دارم، اما عموماً واکنش شدیدی ندارم.",
+        "question1b": "حساسیت‌هایم معمولاً خفیف هستند."
+      }
+    },
+    "family_history": {
+      "question1": {
+        "question1a": "در خانواده ما بیماری COPD وجود دارد و پدرم هم در گذشته سیگاری بوده است.",
+        "question1b": "مشکلات قلبی نیز در بین اعضای خانواده‌ام وجود دارد."
+      },
+      "question2": "در خانواده‌ام سابقه بیماری‌های قلبی وجود دارد.",
+      "question3": {
+        "question3a": "پدربزرگم به سرطان ریه مبتلا بود، ولی این مورد در خانواده ما چندان رایج نیست.",
+        "question3b": "بسته به نوع پوستی که دارد، هیچ مسئله‌ای زمینه‌ساز بیماری من نیست."
+      }
+    },
+    "social_history": {
+      "question1": {
+        "question1a": "بیش از ۲۰ سال سیگار کشیده‌ام و اکنون قبلاً هم سیگاری بوده‌ام و به‌تازگی ترک کرده‌ام.",
+        "question1b": "هر روز سیگار می‌کشیدم، اما اکنون ترک کرده‌ام."
+      },
+      "question2": "به‌طور اجتماعی همیشه الکل مصرف کرده‌ام و این را به عنوان مسئله در نظر می‌گیرم.",
+      "question3": {
+        "question3a": "هرگز از مواد مخدر استفاده نکرده‌ام.",
+        "question3b": ""
+      },
+      "question4": "اکنون با خانواده‌ام زندگی می‌کنم."
+    },
+    "ros": {
+      "question1": "احساس خستگی دارم و به‌تازگی شاهد افزایشی در وزن خود بوده‌ام.",
+      "question2": "پوست من عادی به نظر می‌رسد.",
+      "question3": "به تازگی سردردهای صبحگاهی را تجربه نکرده‌ام.",
+      "question4": "عوارض چشمی را تجربه نکرده‌ام.",
+      "question5": "تنها در مواقعی که عفونت دارم، گرفتگی بینی دارم.",
+      "question6": "خوشبختانه دردی در قفسه سینه ندارم.",
+      "question7": "تنگی نفس و سرفه از النکه‌های اصلی من هستند.",
+      "question8": "مشکلات گوارشی را تجربه نکرده‌ام.",
+      "question9": "علائم ادراری را گزارش نکرده‌ام.",
+      "question10": "بعضی اوقات احساس ضعف عضلانی می‌کنم.",
+      "question11": "علائم عصبی را را تجربه نکرده‌ام.",
+      "question12": "در برخی زمان‌ها احساس اضطراب کرده‌ام.",
+      "question13": "موردی از درد مفاصل نداشته‌ام.",
+      "question14": "خوشبختانه هیچ علامتی در زمینه خونرسانی ندیده‌ام."
+    }
+  },
+  "physical_exam": {
+    "vital_signs": {
+      "BP": "140/61 mmHg",
+      "T": "37.4 °C",
+      "PR": "72 bpm and regular rhythm",
+      "RR": "21 breaths/min",
+      "SpO2": "98% (RA)",
+      "GCS": "15",
+      "Weight": "N/A",
+      "Height": "N/A"
+    },
+    "general_appearance": {
+      "level_of_consciousness": "Alert and Oriented to Person, Place, and Time (A&Ox3)",
+      "mood_and_behavior": "Cooperative and Appears Chronically Ill",
+      "posture_and_position": "Comfortable in bed or seated",
+      "overall_appearance": "No obvious signs of cachexia or obesity",
+      "cardiopulmonary_and_circulatory_clues": {
+        "cyanosis": "Absent",
+        "dyspnea": "Moderate dyspnea with minimal activity",
+        "edema": "Absent"
+      }
+    },
+    "respiratory_system": {
+      "inspection": {
+        "accessory_muscles": "Present (Chronic Use)",
+        "chest_shape_and_symmetry": "Symmetrical movement, Normal shape"
+      },
+      "palpation": {
+        "chest_expansion": "Bilateral Reduced Expansion",
+        "tactile_fremitus": "Decreased and Symmetrical (due to Hyperinflation)"
+      },
+      "percussion": "Diffuse Hyperresonant",
+      "auscultation": {
+        "breath_sounds": "Prolonged Expiration (100% of cases). Reduced intensity (Diminished Breath Sounds).",
+        "adventitious_sounds": "No Adventitious Sounds"
+      }
+    },
+    "cardiovascular_system": {
+      "JVP_assessment": "< 4 cm above sternal angle",
+      "s1_s2_description": "Muffled/Distant S1 and S2",
+      "murmur_description": "Absent",
+      "peripheral_pulses": "72 bpm and regular rhythm"
+    },
+    "abdominal_system": {
+      "percussion_palpation": "Soft, non-tender, non-distended, no organomegaly"
+    },
+    "neurological": {
+      "mental_status_and_LOC": "Alert and Oriented to Person, Place, and Time (A&Ox3)",
+      "motor_strength_and_DTRs": "Motor Strength 5/5, DTRs 2+ and Symmetrical"
+    }
+  },
+  "paraclinic": {
+    "basic_blood_tests": {
+      "CBC": {
+        "Hb": "12.6 g/dL",
+        "WBC": "6209 /µL",
+        "Plt": "515870 /µL"
+      },
+      "Inflammatory_markers": {
+        "ESR": "59 mm/h",
+        "CRP": "41 mg/L"
+      },
+      "Cardiac_Markers": {
+        "BNP": "within normal range"
+      },
+      "VBG": "pH: 7.38, PaO2: 69 mmHg, PaCO2: 37 mmHg, Bicarb: WNL"
+    },
+    "simple_imaging": {
+      "Chest_X_Ray": "Bullae (Air-filled cysts in Lung Fields)"
+    },
+    "advanced_imaging": {
+      "Chest_CT": "Emphysema/Air Trapping Changes",
+      "MRI_chest": "Normal"
+    },
+    "functional_tests": {
+      "Spirometry": "Obstructive Pattern confirmed (FEV1/FVC Ratio: 0.65 < 0.70). FEV1 % Predicted: 78%. FVC % Predicted: 73%. Result is consistent with GOLD 2 severity.",
+      "DLCO": "Reduced (< 70% Predicted)",
+      "plethysmography": "Reduced Lung Volumes (Hyperinflation)"
+    },
+    "procedures": {
+      "Bronchoscopy": "Normal Anatomy with Secretions",
+      "torachonthesis": "Not Indicated (No Pleural Effusion on Imaging)"
+    }
+  }
+}
