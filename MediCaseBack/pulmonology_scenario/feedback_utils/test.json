@@ -8,10 +8,6 @@
     "place_of_birth": "اهواز",
     "place_of_residence": "تهران",
     "marital_status": "متأهل",
-    "diagnosis": "Chronic Obstructive Pulmonary Disease (COPD)",
-    "phenotype": "Emphysema Dominant",
-    "gold_stage": "GOLD 2",
-    "cor_pulmonale": "Absent",
     "chief_complaint": "سرفه مزمن خلط دار که سال‌هاست وجود دارد."
   },
   "history_taking": {
@@ -102,9 +98,7 @@
       "PR": "72 bpm and regular rhythm",
       "RR": "21 breaths/min",
       "SpO2": "98% (RA)",
-      "GCS": "15",
-      "Weight": "N/A",
-      "Height": "N/A"
+      "GCS": "15"
     },
     "general_appearance": {
       "level_of_consciousness": "Alert and Oriented to Person, Place, and Time (A&Ox3)",

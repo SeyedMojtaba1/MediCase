@@ -165,20 +165,6 @@ class PneumoniaDataGenerator:
             "place_of_residence": place_of_residence,
             "marital_status": marital_status
         }
-        
-    def _generate_chief_complaint(self):
-        if self.severity_level == "SEVERE":
-            return self.random.choice([
-                "بیمار به دلیل تب بالا، سرفه خلط دار و تنگی نفس شدید مراجعه کرده است.",
-                "تب شدید و لرز به همراه سرفه‌های مقاوم و عدم تحمل فعالیت.",
-                "بیمار به شدت دچار تب و سرفه بوده و تنش‌تنگی شدید دارد."
-            ])
-        else:
-            return self.random.choice([
-                "سرفه خلط دار و تب خفیف که طی چند روز گذشته شدت گرفته است.",
-                "تب و لرز به همراه خستگی و سرفه."
-            ])
-
 
     def _determine_case_type(self):
         return self.random.choices(
@@ -490,9 +476,7 @@ class PneumoniaDataGenerator:
         
         data = {
             "patient_profile": {
-                "personal_information": personal_info,
-                "chief_complaint": chief_complaint,
-                "vital_sign": self.vital_signs
+                "personal_information": personal_info
             },
             "physical_exam": {
                 "vital_signs": self.vital_signs,

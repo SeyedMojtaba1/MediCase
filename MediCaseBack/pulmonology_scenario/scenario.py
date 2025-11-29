@@ -181,3 +181,5 @@ def scenario_creator():
     except Exception as e:
         print(f"Error generating scenario: {e}")
         return None, target_disease
+
+print(scenario_creator())
