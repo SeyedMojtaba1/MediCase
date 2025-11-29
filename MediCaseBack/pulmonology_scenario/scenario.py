@@ -1,13 +1,8 @@
-import getpass
-import os
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from document import documents
-import random
-
-from typing import List, Optional
+from .document import documents
 from pydantic import BaseModel, Field
 
 class PatientProfile(BaseModel):
@@ -181,5 +176,3 @@ def scenario_creator():
     except Exception as e:
         print(f"Error generating scenario: {e}")
         return None, target_disease
-
-print(scenario_creator())

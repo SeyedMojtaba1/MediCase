@@ -41,7 +41,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://89.42.211.35:8000",
     "http://medicase.local:4200",
     "http://medicase.local:8000",
-    "*",
+    "https://zizmart.ir",
 ]
 
 ALLOWED_HOSTS = [
@@ -49,7 +49,7 @@ ALLOWED_HOSTS = [
     'medicase.local',
     'localhost',
     '127.0.0.1',
-    "*",
+    'https://zizmart.ir',
 ]
 
 MEDIA_URL = '/media/'

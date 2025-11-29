@@ -1,7 +1,7 @@
 import random
 import json
 import re
-from MediCaseBack.pulmonology_scenario.scenario import scenario_creator 
+from scenario import scenario_creator 
 
 class PneumoniaDataGenerator:
     """
@@ -468,7 +468,6 @@ class PneumoniaDataGenerator:
         self.vital_signs["GCS"] = self._generate_gcs_value()
         
         personal_info = self._generate_personal_information()
-        chief_complaint = self._generate_chief_complaint()
         
         jvp, s3, murmur, pulses, cap_refill = self._generate_cv_findings()
         ms_neuro, motor_neuro = self._generate_neuro_findings()
@@ -611,6 +610,11 @@ def create_full_case_json():
     history_data, _ = scenario_creator()
     
     final_patient_profile = paraclinic_output["patient_profile"]
+    
+    # 🌟 اضافه کردن chief_complaint به patient_profile
+    if "patient_profile" in history_data and "chief_complaint" in history_data["patient_profile"]:
+        final_patient_profile["chief_complaint"] = history_data["patient_profile"]["chief_complaint"]
+    # ----------------------------------------------------
     
     final_history_taking = history_data["history_taking"]
     
