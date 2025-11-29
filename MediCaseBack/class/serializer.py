@@ -539,13 +539,17 @@ class HospitalSubjectSerializer(serializers.ModelSerializer):
     
 class HospitalSubjectListSerializer(serializers.ModelSerializer):
     subject = serializers.CharField(source='subject.english_name', read_only=True)
-    hospital = serializers.CharField(source='hospital.english_name', read_only=True)
+    hospital_english = serializers.CharField(source='hospital.english_name', read_only=True)
+    hospital_persian = serializers.CharField(source='hospital.persian_name', read_only=True)
+    hospital_address = serializers.CharField(source='hospital.address', read_only=True)
     
     class Meta:
         model = HospitalSubject
         fields = [
             'subject',
-            'hospital',
+            'hospital_english',
+            'hospital_persian',
+            'hospital_address',
             'access_status',
         ]
         
