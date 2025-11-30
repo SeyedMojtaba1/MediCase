@@ -54,7 +54,7 @@ ALLOWED_HOSTS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/mediacase' / 'media'
+MEDIA_ROOT = '/var/www/mediacase/media'
 
 # Application definition
 
