@@ -4,6 +4,21 @@
 
 
   <div class="grid grid-cols-3 gap-10 items-stretch">
-    <p>{{ subject }} </p>
+
+    @for (item of data; track item) {
+      <app-card>
+        <p class="font-bold cursor-pointer" routerLink="/scenariostart">{{ item.hospital_persian }}</p>
+        <p class="text-gray-500 text-sm">{{ item.hospital_address }}</p>
+        @if (item.access_status == true) {
+          <div class="flex flex-row items-center text-sm justify-center text-gray-500">
+            <p-tag value="فعال" severity="success"/>
+          </div>
+
+        } @else {
+          <p>وضعیت : غیر فعال</p>
+
+        }
+      </app-card>
+    }
   </div>
 </div>

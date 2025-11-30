@@ -47,3 +47,25 @@
   font-family: "Vazir";
 }
 
+
+/* عرض اسکرول‌بار */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* بک‌گراند پشت اسکرول */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* خود اسکرول */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+/* حالت hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
+}

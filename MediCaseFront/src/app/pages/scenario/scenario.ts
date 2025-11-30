@@ -28,6 +28,7 @@ interface Question {
   answer_time: string;
 }
 
+
 @Component({
   selector: 'app-scenario',
   imports: [
@@ -40,6 +41,19 @@ interface Question {
 })
 export class Scenario {
 
+  diseaseCodeMap: Record<string, string> = {
+    "Asthma": "disease1",
+    "Pneumonia": "disease2",
+    "COPD": "disease3",
+    "PTE": "disease4",
+    "IPF": "disease5",
+    "PH": "disease6",
+    "Pleural_Effusion": "disease7",
+    "ARDS": "disease8"
+  };
+
+  imageUrl = signal('https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg')
+
   timer = signal('15:00')
   logo = APP_CONFIG.logoURL;
   backgroundImage = 'assets/bg.jpg';
@@ -48,6 +62,7 @@ export class Scenario {
   activeSection: number | null = 1
   clickSound = new Audio('sounds/click.mp3');
   successSound = new Audio('sounds/success.mp3');
+  isVideoLoading = signal(false)
   questions: Question[] = [];
   // لیست متن سوالا
   questionText: any = Questions
@@ -59,26 +74,32 @@ export class Scenario {
   questionsBySection: Record<string, Question[]> = {};
   paraclinicBySection: Record<string, Question[]> = {};
   showDifferentialDiagnosisModal: boolean = false;
-  // مرحله فعلی پاپ‌آپ (1: انتخاب 4 بیماری، 2: انتخاب 1 بیماری نهایی)
   differentialDiagnosisStage: number = 1;
-  // لیست بیماری‌های انتخاب شده در مرحله ۱
   selectedDifferentialDiseases: Disease[] = [];
-  // تشخیص نهایی انتخاب شده در مرحله ۲
   finalDiagnosis: string | null = null;
+  sectionMedia: any = {
+    cardiovascular_system: {
+      type: 'video',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+    },
+    head_and_neck: {
+      type: 'image',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg'
+    },
+  };
+
+  mediaType: 'image' | 'video' = 'image';
+  mediaUrl: string = 'images/default.jpg';
+
   protected readonly APP_CONFIG = APP_CONFIG;
   protected readonly sessionStorage = sessionStorage;
-  protected readonly console = console;
   protected readonly Log = Log;
-
-
-  // ... داخل کلاس Scenario
+  protected readonly console = console;
   private timeLeft = 15 * 60;
   private intervalId: any;
 
   constructor(public router: Router, public changeDetectorRef: ChangeDetectorRef, public master: Master) {
   }
-
-// ...
 
   ngOnInit() {
     this.loadDiseases();
@@ -86,7 +107,7 @@ export class Scenario {
     this.startTimer();
 
 
-    this.master.pulmonologyScenarioRetrieve('CBXMJGANIS').subscribe({
+    this.master.pulmonologyScenarioRetrieve('XU42DWT9ZX').subscribe({
       next: data => {
         localStorage.setItem('data', JSON.stringify(data));
       },
@@ -135,12 +156,15 @@ export class Scenario {
     this.sections = [
       {id: 1, title: 'اطلاعات بیمار', icon: 'pi pi-id-card'},
       {id: 2, title: 'شرح حال', icon: 'pi pi-list'},
-      {id: 3, title: 'معاینه', icon: 'pi pi-heart'},
+      {id: 3, title: 'معاینه فیزیکی', icon: 'pi pi-heart'},
       {id: 4, title: 'پاراکلینیک', icon: 'pi pi-folder'},
       {id: 5, title: 'تشخیص افتراقی', icon: 'pi pi-pencil'},
       {id: 6, title: 'درمان', icon: 'pi pi-lock'},
     ];
   }
+
+
+  // ... داخل کلاس Scenario
 
 // ...
   selectSection(section: Section) {
@@ -158,9 +182,6 @@ export class Scenario {
     // this.playSuccess();
   }
 
-
-  // ... داخل کلاس Scenario
-
   // مدیریت انتخاب/حذف بیماری در مرحله ۱
   toggleDiseaseSelection(disease: Disease) {
     const index = this.selectedDifferentialDiseases.findIndex(d => d.name === disease.name);
@@ -176,11 +197,11 @@ export class Scenario {
 
   // رفتن از مرحله ۱ به مرحله ۲
   goToFinalDiagnosisStage() {
-    if (this.selectedDifferentialDiseases.length === 4) {
+    if (this.selectedDifferentialDiseases.length >= 2 && this.selectedDifferentialDiseases.length <= 4) {
       this.differentialDiagnosisStage = 2;
       this.playClick();
     } else {
-      alert('لطفاً دقیقاً ۴ بیماری را انتخاب کنید.');
+      alert('لطفاً 2-4 بیماری را انتخاب کنید.');
     }
   }
 
@@ -190,6 +211,8 @@ export class Scenario {
     this.playClick();
   }
 
+// ...
+
   // بستن پاپ‌آپ (به همراه ریست کردن مرحله)
   closeDifferentialDiagnosisModal() {
     this.showDifferentialDiagnosisModal = false;
@@ -198,8 +221,6 @@ export class Scenario {
     this.finalDiagnosis = null;
     this.playClick();
   }
-
-// ...
 
   startTimer() {
     this.intervalId = setInterval(() => {
@@ -218,12 +239,12 @@ export class Scenario {
     }, 1000);
   }
 
+// ... داخل کلاس Scenario
+
   setTime(path: any) {
     path = this.timer();
     this.playClick()
   }
-
-// ... داخل کلاس Scenario
 
   pad(val: number) {
     return val < 10 ? "0" + val : val.toString();
@@ -291,8 +312,7 @@ export class Scenario {
 
     this.physicalExamBySection = {};
 
-    // سطح ۱: سیستم‌ها (مثل neurological، head_and_neck)
-    for (const systemName in examAnswers) { // 👈 بهتر است از ساختار پاسخ‌ها (answers) برای پیمایش استفاده کنیم تا مطمئن باشیم کلیدها وجود دارند.
+    for (const systemName in examAnswers) {
 
       const systemText = examText[systemName];
       const systemAnswers = examAnswers[systemName];
@@ -300,24 +320,20 @@ export class Scenario {
 
       this.physicalExamBySection[systemName] = [];
 
-      // سطح ۲: زیربخش‌ها (مثل ears، palpation، یا cranial_nerves)
-      for (const sectionKey in systemAnswers) { // 👈 پیمایش کلیدهای سطح 2
+      for (const sectionKey in systemAnswers) {
 
-        const answerL2 = systemAnswers[sectionKey]; // پاسخ در سطح 2
+        const answerL2 = systemAnswers[sectionKey];
         const logL2 = systemLogs ? systemLogs[sectionKey] : 'False'; // لاگ در سطح 2
 
-        // **بررسی برای حالت تو در تو (سطح ۳ - مثلاً head_and_neck.ears)**
         if (typeof answerL2 === 'object' && answerL2 !== null && !Array.isArray(answerL2)) {
 
           const textL2 = systemText[sectionKey];
 
-          // پیمایش آیتم‌های سطح ۳ (مثل eardrum_appearance)
           for (const itemKey in answerL2) {
 
-            const titleL3 = textL2 ? textL2[itemKey] : itemKey; // اگر عنوان فارسی نبود، کلید انگلیسی را استفاده کن
+            const titleL3 = textL2 ? textL2[itemKey] : itemKey;
             const answerL3 = answerL2[itemKey];
 
-            // لاگ سطح ۳
             const logL3 = (typeof logL2 === 'object' && logL2 !== null) ? logL2[itemKey] : 'False';
 
             this.physicalExamBySection[systemName].push({
@@ -329,9 +345,7 @@ export class Scenario {
               visible: true
             });
           }
-        }
-        // **بررسی برای حالت مستقیم (سطح ۲ - مثلاً neurological.cranial_nerves یا percussion)**
-        else {
+        } else {
 
           const textL2 = systemText ? systemText[sectionKey] : sectionKey; // عنوان سطح 2
 
@@ -415,10 +429,20 @@ export class Scenario {
     }
   }
 
+
+  // ... داخل کلاس Scenario
+
 // ...
   handleQuestionClick(question: Question, systemName: string, sectionCategory: 'history_taking' | 'physical_exam' | 'paraclinic') {
-    console.log(this.log)
     this.playClick();
+
+    const media = this.sectionMedia[systemName];
+    if (media) {
+      this.mediaType = media.type;
+      this.mediaUrl = media.url;
+      if (this.mediaType == 'video')
+        this.isVideoLoading.set(true)
+    }
 
     if (!question.open) {
 
@@ -462,9 +486,6 @@ export class Scenario {
     this.changeDetectorRef.detectChanges();
   }
 
-
-  // ... داخل کلاس Scenario
-
   finishScenario() {
     if (!this.finalDiagnosis) {
       alert('لطفاً تشخیص نهایی را انتخاب کنید.');
@@ -473,31 +494,33 @@ export class Scenario {
 
     const currentTime = this.timer(); // زمان فعلی سناریو
 
-    // --- ۱. به‌روزرسانی Differential Diagnosis (4 بیماری) ---
-    // لاگ تشخیص افتراقی را پاک و بازسازی می‌کنیم
+    // --- ۱. Differential Diagnosis با ۸ کلید ثابت ---
     this.log.differential_diagnosis = {};
 
-    // پر کردن لاگ: { "Asthma": "12:35", "COPD": "12:35", ... }
-    this.selectedDifferentialDiseases.forEach((disease, index) => {
-      // نام بیماری (disease.name) به عنوان کلید و زمان (currentTime) به عنوان مقدار
-      this.log.differential_diagnosis[disease.name] = currentTime;
-
-      // اگر می‌خواهید حتماً ۴ کلید disease1 تا disease4 در log وجود داشته باشد، از روش قبل استفاده کنید
-      // و فقط مقدار آن را زمان بگذارید:
-      // const key = `disease${index + 1}`;
-      // this.log.differential_diagnosis[key] = disease.name; // نام بیماری در مقدار
+    // اول همه ۸ بیماری را به false مقداردهی کن
+    Object.values(this.diseaseCodeMap).forEach(code => {
+      this.log.differential_diagnosis[code] = false;
     });
 
-    // --- ۲. به‌روزرسانی Final Diagnosis (1 بیماری) ---
+    // برای بیماری‌هایی که انتخاب شده‌اند → زمان درج کن
+    this.selectedDifferentialDiseases.forEach(disease => {
+      const code = this.diseaseCodeMap[disease.name];
+      if (code) {
+        this.log.differential_diagnosis[code] = currentTime;
+      }
+    });
+
+// --- ۲. Final Diagnosis ---
     this.log.final_diagnosis = {};
 
-    // ذخیره تشخیص نهایی: { "Pneumonia": "12:35" }
-    // نام بیماری نهایی (this.finalDiagnosis) به عنوان کلید و زمان (currentTime) به عنوان مقدار
-    this.log.final_diagnosis[this.finalDiagnosis] = currentTime;
+    const finalCode = this.diseaseCodeMap[this.finalDiagnosis];
 
-    console.log('Final Log Data:', this.log);
+// خروجی نهایی:  { "disease4": "12:20" }
+    if (finalCode) {
+      this.log.final_diagnosis[finalCode] = currentTime;
+    }
 
-    // --- ۳. اقدامات پس از اتمام ---
+    // --- ۳. اقدامات بعد ---
     alert(`سناریو به پایان رسید. تشخیص نهایی: ${this.finalDiagnosis}`);
 
     const treatmentSection = this.sections.find(s => s.id === 6);
@@ -506,21 +529,11 @@ export class Scenario {
       this.activeSection = 5;
     }
 
-    this.master.pulmonologyScenarioFeedbackCreate("BP3NOKL8YF", Log).subscribe({
-        next: (data) => {
-          console.log(data);
-        },
-        error: (data) => {
-          console.log(data);
-        },
-        complete: () => {
+    this.master.pulmonologyScenarioFeedbackCreate("BP3NOKL8YF", this.log).subscribe({});
 
-        }
-      }
-    )
     this.showDifferentialDiagnosisModal = false;
-    this.fireConfetti()
-    this.router.navigateByUrl('/scenarioinit')
+    this.fireConfetti();
+    this.router.navigateByUrl('/scenarioinit');
     this.playSuccess();
     this.changeDetectorRef.detectChanges();
   }

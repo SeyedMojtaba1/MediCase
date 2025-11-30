@@ -24,6 +24,7 @@ import {SectionPageS} from './pages/dashboard/student/class/section-page-s/secti
 
 import {Scenario} from './pages/scenario/scenario';
 import {ScenarioIntro} from './pages/scenario/scenario-intro/scenario-intro';
+import {ScenarioStart} from './pages/scenario/scenario-start/scenario-start';
 
 export const routes: Routes = [
 
@@ -49,6 +50,12 @@ export const routes: Routes = [
   {
     path: 'scenarioinit',
     component: ScenarioIntro,
+    canActivate: [AuthGuard, RoleGuard],
+    data: {role: 'student'}
+  },
+  {
+    path: 'scenariostart',
+    component: ScenarioStart,
     canActivate: [AuthGuard, RoleGuard],
     data: {role: 'student'}
   },

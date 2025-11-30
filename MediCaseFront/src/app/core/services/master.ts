@@ -396,7 +396,47 @@ export class Master {
         withCredentials: true
       });
   }
+
+
+  // ***************************************************************************
+// ***************************************************************************
+//                              hospital
+// ***************************************************************************
+// ***************************************************************************
+// لیست بیمارستانا
+
+
+  hospitalSubject(subject: string): Observable<HttpResponse<any>> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'class/hospitalsubjectretrieve/' + subject + '/', {
+      headers,
+      withCredentials: true
+    });
+
+  }
+
+
+  hospitalInfo(name: string): Observable<HttpResponse<any>> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    return this.http.get<any>(this.BASE_URL + 'class/hospitals/' + name + '/', {
+      headers,
+      withCredentials: true
+    });
+
+  }
+
 }
+
 
 
 
