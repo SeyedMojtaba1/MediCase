@@ -1,16 +1,17 @@
 import random
-import json
 import re
-from scenario import scenario_creator
-# نیازی به ایمپورت LabDataGenerator نیست.
+from .history_taking_creator import history_taking_creator
 
 class COPDDataGenerator:
     """
-    کلاسی کاملاً مستقل برای تولید سناریوهای COPD بر اساس منطق پیوستگی فنوتیپ، شدت (GOLD) و Cor Pulmonale.
-    این کلاس هیچ وابستگی به LabDataGenerator ندارد.
+    کلاسی برای تولید داده‌های شبیه‌سازی شده COPD.
+    
+    Logic Drivers (سه متغیر اصلی):
+    1. PHENOTYPE: Emphysema vs Chronic Bronchitis
+    2. SEVERITY: GOLD 1 (Mild) to GOLD 4 (Very Severe)
+    3. COR_PULMONALE: Present vs Absent
     """
     
-    # --- منابع داده برای تولید Patient Profile ---
     RANDOM_DATA_LISTS = {
         "first_names_sample_100": {
             "MALE": [
@@ -21,505 +22,736 @@ class COPDDataGenerator:
                 "بهرام", "کامران", "شایان", "فرشید", "پیمان", "الیاس", "آرش", "نوید", "ناصر", "نادر"
             ],
             "FEMALE": [
-                "فاطمه", "زهرا", "مریم", "سارا", "نازنین", "عسل", "مهسا", "زینب", "پریسا", "آیدا",
-                "رعنا", "فرزانه", "شیدا", "رویا", "مهناز", "فریبا", "نیره", "مرضیه", "افسانه", "سیمین",
-                "شهلا", "ثریا", "ناهید", "لیلا", "ژاله", "نیلوفر", "نسرین", "سمیرا", "کیمیا", "آزاده",
-                "آیلین", "سوگند", "ترانه", "محبوبه", "صدیقه", "پرستو", "بهار", "شبنم", "فاطیما", "مهتاب"
+                "فاطمه", "زهرا", "مریم", "سارا", "آزاده", "نگار", "لیلا", "نازنین", "مهسا", "زینب",
+                "الناز", "آتوسا", "پریسا", "نسترن", "شبنم", "فریبا", "سودابه", "ژاله", "آرزو", "مهناز",
+                "رویا", "محبوبه", "نسرین", "آیلین", "پگاه", "عاطفه", "حدیث", "میترا", "درسا", "هانیه",
+                "شکیبا", "سوگل", "مرجان", "بهاره", "مینو", "کتایون", "شیوا", "پریا", "سایه", "مهتاب",
+                "روژان", "طناز", "سما", "سپیده", "الهام", "ریحانه", "دنیا", "هما", "فروزان", "مینا"
             ]
         },
         "last_names_sample_100": [
-            "کریمی", "محمدی", "جعفری", "حسینی", "رضایی", "مرادی", "باقری", "صادقی", "نجفی", "رحمانی",
-            "زارعی", "موسوی", "احمدی", "علوی", "صالحی", "کرمی", "قاسمی", "نوروزی", "شفیعی", "عباسی",
-            "یزدانی", "مظفری", "کاظمی", "فلاح", "امیری", "سلطانی", "فرهمند", "پورحیدری", "مختاری", "میرزایی",
-            "ملکی", "پاکدل", "مقدس", "تیموری", "لطفی", "بهشتی", "آریایی", "خالقی", "کیانی", "توکلی"
+            "محمدی", "احمدی", "کریمی", "حسینی", "رضایی", "موسوی", "فرهادی", "هاشمی", "نوری", "زارعی",
+            "باقری", "صادقی", "میرزایی", "جلیلی", "افشار", "نجفی", "سلیمانی", "شریفی", "قاسمی", "ملکی",
+            "رحمتی", "یزدانی", "کمالی", "طاهری", "دهقان", "اکبری", "شفیعی", "کاظمی", "فلاح", "مرادی",
+            "عباسی", "یاراحمدی", "مهاجر", "نعمتی", "حیدری", "لطفی", "آذری", "صفری", "خسروی", "پورحسن",
+            "نیک‌نظر", "جهانی", "اسدی", "حبیبی", "خدایی", "عزیزی", "شهبازی", "ابراهیمی", "بیاتی", "بختیاری",
+            "فتاحی", "توسلی", "مجیدی", "خانی", "شهریاری", "جهانگیری", "سپاهی", "امیری", "مظفری", "اسماعیلی",
+            "سادات", "بابایی", "پناهی", "عطایی", "کیانی", "شعبانی", "یوسفی", "گلستانه", "سجادی", "فدایی",
+            "عالم", "دانشمند", "صالحی", "جمشیدی", "میرداماد", "صمدی", "عمرانی", "فرهمند", "آزاد", "نیکو"
         ],
         "occupations_male": [
-            "راننده بازنشسته", "کارگر ساختمانی", "معلم بازنشسته", "فروشنده بازار", "آزاد"
+            "راننده تاکسی", "مهندس نرم‌افزار", "کارمند بازنشسته", "کارگر ساختمانی", "نقاش ساختمان",
+            "تکنسین برق", "کشاورز", "فروشنده بازار", "وکیل", "معمار", "استاد دانشگاه"
         ],
         "occupations_female": [
-            "خانه‌دار", "معلم بازنشسته", "خیاط", "آزاد", "کارمند بازنشسته"
+            "خانه‌دار", "معلم بازنشسته", "پرستار", "خیاط", "حسابدار",
+            "پزشک عمومی", "فروشنده", "کارمند اداری", "استاد دانشگاه"
         ],
         "occupations_retirement": [
-            "بازنشسته تامین اجتماعی", "بازنشسته ارتش", "بازنشسته آموزش و پرورش"
+            "معلم بازنشسته", "بازنشسته نیروهای مسلح", "بازنشسته تأمین اجتماعی", "بازنشسته شرکت نفت"
         ],
         "famous_cities_sample_30": [
-            "تهران", "اصفهان", "مشهد", "شیراز", "تبریز", "اهواز", "کرج", "یزد", "بندرعباس", "کرمانشاه", "رشت"
+            "تهران", "مشهد", "اصفهان", "شیراز", "تبریز", "اهواز", "کرج", "قم", "کرمان", "یزد",
+            "رشت", "ساری", "بندرعباس", "کرمانشاه", "ارومیه", "زاهدان", "همدان", "قزوین", "اردبیل", "زنجان",
+            "گرگان", "سنندج", "بیرجند", "بوشهر", "سمنان", "خرم‌آباد", "ایلام", "یاسوج", "شهرکرد", "سیرجان"
         ],
-        "city_proximity": { # یک دیکشنری ساده برای انتخاب محل زندگی نزدیک به محل تولد
-            "تهران": ["کرج", "قم", "قزوین"],
-            "اصفهان": ["شیراز", "یزد"],
-            "مشهد": ["نیشابور", "سبزوار"]
+        "city_proximity": {
+            "تهران": ["کرج", "قم", "قزوین", "سمنان", "همدان"],
+            "مشهد": ["بیرجند", "سمنان"],
+            "اصفهان": ["شیراز", "قم", "یزد", "شهرکرد", "همدان"],
+            "شیراز": ["اصفهان", "بوشهر", "یاسوج"],
+            "تبریز": ["ارومیه", "زنجان", "اردبیل"],
+            "اهواز": ["خرم‌آباد", "ایلام", "بوشهر"],
+            "کرج": ["تهران", "قزوین", "سمنان"],
+            "قم": ["تهران", "اصفهان", "سمنان"],
+            "کرمان": ["یزد", "زاهدان", "سیرجان"],
+            "یزد": ["کرمان", "اصفهان"],
+            "رشت": ["ساری", "قزوین", "زنجان"],
+            "ساری": ["رشت", "گرگان"],
+            "بندرعباس": ["کرمان", "زاهدان"],
+            "کرمانشاه": ["همدان", "ایلام", "سنندج"],
+            "ارومیه": ["تبریز", "سنندج"],
+            "زاهدان": ["کرمان", "بیرجند"],
+            "همدان": ["کرمانشاه", "قزوین", "زنجان"],
+            "قزوین": ["تهران", "زنجان", "رشت"],
+            "اردبیل": ["تبریز"],
+            "زنجان": ["تبریز", "قزوین", "همدان"],
+            "گرگان": ["ساری"],
+            "سنندج": ["کرمانشاه", "ارومیه"],
+            "بیرجند": ["مشهد", "زاهدان"],
+            "بوشهر": ["شیراز", "اهواز"],
+            "سمنان": ["تهران", "مشهد"],
+            "خرم‌آباد": ["اهواز", "ایلام"],
+            "ایلام": ["کرمانشاه", "خرم‌آباد"],
+            "یاسوج": ["شیراز", "شهرکرد"],
+            "شهرکرد": ["اصفهان", "یاسوج"],
+            "سیرجان": ["کرمان"]
         }
     }
     
     def __init__(self):
         self.random = random
         
-        # --- ۱. منطق هسته و تعیین متغیرهای اصلی COPD ---
-        
-        # تعیین فنوتیپ: Emphysema Dominant (60%) / Chronic Bronchitis Dominant (40%)
-        self.PHENOTYPE = self.random.choices(
-            ["Emphysema Dominant", "Chronic Bronchitis Dominant"], 
+        # 1. CORE LOGIC INITIALIZATION
+        # Phenotype Distribution: Emphysema (60%) vs Chronic Bronchitis (40%)
+        self.phenotype = self.random.choices(
+            ["Emphysema", "Chronic Bronchitis"], 
             weights=[60, 40], k=1
         )[0]
         
-        # تعیین شدت (GOLD Stage): توزیع احتمالات ارسالی
-        self.GOLD_STAGE = self.random.choices(
-            ["GOLD 1", "GOLD 2", "GOLD 3", "GOLD 4"], 
+        # Severity Distribution: Mild(10%), Moderate(40%), Severe(30%), Very Severe(20%)
+        self.severity = self.random.choices(
+            ["GOLD_1", "GOLD_2", "GOLD_3", "GOLD_4"],
             weights=[10, 40, 30, 20], k=1
         )[0]
         
-        # تعیین Cor Pulmonale: Present (30%) / Absent (70%)
-        self.COR_PULMONALE = self.random.choices(
-            ["Present", "Absent"], 
+        # Cor Pulmonale Distribution: Present(30%) vs Absent(70%)
+        self.cor_pulmonale = self.random.choices(
+            ["Present", "Absent"],
             weights=[30, 70], k=1
         )[0]
-        
-        self.severity_level = "SEVERE" if self.GOLD_STAGE in ["GOLD 3", "GOLD 4"] else "MILD"
-        
-        # متغیرهای داخلی مورد نیاز
+
         self.vital_signs = {} 
-        self.pa_o2_val = None 
-        
-    # --- توابع کاربردی (Utility Functions) ---
 
-    def _generate_value(self, distributions, is_int=False, precision=2):
-        """تولید یک مقدار عددی تصادفی بر اساس توزیع‌های مشخص شده."""
-        ranges = [d["range"] for d in distributions]
-        weights = [d["weight"] for d in distributions]
-        chosen_range = self.random.choices(ranges, weights=weights, k=1)[0]
-        
-        if is_int:
-            value = self.random.randint(chosen_range[0], chosen_range[1])
-            return str(value)
-        else:
-            value = self.random.uniform(chosen_range[0], chosen_range[1])
-            return str(round(value, precision))
-
-    def _generate_bp_value(self):
-        """تولید فشار خون بر اساس منطق COPD"""
-        distributions = [{"sys_range": (100, 140), "dia_range": (60, 90), "weight": 80}, 
-                         {"sys_range": (90, 100), "dia_range": (60, 70), "weight": 20}]
-        chosen = self.random.choices(distributions, weights=[d["weight"] for d in distributions], k=1)[0]
-        sys = self.random.randint(chosen["sys_range"][0], chosen["sys_range"][1])
-        dia = self.random.randint(chosen["dia_range"][0], chosen["dia_range"][1])
-        return f"{sys}/{dia} mmHg"
-
-    # --- توابع انتخاب پروفایل (Patient Profile Selectors) ---
-    
+    # --- Demographic Helpers ---
     def _select_occupation(self, gender, age_str):
         age = int(age_str.split()[0])
-        if age > 65:
+        if age > 60:
             return self.random.choice(self.RANDOM_DATA_LISTS["occupations_retirement"])
-        if 55 <= age <= 65:
-            if self.random.random() < 0.5: 
-                return self.random.choice(self.RANDOM_DATA_LISTS["occupations_retirement"])
-            else:
-                return self.random.choice(self.RANDOM_DATA_LISTS["occupations_male"]) if gender == "مرد" else self.random.choice(self.RANDOM_DATA_LISTS["occupations_female"])
-        else:
-            return self.random.choice(self.RANDOM_DATA_LISTS["occupations_male"]) if gender == "مرد" else self.random.choice(self.RANDOM_DATA_LISTS["occupations_female"])
+        if gender == "مرد":
+            return self.random.choice(self.RANDOM_DATA_LISTS["occupations_male"])
+        return self.random.choice(self.RANDOM_DATA_LISTS["occupations_female"])
 
     def _select_place_of_residence(self, place_of_birth):
         if self.random.random() < 0.7:
-            nearby_cities = self.RANDOM_DATA_LISTS["city_proximity"].get(place_of_birth, [])
-            if nearby_cities:
-                return self.random.choice(nearby_cities)
-        all_cities = self.RANDOM_DATA_LISTS["famous_cities_sample_30"]
-        return self.random.choice(all_cities)
+            nearby = self.RANDOM_DATA_LISTS["city_proximity"].get(place_of_birth, [])
+            if nearby: return self.random.choice(nearby)
+        return self.random.choice(self.RANDOM_DATA_LISTS["famous_cities_sample_30"])
 
-    def _select_marital_status(self, gender, age_str):
-        age = int(age_str.split()[0])
-        prob_married = 0
-        if gender == "مرد":
-            prob_married = 0.8 if age >= 45 else 0.5
-        elif gender == "زن":
-            prob_married = 0.9 if age >= 35 else 0.6
-        if self.random.random() < prob_married:
-            return self.random.choices(["متأهل", "همسر متوفی"], weights=[90, 10], k=1)[0]
-        else:
-            return self.random.choices(["مجرد", "مطلقه"], weights=[70, 30], k=1)[0]
-            
-    # --- توابع تولید داده‌های COPD (Core Functions) ---
-    
     def _generate_personal_information(self):
         gender = self.random.choice(["مرد", "زن"])
-        age_num = self.random.randint(55, 85) # سن بالاتر برای COPD
+        # COPD usually presents in older adults
+        age_num = self.random.randint(45, 85)
         age_str = f"{age_num} ساله"
+        
         name_key = "MALE" if gender == "مرد" else "FEMALE"
         first_name = self.random.choice(self.RANDOM_DATA_LISTS["first_names_sample_100"][name_key])
         last_name = self.random.choice(self.RANDOM_DATA_LISTS["last_names_sample_100"])
-        occupation = self._select_occupation(gender, age_str) 
-        place_of_birth = self.random.choice(self.RANDOM_DATA_LISTS["famous_cities_sample_30"])
-        place_of_residence = self._select_place_of_residence(place_of_birth)
-        marital_status = self._select_marital_status(gender, age_str)
+        
+        occupation = self._select_occupation(gender, age_str)
+        birth = self.random.choice(self.RANDOM_DATA_LISTS["famous_cities_sample_30"])
+        residence = self._select_place_of_residence(birth)
+        marital = self.random.choices(["متأهل", "همسر متوفی", "مجرد"], weights=[70, 25, 5], k=1)[0]
         
         return {
-            "first_name": first_name, "last_name": last_name, "age": age_str, "gender": gender,
-            "occupation": occupation, "place_of_birth": place_of_birth, "place_of_residence": place_of_residence,
-            "marital_status": marital_status
+            "first_name": first_name, "last_name": last_name, "age": age_str,
+            "gender": gender, "occupation": occupation,
+            "place_of_birth": birth, "place_of_residence": residence,
+            "marital_status": marital
         }
-    
-    def _generate_chief_complaint(self):
-        if self.severity_level == "SEVERE":
-            return self.random.choice([
-                "تنگی نفس شدید و مزمن، که اخیراً بدتر شده است.",
-                "سرفه مزمن خلط دار و مشکل در تنفس.",
-                "ناتوانی در انجام فعالیت‌های روزمره به دلیل نفس تنگی."
-            ])
+
+    # --- Value Generators ---
+    def _generate_value(self, distributions, is_int=False, precision=2):
+        ranges = [d["range"] for d in distributions]
+        weights = [d["weight"] for d in distributions]
+        chosen_range = self.random.choices(ranges, weights=weights, k=1)[0]
+        if is_int:
+            val = self.random.randint(chosen_range[0], chosen_range[1])
+            return str(val)
+        val = self.random.uniform(chosen_range[0], chosen_range[1])
+        return str(round(val, precision))
+
+    # --- Vital Signs Logic ---
+    def _generate_vitals(self):
+        # BP: Normal/HTN (80%) vs Low Normal (20%)
+        bp_weights = [80, 20]
+        chosen_bp = self.random.choices(["Normal/HTN", "Low Normal"], weights=bp_weights, k=1)[0]
+        if chosen_bp == "Normal/HTN":
+            sys = self.random.randint(110, 150)
+            dia = self.random.randint(70, 95)
         else:
-            return self.random.choice([
-                "سرفه مزمن خلط دار که سال‌هاست وجود دارد.",
-                "تنگی نفس خفیف در هنگام فعالیت‌های سنگین.",
-                "حس سنگینی در قفسه سینه و سرفه صبحگاهی."
-            ])
-
-    # --- علائم حیاتی ---
-
-    def _generate_t_value(self):
-        # T: ۹۵٪ نرمال (۳۶.۵ تا ۳۷.۵ °C)، ۵٪ تب خفیف (< ۳۸ °C)
-        distributions = [{"range": (36.5, 37.5), "weight": 95}, {"range": (37.5, 38.0), "weight": 5}]
-        return f"{self._generate_value(distributions, precision=1)} °C" 
-
-    def _generate_pr_value(self):
-        # PR: ۷۰٪ نرمال (۶۰-۱۰۰)، ۳۰٪ تاکیکاردی خفیف (>۱۰۰)
-        distributions = [{"range": (60, 100), "weight": 70}, {"range": (101, 120), "weight": 30}]
-        val = self._generate_value(distributions, is_int=True)
-        return f"{val} bpm and regular rhythm" 
-
-    def _generate_rr_value(self):
-        # RR: هماهنگ با شدت GOLD
-        if self.GOLD_STAGE in ["GOLD 1", "GOLD 2"]:
-            distributions = [{"range": (16, 18), "weight": 40}, {"range": (18, 20), "weight": 35}, {"range": (20, 22), "weight": 25}] 
-        else: 
-            distributions = [{"range": (20, 22), "weight": 50}, {"range": (23, 25), "weight": 50}] 
-        return f"{self._generate_value(distributions, is_int=True)} breaths/min"
-
-    def _generate_spo2_value(self):
-        # SpO2: هماهنگ با شدت GOLD
-        if self.GOLD_STAGE in ["GOLD 1", "GOLD 2"]: 
-            distributions = [{"range": (94, 100), "weight": 40}, {"range": (92, 93), "weight": 30}, {"range": (90, 91), "weight": 30}] 
-        else: 
-            distributions = [{"range": (92, 94), "weight": 40}, {"range": (90, 91), "weight": 30}, {"range": (80, 89), "weight": 30}] 
-        return f"{self._generate_value(distributions, is_int=True)}% (RA)"
-
-    def _generate_gcs_value(self):
-        # GCS 13-14 فقط در GOLD 4 (۵٪)
-        if self.GOLD_STAGE == "GOLD 4" and self.random.random() < 0.05:
-            return str(self.random.choice([13, 14]))
-        return "15"
-    
-    # --- معاینه فیزیکی ---
-    
-    def _gen_loc(self):
-        if self.vital_signs.get("GCS") in ["13", "14"]:
-            return "Lethargic or Drowsy, but arousable (Hypercapnia)"
-        return "Alert and Oriented to Person, Place, and Time (A&Ox3)"
-
-    def _gen_overall_app(self):
-        # وضعیت ظاهری: بستگی به PHENOTYPE
-        if self.PHENOTYPE == "Emphysema Dominant":
-            opts = ["Cachectic (Muscle Wasting)", "No obvious signs of cachexia or obesity"]
-            return self.random.choices(opts, weights=[40, 60], k=1)[0]
-        elif self.PHENOTYPE == "Chronic Bronchitis Dominant":
-            opts = ["No obvious signs of cachexia or obesity", "Obese"]
-            return self.random.choices(opts, weights=[75, 25], k=1)[0]
-        return "No obvious signs of cachexia or obesity"
-    
-    def _gen_cyanosis(self):
-        spo2_match = re.search(r'\d+', self.vital_signs.get("SpO2", "100"))
-        spo2_val = int(spo2_match.group(0)) if spo2_match else 100
+            sys = self.random.randint(90, 109)
+            dia = self.random.randint(60, 70)
         
-        if spo2_val < 92 and self.random.random() < 0.5: 
-            return "Present (Central Cyanosis)"
-        return "Absent"
+        # Temp: Mostly normal
+        t_weights = [95, 5]
+        t_choice = self.random.choices(["Normal", "Low Grade"], weights=t_weights, k=1)[0]
+        temp = round(self.random.uniform(36.5, 37.5), 1) if t_choice == "Normal" else round(self.random.uniform(37.6, 38.0), 1)
+
+        # Pulse: Normal vs Mild Tachycardia
+        pr_weights = [70, 30]
+        pr_choice = self.random.choices(["Normal", "Tachycardia"], weights=pr_weights, k=1)[0]
+        pr = self.random.randint(60, 100) if pr_choice == "Normal" else self.random.randint(101, 115)
+
+        # RR (Respiratory Rate): Depends on SEVERITY
+        if self.severity in ["GOLD_1"]:
+            rr = self.random.randint(16, 18)
+        elif self.severity in ["GOLD_2"]:
+            rr = self.random.randint(18, 20)
+        else: # GOLD_3, GOLD_4
+            rr = self.random.randint(20, 24)
+
+        # SpO2: Depends on SEVERITY
+        # Rule: Hypoxemia (<=92%) aligns with GOLD 3/4
+        if self.severity in ["GOLD_1", "GOLD_2"]:
+            spo2 = self.random.randint(93, 98)
+        else:
+            # Higher chance of low SpO2 in severe disease
+            if self.random.random() < 0.6: # 60% chance of hypoxemia in severe cases
+                spo2 = self.random.randint(86, 92)
+            else:
+                spo2 = self.random.randint(92, 94)
+
+        # GCS: Generally 15, unless GOLD 4 + Hypercapnia (drowsy)
+        if self.severity == "GOLD_4" and self.random.random() < 0.25: # 5% total chance (25% of 20%)
+            gcs = str(self.random.randint(13, 14))
+        else:
+            gcs = "15"
+
+        return {
+            "BP": f"{sys}/{dia} mmHg",
+            "T": f"{temp} °C",
+            "PR": f"{pr} bpm and regular rhythm",
+            "RR": f"{rr} breaths/min",
+            "SpO2": f"{spo2}% (RA)",
+            "GCS": gcs
+        }
+
+    # --- Physical Exam Logic ---
+    def _gen_general_appearance(self, gcs_val):
+        # LOC
+        if int(gcs_val) < 15:
+            loc = "Drowsy but arousable, following simple commands."
+        else:
+            loc = "Alert and Oriented to Person, Place, and Time."
         
-    def _gen_edema(self):
-        # Edema: اگر Cor Pulmonale Present باشد، ۹۰٪ ادم دوطرفه
-        if self.COR_PULMONALE == "Present":
-            return self.random.choices(["Bilateral Pitting Edema", "Absent"], weights=[90, 10], k=1)[0]
-        return "Absent" 
-    
-    def _gen_chest_shape(self):
-        # ۴۰٪ Barrel Chest
-        return self.random.choices(["Barrel Chest (increased AP diameter)", "Symmetrical movement, Normal shape"], weights=[40, 60], k=1)[0]
-    
-    def _gen_chest_expansion(self):
-        # ۸۵٪ کاهش یافته دوطرفه (Bilateral Reduced)
-        return self.random.choices(["Bilateral Reduced Expansion", "Symmetrical expansion"], weights=[85, 15], k=1)[0]
+        # Mood
+        mood = self.random.choices(
+            ["Appears Chronically Ill, Not in acute distress.", "Anxious/Apprehensive (due to chronic dyspnea)."],
+            weights=[80, 20]
+        )[0]
+        
+        # Posture
+        if self.severity == "GOLD_4":
+             # Higher chance of Tripod in severe
+             pos = self.random.choices(["Comfortable", "Upright", "Tripod"], weights=[40, 30, 30])[0]
+        else:
+             pos = "Comfortable in bed or seated."
+        
+        # Nutritional Status (PHENOTYPE RULE)
+        if self.phenotype == "Emphysema":
+            # Pink Puffer -> Thin
+            nutrition = self.random.choices(["Cachectic (Low BMI)", "Normal"], weights=[70, 30])[0]
+        else:
+            # Blue Bloater -> Obese/Normal
+            nutrition = self.random.choices(["Normal/Obese", "Obese"], weights=[60, 40])[0]
 
-    def _gen_tactile_fremitus(self):
-        # ۷۰٪ کاهش یافته و دوسویه
-        return self.random.choices(["Decreased and Symmetrical (due to Hyperinflation)", "Normal and Symmetrical"], weights=[70, 30], k=1)[0]
+        # Cyanosis (SpO2 Rule)
+        spo2_val = int(re.search(r'\d+', self.vital_signs["SpO2"]).group())
+        if spo2_val < 92:
+            cyanosis = "Central Cyanosis (Tongue/Lips) Present."
+        else:
+            cyanosis = "Absent."
 
-    def _gen_percussion(self):
-        # ۹۰٪ هایپررزونانت منتشر
-        return self.random.choices(["Diffuse Hyperresonant", "Resonant"], weights=[90, 10], k=1)[0]
-
-    def _gen_breath_sounds(self):
-        # ۱۰۰٪ طولانی شدن بازدم
-        result = "Prolonged Expiration (100% of cases). "
-        reduced_intensity_chance = 0.70 
-        if self.PHENOTYPE == "Emphysema Dominant":
-            reduced_intensity_chance = 0.85 
+        # Edema (COR PULMONALE Rule)
+        if self.cor_pulmonale == "Present":
+            edema = "Bilateral Pitting Edema (1+ to 3+)."
+        else:
+            edema = "Absent (No pedal/periorbital swelling)."
             
-        if self.random.random() < reduced_intensity_chance:
-            result += "Reduced intensity (Diminished Breath Sounds)."
-        else:
-            result += "Normal Vesicular breath sounds."
-        return result
+        return {
+            "loc": loc, "mood": mood, "posture": pos, "nutrition": nutrition,
+            "cyanosis": cyanosis, "edema": edema
+        }
 
-    def _gen_adventitious(self):
-        # ۵۰٪ Wheezing منتشر
-        options = ["Wheezing Diffuse (Bronchospasm)", "No Adventitious Sounds"]
-        weights = [50, 45]
+    def _gen_resp_exam(self):
+        # Inspection
+        barrel_chest = self.random.choices(["Symmetrical, Normal shape", "Barrel Chest"], weights=[60, 40])[0]
+        accessory = "Present" if self.severity in ["GOLD_3", "GOLD_4"] else "Absent"
         
-        if self.COR_PULMONALE == "Present" and self.random.random() < 0.15: 
-             return "Fine Crackles (base of lungs)"
+        # Palpation
+        # Reduced expansion is bilateral in COPD
+        expansion = self.random.choices(["Bilateral Reduced Expansion", "Symmetrical expansion"], weights=[85, 15])[0]
+        fremitus = self.random.choices(["Decreased and Symmetrical", "Normal"], weights=[70, 30])[0]
+        
+        # Percussion
+        percussion = self.random.choices(["Diffuse Hyperresonant", "Resonant"], weights=[90, 10])[0]
+        
+        # Auscultation
+        # Breath Sounds: Emphysema -> Diminished
+        if self.phenotype == "Emphysema":
+            bs_intensity = self.random.choices(["Reduced intensity", "Normal Vesicular"], weights=[85, 15])[0]
+        else:
+            bs_intensity = self.random.choices(["Reduced intensity", "Normal Vesicular"], weights=[60, 40])[0]
+        
+        bs_desc = f"{bs_intensity} with Prolonged Expiration"
+        
+        # Adventitious:
+        # Cor Pulmonale -> Crackles?
+        adv_opts = []
+        adv_weights = []
+        
+        # Base Wheeze probability
+        adv_opts.append("Wheezing Diffuse (Expiratory)")
+        adv_weights.append(50)
+        
+        if self.cor_pulmonale == "Present":
+            adv_opts.append("Fine Crackles (Basilar)")
+            adv_weights.append(10) # Added chance
+            adv_opts.append("No Adventitious Sounds")
+            adv_weights.append(40)
+        else:
+            adv_opts.append("No Adventitious Sounds")
+            adv_weights.append(50)
+            
+        # Normalize weights if needed, random.choices handles it
+        adventitious = self.random.choices(adv_opts, weights=adv_weights, k=1)[0]
+        
+        return {
+            "barrel": barrel_chest, "accessory": accessory,
+            "expansion": expansion, "fremitus": fremitus,
+            "percussion": percussion, "bs": bs_desc, "adv": adventitious
+        }
+
+    def _gen_cv_exam(self):
+        # JVP (Cor Pulmonale Rule)
+        if self.cor_pulmonale == "Present":
+            jvp = self.random.choices(["> 4 cm above sternal angle", "< 4 cm"], weights=[70, 30])[0]
+            rv_heave = self.random.choices(["Right Ventricular Heave detected", "No heave"], weights=[30, 70])[0]
+            murmur = self.random.choices(["Soft Systolic Murmur (TR) or S3", "No S3/S4 or Murmur"], weights=[30, 70])[0]
+        else:
+            jvp = "< 4 cm above sternal angle"
+            rv_heave = "No heave, lift, or thrill detected."
+            murmur = "No S3/S4 or Murmur."
+            
+        # Heart Sounds (Hyperinflation rule)
+        hs = self.random.choices(["Muffled/Distant S1 and S2", "Normal S1 and S2"], weights=[70, 30])[0]
+        
+        return {"jvp": jvp, "heave": rv_heave, "murmur": murmur, "hs": hs}
+
+    # --- Paraclinic Logic ---
+    def _gen_cbc(self):
+        # Polycythemia Rule: High only if Cor Pulmonale + Low SpO2 (Severe)
+        spo2_val = int(re.search(r'\d+', self.vital_signs["SpO2"]).group())
+        
+        if self.cor_pulmonale == "Present" and spo2_val < 92:
+            # High chance of Polycythemia
+            hb = self._generate_value([{"range": (17.1, 19.0), "weight": 100}], precision=1) + " g/dL"
+        else:
+            hb = self._generate_value([{"range": (12.0, 16.5), "weight": 100}], precision=1) + " g/dL"
+
+        wbc = self._generate_value([{"range": (4000, 12000), "weight": 90}, {"range": (12001, 14000), "weight": 10}], is_int=True)
+        plt = self._generate_value([{"range": (150000, 450000), "weight": 70}, {"range": (450001, 550000), "weight": 30}], is_int=True)
+        return {"Hb": hb, "WBC": f"{wbc} /µL", "Plt": f"{plt} /µL"}
+
+    def _gen_vbg(self):
+        # pH & PaO2 linked to Severity
+        if self.severity == "GOLD_4":
+            # Risk of Acidosis
+            ph = self._generate_value([{"range": (7.32, 7.35), "weight": 25}, {"range": (7.35, 7.45), "weight": 75}], precision=2)
+            pao2 = self._generate_value([{"range": (50, 60), "weight": 80}, {"range": (60, 70), "weight": 20}], is_int=True)
+        elif self.severity == "GOLD_3":
+             ph = self._generate_value([{"range": (7.35, 7.45), "weight": 100}], precision=2)
+             pao2 = self._generate_value([{"range": (55, 65), "weight": 60}, {"range": (65, 80), "weight": 40}], is_int=True)
+        else: # GOLD 1/2
+             ph = self._generate_value([{"range": (7.38, 7.45), "weight": 100}], precision=2)
+             pao2 = self._generate_value([{"range": (70, 90), "weight": 100}], is_int=True)
              
-        return self.random.choices(options, weights=weights, k=1)[0]
-
-    def _generate_cv_findings(self):
-        # JVP: اگر COR_PULMONALE Present باشد، ۷۰٪ JVD
-        jvp = "< 4 cm above sternal angle"
-        if self.COR_PULMONALE == "Present" and self.random.random() < 0.70:
-            jvp = "> 4 cm above sternal angle (Jugular Venous Distension)"
-            
-        s1_s2_opts = ["Muffled/Distant S1 and S2", "Normal S1 and S2"]
-        s1_s2 = self.random.choices(s1_s2_opts, weights=[70, 30], k=1)[0]
-        
-        return {
-            "JVP_assessment": jvp,
-            "s1_s2_description": s1_s2,
-            "murmur_description": self.random.choices(["Absent", "Soft Systolic Murmur"], weights=[90, 10], k=1)[0],
-            "peripheral_pulses": self.vital_signs["PR"]
-        }
-    
-    # --- پاراکلینیک ---
-    
-    def _generate_hemoglobin_value(self):
-        # Hb (Polycythemia): هماهنگ با SpO2 و Cor Pulmonale
-        polycythemia_chance = 0.15 
-        spo2_match = re.search(r'\d+', self.vital_signs.get("SpO2", "100"))
-        spo2_val = int(spo2_match.group(0)) if spo2_match else 100
-
-        if spo2_val < 92 and self.COR_PULMONALE == "Present":
-            polycythemia_chance = 0.50
-
-        if self.random.random() < polycythemia_chance:
-            dists = [{"range": (17.1, 20.0), "weight": 100}]
-        else:
-            dists = [{"range": (12.0, 17.0), "weight": 100}]
-            
-        return f"{self._generate_value(dists, precision=1)} g/dL"
-
-    def _generate_wbc_count(self):
-        # WBC: ۹۰٪ نرمال (۴-۱۲k)، ۱۰٪ کمی بالا (۱۲-۱۵k)
-        dists = [{"range": (4000, 12000), "weight": 90}, {"range": (12001, 15000), "weight": 10}]
-        return f"{self._generate_value(dists, is_int=True)} /µL"
-
-    def _generate_crp_value(self):
-        # CRP: ۷۰٪ نرمال (< ۱۰)، ۳۰٪ کمی بالا (۲۰-۵۰)
-        dists = [{"range": (1, 10), "weight": 70}, {"range": (20, 50), "weight": 30}]
-        return f"{self._generate_value(dists, is_int=True)} mg/L"
+        return {"pH": ph, "PaO2": f"{pao2} mmHg"}
 
     def _gen_bnp(self):
-        # BNP: اگر Cor Pulmonale Present باشد، ۷۰٪ بالا
-        if self.COR_PULMONALE == "Present":
-            return self.random.choices(["elevated (>100 pg/mL)", "within normal range"], weights=[70, 30], k=1)[0]
-        return "within normal range"
-        
-    def _gen_vbg(self):
-        # VBG: منطق اسیدوز تنفسی مزمن جبران شده
-        
-        ph_val = self._generate_value([{"range": (7.35, 7.45), "weight": 95}], precision=2) 
-        paco2_val = self._generate_value([{"range": (35, 45), "weight": 95}], is_int=True)
+        if self.cor_pulmonale == "Present":
+            return "Elevated (>100 pg/mL)"
+        return "Within normal range"
 
-        if self.GOLD_STAGE == "GOLD 4" and self.random.random() < 0.05:
-            ph_val = self._generate_value([{"range": (7.30, 7.35), "weight": 100}], precision=2) 
-            paco2_val = self._generate_value([{"range": (45, 60), "weight": 100}], is_int=True) 
+    def _gen_imaging(self):
+        # CXR
+        cxr_findings = ["Hyperinflation (Flat Diaphragms, Narrow Heart)"]
+        if self.phenotype == "Emphysema" and self.random.random() < 0.3:
+            cxr_findings.append("Bullae visible in upper lobes")
         
-        # PaO2: هماهنگ با شدت
-        if self.severity_level == "SEVERE":
-            dists = [{"range": (40, 60), "weight": 20}, {"range": (61, 80), "weight": 40}, {"range": (81, 100), "weight": 40}]
-        else:
-            dists = [{"range": (81, 100), "weight": 60}, {"range": (61, 80), "weight": 30}, {"range": (50, 60), "weight": 10}]
-            
-        pa_o2_val = self._generate_value(dists, is_int=True)
-        self.pa_o2_val = pa_o2_val 
-        
-        return f"pH: {ph_val}, PaO2: {pa_o2_val} mmHg, PaCO2: {paco2_val} mmHg, Bicarb: WNL"
-        
-    def _gen_spirometry(self):
-        # FEV1 % Predicted باید دقیقاً با GOLD Stage هماهنگ باشد.
-        
-        if self.GOLD_STAGE == "GOLD 1": fev1_range = (80, 100)
-        elif self.GOLD_STAGE == "GOLD 2": fev1_range = (50, 79)
-        elif self.GOLD_STAGE == "GOLD 3": fev1_range = (30, 49)
-        elif self.GOLD_STAGE == "GOLD 4": fev1_range = (15, 29)
-        
-        fev1_perc = self.random.randint(fev1_range[0], fev1_range[1])
-        fev1_fvc_ratio = self._generate_value([{"range": (0.40, 0.70), "weight": 100}], precision=2)
-        
-        return (f"Obstructive Pattern confirmed (FEV1/FVC Ratio: {fev1_fvc_ratio} < 0.70). "
-                f"FEV1 % Predicted: {fev1_perc}%. FVC % Predicted: {self.random.randint(60, 80)}%. "
-                f"Result is consistent with {self.GOLD_STAGE} severity.")
-
-    def _gen_dlco(self):
-        # DLCO: کاهش یافته (۹۰٪) اگر Emphysema
-        if self.PHENOTYPE == "Emphysema Dominant":
-            return self.random.choices(["Reduced (< 70% Predicted)", "Within normal range"], weights=[90, 10], k=1)[0]
-        # Chronic Bronchitis Dominant: ۹۰٪ نرمال
-        return self.random.choices(["Within normal range", "Reduced (< 70% Predicted)"], weights=[90, 10], k=1)[0]
-        
-    def _gen_cxr(self):
-        # CXR: ۷۰٪ Hyperinflation، ۳۰٪ Bullae.
-        options = ["Hyperinflation findings (Flat Diaphragms, Narrow Heart Shadow)", "Bullae (Air-filled cysts in Lung Fields)"]
-        return self.random.choices(options, weights=[70, 30], k=1)[0]
-
-    def _gen_ct(self):
-        # CT: ۷۰٪ Emphysema/Air Trapping، ۳۰٪ Bullae/Bronchiectatic
-        options = ["Emphysema/Air Trapping Changes", "Bullae or Bronchiectatic Changes"]
-        return self.random.choices(options, weights=[70, 30], k=1)[0]
-        
-    def _gen_thora(self):
-        return "Not Indicated (No Pleural Effusion on Imaging)"
-        
-    def _generate_platelet_count(self):
-        dists = [{"range": (150000, 450000), "weight": 60}, {"range": (450001, 600000), "weight": 30}, {"range": (50000, 149000), "weight": 10}]
-        return f"{self._generate_value(dists, is_int=True)} /µL"
-        
-    def _generate_esr_value(self):
-        dists = [{"range": (51, 120), "weight": 50}, {"range": (20, 50), "weight": 30}, {"range": (5, 19), "weight": 20}]
-        return f"{self._generate_value(dists, is_int=True)} mm/h"
-
-
-    def generate_paraclinic_case(self):
-        """ تابع اصلی تولید داده‌ها با ساختار JSON کامل """
-        
-        # ۱. تولید علائم حیاتی
-        self.vital_signs = {
-            "BP": self._generate_bp_value(), 
-            "T": self._generate_t_value(), 
-            "PR": self._generate_pr_value(), 
-            "RR": self._generate_rr_value(),
-            "SpO2": self._generate_spo2_value(),
-            "GCS": self._generate_gcs_value(),
+        # CT
+        ct_findings = "Emphysema/Air Trapping Changes"
+        if self.phenotype == "Chronic Bronchitis":
+             ct_findings = "Bronchial Wall Thickening, Air Trapping"
+             
+        return {
+            "cxr": f"{', '.join(cxr_findings)}. No Consolidation/Effusion.",
+            "ct": ct_findings
         }
+
+    def _gen_spirometry(self):
+        # MUST BE OBSTRUCTIVE: FEV1/FVC < 0.70
+        ratio = round(self.random.uniform(0.45, 0.68), 2)
         
-        # ۲. تولید کامل داده‌ها
+        # FEV1 MUST MATCH GOLD STAGE
+        if self.severity == "GOLD_1": # >= 80%
+            pred_percent = self.random.randint(80, 95)
+        elif self.severity == "GOLD_2": # 50-79%
+            pred_percent = self.random.randint(50, 79)
+        elif self.severity == "GOLD_3": # 30-49%
+            pred_percent = self.random.randint(30, 49)
+        else: # GOLD_4 < 30%
+            pred_percent = self.random.randint(15, 29)
+            
+        # Mocking volumes
+        predicted_fev1 = 3.0 # Approx
+        measured_fev1 = round(predicted_fev1 * (pred_percent/100), 2)
+        
+        desc = (f"Obstructive Pattern (FEV1/FVC = {ratio}). "
+                f"FEV1 Measured: {measured_fev1}L ({pred_percent}% Predicted). "
+                f"Consistent with {self.severity}.")
+                
+        # DLCO Logic (Phenotype)
+        if self.phenotype == "Emphysema":
+            dlco = "Reduced DLCO (< 70% predicted)"
+        else:
+            dlco = "Normal DLCO"
+            
+        return {"spiro": desc, "dlco": dlco}
+
+    def _gen_bmp(self):
+        """
+        تولید مقادیر پنل متابولیک پایه طبق 
+        """
+        # Sodium (Na): 85% Normal (135-145), 15% Hyponatremia (<135) 
+        na_val = self._generate_value([
+            {"range": (135, 145), "weight": 85}, 
+            {"range": (128, 134), "weight": 15}
+        ], is_int=True)
+
+        # BUN: 80% Normal (7-20), 20% Elevated (>20) 
+        bun_val = self._generate_value([
+            {"range": (7, 20), "weight": 80}, 
+            {"range": (21, 35), "weight": 20}
+        ], is_int=True)
+
+        # Creatinine (Cr): 80% Normal (0.7-1.2), 20% Elevated (>1.2) 
+        cr_val = self._generate_value([
+            {"range": (0.7, 1.2), "weight": 80}, 
+            {"range": (1.3, 1.8), "weight": 20}
+        ], precision=1)
+
+        return {
+            "Na": f"{na_val} mEq/L",
+            "BUN": f"{bun_val} mg/dL",
+            "Cr": f"{cr_val} mg/dL"
+        }
+
+    def _gen_lfts(self):
+        """
+        تولید تست‌های عملکرد کبد طبق 
+        """
+        # ALT & AST: 90% Normal (22-45), 10% Mildly Elevated (45-90)
+        lft_dist = [{"range": (22, 45), "weight": 90}, {"range": (46, 90), "weight": 10}]
+        
+        alt = self._generate_value(lft_dist, is_int=True)
+        ast = self._generate_value(lft_dist, is_int=True)
+        
+        return {"ALT": f"{alt} U/L", "AST": f"{ast} U/L"}
+
+    def _gen_sputum_gram(self):
+        """
+        تولید نتیجه رنگ‌آمیزی گرم خلط طبق 
+        """
+        # 80% Normal Flora, 20% Positive (Colonization in chronic bronchitis)
+        return self.random.choices(
+            ["Normal Flora / Mixed", "Positive for specific organism (Colonization)"],
+            weights=[80, 20], k=1
+        )[0]
+
+    def _gen_sputum_afb(self):
+        """
+        تولید نتیجه AFB خلط طبق 
+        """
+        # 95% Negative, 5% Positive (Comorbidity)
+        return self.random.choices(["Negative", "Positive"], weights=[95, 5], k=1)[0]
+
+    def _gen_a1at(self):
+        """
+        سطح آلفا-1 آنتی‌تریپسین طبق 
+        """
+        # 99% Normal, 1% Low (Genetic Cause)
+        return self.random.choices(
+            ["Within normal range", "Below normal range (Genetic variant suspicion)"],
+            weights=[99, 1], k=1
+        )[0]
+
+    def _gen_ddimer(self):
+        """
+        تولید دی-دایمر طبق 
+        """
+        # 90% < 500 (Rule out PE), 10% > 500
+        dist = [
+            {"range": (200, 499), "weight": 90}, 
+            {"range": (500, 1500), "weight": 10}
+        ]
+        val = self._generate_value(dist, is_int=True)
+        return f"{val} ng/mL FEU"
+    
+    def _gen_head_neck(self):
+        """
+        تولید یافته‌های سر و گردن طبق 
+        """
+        # Eyes: 95% Pink, 5% Pale 
+        conjunctiva = self.random.choices(
+            ["Pink conjunctiva, Anicteric sclera", "Pale conjunctiva, Anicteric sclera"],
+            weights=[95, 5], k=1
+        )[0]
+
+        # Carotid Bruit: 90% Absent, 10% Present 
+        carotid = self.random.choices(
+            ["No bruits", "Carotid bruit present"],
+            weights=[90, 10], k=1
+        )[0]
+
+        # Lymph Nodes: 90% Non-palpable, 10% Small firm 
+        lymph = self.random.choices(
+            ["Non-palpable or small, soft nodes", "Small (<1 cm), firm nodes"],
+            weights=[90, 10], k=1
+        )[0]
+        
+        return {
+            "eyes": {"sclera_and_conjunctiva": conjunctiva, "pupils": "PERRL", "eom": "EOM intact"},
+            "neck": {
+                "tracheal_position": "Midline", 
+                "lymph_nodes": lymph, 
+                "carotid": carotid,
+                "thyroid": "Non-enlarged, non-tender"
+            }
+        }
+
+    def _gen_peripheral_pulses(self):
+        """
+        تولید نبض‌های محیطی و پرفیوژن 
+        """
+        # Pulses: 70% Normal quality, 30% Tachycardic (>100) 
+        # (Check PR from vitals to be consistent, usually >100 aligns with Tachycardic quality)
+        pr_val = int(re.search(r'\d+', self.vital_signs["PR"]).group())
+        if pr_val > 100:
+            quality = "Tachycardic quality (>100 bpm)"
+        else:
+            quality = "Normal quality (60-100 bpm)"
+            
+        desc = f"Symmetrical and Regular. {quality}"
+
+        # Cap Refill: 85% < 2s, 15% > 2s (Hypoxemia/Severe) 
+        # Logic: If Severe (GOLD 3/4) OR SpO2 < 92, increase chance of > 2s
+        spo2_val = int(re.search(r'\d+', self.vital_signs["SpO2"]).group())
+        
+        if self.severity in ["GOLD_3", "GOLD_4"] or spo2_val < 92:
+            cap_refill = self.random.choices(["< 2 seconds", "> 2 seconds"], weights=[60, 40])[0]
+        else:
+            cap_refill = self.random.choices(["< 2 seconds", "> 2 seconds"], weights=[95, 5])[0]
+
+        return {"desc": desc, "cap_refill": cap_refill}
+
+    def _gen_abdominal(self):
+        """
+        معاینه شکم 
+        """
+        # Vascular Bruits: 95% Absent, 5% Present 
+        bruits = self.random.choices(["Absent", "Present"], weights=[95, 5])[0]
+        
+        # Liver Palpation: Hepatic Congestion if Cor Pulmonale 
+        if self.cor_pulmonale == "Present":
+            # 5% chance in general logic, but practically linked to Cor Pulmonale presence
+            palpation = self.random.choices(
+                ["No masses, Liver/Spleen non-palpable", "Mildly palpable liver edge below costal margin (Hepatic Congestion)"],
+                weights=[30, 70] # Higher chance if Cor Pulmonale is actually present
+            )[0]
+        else:
+            palpation = "No masses, Liver/Spleen non-palpable"
+            
+        return {
+            "inspection": "Flat/Rounded, Symmetrical, No obvious scars",
+            "auscultation": f"Normoactive Bowel Sounds. Vascular Bruits: {bruits}",
+            "palpation": f"Soft, non-tender. {palpation}"
+        }
+
+    def _gen_neuro(self):
+        """
+        معاینه عصبی 
+        """
+        # Mental Status: 95% A&Ox3, 5% Drowsy (Severe) 
+        # This should align with General Appearance LOC logic
+        gcs_val = int(self.vital_signs["GCS"])
+        if gcs_val < 15:
+            ms = "Drowsy or Mildly Confused (Consistent with Hypercapnia)"
+        else:
+            ms = "Alert and Oriented to Person, Place, and Time (A&Ox3)"
+
+        # Motor: 70% 5/5, 20% 4/5 (Cachexia/Severe), 10% Asymmetrical 
+        # If Emphysema (Cachectic) or Severe, higher chance of 4/5
+        if self.phenotype == "Emphysema" or self.severity == "GOLD_4":
+            motor = self.random.choices(
+                ["Motor Strength 5/5, Normal Tone", "Motor Strength 4/5 (Generalized weakness/Muscle Wasting)"],
+                weights=[60, 40]
+            )[0]
+        else:
+             motor = self.random.choices(
+                ["Motor Strength 5/5, Normal Tone", "Asymmetrical weakness (Unrelated Comorbidity)"],
+                weights=[90, 10]
+            )[0]
+            
+        # Tremor (Beta-agonist side effect)
+        tremor = self.random.choices(["Absent", "Fine Tremor"], weights=[95, 5])[0]
+        
+        return {"ms": ms, "motor": motor, "tremor": tremor}
+
+    def _gen_plethysmography(self):
+        """
+        
+        """
+        # 80% Increased Lung Volumes, 20% Normal
+        return self.random.choices(
+            ["Increased Lung Volumes (Increased RV/TLC)", "Within normal range"],
+            weights=[80, 20]
+        )[0]
+    
+    def generate_paraclinic_case(self):
+        self.vital_signs = self._generate_vitals()
+        personal_info = self._generate_personal_information()
+        
+        # Parse logic variables
+        gcs_val = self.vital_signs["GCS"]
+        
+        # 1. General Appearance
+        gen_app = self._gen_general_appearance(gcs_val)
+        
+        # 2. Head & Neck (New Dynamic)
+        hn_exam = self._gen_head_neck()
+        
+        # 3. Respiratory
+        resp_exam = self._gen_resp_exam()
+        
+        # 4. Cardiovascular (Updated)
+        cv_exam = self._gen_cv_exam() # Center (Heart)
+        peri_exam = self._gen_peripheral_pulses() # Periphery
+        
+        # 5. Abdominal (New Dynamic)
+        abd_exam = self._gen_abdominal()
+        
+        # 6. Neurological (New Dynamic)
+        neuro_exam = self._gen_neuro()
+        
+        # 7. Labs
+        cbc = self._gen_cbc()
+        bmp = self._gen_bmp()
+        lfts = self._gen_lfts()
+        vbg = self._gen_vbg()
+        bnp = self._gen_bnp()
+        imaging = self._gen_imaging()
+        
+        # 8. Functional
+        spiro = self._gen_spirometry()
+        pleth = self._gen_plethysmography() # New Dynamic
+
         data = {
             "patient_profile": {
-                **self._generate_personal_information(),
-                "chief_complaint": self._generate_chief_complaint(),
+                "personal_information": personal_info
             },
             "physical_exam": {
                 "vital_signs": self.vital_signs,
                 "general_appearance": {
-                    "level_of_consciousness": self._gen_loc(),
-                    "mood_and_behavior": self.random.choices(["Cooperative and Appears Chronically Ill", "Anxious/Depressed"], weights=[80, 20], k=1)[0],
-                    "posture_and_position": self.random.choices(["Comfortable in bed or seated", "Sitting upright", "Tripod position (In severe chronic disease)"], weights=[75, 15, 10], k=1)[0],
-                    "overall_appearance": self._gen_overall_app(),
+                    "level_of_consciousness": gen_app["loc"],
+                    "mood_and_behavior": gen_app["mood"],
+                    "posture_and_position": gen_app["posture"],
+                    "overall_appearance": f"Nutritional: {gen_app['nutrition']}",
                     "cardiopulmonary_and_circulatory_clues": {
-                        "cyanosis": self._gen_cyanosis(), 
-                        "dyspnea": self.random.choices(["Mild dyspnea only on exertion", "Moderate dyspnea with minimal activity", "Severe dyspnea at rest, with accessory muscle use (In GOLD 4)"], weights=[40, 40, 20], k=1)[0], 
-                        "edema": self._gen_edema()
+                        "cyanosis": gen_app["cyanosis"],
+                        "dyspnea": f"Severity Consistent with {self.severity} (MMRC scale)",
+                        "edema": gen_app["edema"]
                     }
+                },
+                "head_and_neck": {
+                    "eyes": hn_exam["eyes"],
+                    "neck_and_lymphatics": hn_exam["neck"]
                 },
                 "respiratory_system": {
                     "inspection": {
-                        "accessory_muscles": self.random.choices(["Present (Chronic Use)", "Absent"], weights=[90, 10], k=1)[0], 
-                        "chest_shape_and_symmetry": self._gen_chest_shape(),
+                        "accessory_muscles": resp_exam["accessory"],
+                        "chest_shape_and_symmetry": resp_exam["barrel"]
                     },
                     "palpation": {
-                        "chest_expansion": self._gen_chest_expansion(),
-                        "tactile_fremitus": self._gen_tactile_fremitus(),
+                        "chest_expansion": resp_exam["expansion"],
+                        "tactile_fremitus": resp_exam["fremitus"]
                     },
-                    "percussion": self._gen_percussion(),
+                    "percussion": resp_exam["percussion"],
                     "auscultation": {
-                        "breath_sounds": self._gen_breath_sounds(),
-                        "adventitious_sounds": self._gen_adventitious(),
-                    },
+                        "breath_sounds": resp_exam["bs"],
+                        "adventitious_sounds": resp_exam["adv"]
+                    }
                 },
-                "cardiovascular_system": self._generate_cv_findings(),
+                "cardiovascular_system": {
+                    "precordium": cv_exam["heave"],
+                    "auscultation": {
+                        "heart_sounds_s1_s2": cv_exam["hs"],
+                        "murmurs": cv_exam["murmur"]
+                    },
+                    "peripheral_pulses": peri_exam["desc"],
+                    "cap_refill": peri_exam["cap_refill"]
+                },
                 "abdominal_system": {
-                    "percussion_palpation": self.random.choices(["Soft, non-tender, non-distended, no organomegaly", "Hepatic Congestion (if Cor Pulmonale is severe)"], weights=[95, 5], k=1)[0]
+                    "inspection": abd_exam["inspection"],
+                    "auscultation": abd_exam["auscultation"],
+                    "percussion_palpation": abd_exam["palpation"]
                 },
                 "neurological": {
-                    "mental_status_and_LOC": self._gen_loc(),
-                    "motor_strength_and_DTRs": self.random.choices(["Motor Strength 5/5, DTRs 2+ and Symmetrical", "Mild weakness/Muscle Wasting (Cachexia)"], weights=[70, 30], k=1)[0]
+                    "mental_status": neuro_exam["ms"],
+                    "motor": neuro_exam["motor"],
+                    "involuntary_movements": neuro_exam["tremor"]
                 },
+                "musculoskeletal_system": {
+                    "joints_and_muscles": self.random.choices(
+                        ["No joint swelling/tenderness", "Diffuse myalgias"], 
+                        weights=[95, 5]
+                    )[0]
+                }
             },
             "paraclinic": {
                 "basic_blood_tests": {
-                    "CBC": {
-                        "Hb": self._generate_hemoglobin_value(),
-                        "WBC": self._generate_wbc_count(), 
-                        "Plt": self._generate_platelet_count(),
+                    "CBC": cbc,
+                    "ESR": self._generate_value([{"range": (5, 29), "weight": 70}, {"range": (30, 60), "weight": 30}], is_int=True) + " mm/h",
+                    "CRP": self._generate_value([{"range": (1, 19), "weight": 70}, {"range": (20, 50), "weight": 30}], is_int=True) + " mg/L",
+                    "BMP": bmp,
+                    "LFTs": lfts,
+                    "VBG": vbg
+                },
+                "specialized_lung_tests": {
+                    "Sputum_analysis": {
+                        "Gram_Stain": self._gen_sputum_gram(),
+                        "Sample_Quality": "Not Indicated for Routine Stable Visit"
                     },
-                    "Inflammatory_markers": {
-                        "ESR": self._generate_esr_value(), 
-                        "CRP": self._generate_crp_value(),
-                    },
-                    "Cardiac_Markers": { 
-                        "BNP": self._gen_bnp(),
-                    },
-                    "VBG": self._gen_vbg(),
+                    "Sputum_AFB": self._gen_sputum_afb(),
+                    "a1_antitrypsin_level": self._gen_a1at(),
+                    "D_dimer": self._gen_ddimer(),
+                    "BNP_NT_proBNP": bnp
+                },
+                "immunity_and_serology": {
+                    "HIV_test": self.random.choices(["Negative", "Positive"], weights=[98, 2])[0],
+                    "Autoimmune_pannel": self.random.choices(["Negative", "Positive"], weights=[95, 5])[0]
                 },
                 "simple_imaging": {
-                    "Chest_X_Ray": self._gen_cxr(),
+                    "Chest_X_Ray": {
+                        "Findings": imaging["cxr"]
+                    }
                 },
                 "advanced_imaging": {
-                    "Chest_CT": self._gen_ct(),
-                    "MRI_chest": self.random.choices(["Normal", "Abnormal signal intensity"], weights=[95, 5], k=1)[0],
+                    "Chest_CT": {
+                         "Findings": imaging["ct"]
+                    }
                 },
                 "functional_tests": {
-                    "Spirometry": self._gen_spirometry(),
-                    "DLCO": self._gen_dlco(),
-                    "plethysmography": self.random.choices(["Reduced Lung Volumes (Hyperinflation)", "within normal range"], weights=[90, 10], k=1)[0],
+                    "Spirometry": spiro["spiro"],
+                    "DLCO": spiro["dlco"],
+                    "plethysmography": pleth,
+                    "peak_flow": self.random.choices(["Reduced", "Normal"], weights=[80, 20])[0]
                 },
                 "procedures": {
-                    "Bronchoscopy": self.random.choices(["Normal Anatomy with Secretions", "Mucosal Inflammation or Obstruction"], weights=[90, 10], k=1)[0],
-                    "torachonthesis": self._gen_thora()
+                    "Bronchoscopy": "Not Indicated for Routine Stable Visit",
+                    "torachonthesis": "Not Indicated"
                 }
             }
         }
         return data
-    
-# ... (کدهای LabDataGenerator و سپس کلاس جدید COPDDataGenerator) ...
-
-def create_copd_case_json():
-    """ 
-    اجرای COPDDataGenerator برای تولید سناریوی COPD.
-    """
-    
-    # فراخوانی کلاس مستقل
-    copd_generator = COPDDataGenerator() 
-    paraclinic_output = copd_generator.generate_paraclinic_case()
-    
-    # فرض می‌شود scenario_creator یا منطق تولید شرح حال COPD در دسترس است.
-    # اگر از scenario_creator برای Pneumonia استفاده می‌کردید، باید مطمئن شوید 
-    # که یک منطق مشابه برای COPD نیز وجود دارد یا آن را ساده نگه دارید.
-    
-    history_data, _ = scenario_creator()
-    
-    final_patient_profile = paraclinic_output["patient_profile"]
-    
-    final_history_taking = history_data["history_taking"]
-    
-    final_physical_exam = paraclinic_output["physical_exam"]
-    final_paraclinic = paraclinic_output["paraclinic"]
-    
-    
-    final_case = {
-        "patient_profile": final_patient_profile,
-        "history_taking": final_history_taking,
-        "physical_exam": final_physical_exam,
-        "paraclinic": final_paraclinic
-    }
-    
-    return json.dumps(final_case, ensure_ascii=False, indent=4)
-
-# مثال اجرا:
-if __name__ == "__main__":
-    copd_case = create_copd_case_json()
-    print(copd_case)

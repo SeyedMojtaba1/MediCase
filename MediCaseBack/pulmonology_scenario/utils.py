@@ -1,5 +1,5 @@
 from celery import shared_task
-from .scenario import scenario_creator
+from .scenario_creator import scenario_creator
 from .feedback_generator import feedback_generator
 from .models import PulmonologyScenario, PulmonologyDisease, PulmonologyFeedback, StudentLog
 from django.contrib.auth import get_user_model

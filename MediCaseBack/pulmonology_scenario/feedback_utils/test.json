@@ -1,220 +1,220 @@
 {
-  "patient_profile": {
-    "personal_information": {
-      "first_name": "آریا",
-      "last_name": "مرادی",
-      "age": "72 ساله",
-      "gender": "مرد",
-      "occupation": "بازنشسته تأمین اجتماعی",
-      "place_of_birth": "اصفهان",
-      "place_of_residence": "قم",
-      "marital_status": "متأهل"
-    },
-    "chief_complaint": "من چندین سال است که به تنگی نفس مبتلا هستم و این وضعیت به تدریج بدتر شده است. علاوه بر این، هر از چند گاهی سرفه‌های مزمن و تولید خلط هم دارم. هر بار که فعالیت بدنی بیشتری انجام می‌دهم، احساس خستگی و ناتوانی بیشتری می‌کنم."
-  },
-  "history_taking": {
-    "present_illness": {
-      "question1": "مدت‌هاست که این علائم را دارم و به تدریج بدتر شده‌اند. من به مرور زمان سعی کردم که به زندگی‌ام وفق بدهم تا با این محدودیت‌ها کنار بیایم.",
-      "question2": "این علائم به تدریج شروع شدند و به طور ناگهانی شروع نشده‌اند.",
-      "question3": "همیشه با تنگی نفس مواجه بوده‌ام و در مواقعی که فعالیت بدنی بیشتری می‌کنم، این مشکل شدیدتر می‌شود.",
-      "question4": "سرفه مزمن دارم و معمولاً در زمان سرفه، خلط روشن یا لزج‌تر می‌آید.",
-      "question5": "در برخی مواقع صدای خس‌خس در سینه‌ام وجود داشته اما متغیر بوده است.",
-      "question6": "درد قفسه سینه ندارم ولی در مواردی احساس فشار خفیف دارم.",
-      "question7": "تب، لرز و عرق شبانه ندارم و در مواقعی که این علائم وجود داشته باشد، آن را نگران‌کننده می‌دانم.",
-      "question8": "مدت‌هاست که ورم پاهایم را تجربه نکرده‌ام.",
-      "question9": "احساس می‌کنم که وضعیت عمومی‌ام به تدریج بدتر می‌شود و چندین بار در گذشته به خاطر مشکلات تنفسی به بیمارستان مراجعه کرده‌ام.",
-      "question10": "بی‌اشتهایی و یا کاهش وزن نداشته‌ام اما بعضی مواقع احساس خستگی می‌کنم."
-    },
-    "past_medical_history": {
-      "question1": {
-        "question1a": "تعدادی از بیماری‌های دیگر مانند فشار خون دارم که چند سالی است وجود دارند.",
-        "question1b": "این مشکلات همگی حدود پنج سال است که به وجود آمده‌اند."
+  "scenario": {
+    "paraclinic": {
+      "procedures": {
+        "Bronchoscopy": "Normal Anatomy with Secretions",
+        "torachonthesis": "Not Indicated and fluid cannot be aspirated"
       },
-      "question2": {
-        "question2a": "یکبار به خاطر مشکلات تنفسی در بیمارستان بستری شدم اما در مجموع جراحی بزرگ نداشته‌ام.",
-        "question2b": "تجربه جدی از بیهوش شدن در گذشته نداشته‌ام."
+      "simple_imaging": {
+        "Chest_X_Ray": {
+          "PA_Lateral_Findings_and_Effusion": "Diffuse Interstitial Infiltrates (NO Effusion)"
+        }
       },
-      "question3": "سابقه بیماری قلبی در خانواده‌ام وجود دارد.",
-      "question4": "در خانواده‌ام سابقه سرطان ریه هم وجود داشته است اما تهدید جدی برای سلامتی من نیست.",
-      "question5": "در کودکی به عفونت‌های تنفسی مبتلا شده‌ام.",
-      "question6": "واکسن آنفلوآنزا را زده‌ام."
-    },
-    "drug_history": {
-      "question1": {
-        "question1a": "در حال حاضر از داروهای استنشاقی برای کنترل وضعیت COPD استفاده می‌کنم.",
-        "question1b": "در استفاده از دستگاه استنشاقی به برخی تکنیک‌ها دقت لازم را نداشته‌ام.",
-        "question1c": "دوز داروهایم معمولاً در این مدت ثابت مانده است."
+      "advanced_imaging": {
+        "Pet_scan": "Normal metabolic activity",
+        "MRI_chest": "Normal",
+        "Chest_CT_CTPA": {
+          "Lung_Parenchyma_and_Pleura": "Dense or Patchy Consolidation with NO Pleural abnormality"
+        }
       },
-      "question2": "استفاده از ملین‌ها را تجربه نکرده‌ام."
-    },
-    "allergies": {
-      "question1": {
-        "question1a": "به برخی داروها حساسیت دارم ولی شدید نیست.",
-        "question1b": "گزارشات حساسیت مربوط به تغییرات معمول در حساسیت‌ها می‌باشد."
+      "functional_tests": {
+        "peak_flow": "reduced",
+        "Spirometry": "Not Indicated or Unable to perform",
+        "plethysmography": "within normal range"
+      },
+      "basic_blood_tests": {
+        "BMP": {
+          "Cr": "0.72 mg/dL",
+          "Na": "127 mEq/L",
+          "BUN": "9 mg/dL"
+        },
+        "CBC": {
+          "Hb": "15.3 g/dL",
+          "Plt": "534681 /µL",
+          "WBC": "15634 /µL"
+        },
+        "CRP": "107 mg/L",
+        "ESR": "115 mm/h",
+        "VBG": {
+          "pH": "7.39",
+          "PaO2": "66 mmHg"
+        },
+        "LFTs": {
+          "ALT": "44 U/L",
+          "AST": "84 U/L"
+        }
+      },
+      "immunity_and_serology": {
+        "HIV_test": "Negative",
+        "Autoimmune_pannel_ANA_ANCA": "Negative"
+      },
+      "specialized_lung_tests": {
+        "D_dimer": "248 ng/mL FEU",
+        "Sputum_AFB": "Negative",
+        "BNP_NT_proBNP": "within normal range",
+        "Sputum_analysis": {
+          "Gram_Stain": "No Organism seen",
+          "Sample_Quality": "Good Quality (>25 PMNs, <10 Epithelial cells)"
+        },
+        "a1_antitrypsin_level": "within normal range"
       }
     },
-    "family_history": {
-      "question1": {
-        "question1a": "در خانواده‌ام چند نفر به COPD مبتلا بوده‌اند.",
-        "question1b": "سابقه سیگار کشیدن در والدین وجود داشته است."
+    "physical_exam": {
+      "vital_signs": {
+        "T": "37.6 °C",
+        "BP": "130/85 mmHg",
+        "PR": "108 bpm and regular rhythm",
+        "RR": "14 breaths/min",
+        "GCS": "14",
+        "SpO2": "95% (RA)"
       },
-      "question2": "سابقه بیماری‌های قلبی در خانواده‌ام وجود دارد.",
-      "question3": {
-        "question3a": "در خانواده‌ام سابقه سرطان وجود دارد اما به طور کلی غیرقابل اغماض است.",
-        "question3b": "جزئیات مرتبط با سابقه سرطان تأثیر خاصی بر وضعیت فعلی من ندارد."
+      "neurological": {
+        "mental_status_and_LOC": "Consistent with General Appearance (Lethargic)",
+        "motor_strength_and_DTRs": "Motor Strength 5/5, DTRs 2+ and Symmetrical"
+      },
+      "head_and_neck": {
+        "eyes": {
+          "sclera_and_conjunctiva": "Pink conjunctiva, Anicteric sclera"
+        },
+        "neck_and_lymphatics": {
+          "lymph_nodes": "Non-palpable or Small, non-tender cervical nodes",
+          "tracheal_position": "Midline"
+        }
+      },
+      "abdominal_system": {
+        "percussion_palpation": "Soft, non-tender, non-distended, no organomegaly"
+      },
+      "general_appearance": {
+        "mood_and_behavior": "Cooperative and Appears Acutely Ill",
+        "overall_appearance": "No obvious signs of cachexia or obesity",
+        "posture_and_position": "Comfortable in bed",
+        "level_of_consciousness": "Lethargic or Drowsy, but arousable",
+        "cardiopulmonary_and_circulatory_clues": {
+          "edema": "Absent",
+          "dyspnea": "Moderate dyspnea at rest, without accessory muscle use",
+          "cyanosis": "Present (Peri-oral cyanosis)"
+        }
+      },
+      "respiratory_system": {
+        "palpation": {
+          "chest_expansion": "Unilateral reduced expansion over affected area",
+          "tactile_fremitus": "Increased over consolidation"
+        },
+        "inspection": {
+          "accessory_muscles": "Present",
+          "chest_shape_and_symmetry": "Reduced movement on one side"
+        },
+        "percussion": "Dullness over consolidation",
+        "auscultation": {
+          "breath_sounds": "Reduced intensity",
+          "adventitious_sounds": "Pleural friction rub"
+        }
+      },
+      "cardiovascular_system": {
+        "cap_refill": "> 2 seconds",
+        "auscultation": {
+          "murmurs": "Absent",
+          "heart_sounds_s1_s2": "Normal S1 and S2"
+        },
+        "JVP_assessment": "< 4 cm above sternal angle",
+        "peripheral_pulses": "108 bpm and regular rhythm"
+      },
+      "musculoskeletal_system": {
+        "joints_and_muscles": "No joint swelling, tenderness, or muscle atrophy"
       }
     },
-    "social_history": {
-      "question1": {
-        "question1a": "در گذشته سیگار می‌کشیدم اما حالا ترک کرده‌ام.",
-        "question1b": "به مدت چندین سال سیگار می‌کشیدم."
+    "history_taking": {
+      "ros": {
+        "question1": "متوجه عرق کردن مداوم و گاهی ضعف در تنفس هستم.",
+        "question2": "تغییراتی در پوست خود را مشاهده نمیکنم و در عموماً بدون مشکل هستم.",
+        "question3": "سردرد، اما نه به شدت، اتفاق میافتد.",
+        "question4": "هیچ نشانهای در چشمهایم احساس نمیکنم و همهچیز عادی است.",
+        "question5": "احساس سوزش گلو یا عفونت گوش را ندارم.",
+        "question6": "هیچ گونه درد قفسه سینهای ندارم و در باقیمانده هم مشکلی ندارم.",
+        "question7": "دستکم، در فعالیتها، دم و سرفه اصلی خلاصه میشود.",
+        "question8": "احساس ناراحتی در معده شخصاً ندارم.",
+        "question9": "هیچی از مشکل ادراری با خود نداشتهام.",
+        "question10": "ضعف در اصل ندارم، اما باورتان نرود که خسته میشوم.",
+        "question11": "هیچ نشانه جدی از مشکلات عصبی ندارم، مگر اینکه به فعالیتهای روزمره وابسته باشم.",
+        "question12": "احساس اضطراب و افسردگی در من کاملاً در باد است.",
+        "question13": "به درستی فکر میکنم، اما روزهایی دلم میخواست تا در آرامش باشم.",
+        "question14": "هر نشانهای نشاندهنده نقص هذیانی یا رنج حاشیهای که در نسل خود دارم، نمیبینم."
       },
-      "question2": "مصرف مشروبات الکلی به طور اجتماعی وجود دارد اما استفاده سنگین ندارم.",
-      "question3": {
-        "question3a": "به هیچ مواد مخدر تفریحی اعتیاد ندارم.",
-        "question3b": "تا به حال به چنین موادی دست نزده‌ام."
+      "allergies": {
+        "question1": {
+          "question1a": "الزامات دارویی خاصی نداشتم، اما در موارد کمی در برابر داروها حساسیت داشتهام.",
+          "question1b": "هر بار که حساسیتی برای دارویی داشتم، شدت واکنش آن در انتخاب داروها مؤثر بوده است."
+        }
       },
-      "question4": "در یک محیط عادی و غیر شلوغ زندگی می‌کنم."
-    },
-    "ros": {
-      "question1": "در حال حاضر احساس خستگی دارم و تغییری در وزن نداشتم.",
-      "question2": "پوست و وضعیت عمومی‌ام طبیعی است.",
-      "question3": "نمی‌توانم در مورد سردرد نظری بدهم.",
-      "question4": "بجز تنگی نفس، علائم دیگری ندارم.",
-      "question5": "پیش آمدهای بینی مزمن دارم.",
-      "question6": "احساس تپش قلب هم به ندرت تجربه می‌کنم.",
-      "question7": "تنگی نفس و سرفه از علائم اصلی من است.",
-      "question8": "هیچ مشکل گوارشی نداشتم.",
-      "question9": "از لحاظ ادراری مشکلی ندارم.",
-      "question10": "در حال حاضر ضعف عضلانی احساس نمی‌کنم.",
-      "question11": "نمی‌توانم مشکلات عصبی را گزارش کنم.",
-      "question12": "احساس افسردگی و اضطراب داشته‌ام.",
-      "question13": "در مورد مشکلات مفصلی نیز گزارشی ندارم.",
-      "question14": "مشکلات خونی نداشته‌ام."
-    }
-  },
-  "physical_exam": {
-    "vital_signs": {
-      "BP": "133/64 mmHg",
-      "T": "37.8 °C",
-      "PR": "64 bpm and regular rhythm",
-      "RR": "23 breaths/min",
-      "SpO2": "91% (RA)",
-      "GCS": "14"
-    },
-    "general_appearance": {
-      "level_of_consciousness": "Lethargic or Drowsy, but arousable",
-      "mood_and_behavior": "Cooperative and Appears Acutely Ill",
-      "posture_and_position": "Comfortable in bed",
-      "overall_appearance": "No obvious signs of cachexia or obesity",
-      "cardiopulmonary_and_circulatory_clues": {
-        "cyanosis": "Absent",
-        "dyspnea": "Moderate dyspnea at rest, without accessory muscle use",
-        "edema": "Absent"
+      "drug_history": {
+        "question1": {
+          "question1a": "به هیچ داروی خاصی نمیتوانم اشاره کنم و داروهای خاصی هم به صورت مرتب مصرف نمیکنم.",
+          "question1b": "هرگز آنتیبیوتیک هم مصرف نکردهام و نگران مقاومت میکروبی هستم.",
+          "question1c": "تغییر دارویی نداشتهام."
+        },
+        "question2": "داروهای مسکن عمومی را برای تسکین علائم سرماخوردگی مصرف میکنم."
+      },
+      "family_history": {
+        "question1": {
+          "question1a": "تا آنجایی که به یاد میآورم، مسائل مربوط به بیماریهای مادرزادی در خانوادهام وجود نداشته است.",
+          "question1b": "تاریخچه خانوادگی بیماریهای تنفسی یا قلبی در آنها دیده میشود."
+        },
+        "question2": "هیچ تاریخچهای از بیماری قلب یا ریه در خانوادهام وجود ندارد.",
+        "question3": {
+          "question3a": "تاریخچه بیماریهای سرطانی در خانواده وجود نداشته، اما جزئیات دقیق معمولاً مؤثر نیست.",
+          "question3b": "عملاً تأثیری در وضعیت کنونی من نداشته است."
+        }
+      },
+      "social_history": {
+        "question1": {
+          "question1a": "من هرگز سیگار نکشیدهام ، اما سابقه استخدام نیروی انسانی در محیطهای شلوغ و دودی داشتهام.",
+          "question1b": "تجربه جدی از خاطرات تلخ یا جدی به یاد ندارم."
+        },
+        "question2": "نمیتوانم بگویم که عادت به مصرف الکل دارم، اما در حدی که با دوستان به جمع بروم، گاهیاوقات نوشیدهام.",
+        "question3": {
+          "question3a": "هیچگاه از داروهای غیرمجاز استفاده نکردهام.",
+          "question3b": "آخرین باری که از آنها استفاده کردم، هرگز نبود."
+        },
+        "question4": "زندگیام با کسانی که در شلوغی زندگی میکنند، روابط خوبی داشته و در خانه آرام هستیم."
+      },
+      "present_illness": {
+        "question1": "علائم من به طور ناگهانی شروع شد و حالا چند روزی است که ادامه دارد.",
+        "question2": "بینی که سرماخورده بودم یا نه، به یاد نمیآورم. اما از زمانی که علائم شروع شده، حس میکنم وضعیت بدی دارم.",
+        "question3": "نفستنگی من معمولاً ادامه دارد و اگر فعالیتی انجام دهم، بدتر میشود. در حالت استراحت هم گاهی اوقات احساس میکنم کمبود نفس دارم.",
+        "question4": "سرفه من تقریباً همیشه وجود دارد و بعضی اوقات خلط دارم که رنگ آن زرد و سبز است.",
+        "question5": "هیچ صدای وز وزی از سرفهام نمیشنوم، به جز زمانی که دچار مشکل تنفسی هستم یا زمینهی بیماری خاصی دارم.",
+        "question6": "درد قفسه سینهام گاهی به صورت تیز و مشخصی احساس میشود.",
+        "question7": "تب و لرز دارم که به طرز عجیبی خواب را مختل کرده است.",
+        "question8": "پایم ورم کرده است، اما معمولاً اینگونه نیست است که به خاطر این موضوع نگران بشوم.",
+        "question9": "به یاد نمیآورم که این علائم قبلتر بوجود آمده باشد، اما این بار به نظرم خیلی شدید است.",
+        "question10": "خستگی و بیاشتهایی برای من به شدت آزاردهنده است و برای انجام کارهای روزم در تلاش هستم."
+      },
+      "past_medical_history": {
+        "question1": {
+          "question1a": "من سابقه بیماری خاصی ندارم، اما دکتر به من گفت که ممکن است پسزمینهای از بیماری تنفسی داشته باشم که به آن اشاره کرد.",
+          "question1b": "این بیماریها به مدت چند سال است که در من وجود ندارند."
+        },
+        "question2": {
+          "question2a": "تا به حال هیچ عمل جراحی مهمی نداشتهام و تا امروز در بیمارستان هم بستری نشدهام.",
+          "question2b": "تجربهای از بستری شدن برای دلایل دیگر هم نداشتهام."
+        },
+        "question3": "در خانوادهام کسی به بیماریهای قلبی یا تنفسی مبتلا نبوده است.",
+        "question4": "بدون سابقه ابتلا به سرطان یا درمان شیمی درمانی هستم.",
+        "question5": "در دوران کودکی مشکی جدی نداشتم، اما همیشه حساسیتها را احساس میکردم.",
+        "question6": "وضعیت واکسیناسیون من در برابر آنفلوانزا و پنوموکوکی معمولاً منفی بوده است."
       }
     },
-    "head_and_neck": {
-      "eyes": {
-        "sclera_and_conjunctiva": "Pink conjunctiva, Anicteric sclera"
-      },
-      "neck_and_lymphatics": {
-        "tracheal_position": "Midline",
-        "lymph_nodes": "Non-palpable or Small, non-tender cervical nodes"
-      }
-    },
-    "respiratory_system": {
-      "inspection": {
-        "accessory_muscles": "Present",
-        "chest_shape_and_symmetry": "Symmetrical movement, Normal shape"
-      },
-      "palpation": {
-        "chest_expansion": "Unilateral reduced expansion over affected area",
-        "tactile_fremitus": "Increased over consolidation"
-      },
-      "percussion": "Dullness over consolidation",
-      "auscultation": {
-        "breath_sounds": "Reduced intensity",
-        "adventitious_sounds": "Coarse crackles"
-      }
-    },
-    "cardiovascular_system": {
-      "JVP_assessment": "< 4 cm above sternal angle",
-      "auscultation": {
-        "heart_sounds_s1_s2": "Normal S1 and S2",
-        "murmurs": "Soft Systolic Murmur"
-      },
-      "peripheral_pulses": "64 bpm and regular rhythm",
-      "cap_refill": "> 2 seconds"
-    },
-    "abdominal_system": {
-      "percussion_palpation": "Soft, non-tender, non-distended, no organomegaly"
-    },
-    "neurological": {
-      "mental_status_and_LOC": "Consistent with General Appearance (Lethargic)",
-      "motor_strength_and_DTRs": "Motor Strength 5/5, DTRs 2+ and Symmetrical"
-    },
-    "musculoskeletal_system": {
-      "joints_and_muscles": "No joint swelling, tenderness, or muscle atrophy"
-    }
-  },
-  "paraclinic": {
-    "basic_blood_tests": {
-      "CBC": {
-        "Hb": "12.7 g/dL",
-        "WBC": "21923 /µL",
-        "Plt": "381551 /µL"
-      },
-      "ESR": "9 mm/h",
-      "CRP": "52 mg/L",
-      "BMP": {
-        "Na": "141 mEq/L",
-        "BUN": "18 mg/dL",
-        "Cr": "1.04 mg/dL"
-      },
-      "LFTs": {
-        "ALT": "39 U/L",
-        "AST": "43 U/L"
-      },
-      "VBG": {
-        "pH": "7.36",
-        "PaO2": "60 mmHg"
-      }
-    },
-    "specialized_lung_tests": {
-      "Sputum_analysis": {
-        "Gram_Stain": "Positive for specific organism",
-        "Sample_Quality": "Good Quality (>25 PMNs, <10 Epithelial cells)"
-      },
-      "Sputum_AFB": "Negative",
-      "a1_antitrypsin_level": "within normal range",
-      "D_dimer": "334 ng/mL FEU",
-      "BNP_NT_proBNP": "within normal range"
-    },
-    "immunity_and_serology": {
-      "HIV_test": "Negative",
-      "Autoimmune_pannel_ANA_ANCA": "Negative"
-    },
-    "simple_imaging": {
-      "Chest_X_Ray": {
-        "PA_Lateral_Findings_and_Effusion": "Diffuse Interstitial Infiltrates (NO Effusion)"
-      }
-    },
-    "advanced_imaging": {
-      "Chest_CT_CTPA": {
-        "Lung_Parenchyma_and_Pleura": "Dense or Patchy Consolidation with NO Pleural abnormality"
-      },
-      "MRI_chest": "Normal",
-      "Pet_scan": "Normal metabolic activity"
-    },
-    "functional_tests": {
-      "Spirometry": "Not Indicated or Unable to perform",
-      "peak_flow": "within normal range",
-      "plethysmography": "within normal range"
-    },
-    "procedures": {
-      "Bronchoscopy": "Normal Anatomy with Secretions",
-      "torachonthesis": {
-        "Status_and_Biochemistry": "Not Indicated and fluid cannot be aspirated"
+    "patient_profile": {
+      "chief_complaint": "من اخیراً دچار تب و سرفه شدهام و نفستنگی دارم. گاهی اوقات احساس درد در قفسه سینه دارم که با نفس کشیدن بدتر میشود.",
+      "personal_information": {
+        "age": "40 ساله",
+        "gender": "مرد",
+        "last_name": "دهقان",
+        "first_name": "نوید",
+        "occupation": "فروشنده بازار",
+        "marital_status": "مجرد",
+        "place_of_birth": "مشهد",
+        "place_of_residence": "بیرجند"
       }
     }
   }

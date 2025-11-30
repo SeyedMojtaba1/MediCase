@@ -1,7 +1,6 @@
 import random
-import json
 import re
-from scenario import scenario_creator 
+from .history_taking_creator import history_taking_creator 
 
 class PneumoniaDataGenerator:
     """
@@ -539,37 +538,37 @@ class PneumoniaDataGenerator:
                     "CBC": {
                         "Hb": self._generate_hemoglobin_value(),
                         "WBC": self._generate_wbc_count(),
-                        "Plt": self._generate_platelet_count(),
+                        "Plt": self._generate_platelet_count()
                     },
                     "ESR": self._generate_esr_value(),
                     "CRP": self._generate_crp_value(),
                     "BMP": {
                         "Na": self._gen_na(),
                         "BUN": self._gen_bun(),
-                        "Cr": self._gen_cr(),
+                        "Cr": self._gen_cr()
                     },
                     "LFTs": {
                         "ALT": self._gen_liver(),
-                        "AST": self._gen_liver(),
+                        "AST": self._gen_liver()
                     },
                     "VBG": {
                         "pH": self._gen_ph(),
-                        "PaO2": self._gen_pao2(),
-                    },
+                        "PaO2": self._gen_pao2()
+                    }
                 },
                 "specialized_lung_tests": {
                     "Sputum_analysis": {
                         "Gram_Stain": self._gen_gram_stain(),
-                        "Sample_Quality": self._gen_sample_quality(),
+                        "Sample_Quality": self._gen_sample_quality()
                     },
                     "Sputum_AFB": self._gen_afb(),
                     "a1_antitrypsin_level": self._gen_a1at(),
                     "D_dimer": self._gen_ddimer(),
-                    "BNP_NT_proBNP": self._gen_bnp(),
+                    "BNP_NT_proBNP": self._gen_bnp()
                 },
                 "immunity_and_serology": {
                     "HIV_test": self._gen_hiv(),
-                    "Autoimmune_pannel_ANA_ANCA": self._gen_autoimmune(),
+                    "Autoimmune_pannel_ANA_ANCA": self._gen_autoimmune()
                 },
                 "simple_imaging": {
                     "Chest_X_Ray": {
@@ -581,55 +580,17 @@ class PneumoniaDataGenerator:
                         "Lung_Parenchyma_and_Pleura": self._gen_ct()
                     },
                     "MRI_chest": self._gen_mri(),
-                    "Pet_scan": self._gen_pet(),
+                    "Pet_scan": self._gen_pet()
                 },
                 "functional_tests": {
                     "Spirometry": self._gen_spirometry(),
                     "peak_flow": self._gen_peak(),
-                    "plethysmography": self._gen_pleth(),
+                    "plethysmography": self._gen_pleth()
                 },
                 "procedures": {
                     "Bronchoscopy": self._gen_bronch(),
-                    "torachonthesis": {
-                        "Status_and_Biochemistry": self._gen_thora()
-                    }
+                    "torachonthesis": self._gen_thora()
                 }
             }
         }
         return data
-
-def create_full_case_json():
-    """
-    اجرای PneumoniaDataGenerator (بخش پاراکلینیک) و ScenarioCreator (بخش شرح حال) 
-    و ادغام خروجی‌ها در یک JSON نهایی.
-    """
-    
-    paraclinic_generator = PneumoniaDataGenerator()
-    paraclinic_output = paraclinic_generator.generate_paraclinic_case()
-    
-    history_data, _ = scenario_creator()
-    
-    final_patient_profile = paraclinic_output["patient_profile"]
-    
-    # 🌟 اضافه کردن chief_complaint به patient_profile
-    if "patient_profile" in history_data and "chief_complaint" in history_data["patient_profile"]:
-        final_patient_profile["chief_complaint"] = history_data["patient_profile"]["chief_complaint"]
-    # ----------------------------------------------------
-    
-    final_history_taking = history_data["history_taking"]
-    
-    final_physical_exam = paraclinic_output["physical_exam"]
-    final_paraclinic = paraclinic_output["paraclinic"]
-    
-    final_case = {
-        "patient_profile": final_patient_profile,
-        "history_taking": final_history_taking,
-        "physical_exam": final_physical_exam,
-        "paraclinic": final_paraclinic
-    }
-    
-    return final_case
-
-if __name__ == "__main__":
-    final_case = create_full_case_json()
-    print(json.dumps(final_case, indent=2, ensure_ascii=False))

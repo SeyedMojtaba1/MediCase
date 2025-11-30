@@ -109,6 +109,16 @@ class MedicalCase(BaseModel):
     patient_profile: PatientProfile
     history_taking: HistoryTaking
 
+def clean_persian_text(data):
+    """Recursively removes the zero-width non-joiner character (\u200c) from all string values in a dict or list."""
+    if isinstance(data, dict):
+        return {k: clean_persian_text(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [clean_persian_text(item) for item in data]
+    elif isinstance(data, str):
+        return data.replace('\u200c', '')
+    return data
+
 model = init_chat_model(
   model="gpt-4o-mini",
   base_url="https://api.avalai.ir/v1",
@@ -128,11 +138,7 @@ retriever = vector_store.as_retriever(
     }
 )
 
-OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH", "Pleural_Effusion", "ARDS"]
-
-def scenario_creator():
-    target_disease = "COPD" 
-    
+def history_taking_creator(target_disease):
     retrieved_docs = retriever.invoke(
         f"اطلاعات مورد نیاز برای سناریوی کامل بیماری {target_disease}", 
         config={"configurable": {"filter": {"disease": target_disease}}}
@@ -171,8 +177,10 @@ def scenario_creator():
         
         output_dict = output_pydantic_object.model_dump(by_alias=True)
         
-        return output_dict, target_disease
+        final_cleaned_output = clean_persian_text(output_dict)
+        
+        return final_cleaned_output
 
     except Exception as e:
         print(f"Error generating scenario: {e}")
-        return None, target_disease
+        return None
