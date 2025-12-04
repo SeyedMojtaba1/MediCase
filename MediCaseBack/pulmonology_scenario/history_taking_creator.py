@@ -2,7 +2,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from document import documents
+from .document import documents
 from pydantic import BaseModel, Field
 
 class PatientProfile(BaseModel):
