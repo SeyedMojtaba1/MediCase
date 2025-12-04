@@ -1,11 +1,10 @@
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 
-from feedback_utils.S1_identifying_sets import calculate_set_metrics
-from feedback_utils.S3_stage_score import calculate_stage_order_error
-from feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
-from feedback_utils.escape_json_braces import escape_json_braces
-from typing import Dict
+from .feedback_utils.S1_identifying_sets import calculate_set_metrics
+from .feedback_utils.S3_stage_score import calculate_stage_order_error
+from .feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
+from .feedback_utils.escape_json_braces import escape_json_braces
 import json
 
 json_schema = {
@@ -695,4 +694,3 @@ STUDENT_LOG={
   ]
 }
 
-print(json.dumps(feedback_generator(target_disease="COPD", STUDENT_LOG=STUDENT_LOG), ensure_ascii=False))
