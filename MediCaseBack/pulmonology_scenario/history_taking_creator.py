@@ -2,7 +2,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from .document import documents
+from document import documents
 from pydantic import BaseModel, Field
 
 class PatientProfile(BaseModel):
@@ -140,8 +140,7 @@ retriever = vector_store.as_retriever(
 
 def history_taking_creator(target_disease):
     retrieved_docs = retriever.invoke(
-        f"اطلاعات مورد نیاز برای سناریوی کامل بیماری {target_disease}", 
-        config={"configurable": {"filter": {"disease": target_disease}}}
+        f"اطلاعات مورد نیاز برای سناریوی کامل بیماری {target_disease}"
     )
     
     context_text = "\n---\n".join([doc.page_content for doc in retrieved_docs])
@@ -155,7 +154,8 @@ def history_taking_creator(target_disease):
         3.  بخش پاراکلینیک (Paraclinic): پاسخ‌ها باید به فارسی باشند.
         4.  حذف کامل تحلیل و درصد: به هیچ وجه هیچ‌کدام از اطلاعات آماری، درصدها (مانند 80%، 20%)، بازه‌های زمانی (مانند 1 تا 7 روز) یا تحلیل‌های پزشکی (مانند risk factor) موجود در «متون رفرنس» را در خروجی JSON تکرار نکنید.
         5.  تولید مقادیر واقعی: از داده‌های رفرنس برای انتخاب یک مقدار واقعی و قطعی برای این بیمار خاص استفاده کنید.
-        
+        6.  **تولید ساختار JSON کامل**: برای فیلدهای تودرتو (Nested fields) که خودشان یک شیء هستند (مانند `question1` در `past_medical_history`)، **باید یک شیء JSON کامل** شامل تمام زیرفیلدهای آن (مانند `question1a` و `question1b`) تولید شود، **حتی اگر پاسخ برای یکی از زیرفیلدها 'خیر' باشد**. **هرگز** مقدار `null` را برای فیلدهای تودرتو برنگردانید.
+
         بیماری هدف: {disease}
         
         متون رفرنس (Context):

@@ -1,6 +1,7 @@
 import random
 import re
-from .history_taking_creator import history_taking_creator 
+from history_taking_creator import history_taking_creator 
+import json
 
 class PneumoniaDataGenerator:
     """
@@ -449,6 +450,51 @@ class PneumoniaDataGenerator:
     def _gen_pleth(self): return self.random.choices(["within normal range", "reduced Lung Volumes"], weights=[90, 10], k=1)[0]
     def _gen_bronch(self): return self.random.choices(["Normal Anatomy with Secretions", "Mucosal Inflammation or Obstruction"], weights=[90, 10], k=1)[0]
 
+    def _get_dlco_finding(self):
+        """
+        بر اساس فراوانی‌های مشخص شده، وضعیت DLCO را برمی‌گرداند.
+        90% Reduced (< 80% predicted), 10% Normal.
+        """
+        # تعریف یافته‌ها و وزن‌های (فراوانی‌های) متناظر آن‌ها
+        findings = [
+            "Reduced",  # 90%
+            "Normal"                     # 10%
+        ]
+        
+        weights = [70, 30]
+        
+        # انتخاب تصادفی وضعیت
+        chosen_status = self.random.choices(findings, weights=weights, k=1)[0]
+        
+        # تولید مقدار عددی منطبق بر وضعیت انتخاب شده
+        if chosen_status == "Reduced (< 80% predicted)":
+            dlco_val = self.random.randint(40, 79)
+        else:
+            dlco_val = self.random.randint(80, 100)
+            
+        # برگرداندن هر دو (متن و مقدار) برای سازگاری با ساختار داده
+        return chosen_status, f"{dlco_val}% predicted"
+    
+    def _gen_reversibility(self):
+        """
+        تولید خروجی تست Reversibility (پاسخ به برونکودیلاتور) بر اساس منطق آسم.
+        توزیع احتمال: 80% مثبت، 10% منفی (حجمی)، 10% منفی (ثابت).
+        """
+        
+        # تعیین نوع خروجی بر اساس وزن‌های 80، 10 و 10 درصد
+        choice = self.random.choices(
+            ["Positive", "Negative"], 
+            weights=[5, 95], k=1
+        )[0]
+        
+        if choice == "Positive":
+            return "FEV1 increase > 12% AND > 200 mL"
+            
+        elif choice == "Negative":
+            return "FEV1 increase < 12% AND < 200 mL"
+            
+        return "Not Indicated"
+    
     def generate_paraclinic_case(self):
         """
         تولید داده‌ها دقیقاً با ساختار درخواستی و اعمال منطق هماهنگ‌سازی.
@@ -583,7 +629,11 @@ class PneumoniaDataGenerator:
                     "Pet_scan": self._gen_pet()
                 },
                 "functional_tests": {
-                    "Spirometry": self._gen_spirometry(),
+                    "Spirometry": {
+                        "result": self._gen_spirometry(),
+                        "Reversibility": self._gen_reversibility()
+                    },
+                    "dlco": self._get_dlco_finding()[1],
                     "peak_flow": self._gen_peak(),
                     "plethysmography": self._gen_pleth()
                 },
@@ -594,3 +644,8 @@ class PneumoniaDataGenerator:
             }
         }
         return data
+
+if __name__ == "__main__":
+    import json
+    generator = PneumoniaDataGenerator()
+    print(json.dumps(generator.generate_paraclinic_case(), ensure_ascii=False, indent=4))

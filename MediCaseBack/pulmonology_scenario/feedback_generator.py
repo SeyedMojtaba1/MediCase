@@ -1,11 +1,12 @@
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 
-from .feedback_utils.S1_identifying_sets import calculate_set_metrics
-from .feedback_utils.S3_stage_score import calculate_stage_order_error
-from .feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
-from .feedback_utils.escape_json_braces import escape_json_braces
+from feedback_utils.S1_identifying_sets import calculate_set_metrics
+from feedback_utils.S3_stage_score import calculate_stage_order_error
+from feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
+from feedback_utils.escape_json_braces import escape_json_braces
 from typing import Dict
+import json
 
 json_schema = {
     "title": "Clinical_Case_Feedback_Schema",
@@ -559,3 +560,139 @@ def feedback_generator(target_disease, STUDENT_LOG):
 
   return output, evaluation, transition
 
+STUDENT_LOG={
+  "timeline": [
+    {
+      "time": "15:00",
+      "selection": {
+        "patient_profile": {
+          "chief_complaint": "chief_complaint"
+        }
+      }
+    },
+    {
+      "time": "13:30",
+      "selection": {
+        "history_taking": {
+          "present_illness": [
+            "question1",
+            "question2",
+            "question3",
+            "question4",
+            "question7",
+            "question10"
+          ]
+        }
+      }
+    },
+    {
+      "time": "12:00",
+      "selection": {
+        "history_taking": {
+          "ros": [
+            "question1",
+            "question7",
+            "question8",
+            "question9"
+          ]
+        }
+      }
+    },
+    {
+      "time": "10:30",
+      "selection": {
+        "history_taking": {
+          "past_medical_history": [
+            "question1a",
+            "question1b"
+          ]
+        }
+      }
+    },
+    {
+      "time": "09:00",
+      "selection": {
+        "history_taking": {
+          "drug_history": [
+            "question1a",
+            "question1b",
+            "question2"
+          ]
+        }
+      }
+    },
+    {
+      "time": "07:30",
+      "selection": {
+        "history_taking": {
+          "family_history": [
+            "question1b",
+            "question2"
+          ]
+        }
+      }
+    },
+    {
+      "time": "06:00",
+      "selection": {
+        "history_taking": {
+          "social_history": [
+            "question1a",
+            "question1b",
+            "question3b"
+          ]
+        }
+      }
+    },
+    {
+      "time": "04:30",
+      "selection": {
+        "physical_exam": {
+          "vital_signs": [
+            "T",
+            "SpO2",
+            "RR"
+          ]
+        }
+      }
+    },
+    {
+      "time": "03:00",
+      "selection": {
+        "physical_exam": {
+          "respiratory_system": [
+            "palpation.chest_expansion",
+            "auscultation.breath_sounds",
+            "auscultation.adventitious_sounds"
+          ]
+        }
+      }
+    },
+    {
+      "time": "01:30",
+      "selection": {
+        "paraclinic": {
+          "simple_imaging": [
+            "Chest_X_Ray.PA_Lateral_Findings_and_Effusion"
+          ]
+        }
+      }
+    },
+    {
+      "time": "00:00",
+      "selection": {
+        "paraclinic": {
+          "basic_blood_tests": [
+            "CRP",
+            "ESR"
+          ],
+          "procedures": [
+            "torachonthesis"
+          ]
+        }
+      }
+    }
+  ]
+}
+
+print(json.dumps(feedback_generator(target_disease="COPD", STUDENT_LOG=STUDENT_LOG), ensure_ascii=False))
