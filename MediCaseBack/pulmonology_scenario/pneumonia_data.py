@@ -1,6 +1,5 @@
 import random
 import re
-from history_taking_creator import history_taking_creator 
 import json
 
 class PneumoniaDataGenerator:
