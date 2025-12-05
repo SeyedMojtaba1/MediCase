@@ -1,218 +1,57 @@
 {
-  "patient_profile": {
-    "personal_information": {
-      "first_name": "سارا",
-      "last_name": "میرزایی",
-      "age": "72 ساله",
-      "gender": "زن",
-      "occupation": "کارگر",
-      "place_of_birth": "زنجان",
-      "place_of_residence": "زنجان",
-      "marital_status": "متاهل"
+  "total": {
+    "strengths": "دانشجو به درستی در مورد تنگی نفس سؤالاتی را پرسیده است که نشان دهنده درک صحیح او از وضعیت بیمار بود (سوالات 1، 3 و 8). این سؤالات به جمع آوری اطلاعات کلیدی در مورد زمان و الگوی تنگی نفس کمک کرد.",
+    "weaknesses": {
+      "M": "دانشجو هیچ کدام از سوالات مهم را از دست نداده است.",
+      "E": ""
     },
-    "chief_complaint": "تنگی نفس پیشرونده"
+    "educational_feedback": "نکته مهم این است که برای بهبود مهارت‌های تریاژ و استدلال بالینی، دانشجو باید به یاد داشته باشد که تمامی سوالات کلیدی باید در مراحل اولیه اانجام شود و از اتمام 50% سوالات بهینه قبل از انتقال به بخش‌های دیگر اطمینان حاصل کند."
   },
   "history_taking": {
-    "present_illness": {
-      "question1": "احساس تنگی نفس و ضعف شاید از خیلی وقت پیش شروع شده باشد، اما به مرور زمان برایم سختتر شد. بهخصوص وقتی فعالیت میکنم، خیلی بیشتر اذیت میشوم.",
-      "question2": "خیلی ناگهانی نبود، بیشتر تدریجی و نامحسوس شروع شد. حتی نمیتوانم روز مشخصی را به یاد بیاورم که این علائم برای اولین بار ظاهر شدند.",
-      "question3": "بله، تنگی نفس هنگام فعالیت رخ میدهد، گاهی حتی در استراحت هم احساسش میکنم، ولی بیشتر وقتی که خیلی خسته میشوم یا کاری انجام دادهام بدتر است.",
-      "question4": "نه، معمولاً سرفه ندارم.",
-      "question5": "صدای غیرعادی یا خسخس هنگام تنفس نداشتهام.",
-      "question6": "گاهی احساس فشار یا دردی در قفسه سینه دارم؛ چیزی شبیه به درد مبهم که وقتی نفس عمیق میکشم یا خیلی به حرکت میپردازم احساسش میکنم.",
-      "question7": "تب یا لرز نداشتهام.",
-      "question8": "پاهایم گاهی متورم میشود، و گاهی اوقات احساس سبکی سر داشتهام. شاید زمانی که خیلی خسته باشم یا تپش قلب پیدا کنم.",
-      "question9": "خیر، قبلاً چنین حمله مشخصی نداشتهام، فقط این علائم به مرور شدیدتر شدهاند.",
-      "question10": "گاهی احساس خستگی و بیحالی زیادی دارم، ولی کاهش وزن خاصی نداشتهام."
+    "strengths": "سؤالات مربوط به تنگی نفس و سابقه پزشکی نشان‌دهنده درک درست دانشجو از شرایط بیمار است و کمک شایانی به جمع آوری اطلاعات کلیدی کرده است.",
+    "weaknesses": {
+      "M": "",
+      "E": ""
     },
-    "past_medical_history": {
-      "question1": {
-        "question1a": "مشکلاتی مثل نارسایی قلب یا بیماریهای مزمن ریوی ندارم.",
-        "question1b": "نه، مدت زمانی طولانی دچار بیماری زمینهای خاصی نشدهام."
-      },
-      "question2": {
-        "question2a": "هیچ سابقهای از بستری یا جراحی خاصی ندارم.",
-        "question2b": "دلایل مرتبطی برای بستری یا جراحی برایم وجود نداشته است."
-      },
-      "question3": "مشکل قلبی خاصی ندارم.",
-      "question4": "هیچ سابقهای از سرطان فعال ندارم.",
-      "question5": "در کودکی بیماریهای خاصی نداشتهام.",
-      "question6": "واکسیناسیونم کامل بوده است."
-    },
-    "drug_history": {
-      "question1": {
-        "question1a": "دیورتیکها مصرف میکنم.",
-        "question1b": "دوز مشخصی دارد و بصورت متداول مصرف میکنم.",
-        "question1c": "تغییری در داروهایم اعمال نشده."
-      },
-      "question2": "هیچ داروی بدون نسخه یا مکمل خاصی استفاده نمیکنم."
-    },
-    "allergies": {
-      "question1": {
-        "question1a": "هیچ حساسیتی ندارم.",
-        "question1b": "واکنش خاصی نداشتهام."
-      }
-    },
-    "family_history": {
-      "question1": {
-        "question1a": "هیچ سابقه خاصی از بیماری در خانواده ندارم.",
-        "question1b": "هیچ عضو دیگری در خانواده دچار بیماری نیست."
-      },
-      "question2": "در خانواده ما کسی سکته قلبی یا بیماری قلبی خاصی نداشته است.",
-      "question3": {
-        "question3a": "هیچ سابقهای از سرطان نداریم.",
-        "question3b": "هیچ مورد خاصی از سرطان در خانواده مرتبط نبوده است."
-      }
-    },
-    "social_history": {
-      "question1": {
-        "question1a": "سیگار نمیکشم.",
-        "question1b": "نیازی به ترک سیگار نداشت تهام زیرا نمیکشیدم."
-      },
-      "question2": "الکل مصرف نمیکنم.",
-      "question3": {
-        "question3a": "هیچ مصرف مواد مخدر ندارم.",
-        "question3b": "آخرین زمان مصرف هیچگاه نبوده است."
-      },
-      "question4": "با خانوادهام زندگی میکنم."
-    },
-    "ros": {
-      "question1": "گاهی خیلی احساس خستگی دارم.",
-      "question2": "هیچ تغییر خاصی در پوست یا ناخنها نداشتهام.",
-      "question3": "نه، سردرد یا سفتی گردن ندارم.",
-      "question4": "تغییری در بینایی یا علائم چشمی تجربه نکردهام.",
-      "question5": "مشکلی در بلع یا علائم مرتبط نداشتهام.",
-      "question6": "همچنان تنگی نفس دارم و گاهی احساس تورم در پا میکنم.",
-      "question7": "نه، سرفه ندارم.",
-      "question8": "مشکلی در گوارش یا علائمی از زردی پوست نداشتهام.",
-      "question9": "مشکل خاصی در ادرار کردن تجربه نکردهام.",
-      "question10": "مشکلی در مفاصل یا ضعف عضلانی ندارم.",
-      "question11": "نه، هیچ علائم عصبی مثل تشنج یا ضعف ندارم.",
-      "question12": "گاهی احساس اضطراب دارم، شاید به خاطر تنگی نفس باشد.",
-      "question13": "نه، علائم مرتبط به تغییرات متابولیکی ندارم.",
-      "question14": "هیچ علامتی از خونریزی طولانی یا کبودی آسان ندارم."
+    "educational_feedback": {
+      "why_M_was_important": "",
+      "why_E_was_unnecessary": "",
+      "sequence_advice": "توجه به توالی منطقی اهمیت دارد. دانشجو باید سعی کند که سؤالات بهینه را قبل از انتقال به مراحل بعدی جمع آوری کند."
     }
   },
   "physical_exam": {
-    "vital_signs": {
-      "BP": "123/76 mmHg",
-      "T": "37.2 °C",
-      "PR": "73 bpm",
-      "RR": "17 breaths/min",
-      "SpO2": "88% (Room Air)",
-      "GCS": "15"
+    "strengths": "دانشجو به درستی در مورد ارزیابی JVP اقدام کرد که یکی از ارزیابی‌های اصلی برای مسائل قلبی است.",
+    "weaknesses": {
+      "M": "",
+      "E": ""
     },
-    "general_appearance": {
-      "level_of_consciousness_mood_and_behavior": {
-        "level_of_consciousness": "Alert and Oriented.",
-        "mood": "Anxious or Distressed.",
-        "behavior": "Cooperative."
-      },
-      "posture_and_position": {
-        "position_of_comfort": "Orthopnea/Semi-Fowler's position may be preferred."
-      },
-      "overall_appearance": { "nutritional_status": "Normal." },
-      "cardiopulmonary_and_circulatory_clues": {
-        "cyanosis": "Central Cyanosis Present.",
-        "dyspnea": "Dyspnea with moderate to strenuous exertion.",
-        "edema": "No Peripheral Edema."
-      }
-    },
-    "head_and_neck": {
-      "head_and_face": { "symmetry_and_lesions": "Normal." },
-      "eyes": { "sclera_and_conjunctiva": "Normal." },
-      "ears": { "external_and_tenderness": "Normal." },
-      "nose_and_sinuses": { "septum_and_discharge": "Normal." },
-      "mouth_and_pharynx": { "oral_mucosa_and_lesions": "Normal." },
-      "neck_and_lymphatics": {
-        "inspection": "Supple.",
-        "tracheal_position": "Midline.",
-        "carotid_bruit": "No Bruit.",
-        "lymph_nodes_size_consistency": "Not Palpable.",
-        "JVP_assessment": "Normal JVP."
-      }
-    },
-    "respiratory_system": {
-      "inspection": {
-        "accessory_muscles": "No Accessory Muscle Use.",
-        "chest_shape_and_symmetry": "Symmetrical, Normal AP Diameter."
-      },
-      "palpation": { "chest_expansion": "Normal." },
-      "percussion": "Normal Resonance.",
-      "auscultation": {
-        "breath_sounds_intensity": "Normal Intensity.",
-        "adventitious_sounds": "Bilateral Expiratory Wheezes and Rhonchi."
-      }
-    },
-    "cardiovascular_system": {
-      "palpation": {
-        "precordial_palpation_heave_thrill": "No Heave or Thrill.",
-        "pmi_assessment": "PMI Non-displaced."
-      },
-      "auscultation": {
-        "heart_sounds_s1_s2": "Normal S1 and S2.",
-        "extra_sounds_s3_s4_murmurs": "No Extra Sounds or Murmurs."
-      },
-      "peripheral_pulses_and_extremities": {
-        "peripheral_pulses_symmetry_and_quality": "Peripheral Pulses Symmetric and 2+.",
-        "extremities_color_and_trophic_changes": "Normal color.",
-        "extremities_temperature_and_cap_refill": "Extremities Warm, Capillary Refill < 2 seconds.",
-        "extremities_edema": "See General Appearance Section."
-      }
-    },
-    "abdominal_system": {
-      "inspection": "Abdomen Flat and Symmetric.",
-      "auscultation": { "bowel_sounds": "Normoactive Bowel Sounds." },
-      "percussion": { "organ_borders": "Liver/Spleen non-palpable." },
-      "palpation": { "superficial_tenderness": "No Superficial Tenderness." }
-    },
-    "neurological": {
-      "mental_status_and_LOC": "Mental Status: Alert and Oriented.",
-      "motor_strength_and_tone": "Motor Strength 5/5 Bilaterally."
-    },
-    "musculoskeletal_system": {
-      "inspection": { "joints": "No Digital Clubbing." },
-      "palpation": { "tenderness_and_crepitus": "No tenderness." },
-      "range_of_motion_active_passive": "Full ROM."
+    "educational_feedback": {
+      "why_M_was_important": "",
+      "why_E_was_unnecessary": "",
+      "sequence_advice": "جهت بهبود، بهتر است دانشجو بتواند ارزیابی‌های بیشتری از سیستم‌های قلبی و تنفسی را انجام دهد تا دید بهتری نسبت به وضعیت بیمار پیدا کند."
     }
   },
   "paraclinic": {
-    "basic_blood_tests": {
-      "CBC": { "Hb": "17.0 g/dL.", "WBC": "9000 /uL", "Plt": "250,000 /uL" },
-      "BMP": { "Na": "138", "BUN": "20", "Cr": "1.1" },
-      "VBG": { "pH": "7.40", "PaCO2": "40 mmHg", "HCO3": "26 mEq/L" }
+    "strengths": "دانشجو تست‌های ضروری برای ارزیابی وضعیت بیمار را انجام داد و به شناخت بهتر بیماری کمک کرد.",
+    "weaknesses": {
+      "M": "",
+      "E": ""
     },
-    "specialized_lung_tests": {
-      "D_dimer": "Normal",
-      "BNP_NT_proBNP": "Normal or Mildly Elevated.",
-      "Troponin": "Negative Troponin."
+    "educational_feedback": {
+      "why_M_was_important": "",
+      "why_E_was_unnecessary": "",
+      "sequence_advice": "توجه به کمیت و کیفیت تست‌ها در پروسه تشخیصی ضروری است و دانشجو باید به یاد داشته باشد که تست‌ها باید به طور منطقی و به تدریج انجام شوند."
+    }
+  },
+  "differential_diagnosis": {
+    "strengths": "دانشجو توانست فهرست مناسبی از بیماری‌های قابل تصور را در نظر بگیرد.",
+    "weaknesses": {
+      "M": "فقدان تحلیل صحیح و انتخاب غیر ضروری.",
+      "E": ""
     },
-    "simple_imaging": {
-      "Chest_X_Ray": {
-        "PA_Lateral_Findings_and_Effusion": "Prominent Main Pulmonary Arteries and Enlarged Right Heart Border."
-      }
-    },
-    "advanced_imaging": {
-      "Chest_CT_CTPA": {
-        "Lung_Parenchyma_and_Pleura": "PA diameter > Aorta diameter"
-      }
-    },
-    "functional_tests": {
-      "spirometry": {
-        "result": {
-          "FEV1": "Measured: 2.93 L, Predicted: 3.79 L, %Predicted: 40-79%",
-          "FVC": "Measured: 5.44 L, Predicted: 4.67 L, %Predicted: 80-100%",
-          "FEV1/FVC_Ratio": "Measured: 0.54, Predicted: 0.80, %Predicted: 67%"
-        },
-        "Reversibility": "FEV1 increase < 12% AND < 200 mL"
-      },
-      "dlco": "79% predicted",
-      "peak_flow": "Normal PEF",
-      "plethysmography": "Normal Lung Volumes"
-    },
-    "procedures": {
-      "Bronchoscopy": "Not Indicated.",
-      "torachonthesis": "Not Indicated."
+    "educational_feedback": {
+      "why_M_was_important": "دانشجو باید تحلیل دقیقی از شواهد و داده‌ها داشته باشد تا بیماری‌های نادر یا جدی نادیده نرود.",
+      "why_E_was_unnecessary": "از آنجایی که دانشجو هیچ بیماری غیرضروری را درخواست نکرده است، این ضعف صرفا به دلایل تحلیل نامناسب برمی‌گردد."
     }
   }
 }

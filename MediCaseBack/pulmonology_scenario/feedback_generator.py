@@ -1,11 +1,10 @@
+import json  # 1. اضافه کردن کتابخانه json
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
-
 from .feedback_utils.S1_identifying_sets import calculate_set_metrics
 from .feedback_utils.S3_stage_score import calculate_stage_order_error
 from .feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
 from .feedback_utils.escape_json_braces import escape_json_braces
-import json
 
 json_schema = {
     "title": "Clinical_Case_Feedback_Schema",
@@ -245,14 +244,11 @@ json_schema = {
     ]
 }
 
-
 model = init_chat_model(
   model="gpt-4o-mini",
   base_url="https://api.avalai.ir/v1",
-  api_key="aa-bFHSFoxDcvBLcr9tEpySz5SIjvlHGBAmJ3nqgKALEgt5w8YH",
+  api_key="aa-3merXIxJbKqFQqE69uVBXvWAJXVg1OAD7e1Tqq2BttJmJoVj",
 )
-
-
 
 prompt_template = PromptTemplate(
     template="""
@@ -557,140 +553,68 @@ def feedback_generator(target_disease, STUDENT_LOG):
   structured_chat_model = model.with_structured_output(json_schema)
   output = structured_chat_model.invoke(final_prompt)
 
-  return output, evaluation, transition
+  # 2. تبدیل خروجی دیکشنری به رشته JSON معتبر
+  # ensure_ascii=False باعث می‌شود کاراکترهای فارسی به درستی نمایش داده شوند
+  output_json = json.dumps(output, ensure_ascii=False, indent=2)
+
+  return output_json, evaluation, transition
 
 STUDENT_LOG={
-  "timeline": [
-    {
-      "time": "15:00",
-      "selection": {
-        "patient_profile": {
-          "chief_complaint": "chief_complaint"
-        }
-      }
+  "history_taking": {
+    "present_illness": {
+      "question1": "15:00",
+      "question3": "14:00",
+      "question8": "13:00"
     },
-    {
-      "time": "13:30",
-      "selection": {
-        "history_taking": {
-          "present_illness": [
-            "question1",
-            "question2",
-            "question3",
-            "question4",
-            "question7",
-            "question10"
-          ]
-        }
-      }
+    "past_medical_history": {
+      "question1.question1a": "14:30",
+      "question1.question1b": "14:15",
+      "question3": "12:30"
     },
-    {
-      "time": "12:00",
-      "selection": {
-        "history_taking": {
-          "ros": [
-            "question1",
-            "question7",
-            "question8",
-            "question9"
-          ]
-        }
-      }
-    },
-    {
-      "time": "10:30",
-      "selection": {
-        "history_taking": {
-          "past_medical_history": [
-            "question1a",
-            "question1b"
-          ]
-        }
-      }
-    },
-    {
-      "time": "09:00",
-      "selection": {
-        "history_taking": {
-          "drug_history": [
-            "question1a",
-            "question1b",
-            "question2"
-          ]
-        }
-      }
-    },
-    {
-      "time": "07:30",
-      "selection": {
-        "history_taking": {
-          "family_history": [
-            "question1b",
-            "question2"
-          ]
-        }
-      }
-    },
-    {
-      "time": "06:00",
-      "selection": {
-        "history_taking": {
-          "social_history": [
-            "question1a",
-            "question1b",
-            "question3b"
-          ]
-        }
-      }
-    },
-    {
-      "time": "04:30",
-      "selection": {
-        "physical_exam": {
-          "vital_signs": [
-            "T",
-            "SpO2",
-            "RR"
-          ]
-        }
-      }
-    },
-    {
-      "time": "03:00",
-      "selection": {
-        "physical_exam": {
-          "respiratory_system": [
-            "palpation.chest_expansion",
-            "auscultation.breath_sounds",
-            "auscultation.adventitious_sounds"
-          ]
-        }
-      }
-    },
-    {
-      "time": "01:30",
-      "selection": {
-        "paraclinic": {
-          "simple_imaging": [
-            "Chest_X_Ray.PA_Lateral_Findings_and_Effusion"
-          ]
-        }
-      }
-    },
-    {
-      "time": "00:00",
-      "selection": {
-        "paraclinic": {
-          "basic_blood_tests": [
-            "CRP",
-            "ESR"
-          ],
-          "procedures": [
-            "torachonthesis"
-          ]
-        }
-      }
+    "drug_history": {
+      "question1.question1a": "13:30",
+      "question1.question1b": "13:15",
     }
-  ]
-}
+  },
+  "physical_exam": {
+    "respiratory_system": {
+      "inspection.chest_shape_and_accessory_muscles": "12:00",
+      "auscultation.adventitious_sounds": "11:30"
+    },
+    "cardiovascular_system": {
+      "JVP_assessment": "11:00"
+    }
+  },
+  "paraclinic": {
+    "basic_blood_tests": {
+      "VBG": "10:30",
+      "CBC": "09:30"
+    },
+    "specialized_lung_tests": {
+      "BNP_NT_proBNP": "10:15",
+      "a1_antitrypsin_level": "06:15"
+    },
+    "simple_imaging": {
+      "Chest_X_Ray.PA_Lateral": "10:00"
+    },
+    "interpretation": {
+      "VBG_BNP_CXR": "09:00"
+    },
+    "functional_tests": {
+      "Spirometry": "08:00",
+      "plethysmography": "07:00"
+    }
+  },
+  "differential_diagnosis": {
+    "ddx": {
+      "disease3": "05:30",
+      "disease2": "05:15",
+      "disease5": "05:10",
+      "disease7": "05:00"
+    }
+  },
+  "final_diagnosis": {
+      "disease3": "02:00"
+    }
+  }
 

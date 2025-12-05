@@ -1,6 +1,10 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from celery import shared_task
-from .scenario_creator import scenario_creator
-from .feedback_generator import feedback_generator
+from pulmonology_scenario.scenario_creator import scenario_creator
+from pulmonology_scenario.feedback_generator import feedback_generator
 from .models import PulmonologyScenario, PulmonologyDisease, PulmonologyFeedback, StudentLog
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
@@ -25,7 +29,7 @@ def senario_creator_celery(user, tracking_code):
             {"detail": "Disease is not exist."}
         )
     
-    PulmonologyScenario.objects.get_or_create(
+    scenario = PulmonologyScenario.objects.get_or_create(
         scenario = scenario,
         tracking_code = tracking_code,
         user = user,

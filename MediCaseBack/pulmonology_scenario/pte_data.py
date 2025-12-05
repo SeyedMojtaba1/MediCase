@@ -604,8 +604,3 @@ class PTEDataGenerator:
         }
         
         return data
-
-if __name__ == "__main__":
-    import json
-    generator = PTEDataGenerator()
-    print(json.dumps(generator.generate_paraclinic_case(), ensure_ascii=False, indent=4))

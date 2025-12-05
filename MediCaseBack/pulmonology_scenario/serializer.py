@@ -2,8 +2,6 @@ from .models import PulmonologyScenario, PulmonologyFeedback
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-import base64
-from .utils import senario_creator_celery
 import secrets
 import string
 

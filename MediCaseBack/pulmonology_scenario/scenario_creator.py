@@ -1,13 +1,16 @@
-from .pneumonia_data import PneumoniaDataGenerator
-from .copd_data import COPDDataGenerator
-from .asthma_data import AsthmaDataGenerator
-from .pte_data import PTEDataGenerator
-from .ipf_data import IPFDataGenerator
-from .ph_data import PHDataGenerator
-from .ards_data import ARDSDataGenerator
-from .history_taking_creator import history_taking_creator
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from pulmonology_scenario.pneumonia_data import PneumoniaDataGenerator
+from pulmonology_scenario.copd_data import COPDDataGenerator
+from pulmonology_scenario.asthma_data import AsthmaDataGenerator
+from pulmonology_scenario.pte_data import PTEDataGenerator
+from pulmonology_scenario.ipf_data import IPFDataGenerator
+from pulmonology_scenario.ph_data import PHDataGenerator
+from pulmonology_scenario.ards_data import ARDSDataGenerator
+from pulmonology_scenario.history_taking_creator import history_taking_creator
 import random
-import json
 
 def create_full_pneumonia_case(target_disease):
     paraclinic_generator = PneumoniaDataGenerator()
@@ -160,10 +163,8 @@ def create_full_ards_case(target_disease):
         "physical_exam": final_physical_exam,
         "paraclinic": final_paraclinic
     }
-
-   
-
     return final_case
+
 case = {
     "COPD": create_full_copd_case,
     "Pneumonia": create_full_pneumonia_case,
