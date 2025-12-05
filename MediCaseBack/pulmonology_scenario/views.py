@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -16,7 +12,7 @@ from .serializer import (
 )
 from .models import PulmonologyScenario, PulmonologyFeedback
 from django.contrib.auth import get_user_model
-from pulmonology_scenario.utils import senario_creator_celery, feedback_creator_celery
+from .utils import senario_creator_celery, feedback_creator_celery
 import secrets
 import string
 
