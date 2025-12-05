@@ -1,10 +1,6 @@
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-
-from pulmonology_scenario.feedback_utils.S1_identifying_sets import calculate_set_metrics, count_true_values
-from pulmonology_scenario.feedback_utils.S2_get_action_time import get_first_action_time_and_count
-from pulmonology_scenario.feedback_utils.optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
+from .S1_identifying_sets import calculate_set_metrics, count_true_values
+from .S2_get_action_time import get_first_action_time_and_count
+from .optimal_pulmonology_scenarios import OPTIMAL_SCENARIO
 from typing import Dict, Any
 
 STUDENT_LOG: Dict[str, Dict[str, str]] = {
