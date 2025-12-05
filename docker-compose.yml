@@ -41,7 +41,7 @@ services:
     container_name: django_medicase
     command: >
       sh -c "python MediCaseBack/manage.py migrate &&
-             gunicorn --chdir MediCaseBack/ MediCaseBack.wsgi:application --bind 0.0.0.0:8000"
+             python MediCaseBack/manage.py runserver 0.0.0.0:8000" #gunicorn --chdir MediCaseBack/ MediCaseBack.wsgi:application --bind 0.0.0.0:8000
     ports:
       - '8000:8000'
     volumes:
