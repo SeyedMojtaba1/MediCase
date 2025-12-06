@@ -172,7 +172,8 @@ case = {
 }
 
 
-OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH", "ARDS"]
+OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH"]
+# , "ARDS"
 
 def scenario_creator():
     target_disease = random.choice(OPTIMAL_SCENARIO)

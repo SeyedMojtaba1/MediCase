@@ -661,7 +661,7 @@ class AsthmaDataGenerator:
                  eos_note = " with Neutrophil predominance."
 
         wbc_val = self.random.randint(wbc_range[0], wbc_range[1])
-        wbc_str = f"{wbc_val} /µL{eos_note}"
+        wbc_str = f"{wbc_val} /µL"
 
         if self.phenotype == "Allergic":
              tot_ige = self.random.choices(["Elevated (>100 IU/mL)", "within normal range"], weights=[80, 20])[0]
