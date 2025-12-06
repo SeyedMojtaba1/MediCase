@@ -158,83 +158,303 @@ ROS:
     question14: Hematologic symptoms are negative in 85% of cases. Secondary polycythemia is present in 15% of cases (suggesting chronic hypoxemia)
 """
 
-ASTHMA_PROFILE_REF = """
-disease: Asthma
-chief_complaint: Recurrent episodes of dyspnea (episodic shortness of breath), wheezing (whistling sound on expiration), cough (often nocturnal), and chest tightness. Symptoms are highly variable and triggered by specific exposures.
+ASTHMA_BOUNDARIES_REF = """
+### بخش ۱ — مرزهای بیماری (Disease Boundaries)
+
+**علائم اصلی (Core Symptoms Spectrum):**
+* تنگی نفس (Dyspnea) [متغیر: حمله‌ای تا مزمن]
+* خس‌خس سینه (Wheezing) [به‌ویژه در بازدم]
+* سرفه (Cough) [خشک یا با خلط کم، تشدید در شب یا صبح زود]
+* احساس سنگینی یا فشار در قفسه سینه (Chest Tightness)
+
+**علائم اختیاری (Optional Symptoms):**
+* خلط (Sputum) [شفاف یا سفید، مگر در صورت عفونت همزمان]
+* خستگی ناشی از تلاش تنفسی
+* اضطراب یا بی‌قراری (در حملات حاد)
+* اختلال خواب (بیدار شدن با سرفه یا تنگی نفس)
+
+**علائم ممنوعه (Forbidden Symptoms - رد کننده تشخیص):**
+* استریدور (Stridor) [نشانه انسداد راه هوایی فوقانی]
+* هموپتزی وسیع (Massive Hemoptysis)
+* کرپیتاسیون یا رال‌های موضعی (Localized Crackles) [مگر در صورت پنومونی همزمان]
+* درد قفسه سینه پلورتیک (Pleuritic Chest Pain) [مگر در پنوموتوراکس]
+* کاهش وزن توجیه‌ناپذیر
+
+**محدوده‌های شدت (Severity Ranges):**
+1.  متناوب (Intermittent)
+2.  خفیف پایدار (Mild Persistent)
+3.  متوسط پایدار (Moderate Persistent)
+4.  شدید پایدار (Severe Persistent)
+5.  حمله حاد شدید (Status Asthmaticus)
+
+**محدوده‌های فیزیولوژیک (Physiology Ranges):**
+* اشباع اکسیژن ($SpO_2$): $88\%$ (حمله مرگبار) تا $99\%$ (نرمال/بین حملات)
+* تعداد تنفس (RR): $12$ تا $40$ تنفس در دقیقه
+* جریان بازدمی اوج (PEF): $30\%$ تا $100\%$ مقدار پیش‌بینی شده
+
+**مرزهای محرک (Trigger Limits):**
+* باید حداقل یک عامل محرک یا الگوی زمانی (شبانه/فصلی) وجود داشته باشد (مگر در موارد آسم ذاتی شدید).
+
+"""
+
+ASTHMA_VARIABILITY_REF = """
+### بخش ۲ — موتور تغییرپذیری (Variability Engine)
+
+**الف. شدت تصادفی (Random Intensity):**
+* **فرکانس علائم:** از $<2$ بار در هفته تا چندین بار در روز.
+* **بیدار شدن شبانه:** از $0$ بار تا هر شب.
+* **محدودیت فعالیت:** از "هیچ" تا "ناتوانی در صحبت کردن".
+* **نمره ACT (تست کنترل آسم):** محدوده $5$ تا $25$.
+
+**ب. مسیر تصادفی (Random Trajectory) [احتمالات]:**
+* اپیزودیک/حمله‌ای (۶۰٪): دوره‌های بی‌علامتی بین حملات.
+* فصلی (۱۵٪): تشدید در بهار یا پاییز.
+* مزمن پیشرونده (۱۵٪): علائم دائمی با نوسانات کم.
+* شروع دیررس (۱۰٪): شروع علائم در بزرگسالی بدون سابقه کودکی.
+
+**ج. جاسازی زمینه تصادفی (Context Embedding):**
+* **محیطی:** حیوانات خانگی (گربه/سگ)، گرد و غبار، رطوبت خانه.
+* **شغلی:** نانوا (آرد)، نقاش (ایزوسیانات‌ها)، کشاورز، کارگر نظافت.
+* **سبک زندگی:** سیگاری (فعال/غیرفعال)، ورزشکار (آسم ناشی از ورزش).
+* **فصلی:** گرده گیاهان، هوای سرد و خشک.
+* **عفونی:** شروع علائم پس از عفونت ویروسی تنفسی.
+
+**د. تزریق نویز واقع‌گرایانه (Realistic Noise Injection):**
+* **یادآوری مبهم:** "فکر می‌کنم از بچگی داشتم، مطمئن نیستم."
+* **توصیف غیردقیق:** "سینه‌ام خس‌خس نمی‌کند، فقط سوت می‌کشد."
+* **عدم قطعیت دارویی:** "اسپری آبی را میزنم ولی اسمش را نمی‌دانم."
+* **همپوشانی:** اشتباه گرفتن علائم با رفلاکس معده یا عدم تناسب اندام.
+
+**هـ. تغییرات ترکیبی چندگانه (Multi-factor Cross Variation):**
+* **خوشه آتوپیک:** آسم + اگزما + رینیت آلرژیک (احتمال بالا).
+* **خوشه چاقی:** BMI بالا + آسم شدیدتر + پاسخ کمتر به استروئید.
+* **خوشه سالمندان:** آسم + COPD (سندرم همپوشانی ACOS).
 """
 
 ASTHMA_HISTORY_REF = """
-disease: Asthma
-present_illness:
-    question1: The course is episodic; symptoms often start in childhood (70% of cases) and vary in frequency and severity over time. Exacerbations (attacks) are followed by periods of relative stability.
-    question2: Onset of an exacerbation (attack) is usually sudden and acute (85% of cases), often triggered by a specific event (e.g., allergen exposure, viral infection, exercise, or cold air). Gradual worsening may occur with non-adherence to control meds.
-    question3: Dyspnea (shortness of breath) is present in 95% of cases and is often worse on expiration. Severity is highly variable, ranging from mild (difficulty with vigorous activity) to severe (difficulty speaking in full sentences at rest).
-    question4: Cough is present in 90% of cases, often dry or with minimal clear/white sputum. It is characteristically worse at night or in the early morning (70% of cases).
-    question5: Wheezing is a classic sign (85% of cases), typically heard as a high-pitched sound on expiration. Wheezing may be absent in severe, "silent" asthma.
-    question6: Chest tightness or pressure is a common complaint (70% of cases), especially during an attack, but sharp chest pain is rare (10%).
-    question7: Fever, chills, and night sweats are ABSENT in 90% of stable asthma. Their presence (10%) suggests a co-existing respiratory infection (a common trigger for exacerbation).
-    question8: Palpitations may be present in 30% of cases due to the side effects of SABA (e.g., Salbutamol) rescue inhalers. Leg swelling (edema) is absent in 95% of cases.
-    question9: History of previous attacks and use of a Quick-Relief inhaler (SABA) is present in 95% of asthmatics. Increased use of SABA is the main indicator of poor control (60% of cases).
-    question10: Fatigue and sleep disturbance (due to nocturnal symptoms) are present in 40-60% of cases. Weight loss and poor appetite are absent in 95% of cases.
-    
-past_medical_history:
-    question1:
-        question1a: Comorbidities often include **Allergic Rhinitis** (hay fever - 60%), **Eczema** (atopic dermatitis - 40%), and **GERD** (30%). In older adults, Asthma-COPD Overlap (ACO) is present in 15%.
-        question1b: The duration of asthma is often since childhood (70%) or for many years.
-    question2: 
-        question2a: History of previous hospitalizations or emergency room visits for asthma exacerbations is present in 40-50% of moderate-to-severe cases.
-        question2b: History of intubation for severe asthma is present in <5% of stable outpatients.
-    question3: Need to rule out heart disease (e.g., cardiac asthma) in 15% of older patients presenting with dyspnea.
-    question4: History of active cancer is generally unrelated (99%).
-    question5: History of severe viral respiratory infections in early childhood is reported in 30% of cases.
-    question6: Vaccination (Influenza/Pneumococcal) is indicated for all asthmatics and done in 60% of cases.
+### بخش ۳ — قالب تاریخچه ساختاریافته (Structured History Template)
 
-drug_history:
-    question1:
-        question1a: In 80% of persistent asthmatics, patients use maintenance inhalers (**Controllers** - ICS/LABA/LAMA). **SABA** (Relievers) are used by 100% of asthmatics.
-        question1b: Increased use of SABA (>2 times/week or >2 cans/year) indicates uncontrolled asthma in 60% of cases.
-        question1c: Recent non-adherence (stopping or reducing maintenance medication) is present in 40% of cases presenting with an exacerbation.
-    question2: Use of **NSAIDs or Aspirin** is critical to note, as they can trigger asthma in 5-10% of adults (**AERD**).
-    
-allergies:
-    question1:
-        question1a: Known allergy to inhaled substances (pollen, dust mites, pet dander, mold, cockroaches) is present in 70-80% of cases (Allergic Asthma). Allergy to **Aspirin/NSAIDs** is present in 5-10%.
-        question1b: Severity of allergic reaction varies greatly, from mild rhinitis to severe anaphylaxis (<5%).
+**الف. شکایت اصلی (Chief Complaint Pool):**
+* انتخاب ۱ از: ["تنگی نفس"، "سرفه‌های مداوم"، "خس‌خس سینه"، "احساس خفگی"، "تست عملکرد ریه غیرطبیعی (چکاپ)"]
+* مدت زمان: متغیر ($1$ ساعت تا $20$ سال).
 
-family_history:
-    question1: 
-        question1a: Strong family history of **Asthma**, **Eczema**, or **Allergic Rhinitis** (**Atopy**) is present in 60-70% of cases.
-        question1b: Sibling or parent with asthma is present in 40% of cases.
-    question2: Family history of cardiovascular disease is present in 40% of cases, often unrelated.
-    question3: 
-        question3a: Family history of lung cancer is present in 15% of cases.
-        question3b: Details are generally non-contributory for the acute asthma presentation in 99% of cases.
+**ب. مولد بیماری فعلی (Present Illness Generator):**
+* **شروع (Onset):** ناگهانی (در مواجهه با محرک) یا تدریجی (پس از سرماخوردگی).
+* **محرک‌ها (Triggers Pool):** [ورزش، هوای سرد، گربه، عطر تند، دود سیگار، آسپرین، استرس].
+* **الگو (Pattern):** بدتر شدن در شب یا اوایل صبح (احتمال ۸۰٪).
+* **عوامل تسکین‌دهنده:** اسپری سالبوتامول (SABA)، نشستن، هوای تازه، کورتون خوراکی.
+* **تاثیر بر زندگی:** غیبت از مدرسه/کار، ناتوانی در ورزش.
 
-social_history:
-    question1:
-        question1a: **Active smoking** (30%) or exposure to **second-hand smoke** (40%) is a major trigger and risk factor for poor control.
-        question1b: Pack-year history is often less relevant than in COPD, but any exposure is critical.
-    question2: Alcohol use is generally not a direct trigger (90%).
-    question3: 
-        question3a: Recreational drug use is present in <5% of cases.
-        question3b: Last use date is critical if positive, as some substances (e.g., marijuana smoke) are lung irritants.
-    question4: Exposure to **pets** (cats/dogs), **mold**, **dampness**, or **occupational irritants** (e.g., dusts, chemicals) is present in 30-40% of cases (key triggers).
-    
-ROS:
-    question1: Fatigue is positive in 60% of cases. Fever is negative (90%).
-    question2: History of **Eczema** or chronic rash is positive in 40% of cases. Skin is otherwise normal (60%).
-    question3: Generally negative (90%).
-    question4: Eye symptoms (Itchy/Watery eyes) are present in 50% of cases due to co-existing allergic conjunctivitis.
-    question5: **Allergic Rhinitis** (nasal congestion, runny nose, sneezing) is positive in 60% of cases.
-    question6: Palpitations are present in 30% of cases (often due to inhaler side effects). Chest pain is negative in 90% of cases.
-    question7: **Dyspnea, Wheezing, and Cough** are the main positives (see HPI) in 95% of cases. **Hemoptysis** is virtually absent (<1%).
-    question8: GERD symptoms are present in 30% of cases.
-    question9: Generally negative (95%).
-    question10: Generally negative (90%).
-    question11: Generally negative (95%).
-    question12: **Anxiety/Panic** is positive during acute attacks (40%). **Sleep disturbance** is present in 40%.
-    question13: Generally negative (90%).
-    question14: Generally negative (95%). Eosinophilia may be present (50% of allergic asthma cases).
+**ج. مولد سابقه پزشکی (Past Medical Generator):**
+* **همبودی‌ها (Comorbidities Pool):** رینیت آلرژیک (۶۰-۸۰٪)، سینوزیت، پولیپ بینی، درماتیت آتوپیک (اگزما)، GERD، چاقی.
+* **سابقه بستری:** $0$ تا $N$ بار بستری در ICU یا بخش (نشان‌دهنده شدت).
+* **اینتوباسیون قبلی:** [بله/خیر] (پرچم قرمز برای خطر مرگ).
+
+**د. مولد سابقه دارویی (Drug History Generator):**
+* **داروهای فعلی:** SABA (Salbutamol)، ICS (Fluticasone, Budesonide)، LABA+ICS، LTRA (Montelukast).
+* **پایبندی (Adherence):** [خوب، مصرف نامنظم، قطع خودسرانه به دلیل ترس از کورتون].
+* **تکنیک:** [صحیح، غلط] (استفاده از دمیار/Spacer).
+
+**هـ. مولد سابقه خانوادگی (Family History Generator):**
+* **ژنتیک:** سابقه آسم، آلرژی یا اگزما در بستگان درجه یک (مادر/پدر/خواهر/برادر).
+
+**و. مولد سابقه اجتماعی (Social History Generator):**
+* **سیگار:** [هرگز، سیگاری سابق، سیگاری فعال، در معرض دود دست دوم].
+* **محیط خانه:** فرش‌های قدیمی، وجود کپک، حیوانات خانگی.
+* **شغل:** بررسی احتمال آسم شغلی.
+
+**ز. مرور سیستم‌ها (ROS Generator):**
+* **ENT:** آبریزش بینی، گرفتگی گوش، عطسه.
+* **Skin:** راش‌های اگزمایی (چین آرنج/زانو).
+* **GI:** سوزش سر دل (تشدید کننده سرفه).
+"""
+
+ASTHMA_CONSTRaAINTS_REF = """
+### بخش ۵ — محدودیت‌های مبتنی بر شواهد (Constraints)
+
+**عناصر اجباری (Mandatory Elements):**
+* باید حداقل یکی از علائم کلیدی (ویزینگ، تنگی نفس، سرفه) موجود باشد.
+* ویزینگ نباید "فقط دمی" (Inspiratory only) باشد (مگر اینکه استریدور باشد که تشخیص را رد می‌کند).
+
+**ترکیبات ممنوعه (Forbidden Combinations):**
+* $SpO_2 < 85\%$ با "حال عمومی کاملاً خوب و راحت" (تناقض فیزیولوژیک).
+* "قفسه سینه خاموش" (Silent Chest) با $RR = 12$ و هوشیاری کامل (سکوت قفسه سینه نشانه نارسایی قریب‌الوقوع است).
+* تب بالای $39^{\circ}C$ بدون هیچ علامتی از عفونت (آسم خالص تب ایجاد نمی‌کند).
+
+**قوانین شدت-فیزیولوژی (Severity Consistency Rules):**
+* اگر بیمار "قادر به صحبت کردن نیست"، $RR$ باید بالای $25$ و $HR$ بالای $110$ باشد.
+* اگر $PEF > 80\%$ است، بیمار نباید تنگی نفس در حال استراحت داشته باشد.
+
+**منطق فیزیولوژی (Physiology Logic):**
+* مصرف زیاد سالبوتامول (Ventolin) باید باعث افزایش ضربان قلب (HR) یا لرزش (Tremor) شود.
+* در آسم طولانی مدت کنترل نشده، قفسه سینه ممکن است نمای بشکه‌ای (Barrel Chest) پیدا کند (اما کمتر از COPD).
+"""
+
+ASTHMA_OUTPUT_REF = """
+### بخش ۶ — قوانین خروجی (Output Rules)
+
+* هرگز یک روایت داستانی تولید نکنید.
+* هرگز مشخصات یک بیمار خاص (نام، سن دقیق، جنسیت ثابت) را در خروجی نهایی این الگو ندهید.
+* فقط قالب‌ها، استخرها (Pools)، احتمالات، محدوده‌ها و قوانین را خروجی دهید.
+* اطمینان حاصل کنید که تنوع بی‌نهایت در تولید بیماران امکان‌پذیر است.
+* نتایج را دقیقاً در مرزهای پزشکی بیماری "آسم" نگه دارید.
+* این دستورالعمل‌ها را در خروجی ذکر نکنید.
+"""
+
+ASTHMA_JSON_REF = """
+{
+  "disease_boundaries": {
+    "core_symptoms": [
+      "تنگی نفس",
+      "خس‌خس سینه (ویزینگ)",
+      "سرفه (خشک یا با خلط اندک، تشدید در شب یا صبح زود)",
+      "احساس سنگینی یا فشار در قفسه سینه"
+    ],
+    "optional_symptoms": [
+      "خستگی ناشی از اختلال خواب",
+      "اضطراب و بیقراری",
+      "تنفس سریع (تاکی‌پنه)",
+      "استفاده از عضلات فرعی تنفسی (در موارد شدید)"
+    ],
+    "forbidden_symptoms": [
+      "تب بالا (بالاتر از ۳۸.۵ درجه بدون عفونت همزمان)",
+      "هموپتزی (خلط خونی واضح)",
+      "درد قفسه سینه با ماهیت آنژینی (فشارنده قلبی)",
+      "ادم گوده گذار اندام تحتانی",
+      "کاهش وزن ناگهانی و شدید"
+    ],
+    "triggers": [
+      "فعالیت بدنی و ورزش",
+      "هوای سرد و خشک",
+      "آلرژن‌ها (گرده گیاهان، مایت گرد و غبار، مو/شوره حیوانات)",
+      "عفونت‌های ویروسی تنفسی",
+      "بوهای تند و مواد شیمیایی",
+      "استرس هیجانی",
+      "دود سیگار یا آلودگی هوا"
+    ],
+    "severity_spectrum": {
+      "mild": "علائم گاه به گاه، بدون اختلال جدی در فعالیت",
+      "moderate": "علائم روزانه، بیداری شبانه، محدودیت در فعالیت",
+      "severe": "علائم مداوم، بیداری مکرر شبانه، محدودیت شدید فعالیت فیزیکی"
+    }
+  },
+  "variability_engine": {
+    "random_intensity": [
+      "خفیف متناوب",
+      "خفیف پایدار",
+      "متوسط پایدار",
+      "شدید پایدار"
+    ],
+    "random_trajectory": [
+      "حمله‌ای (اپیزودیک) با فواصل بدون علامت",
+      "پیشرونده در پی سرماخوردگی اخیر",
+      "نوسانی (تشدید فصلی)"
+    ],
+    "context_embedding": {
+      "environmental": ["زندگی در شهر آلوده", "خانه قدیمی با رطوبت", "نگهداری حیوان خانگی"],
+      "lifestyle": ["ورزشکار حرفه‌ای", "شغل‌های در معرض ذرات (نانوایی، نجاری)"],
+      "stress_factors": ["امتحانات", "فشارهای کاری"]
+    },
+    "realistic_noise": {
+      "recall_error": ["فراموشی زمان دقیق شروع علائم", "ابهام در تعداد بیداری‌های شبانه"],
+      "variable_reporting": ["کم‌اهمیت جلوه دادن علائم توسط بیمار", "اغراق در شدت تنگی نفس به دلیل اضطراب"]
+    },
+    "multi_factor_cross_variation": [
+      "ترکیب رینیت آلرژیک با آسم (سندرم راه‌های هوایی یکپارچه)",
+      "تشدید علائم رفلاکس معده (GERD) با سرفه",
+      "چاقی و تشدید تنگی نفس"
+    ]
+  },
+  "history_taking": {
+    "chief_complaint": {
+      "conceptual_goal": "بیان مشکل اصلی از زبان بیمار",
+      "symptom_pools": [
+        "نمی‌توانم نفس بکشم",
+        "سینه‌ام خس‌خس می‌کند",
+        "سرفه‌هایم قطع نمی‌شود",
+        "موقع ورزش نفسم می‌گیرد"
+      ],
+      "variability_rules": "تمرکز بر یکی از علائم اصلی (تنگی نفس، سرفه، ویز) به عنوان شکایت غالب"
+    },
+    "present_illness": {
+      "conceptual_goal": "بررسی سیر زمانی، شدت و عوامل مرتبط",
+      "onset": ["ناگهانی (پس از تماس با محرک)", "تدریجی (طی چند هفته اخیر)"],
+      "progression": ["ثابت", "بدتر شونده", "نوسانی"],
+      "triggers": "انتخاب تصادفی از لیست محرک‌ها (حیوانات، سرما، ورزش)",
+      "associated_symptoms": ["آبریزش بینی", "اشک‌ریزش", "خارش گلو"],
+      "diurnal_variation": "تشدید علائم در شب یا اوایل صبح (ویژگی کلیدی)",
+      "general_symptoms": ["خستگی", "کلافگی"]
+    },
+    "past_medical_history": {
+      "conceptual_goal": "یافتن بیماری‌های همراه یا زمینه‌ای آتوپیک",
+      "symptom_pools": [
+        "اگزما (درماتیت آتوپیک)",
+        "رینیت آلرژیک (تب یونجه)",
+        "سینوزیت مزمن",
+        "پلیپ بینی",
+        "رفلاکس معده به مری (GERD)"
+      ],
+      "probabilities": "احتمال بالای وجود بیماری‌های آتوپیک (تریاد آتوپی)",
+      "negative_symptoms": ["نارسایی قلبی", "بیماری انسدادی مزمن ریه (در افراد غیر سیگاری جوان)"]
+    },
+    "drug_history": {
+      "conceptual_goal": "بررسی داروهای مصرفی فعلی (غیر از درمان اصلی آسم)",
+      "prescribed_drugs": [
+        "آنتی‌هیستامین‌ها (مثل ستیریزین، لوراتادین)",
+        "مهارکننده پمپ پروتون (مثل امپرازول برای رفلاکس)",
+        "قطره‌های چشمی یا بینی"
+      ],
+      "otc_and_supplements": ["مولتی‌ویتامین", "مسکن‌های ساده"],
+      "recent_changes": ["مصرف اخیر آسپیرین یا NSAID (بررسی حساسیت دارویی)"],
+      "constraint": "عدم ذکر اسپری‌های تنفسی یا کورتون‌های سیستمیک به عنوان داروی روتین (مگر در سناریوی آسم کنترل نشده شناخته شده)"
+    },
+    "allergies": {
+      "conceptual_goal": "شناسایی آلرژی‌های دارویی و محیطی",
+      "probability": "بسیار بالا (۷۰-۹۰ درصد)",
+      "type_of_reaction": ["تنفسی (تنگی نفس)", "پوستی (کهیر)", "گوارشی"],
+      "specific_allergens": ["گرده گل", "غذاهای خاص (بادام زمینی، تخم مرغ)", "آسپیرین (در آسم حساس به آسپیرین)"]
+    },
+    "family_history": {
+      "conceptual_goal": "بررسی زمینه ژنتیکی آتوپی",
+      "hereditary_conditions": ["آسم", "اگزما", "آلرژی فصلی"],
+      "relatives": ["پدر", "مادر", "خواهر/برادر"]
+    },
+    "social_history": {
+      "conceptual_goal": "بررسی فاکتورهای محیطی و سبک زندگی",
+      "smoking": ["سیگاری فعال", "سیگاری غیرفعال (دود دست دوم)", "قلیان", "غیر سیگاری"],
+      "living_situation": ["وجود قالی/موکت قدیمی", "رطوبت منزل", "حیوانات خانگی (گربه، سگ، پرنده)"],
+      "occupation": ["دانش‌آموز", "کارمند اداری", "شغل‌های صنعتی (رنگ‌کاری، نجاری)"]
+    },
+    "ROS": {
+      "conceptual_goal": "بررسی سیستماتیک برای یافتن علائم همراه یا رد تشخیص‌های افتراقی",
+      "positive_findings": {
+        "HEENT": ["گرفتگی بینی", "ترشحات پشت حلق", "خارش چشم"],
+        "Skin": ["خشکی پوست", "ضایعات اگزمایی"],
+        "Resp": ["تنگی نفس کوششی", "ویزینگ بازدمی"]
+      },
+      "negative_findings": {
+        "CV": ["تپش قلب غیرطبیعی", "درد قفسه سینه فعالیتی", "اورتوپنه شدید (مختص نارسایی قلب)"],
+        "GI": ["تهوع و استفراغ (مگر ناشی از سرفه شدید)"],
+        "General": ["تب", "لرز"]
+      }
+    }
+  },
+  "constraints": {
+    "mandatory_symptoms": [
+      "حداقل یکی از سه علامت اصلی (سرفه، ویزینگ، تنگی نفس) باید وجود داشته باشد."
+    ],
+    "consistency_rules": [
+      "اگر شدت بیماری 'شدید' توصیف شود، بیمار نباید قادر به صحبت کردن با جملات کامل باشد.",
+      "اگر بیمار سیگاری قهار و مسن است، علائم باید با تشخیص افتراقی COPD همپوشانی منطقی داشته باشد (اما تشخیص نهایی آسم بماند).",
+      "علائم نباید صرفاً با فعالیت بدنی ایجاد شوند مگر در نوع 'آسم ناشی از ورزش'."
+    ],
+    "forbidden_combinations": [
+      "تب بالا + شروع ناگهانی تنگی نفس (بیشتر مطرح کننده پنومونی است تا حمله آسم خالص).",
+      "تنگی نفس دمی (استریدور) به جای بازدمی (ویزینگ) (مطرح کننده انسداد راه هوایی فوقانی است)."
+    ],
+    "logic_control": "تنوع نامحدود در ترکیب محرک‌ها و شدت، اما الگوی کلی باید 'برگشت‌پذیر بودن' یا 'نوسانی بودن' علائم را حفظ کند."
+  }
+}
 """
 
 PTE_PROFILE_REF = """
@@ -531,8 +751,12 @@ documents = [
     Document(page_content=PNEUMONIA_HISTORY_REF, metadata={"disease": "Pneumonia", "section": "history_taking"}),
     Document(page_content=COPD_PROFILE_REF, metadata={"disease": "COPD", "section": "patient_profile"}),
     Document(page_content=COPD_HISTORY_REF, metadata={"disease": "COPD", "section": "history_taking"}),
-    Document(page_content=ASTHMA_PROFILE_REF, metadata={"disease": "Asthma", "section": "patient_profile"}),
-    Document(page_content=ASTHMA_HISTORY_REF, metadata={"disease": "Asthma", "section": "history_taking"}),
+    Document(page_content=ASTHMA_BOUNDARIES_REF, metadata={"disease": "Asthma", "section": "BOUNDARIES"}),
+    Document(page_content=ASTHMA_VARIABILITY_REF, metadata={"disease": "Asthma", "section": "VARIABILITY"}),
+    Document(page_content=ASTHMA_HISTORY_REF, metadata={"disease": "Asthma", "section": "HISTORY"}),
+    Document(page_content=ASTHMA_CONSTRaAINTS_REF, metadata={"disease": "Asthma", "section": "CONSTRaAINTS"}),
+    Document(page_content=ASTHMA_OUTPUT_REF, metadata={"disease": "Asthma", "section": "OUTPUT"}),
+    Document(page_content=ASTHMA_JSON_REF, metadata={"disease": "Asthma", "section": "JSON"}),
     Document(page_content=PTE_PROFILE_REF, metadata={"disease": "PTE", "section": "patient_profile"}),
     Document(page_content=PTE_HISTORY_REF, metadata={"disease": "PTE", "section": "history_taking"}),
     Document(page_content=IPF_PROFILE_REF, metadata={"disease": "IPF", "section": "patient_profile"}),

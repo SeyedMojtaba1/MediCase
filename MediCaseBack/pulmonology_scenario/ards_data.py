@@ -494,60 +494,60 @@ class ARDSDataGenerator:
 
     # در داخل کلاس PHDataGenerator
 
-    def _get_spirometry_data(self):
-        """
-        تولید داده‌های FEV1, FVC و FEV1/FVC Ratio بر اساس وابستگی‌های اعلام شده.
-        این داده‌ها عمدتاً برای Group 1 PAH (بیماری عروقی خالص) معتبر هستند.
-        """
+    # def _get_spirometry_data(self):
+    #     """
+    #     تولید داده‌های FEV1, FVC و FEV1/FVC Ratio بر اساس وابستگی‌های اعلام شده.
+    #     این داده‌ها عمدتاً برای Group 1 PAH (بیماری عروقی خالص) معتبر هستند.
+    #     """
         
-        # مقادیر مرجع (Predicted) را با اندکی تغییر در رنج‌های شما تعریف می‌کنیم
-        # این مقادیر فقط برای محاسبه 'Measured' استفاده می‌شوند.
-        pred_fev1_val = self.random.uniform(3.50, 3.80) # حول و حوش 3.65 L
-        pred_fvc_val = self.random.uniform(4.30, 4.70)  # حول و حوش 4.50 L
-        pred_ratio_val = self.random.uniform(0.79, 0.83) # حول و حوش 0.81
+    #     # مقادیر مرجع (Predicted) را با اندکی تغییر در رنج‌های شما تعریف می‌کنیم
+    #     # این مقادیر فقط برای محاسبه 'Measured' استفاده می‌شوند.
+    #     pred_fev1_val = self.random.uniform(3.50, 3.80) # حول و حوش 3.65 L
+    #     pred_fvc_val = self.random.uniform(4.30, 4.70)  # حول و حوش 4.50 L
+    #     pred_ratio_val = self.random.uniform(0.79, 0.83) # حول و حوش 0.81
         
-        # --- FEV1 Logic (80/20) ---
-        fev1_pct_choices = [
-            (self.random.uniform(80.0, 120.0), (2.90, 4.40), "80-120%"), # 80%
-            (self.random.uniform(60.0, 79.0), (2.20, 2.90), "60-79%")   # 20%
-        ]
-        fev1_pct, fev1_range, fev1_pct_text = self.random.choices(fev1_pct_choices, weights=[80, 20], k=1)[0]
-        meas_fev1 = self.random.uniform(fev1_range[0], fev1_range[1]) # انتخاب مقدار Measured از رنج درخواستی
+    #     # --- FEV1 Logic (80/20) ---
+    #     fev1_pct_choices = [
+    #         (self.random.uniform(80.0, 120.0), (2.90, 4.40), "80-120%"), # 80%
+    #         (self.random.uniform(60.0, 79.0), (2.20, 2.90), "60-79%")   # 20%
+    #     ]
+    #     fev1_pct, fev1_range, fev1_pct_text = self.random.choices(fev1_pct_choices, weights=[80, 20], k=1)[0]
+    #     meas_fev1 = self.random.uniform(fev1_range[0], fev1_range[1]) # انتخاب مقدار Measured از رنج درخواستی
         
-        # --- FVC Logic (80/20) ---
-        fvc_pct_choices = [
-            (self.random.uniform(80.0, 120.0), (3.60, 5.40), "80-120%"), # 80%
-            (self.random.uniform(60.0, 79.0), (2.70, 3.55), "60-79%")   # 20%
-        ]
-        fvc_pct, fvc_range, fvc_pct_text = self.random.choices(fvc_pct_choices, weights=[80, 20], k=1)[0]
-        meas_fvc = self.random.uniform(fvc_range[0], fvc_range[1]) # انتخاب مقدار Measured از رنج درخواستی
+    #     # --- FVC Logic (80/20) ---
+    #     fvc_pct_choices = [
+    #         (self.random.uniform(80.0, 120.0), (3.60, 5.40), "80-120%"), # 80%
+    #         (self.random.uniform(60.0, 79.0), (2.70, 3.55), "60-79%")   # 20%
+    #     ]
+    #     fvc_pct, fvc_range, fvc_pct_text = self.random.choices(fvc_pct_choices, weights=[80, 20], k=1)[0]
+    #     meas_fvc = self.random.uniform(fvc_range[0], fvc_range[1]) # انتخاب مقدار Measured از رنج درخواستی
 
-        # --- Ratio Logic (100%) ---
-        meas_ratio = self.random.uniform(0.70, 0.85)
+    #     # --- Ratio Logic (100%) ---
+    #     meas_ratio = self.random.uniform(0.70, 0.85)
         
-        # در صورت وجود بیماری زمینه‌ای (Group 3)، باید این مقادیر تعدیل شوند
-        if self.ph_group.startswith("Group 3"):
-            if "ILD" in self.ph_group:
-                # الگوی محدودیت (Restriction): FVC و FEV1 کاهش یافته، نسبت نرمال یا بالا
-                meas_fvc = self.random.uniform(0.5 * pred_fvc_val, 0.79 * pred_fvc_val)
-                meas_ratio = self.random.uniform(0.80, 0.95)
-                meas_fev1 = meas_fvc * meas_ratio # حفظ تناسب
-                fev1_pct_text = fvc_pct_text = "50-79%"
-            elif "COPD" in self.ph_group:
-                # الگوی انسداد (Obstruction): FEV1 کاهش یافته، نسبت پایین
-                meas_ratio = self.random.uniform(0.40, 0.69)
-                meas_fev1 = self.random.uniform(0.4 * pred_fev1_val, 0.79 * pred_fev1_val)
-                meas_fvc = meas_fev1 / meas_ratio # حفظ تناسب
-                fev1_pct_text = "40-79%"
-                fvc_pct_text = "80-100%"
+    #     # در صورت وجود بیماری زمینه‌ای (Group 3)، باید این مقادیر تعدیل شوند
+    #     if self.ph_group.startswith("Group 3"):
+    #         if "ILD" in self.ph_group:
+    #             # الگوی محدودیت (Restriction): FVC و FEV1 کاهش یافته، نسبت نرمال یا بالا
+    #             meas_fvc = self.random.uniform(0.5 * pred_fvc_val, 0.79 * pred_fvc_val)
+    #             meas_ratio = self.random.uniform(0.80, 0.95)
+    #             meas_fev1 = meas_fvc * meas_ratio # حفظ تناسب
+    #             fev1_pct_text = fvc_pct_text = "50-79%"
+    #         elif "COPD" in self.ph_group:
+    #             # الگوی انسداد (Obstruction): FEV1 کاهش یافته، نسبت پایین
+    #             meas_ratio = self.random.uniform(0.40, 0.69)
+    #             meas_fev1 = self.random.uniform(0.4 * pred_fev1_val, 0.79 * pred_fev1_val)
+    #             meas_fvc = meas_fev1 / meas_ratio # حفظ تناسب
+    #             fev1_pct_text = "40-79%"
+    #             fvc_pct_text = "80-100%"
                 
         
-        # ساختار خروجی مطابق با جزئیات درخواستی
-        return {
-            "FEV1": f"Measured: {meas_fev1:.2f} L, Predicted: {pred_fev1_val:.2f} L, %Predicted: {fev1_pct_text}",
-            "FVC": f"Measured: {meas_fvc:.2f} L, Predicted: {pred_fvc_val:.2f} L, %Predicted: {fvc_pct_text}",
-            "FEV1/FVC_Ratio": f"Measured: {meas_ratio:.2f}, Predicted: {pred_ratio_val:.2f}, %Predicted: {(meas_ratio/pred_ratio_val)*100:.0f}%"
-        }
+    #     # ساختار خروجی مطابق با جزئیات درخواستی
+    #     return {
+    #         "FEV1": f"Measured: {meas_fev1:.2f} L, Predicted: {pred_fev1_val:.2f} L, %Predicted: {fev1_pct_text}",
+    #         "FVC": f"Measured: {meas_fvc:.2f} L, Predicted: {pred_fvc_val:.2f} L, %Predicted: {fvc_pct_text}",
+    #         "FEV1/FVC_Ratio": f"Measured: {meas_ratio:.2f}, Predicted: {pred_ratio_val:.2f}, %Predicted: {(meas_ratio/pred_ratio_val)*100:.0f}%"
+    #     }
     
     # در داخل کلاس PHDataGenerator
     def _gen_functional_tests(self):
@@ -556,7 +556,7 @@ class ARDSDataGenerator:
         """
         
         # فراخوانی متد جدید برای تولید داده‌های اسپیرومتری
-        spirometry_data = self._get_spirometry_data()
+        # spirometry_data = self._get_spirometry_data()
         
         # فراخوانی متد DLCO (اگر آن را به یک متد مجزا تبدیل کرده باشید)
         dlco_status, dlco_value = self._get_dlco_finding() 
@@ -575,11 +575,11 @@ class ARDSDataGenerator:
 
         # --- Constructing the Dictionary based on your required structure ---
         return {
-            "spirometry": {
-                "FEV1": spirometry_data["FEV1"],
-                "FVC": spirometry_data["FVC"],
-                "FEV1/FVC_Ratio": spirometry_data["FEV1/FVC_Ratio"]
-            }, 
+            # "spirometry": {
+            #     "FEV1": spirometry_data["FEV1"],
+            #     "FVC": spirometry_data["FVC"],
+            #     "FEV1/FVC_Ratio": spirometry_data["FEV1/FVC_Ratio"]
+            # }, 
             "dlco": dlco_value,
             "peak_flow": pef_val,
             "plethysmography": pleth_val

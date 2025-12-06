@@ -1,57 +1,291 @@
 {
-  "total": {
-    "strengths": "دانشجو به درستی در مورد تنگی نفس سؤالاتی را پرسیده است که نشان دهنده درک صحیح او از وضعیت بیمار بود (سوالات 1، 3 و 8). این سؤالات به جمع آوری اطلاعات کلیدی در مورد زمان و الگوی تنگی نفس کمک کرد.",
-    "weaknesses": {
-      "M": "دانشجو هیچ کدام از سوالات مهم را از دست نداده است.",
-      "E": ""
+  "scenario": {
+    "paraclinic": {
+      "procedures": {
+        "Bronchoscopy": "Not Indicated for Routine Stable Visit.",
+        "torachonthesis": "Not Indicated and fluid cannot be aspirated."
+      },
+      "simple_imaging": {
+        "Chest_X_Ray": {
+          "PA_Lateral_Findings_and_Effusion": "Hyperinflation findings (Flat Diaphragms)"
+        }
+      },
+      "advanced_imaging": {
+        "Chest_CT_CTPA": {
+          "Lung_Parenchyma_and_Pleura": "Bullae or Bronchiectatic Changes"
+        }
+      },
+      "functional_tests": {
+        "dlco": "95% predicted",
+        "peak_flow": "Reduced",
+        "Spirometry": {
+          "result": {
+            "FVC": "Measured: 3.04 L, Predicted: 4.0 L, %Predicted: 76%",
+            "FEV1": "Measured: 1.57 L, Predicted: 3.5 L, %Predicted: 45%",
+            "FEV1/FVC_Ratio": "Measured: 0.52, Predicted: 0.8, %Predicted: 65%"
+          },
+          "Reversibility": "FEV1 increase > 12% but < 200 mL"
+        },
+        "plethysmography": "Increased Lung Volumes"
+      },
+      "basic_blood_tests": {
+        "BMP": {
+          "Cr": "0.8 mg/dL",
+          "Na": "141 mEq/L",
+          "BUN": "13 mg/dL"
+        },
+        "CBC": {
+          "Hb": "16.6 g/dL",
+          "Plt": "41 /µL",
+          "WBC": "10781 /µL"
+        },
+        "CRP": "4 mg/L",
+        "ESR": "42 mm/h",
+        "VBG": {
+          "pH": "7.4",
+          "HCO3": "24 mEq/L",
+          "PaO2": "82 mmHg"
+        },
+        "LFTs": {
+          "ALT": "28 U/L",
+          "AST": "26 U/L"
+        }
+      },
+      "immunity_and_serology": {
+        "HIV_test": "Negative",
+        "Autoimmune_pannel_ANA_ANCA": "Positive"
+      },
+      "specialized_lung_tests": {
+        "D_dimer": "< 500 ng/mL FEU",
+        "Sputum_AFB": "Negative",
+        "BNP_NT_proBNP": "within normal range",
+        "Sputum_analysis": {
+          "Gram_Stain": "Normal Flora / Mixed",
+          "Sample_Quality": "Not Indicated for Routine Stable Visit."
+        },
+        "a1_antitrypsin_level": "within normal range"
+      }
     },
-    "educational_feedback": "نکته مهم این است که برای بهبود مهارت‌های تریاژ و استدلال بالینی، دانشجو باید به یاد داشته باشد که تمامی سوالات کلیدی باید در مراحل اولیه اانجام شود و از اتمام 50% سوالات بهینه قبل از انتقال به بخش‌های دیگر اطمینان حاصل کند."
-  },
-  "history_taking": {
-    "strengths": "سؤالات مربوط به تنگی نفس و سابقه پزشکی نشان‌دهنده درک درست دانشجو از شرایط بیمار است و کمک شایانی به جمع آوری اطلاعات کلیدی کرده است.",
-    "weaknesses": {
-      "M": "",
-      "E": ""
+    "physical_exam": {
+      "vital_signs": {
+        "T": "37.2 °C",
+        "BP": "104/68 mmHg",
+        "PR": "65 bpm and regular rhythm",
+        "RR": "18 breaths/min",
+        "GCS": "15",
+        "SpO2": "94% (Room Air)"
+      },
+      "neurological": {
+        "cranial_nerves": "Cranial Nerves II-XII intact.",
+        "deep_tendon_reflexes": "2+ and Symmetrical.",
+        "coordination_and_gait": "Normal coordination and Gait.",
+        "involuntary_movements": "Absent.",
+        "mental_status_and_LOC": "A&Ox3.",
+        "motor_strength_and_tone": "Asymmetrical weakness.",
+        "sensory_light_touch_and_pain": "Symmetrical and Intact."
+      },
+      "head_and_neck": {
+        "ears": {
+          "eardrum_appearance": "Normal appearance.",
+          "external_and_tenderness": "Normal external appearance, No mastoid tenderness."
+        },
+        "eyes": {
+          "pupils_reaction": "Pupils equal, round, and reactive to light (PERRL).",
+          "extraocular_movements": "Full Range of Motion.",
+          "sclera_and_conjunctiva": "Pink conjunctiva, Anicteric sclera."
+        },
+        "head_and_face": {
+          "tenderness": "No tenderness on palpation of the skull.",
+          "symmetry_and_lesions": "Symmetrical, No acute lesions or masses."
+        },
+        "nose_and_sinuses": {
+          "sinus_tenderness": "No sinus tenderness on palpation.",
+          "septum_and_discharge": "Midline Septum, No purulent/bloody discharge."
+        },
+        "mouth_and_pharynx": {
+          "pharynx_and_tonsils": "Non-erythematous pharynx, Tonsils non-enlarged.",
+          "oral_mucosa_and_lesions": "Moist mucosa, No lesions."
+        },
+        "neck_and_lymphatics": {
+          "inspection": "No swelling, redness, or visible masses.",
+          "carotid_bruit": "Absent.",
+          "thyroid_gland": "Non-enlarged, non-tender.",
+          "tracheal_position": "Midline, no deviation.",
+          "lymph_nodes_size_consistency": "Non-palpable or small, soft nodes.",
+          "lymph_nodes_mobility_tenderness": "Mobile and non-tender."
+        }
+      },
+      "abdominal_system": {
+        "palpation": {
+          "peritoneal_signs": "Absent (No Rebound Tenderness or Guarding).",
+          "deep_masses_and_organs": "No masses, Liver/Spleen non-palpable.",
+          "superficial_tenderness": "No superficial tenderness."
+        },
+        "inspection": "Flat/Rounded, Symmetrical, No obvious scars or masses.",
+        "percussion": {
+          "general": "Tympanic throughout.",
+          "organ_borders": "Liver/Spleen borders not percussed as enlarged."
+        },
+        "auscultation": {
+          "bowel_sounds": "Normoactive Bowel Sounds.",
+          "vascular_bruits": "Absent."
+        }
+      },
+      "general_appearance": {
+        "overall_appearance": {
+          "nutritional_status": "Cachectic (Low BMI)."
+        },
+        "posture_and_position": {
+          "position_of_comfort": "Comfortable in bed or seated."
+        },
+        "cardiopulmonary_and_circulatory_clues": {
+          "edema": "Absent.",
+          "dyspnea": "Mild dyspnea only on exertion.",
+          "cyanosis": "Absent."
+        },
+        "level_of_consciousness_mood_and_behavior": {
+          "mood": "Anxious/Apprehensive.",
+          "behavior": "Cooperative.",
+          "level_of_consciousness": "Alert and Oriented to Person, Place, and Time, following commands."
+        }
+      },
+      "respiratory_system": {
+        "palpation": {
+          "chest_expansion": "Symmetrical expansion.",
+          "tactile_fremitus": "Decreased and Symmetrical"
+        },
+        "inspection": {
+          "accessory_muscles": "Present (Sternocleidomastoid/Scalene use).",
+          "chest_shape_and_symmetry": "Symmetrical movement, Normal shape."
+        },
+        "percussion": "Diffuse Hyperresonant.",
+        "auscultation": {
+          "adventitious_sounds": "No Adventitious Sounds.",
+          "breath_sounds_intensity": "Prolonged Expiration. Reduced intensity."
+        }
+      },
+      "cardiovascular_system": {
+        "palpation": {
+          "pmi_assessment": "PMI non-palpable or muffled.",
+          "precordial_palpation_heave_thrill": "No heave, lift, or thrill detected."
+        },
+        "auscultation": {
+          "heart_sounds_s1_s2": "Muffled/Distant S1 and S2.",
+          "extra_sounds_s3_s4_murmurs": "No S3/S4 or Murmur."
+        },
+        "JVP_assessment": "< 4 cm above sternal angle.",
+        "peripheral_pulses_and_extremities": {
+          "extremities_edema": "Absent.",
+          "extremities_color_and_trophic_changes": "No clubbing or trophic changes.",
+          "extremities_temperature_and_cap_refill": "Extremities warm, Capillary Refill Time < 2 seconds.",
+          "peripheral_pulses_symmetry_and_quality": "Symmetrical and Regular. Tachycardic quality."
+        }
+      },
+      "musculoskeletal_system": {
+        "palpation": {
+          "tenderness_and_crepitus": "No tenderness or crepitus."
+        },
+        "inspection": {
+          "joints": "No swelling, redness, or deformity.",
+          "muscles": "No obvious atrophy."
+        },
+        "stability_and_function": "Stable and Functional.",
+        "range_of_motion_active_passive": "Full ROM Active/Passive."
+      }
     },
-    "educational_feedback": {
-      "why_M_was_important": "",
-      "why_E_was_unnecessary": "",
-      "sequence_advice": "توجه به توالی منطقی اهمیت دارد. دانشجو باید سعی کند که سؤالات بهینه را قبل از انتقال به مراحل بعدی جمع آوری کند."
-    }
-  },
-  "physical_exam": {
-    "strengths": "دانشجو به درستی در مورد ارزیابی JVP اقدام کرد که یکی از ارزیابی‌های اصلی برای مسائل قلبی است.",
-    "weaknesses": {
-      "M": "",
-      "E": ""
+    "history_taking": {
+      "ros": {
+        "question1": "گاهی احساس خستگی شدید دارم ولی کاهش وزن چشمگیری نداشتهام.",
+        "question2": "پوستم طبیعی است و هیچ تغییری در رنگ یا بافت آن نداشتهام.",
+        "question3": "سردرد، سفتی گردن یا بزرگی غدد لنفاوی در گردن ندارم.",
+        "question4": "هیچگونه تاری دید، دوبینی یا درد چشمی نداشتهام.",
+        "question5": "مشکلی در گوش، حلق یا بینی ندارم.",
+        "question6": "گاهی اوقات تنگی نفس دارم اما درد قفسه سینه یا تورم پاها ندارم.",
+        "question7": "سرفه مداوم همراه با خلط گاه به گاه دارم و گاهی خسخس میکنم.",
+        "question8": "رفلاکس معده دارم ولی سایر مشکلات گوارشی ندارم.",
+        "question9": "هیچ مشکلی در دستگاه ادراری ندارم.",
+        "question10": "گاهی احساس ضعف عضلانی دارم ولی درد یا سفتی مفاصل تجربه نکردهام.",
+        "question11": "هیچ نشانهای از سردرد جدید، ضعف اندامها یا تشنج مشاهده نکردهام.",
+        "question12": "گاهی اوقات اضطراب دارم ولی افسردگی خاصی ندارم.",
+        "question13": "افزایش تشنگی یا گرسنگی را تجربه نکردهام.",
+        "question14": "مشکل کمخونی ندارم و هیچ علائمی از خونریزی غیرطبیعی نداشتهام."
+      },
+      "allergies": {
+        "question1": {
+          "question1a": "هیچ آلرژی شناختهشدهای به دارو یا مواد غذایی ندارم.",
+          "question1b": "هیچ واکنش شدیدی مثل کهیر یا تنگی نفس نداشتهام."
+        }
+      },
+      "drug_history": {
+        "question1": {
+          "question1a": "از اسپری تنفسی (LAMA و SABA) به طور منظم استفاده میکنم.",
+          "question1b": "به نظر میآید تکنیک استفاده از اسپریهایم مشکل دارد.",
+          "question1c": "دوز داروهایم اخیراً تغییری نکرده است."
+        },
+        "question2": "گاهی اوقات از مکملهای غذایی استفاده میکنم ولی داروهای گیاهی مصرف نمیکنم."
+      },
+      "family_history": {
+        "question1": {
+          "question1a": "سابقه بیماری COPD در اعضای خانوادهام وجود دارد.",
+          "question1b": "پدرم از مشکلات ریوی رنج میبرد که در میانسالی شدت گرفت."
+        },
+        "question2": "در خانوادهام سابقه نارسایی قلبی و سکته قلبی وجود دارد.",
+        "question3": {
+          "question3a": "سابقه سرطان در خانوادهام وجود ندارد.",
+          "question3b": "هیچ سابقه مرتبطی از سرطان نداریم."
+        }
+      },
+      "social_history": {
+        "question1": {
+          "question1a": "سیگار کشیدن را حدود ده سال پیش ترک کردم اما قبل از آن بیش از ۲۰ سال سیگاری بودم.",
+          "question1b": "حدود بیست سال است که ترک کردهام."
+        },
+        "question2": "به ندرت الکل مصرف میکنم و میزان مصرفم بسیار کم است.",
+        "question3": {
+          "question3a": "هیچگونه مصرف مواد مخدر نداشتهام.",
+          "question3b": "نیازی به تاریخچه مصرف ندارم زیرا هیچوقت مصرف نکردهام."
+        },
+        "question4": "با خانوادهام در خانهای نسبتا بزرگ و راحت زندگی میکنم."
+      },
+      "present_illness": {
+        "question1": "علائمم از چند سال پیش شروع شد و به تدریج به مرور زمان بدتر شد. در ابتدا فقط هنگام فعالیت تنگی نفس داشتم اما حالا با فعالیتهای روزمره هم احساس تنگی نفس میکنم.",
+        "question2": "علائم به صورت تدریجی شروع شده و بعید است که بعد از یک اتفاق خاص یا عفونت خاص به وجود آمده باشد.",
+        "question3": "تنگی نفس دارم که در هنگام فعالیت تشدید میشود و در حالت استراحت نسبتاً کمتر است.",
+        "question4": "بیشتر وقتها سرفههای مداوم دارم با خلط شفاف که حجمش زیاد نیست. گاهی هم فقط سرفه خشک میکنم.",
+        "question5": "بله، در مواقعی خسخس و صدای غیرعادی از ریههایم شنیدهام، مخصوصاً وقتی هوا سرد یا آلوده باشد.",
+        "question6": "احساس درد خاصی در قفسه سینه ندارم ولی گاهی احساس میکنم قفسه سینهام سنگین است.",
+        "question7": "خیر، اخیراً تب، لرز یا تعریق شبانه نداشتهام.",
+        "question8": "بعضی وقتها ورم پاها دارم اما تپش قلب یا احساس سبکی سر ندارم.",
+        "question9": "بله، قبلاً هم چنین علائمی داشتم. استفاده از اسپری تنفسی به من کمک میکند.",
+        "question10": "گاهی اوقات احساس خستگی دارم، اما کاهش وزن یا بیاشتهایی قابل توجهی نداشتهام."
+      },
+      "past_medical_history": {
+        "question1": {
+          "question1a": "فشار خون بالا و اضطراب دارم.",
+          "question1b": "بیش از پنج سال است که با این مشکلات روبرو هستم."
+        },
+        "question2": {
+          "question2a": "برای مشکلات تنفسی در بیمارستان بستری شدم، اما هیچ عمل جراحی بزرگی نداشتهام.",
+          "question2b": "چند سال پیش برای بررسی وضعیت ریهام بستری شدم."
+        },
+        "question3": "سابقه بیماری ریوی انسدادی مزمن (COPD) در گذشته تصدیق شده است.",
+        "question4": "سابقه سرطان فعال ندارم.",
+        "question5": "در کودکی سابقه هیچ مشکل جدی یا بیماری خاصی نداشتم.",
+        "question6": "واکسیناسیون برای آنفولانزا و ذاتالریه را انجام دادهام."
+      }
     },
-    "educational_feedback": {
-      "why_M_was_important": "",
-      "why_E_was_unnecessary": "",
-      "sequence_advice": "جهت بهبود، بهتر است دانشجو بتواند ارزیابی‌های بیشتری از سیستم‌های قلبی و تنفسی را انجام دهد تا دید بهتری نسبت به وضعیت بیمار پیدا کند."
-    }
-  },
-  "paraclinic": {
-    "strengths": "دانشجو تست‌های ضروری برای ارزیابی وضعیت بیمار را انجام داد و به شناخت بهتر بیماری کمک کرد.",
-    "weaknesses": {
-      "M": "",
-      "E": ""
-    },
-    "educational_feedback": {
-      "why_M_was_important": "",
-      "why_E_was_unnecessary": "",
-      "sequence_advice": "توجه به کمیت و کیفیت تست‌ها در پروسه تشخیصی ضروری است و دانشجو باید به یاد داشته باشد که تست‌ها باید به طور منطقی و به تدریج انجام شوند."
-    }
-  },
-  "differential_diagnosis": {
-    "strengths": "دانشجو توانست فهرست مناسبی از بیماری‌های قابل تصور را در نظر بگیرد.",
-    "weaknesses": {
-      "M": "فقدان تحلیل صحیح و انتخاب غیر ضروری.",
-      "E": ""
-    },
-    "educational_feedback": {
-      "why_M_was_important": "دانشجو باید تحلیل دقیقی از شواهد و داده‌ها داشته باشد تا بیماری‌های نادر یا جدی نادیده نرود.",
-      "why_E_was_unnecessary": "از آنجایی که دانشجو هیچ بیماری غیرضروری را درخواست نکرده است، این ضعف صرفا به دلایل تحلیل نامناسب برمی‌گردد."
+    "patient_profile": {
+      "chief_complaint": "سرفه های مداوم و تنگی نفس در طول فعالیت",
+      "personal_information": {
+        "age": "67 ساله",
+        "gender": "مرد",
+        "last_name": "صالحی",
+        "first_name": "وحید",
+        "occupation": "بازنشسته شرکت نفت",
+        "marital_status": "متأهل",
+        "place_of_birth": "قم",
+        "place_of_residence": "ایلام"
+      }
     }
   }
 }

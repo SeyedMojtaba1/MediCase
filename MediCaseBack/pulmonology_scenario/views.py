@@ -30,8 +30,12 @@ def generate_tracking_code(length: int = 10) -> str:
 @permission_classes([permissions.IsAuthenticated])
 @api_view(['GET'])
 def scenario_create(request):
+    with open("demofile.txt", "a") as f:
+        f.write("start-scenario-create-view")
     user = request.user
     
+    with open("demofile.txt", "a") as f:
+        f.write("start-try-User")
     try:
         user = User.objects.get(personal_number=user.personal_number)
     except User.DoesNotExist:
@@ -39,14 +43,20 @@ def scenario_create(request):
             {"detail": "User is not exist."}
         )
     
+    with open("demofile.txt", "a") as f:
+        f.write("check")
     if user.scenario_credit <= 0:
         return Response(
             {"detail": "User Have not enough credit."}
         )
-        
+    
+    with open("demofile.txt", "a") as f:
+        f.write("create-tracking")
     tracking_code = generate_tracking_code(10)
     senario_creator_celery.delay(user.personal_number, tracking_code)
 
+    with open("demofile.txt", "a") as f:
+        f.write("before-return")
     return Response({"tracking_code": tracking_code}, status=status.HTTP_200_OK)
 
 class ScenarioRetrieveView(generics.RetrieveAPIView):
