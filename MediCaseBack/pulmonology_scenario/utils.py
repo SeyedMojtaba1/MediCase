@@ -11,6 +11,7 @@ User = get_user_model()
 def senario_creator_celery(user, tracking_code):
     print("before-call-scenario-creator")
     scenario, target_disease = scenario_creator()
+    print(target_disease)
     
     # 1. NEW: Check for error dictionary returned by scenario_creator
     if isinstance(scenario, dict) and "error" in scenario:

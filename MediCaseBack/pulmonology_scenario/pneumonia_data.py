@@ -1,10 +1,11 @@
 import random
 import re
+import json
 
 class PneumoniaDataGenerator:
     """
-    کلاسی برای تولید داده‌های شبیه‌سازی شده آزمایشگاهی، پاراکلینیکی و معاینات فیزیکی.
-    نسخه به روز شده با منطق هماهنگ‌سازی و اضافه شدن Patient Profile پیشرفته.
+    کلاسی برای تولید داده‌های شبیه‌سازی شده پنومونی.
+    اصلاح شده بر اساس قواعد آماری دقیق فایل متنی 'معاینات فیزیکی'.
     """
     
     RANDOM_DATA_LISTS = {
@@ -86,306 +87,291 @@ class PneumoniaDataGenerator:
     
     def __init__(self):
         self.random = random
-        self.case_type = self._determine_case_type()
-        self.pe_status = "PE Present" if self.case_type == "LOBAR_PE_PRESENT" else "PE Absent"
-        self.vital_signs = {} 
-        self.severity_level = None 
+        # دیگر نیازی به self.case_type یا severity_level برای تعیین منطق نیست
+        # زیرا منطق دقیقا بر اساس درصدهای فایل متنی پیاده می‌شود.
 
-
+    # --- Demographic Helpers ---
     def _select_occupation(self, gender, age_str):
         age = int(age_str.split()[0])
-        
-        if age > 65:
-            return self.random.choice(self.RANDOM_DATA_LISTS["occupations_retirement"])
-        
+        if age > 65: return self.random.choice(self.RANDOM_DATA_LISTS["occupations_retirement"])
         if 55 <= age <= 65:
-            if self.random.random() < 0.5:
-                return self.random.choice(self.RANDOM_DATA_LISTS["occupations_retirement"])
-            else:
-                if gender == "مرد":
-                    return self.random.choice(self.RANDOM_DATA_LISTS["occupations_male"])
-                else:
-                    return self.random.choice(self.RANDOM_DATA_LISTS["occupations_female"])
-
-        else:
-            if gender == "مرد":
-                return self.random.choice(self.RANDOM_DATA_LISTS["occupations_male"])
-            else:
-                return self.random.choice(self.RANDOM_DATA_LISTS["occupations_female"])
+            return self.random.choice(self.RANDOM_DATA_LISTS["occupations_retirement"]) if self.random.random() < 0.5 else (self.random.choice(self.RANDOM_DATA_LISTS["occupations_male"]) if gender == "مرد" else self.random.choice(self.RANDOM_DATA_LISTS["occupations_female"]))
+        return self.random.choice(self.RANDOM_DATA_LISTS["occupations_male"]) if gender == "مرد" else self.random.choice(self.RANDOM_DATA_LISTS["occupations_female"])
 
     def _select_place_of_residence(self, place_of_birth):
         if self.random.random() < 0.7:
             nearby_cities = self.RANDOM_DATA_LISTS["city_proximity"].get(place_of_birth, [])
-            if nearby_cities:
-                return self.random.choice(nearby_cities)
-            
-        all_cities = self.RANDOM_DATA_LISTS["famous_cities_sample_30"]
-        return self.random.choice(all_cities)
+            if nearby_cities: return self.random.choice(nearby_cities)
+        return self.random.choice(self.RANDOM_DATA_LISTS["famous_cities_sample_30"])
 
     def _select_marital_status(self, gender, age_str):
         age = int(age_str.split()[0])
-        
         prob_married = 0
-        
-        if gender == "مرد":
-            prob_married = 0.8 if age >= 45 else 0.5
-        elif gender == "زن":
-            prob_married = 0.9 if age >= 35 else 0.6
-                
-        if self.random.random() < prob_married:
-            return self.random.choices(["متأهل", "همسر متوفی"], weights=[90, 10], k=1)[0]
-        else:
-            return self.random.choices(["مجرد", "مطلقه"], weights=[70, 30], k=1)[0]
+        if gender == "مرد": prob_married = 0.8 if age >= 45 else 0.5
+        elif gender == "زن": prob_married = 0.9 if age >= 35 else 0.6
+        return self.random.choices(["متأهل", "همسر متوفی"], weights=[90, 10], k=1)[0] if self.random.random() < prob_married else self.random.choices(["مجرد", "مطلقه"], weights=[70, 30], k=1)[0]
 
     def _generate_personal_information(self):
         gender = self.random.choice(["مرد", "زن"])
         age_num = self.random.randint(40, 75)
         age_str = f"{age_num} ساله"
-        
         name_key = "MALE" if gender == "مرد" else "FEMALE"
-        first_name = self.random.choice(self.RANDOM_DATA_LISTS["first_names_sample_100"][name_key])
-        last_name = self.random.choice(self.RANDOM_DATA_LISTS["last_names_sample_100"])
-        
-        occupation = self._select_occupation(gender, age_str)
-        
-        place_of_birth = self.random.choice(self.RANDOM_DATA_LISTS["famous_cities_sample_30"])
-        place_of_residence = self._select_place_of_residence(place_of_birth)
-        
-        marital_status = self._select_marital_status(gender, age_str)
-        
         return {
-            "first_name": first_name,
-            "last_name": last_name,
-            "age": age_str,
-            "gender": gender,
-            "occupation": occupation,
-            "place_of_birth": place_of_birth,
-            "place_of_residence": place_of_residence,
-            "marital_status": marital_status
+            "first_name": self.random.choice(self.RANDOM_DATA_LISTS["first_names_sample_100"][name_key]),
+            "last_name": self.random.choice(self.RANDOM_DATA_LISTS["last_names_sample_100"]),
+            "age": age_str, "gender": gender,
+            "occupation": self._select_occupation(gender, age_str),
+            "place_of_birth": (birth := self.random.choice(self.RANDOM_DATA_LISTS["famous_cities_sample_30"])),
+            "place_of_residence": self._select_place_of_residence(birth),
+            "marital_status": self._select_marital_status(gender, age_str)
         }
-
-    def _determine_case_type(self):
-        return self.random.choices(
-            ["LOBAR_PE_PRESENT", "LOBAR_PE_ABSENT", "INTERSTITIAL"], 
-            weights=[15, 60, 25], k=1
-        )[0]
-
-    def _determine_severity(self):
-        pr_match = re.search(r'\d+', self.vital_signs.get("PR", "0"))
-        rr_match = re.search(r'\d+', self.vital_signs.get("RR", "0"))
-        t_match = re.search(r'(\d+\.\d+|\d+)', self.vital_signs.get("T", "0"))
-        spo2_match = re.search(r'\d+', self.vital_signs.get("SpO2", "0"))
-
-        pr_val = int(pr_match.group(0)) if pr_match else 0
-        rr_val = int(rr_match.group(0)) if rr_match else 0
-        t_val = float(t_match.group(0)) if t_match else 0.0
-        spo2_val = int(spo2_match.group(0)) if spo2_match else 0
-
-        if pr_val > 100 or rr_val > 20 or t_val > 38.0 or spo2_val < 95:
-            return "SEVERE" 
-        else:
-            return "MILD"
 
     def _generate_value(self, distributions, is_int=False, precision=2):
         ranges = [d["range"] for d in distributions]
         weights = [d["weight"] for d in distributions]
         chosen_range = self.random.choices(ranges, weights=weights, k=1)[0]
-        
-        if is_int:
-            value = self.random.randint(chosen_range[0], chosen_range[1])
-            return str(value)
-        else:
-            value = self.random.uniform(chosen_range[0], chosen_range[1])
-            return str(round(value, precision))
+        if is_int: return str(self.random.randint(chosen_range[0], chosen_range[1]))
+        return str(round(self.random.uniform(chosen_range[0], chosen_range[1]), precision))
 
-    def _generate_bp_value(self):
-        distributions = [{"sys_range": (100, 140), "dia_range": (60, 90), "weight": 80}, 
-                         {"sys_range": (70, 89), "dia_range": (40, 59), "weight": 20}]
-        chosen = self.random.choices(distributions, weights=[d["weight"] for d in distributions], k=1)[0]
-        sys = self.random.randint(chosen["sys_range"][0], chosen["sys_range"][1])
-        dia = self.random.randint(chosen["dia_range"][0], chosen["dia_range"][1])
+    # ==========================================
+    # 1. PHYSICAL EXAM - VITAL SIGNS (RULES APPLIED)
+    # ==========================================
+    def _gen_vital_bp(self):
+        # 20% <90, 60% 90-140, 20% >140
+        scenario = self.random.choices(["Hypotension", "Normal", "Hypertension"], weights=[20, 60, 20])[0]
+        if scenario == "Hypotension":
+            sys = self.random.randint(70, 89)
+            dia = self.random.randint(40, 59)
+        elif scenario == "Normal":
+            sys = self.random.randint(90, 140)
+            dia = self.random.randint(60, 90)
+        else: # Hypertension
+            sys = self.random.randint(141, 180)
+            dia = self.random.randint(91, 110)
         return f"{sys}/{dia} mmHg"
 
-    def _generate_t_value(self):
-        distributions = [{"range": (37.0, 38.0), "weight": 40}, {"range": (38.1, 40.5), "weight": 60}]
-        return f"{self._generate_value(distributions, precision=1)} °C"
-
-    def _generate_pr_value(self):
-        distributions = [{"range": (60, 100), "weight": 70}, {"range": (101, 140), "weight": 30}]
-        chosen = self.random.choices(distributions, weights=[d["weight"] for d in distributions], k=1)[0]
-        val = self.random.randint(chosen["range"][0], chosen["range"][1])
-        return f"{val} bpm and regular rhythm"
-
-    def _generate_rr_value(self):
-        distributions = [{"range": (12, 20), "weight": 40}, {"range": (21, 24), "weight": 35}, {"range": (25, 40), "weight": 25}]
-        chosen = self.random.choices(distributions, weights=[d["weight"] for d in distributions], k=1)[0]
-        return f"{self.random.randint(chosen['range'][0], chosen['range'][1])} breaths/min"
-
-    def _generate_spo2_value(self):
-        distributions = [{"range": (95, 100), "weight": 60}, {"range": (90, 94), "weight": 30}, {"range": (80, 89), "weight": 10}]
-        chosen = self.random.choices(distributions, weights=[d["weight"] for d in distributions], k=1)[0]
-        return f"{self.random.randint(chosen['range'][0], chosen['range'][1])}% (RA)"
-
-    def _generate_gcs_value(self):
-        if self.severity_level == "MILD":
-            return "15"
+    def _gen_vital_temp(self):
+        # 75% > 38.0, 25% < 37.5
+        scenario = self.random.choices(["Fever", "Normal/Low"], weights=[75, 25])[0]
+        if scenario == "Fever":
+            return f"{round(self.random.uniform(38.1, 40.0), 1)} C"
         else:
-            return str(self.random.choice([13, 14]))
+            return f"{round(self.random.uniform(36.0, 37.4), 1)} C"
 
-    def _gen_loc(self):
-        if self.severity_level == "MILD":
-            return "Alert and Oriented to Person, Place, and Time"
+    def _gen_vital_pr(self):
+        # 80% > 100, 20% 60-100
+        scenario = self.random.choices(["Tachycardia", "Normal"], weights=[80, 20])[0]
+        if scenario == "Tachycardia":
+            val = self.random.randint(101, 130)
         else:
-            return "Lethargic or Drowsy, but arousable" 
+            val = self.random.randint(60, 100)
+        return f"{val} bpm"
 
-    def _gen_mood(self):
-        opts = ["Cooperative and Appears Acutely Ill", "Restless with evident discomfort"]
-        return self.random.choices(opts, weights=[80, 20], k=1)[0]
-    
-    def _gen_posture(self):
-        opts = ["Comfortable in bed", "Sitting upright", "Tripod position"]
-        return self.random.choices(opts, weights=[75, 15, 10], k=1)[0]
-
-    def _gen_overall_app(self):
-        opts = ["No obvious signs of cachexia or obesity", "Cachectic", "Obese"]
-        return self.random.choices(opts, weights=[90, 5, 5], k=1)[0]
-
-    def _gen_cyanosis(self):
-        opts = ["Absent", "Present (Peri-oral cyanosis)", "Present (Nail bed cyanosis)"]
-        return self.random.choices(opts, weights=[80, 10, 10], k=1)[0]
-
-    def _gen_dyspnea(self):
-        if self.severity_level == "MILD":
-            return "Mild dyspnea only on exertion"
+    def _gen_vital_rr(self):
+        # 85% > 20, 15% 12-20
+        scenario = self.random.choices(["Tachypnea", "Normal"], weights=[85, 15])[0]
+        if scenario == "Tachypnea":
+            val = self.random.randint(21, 35)
         else:
-            opts = ["Moderate dyspnea at rest, without accessory muscle use", "Severe dyspnea at rest, with accessory muscle use"]
-            return self.random.choice(opts)
+            val = self.random.randint(12, 20)
+        return f"{val} breaths/min"
 
-    def _gen_edema(self):
-        opts = ["Absent", "Mild Pitting Edema"]
-        return self.random.choices(opts, weights=[90, 10], k=1)[0]
-
-    def _gen_eyes(self):
-        opts = ["Pink conjunctiva, Anicteric sclera", "Pale conjunctiva"]
-        return self.random.choices(opts, weights=[85, 15], k=1)[0]
-
-    def _gen_lymph(self):
-        opts = ["Non-palpable or Small, non-tender cervical nodes", "Tender, enlarged, mobile anterior cervical nodes"]
-        return self.random.choices(opts, weights=[70, 30], k=1)[0]
-
-    def _gen_accessory_muscles(self):
-        if self.severity_level == "MILD":
-            return "Absent"
+    def _gen_vital_spo2(self):
+        # 60% < 94, 40% >= 94
+        scenario = self.random.choices(["Hypoxemia", "Normal"], weights=[60, 40])[0]
+        if scenario == "Hypoxemia":
+            val = self.random.randint(85, 93)
         else:
-            return "Present"
+            val = self.random.randint(94, 99)
+        return f"{val}% on Room Air"
 
-    def _gen_chest_shape(self):
-        opts = ["Symmetrical movement, Normal shape", "Reduced movement on one side", "Barrel Chest", "Pectus Excavatum", "Pectus Carinatum"]
-        return self.random.choices(opts, weights=[90, 7, 2, 0.5, 0.5], k=1)[0]
-
-    def _gen_chest_expansion(self):
-        if self.case_type in ["LOBAR_PE_PRESENT", "LOBAR_PE_ABSENT"]:
-            return "Unilateral reduced expansion over affected area"
+    def _gen_vital_gcs(self):
+        # 80% 15/15, 20% < 15
+        scenario = self.random.choices(["Normal", "Confusion"], weights=[80, 20])[0]
+        if scenario == "Normal":
+            return "15/15"
         else:
-            return "Symmetrical expansion"
+            return str(self.random.randint(13, 14))
 
-    def _gen_tactile_fremitus(self):
-        if self.case_type == "LOBAR_PE_PRESENT":
-            return "Decreased over pleural effusion area"
-        elif self.case_type == "LOBAR_PE_ABSENT":
-            return "Increased over consolidation"
-        else:
-            return "Normal and Symmetrical"
-
-    def _gen_percussion(self):
-        if self.case_type == "LOBAR_PE_PRESENT":
-            return "Flatness over pleural effusion area"
-        elif self.case_type == "LOBAR_PE_ABSENT":
-            return "Dullness over consolidation"
-        else:
-            return "Resonant"
-
-    def _gen_breath_sounds(self):
-        if self.case_type in ["LOBAR_PE_PRESENT", "LOBAR_PE_ABSENT"]:
-            return self.random.choice(["Bronchial breath sounds", "Reduced intensity"])
-        else:
-            return "Normal Vesicular breath sounds"
-
-    def _gen_adventitious(self):
-        if self.case_type in ["LOBAR_PE_PRESENT", "LOBAR_PE_ABSENT"]:
-            return self.random.choice(["Coarse crackles", "Rhonchi", "Pleural friction rub"])
-        else:
-            return "Coarse crackles"
-
-    def _parse_vitals(self):
-        pr_match = re.search(r'\d+', self.vital_signs.get("PR", "0"))
-        sbp_match = re.search(r'(\d+)/\d+', self.vital_signs.get("BP", "0/0"))
-        gcs_match = re.search(r'\d+', self.vital_signs.get("GCS", "15"))
-
-        pr_val = int(pr_match.group(0)) if pr_match else 0
-        sbp_val = int(sbp_match.group(1)) if sbp_match else 0
-        gcs_val = int(gcs_match.group(0)) if gcs_match else 15
-        return pr_val, sbp_val, gcs_val
-
-    def _generate_cv_findings(self):
-        pr_val, sbp_val, _ = self._parse_vitals()
-        
-        jvp = self.random.choices(["< 4 cm above sternal angle", "> 4 cm above sternal angle"], weights=[90, 10], k=1)[0]
-        s3 = self.random.choices(["Normal S1 and S2", "Tachycardia with S3 gallop"], weights=[95, 5], k=1)[0]
-        murmur = self.random.choices(["Absent", "Soft Systolic Murmur"], weights=[90, 10], k=1)[0]
-        pulse_desc = self.vital_signs["PR"]
-        
-        if self.severity_level == "SEVERE" or sbp_val < 90:
-             cap = "> 2 seconds"
-        else:
-             cap = "< 2 seconds"
-
-        return jvp, s3, murmur, pulse_desc, cap
-
-    def _generate_abdominal_system(self):
-        return "Soft, non-tender, non-distended, no organomegaly"
-
-    def _generate_neuro_findings(self):
-        if self.severity_level == "MILD":
-            ms = "A&Ox3"
-        else:
-            ms = "Consistent with General Appearance (Lethargic)"
-        
-        motor = self.random.choices(
-            ["Motor Strength 5/5, DTRs 2+ and Symmetrical", "Mild weakness", "Asymmetrical DTRs"],
-            weights=[95, 3, 2], k=1)[0]
-        return ms, motor
-
-    def _generate_msk_findings(self):
+    # ==========================================
+    # 2. PHYSICAL EXAM - GENERAL APPEARANCE
+    # ==========================================
+    def _gen_ga_mood(self):
+        # 40% Anxious, 20% Lethargic, 40% Calm
         return self.random.choices(
-            ["No joint swelling, tenderness, or muscle atrophy", "Diffuse myalgias and arthralgias without swelling"],
-            weights=[95, 5], k=1)[0]
+            ["Anxious due to dyspnea", "Lethargic (Severe infection)", "Calm"],
+            weights=[40, 20, 40]
+        )[0]
 
-    def _gen_cxr(self):
-        if self.pe_status == "PE Present":
-            return self.random.choice(["Lobar Consolidation (Small Pleural Effusion present)", "Patchy or Segmental Infiltrates (Small Pleural Effusion present)"])
-        else:
-            return self.random.choice(["Lobar Consolidation (NO Effusion)", "Patchy or Segmental Infiltrates (NO Effusion)", "Diffuse Interstitial Infiltrates (NO Effusion)", "Normal CXR (NO Effusion)"])
+    def _gen_ga_overall(self):
+        # 60% Ill-appearing, 30% Mild distress, 10% Comfortable
+        return self.random.choices(
+            ["Ill-appearing/Toxic", "Mildly distressed", "Comfortable, No acute distress"],
+            weights=[60, 30, 10]
+        )[0]
 
-    def _gen_ct(self):
-        if self.pe_status == "PE Present":
-            return "Consolidation with Effusion (fluid collection)"
-        else:
-            return self.random.choice(["Dense or Patchy Consolidation with NO Pleural abnormality", "Normal CT Scan"])
+    def _gen_ga_posture(self):
+        # 30% Splinting, 20% Tripod, 50% No specific
+        return self.random.choices(
+            ["Splinting (lying on affected side)", "Tripod position", "Supine/No specific preference"],
+            weights=[30, 20, 50]
+        )[0]
+
+    def _gen_ga_loc(self):
+        # 80% Alert, 20% Confused
+        return self.random.choices(
+            ["Alert and Oriented", "Confused (Sepsis/Hypoxia)"],
+            weights=[80, 20]
+        )[0]
     
-    def _gen_thora(self):
-        if self.pe_status == "PE Present":
-            pf_prot = round(self.random.uniform(3.5, 5.0), 1)
-            ser_prot = round(self.random.uniform(6.0, 8.0), 1)
-            pf_ldh = self.random.randint(150, 300)
-            ser_ldh = self.random.randint(100, 200)
-            pf_alb = round(self.random.uniform(2.0, 3.5), 1)
-            ser_alb = round(self.random.uniform(3.5, 5.0), 1)
+    def _gen_ga_clues(self):
+        # Edema: 100% No
+        edema = "No peripheral edema"
+        # Dyspnea: 80% Visible, 20% Absent
+        dyspnea = self.random.choices(["Visible dyspnea present", "No visible dyspnea"], weights=[80, 20])[0]
+        # Cyanosis: 15% Central, 85% Absent
+        cyanosis = self.random.choices(["Central Cyanosis present", "Absent"], weights=[15, 85])[0]
+        return {"edema": edema, "dyspnea": dyspnea, "cyanosis": cyanosis}
 
-            return f"Fluid was successfully aspirated : Pleural Fluid Protein {pf_prot} g/dL, Serum Protein {ser_prot} g/dL, Pleural Fluid LDH {pf_ldh} U/L, Serum LDH {ser_ldh} U/L, Pleural Fluid Albumin {pf_alb} g/dL, Serum Albumin {ser_alb} g/dL"
-        else:
-            return "Not Indicated and fluid cannot be aspirated"
-            
+    # ==========================================
+    # 3. PHYSICAL EXAM - HEAD AND NECK
+    # ==========================================
+    def _gen_hn_ears(self):
+        # 95% Normal, 5% Bullous
+        return self.random.choices(
+            ["Normal appearance", "Bullous Myringitis (Bullous lesions)"],
+            weights=[95, 5]
+        )[0]
+
+    def _gen_hn_nose(self):
+        # 40% Nasal flaring, 60% Normal
+        return self.random.choices(
+            ["Nasal flaring present", "Normal, no flaring"],
+            weights=[40, 60]
+        )[0]
+
+    def _gen_hn_mouth(self):
+        # 50% Dry, 50% Moist
+        return self.random.choices(
+            ["Dry mucous membranes (Dehydration)", "Moist mucous membranes"],
+            weights=[50, 50]
+        )[0]
+
+    def _gen_hn_lymph(self):
+        # 90% Normal, 10% Reactive
+        return self.random.choices(
+            ["No lymphadenopathy", "Mild cervical lymphadenopathy (Reactive)"],
+            weights=[90, 10]
+        )[0]
+
+    # ==========================================
+    # 4. PHYSICAL EXAM - RESPIRATORY SYSTEM
+    # ==========================================
+    def _gen_resp_inspection(self):
+        # Accessory: 50% Present, 50% Normal
+        acc = self.random.choices(["Accessory muscle use present", "No accessory muscle use"], weights=[50, 50])[0]
+        # Chest Shape: 30% Splinting/Lag, 70% Normal
+        shape = self.random.choices(["Asymmetrical movement (Lag on affected side)", "Symmetrical movement"], weights=[30, 70])[0]
+        return {"accessory_muscles": acc, "chest_shape_and_symmetry": shape}
+
+    def _gen_resp_palpation(self):
+        # Expansion: 40% Reduced, 60% Normal
+        exp = self.random.choices(["Reduced expansion on affected side", "Symmetrical expansion"], weights=[40, 60])[0]
+        # Fremitus: 70% Increased, 30% Normal
+        frem = self.random.choices(["Increased tactile fremitus over consolidation", "Normal tactile fremitus"], weights=[70, 30])[0]
+        return {"chest_expansion": exp, "tactile_fremitus": frem}
+
+    def _gen_resp_percussion(self):
+        # 75% Dullness, 25% Resonant
+        return self.random.choices(["Dullness to percussion", "Resonant"], weights=[75, 25])[0]
+
+    def _gen_resp_auscultation(self):
+        # Breath Sounds: 60% Bronchial, 40% Vesicular
+        bs = self.random.choices(["Bronchial breath sounds", "Vesicular breath sounds (Normal)"], weights=[60, 40])[0]
+        # Adventitious: 70% Crackles, 15% Rhonchi, 10% Egophony, 5% Clear
+        adv = self.random.choices(
+            ["Localized crackles (Rales)", "Rhonchi", "Egophony (E to A change)", "Clear"],
+            weights=[70, 15, 10, 5]
+        )[0]
+        return {"breath_sounds": bs, "adventitious_sounds": adv}
+
+    # ==========================================
+    # 5. PHYSICAL EXAM - CARDIOVASCULAR
+    # ==========================================
+    def _gen_cv_auscultation(self):
+        # Heart Sounds: 70% Tachycardia, 30% Normal
+        hs = self.random.choices(["Tachycardic S1, S2", "Normal rate and rhythm"], weights=[70, 30])[0]
+        # Murmurs: 100% None
+        mur = "No murmurs"
+        return {"heart_sounds_s1_s2": hs, "murmurs": mur}
+
+    def _gen_cv_peripheral(self):
+        # Pulses: 40% Bounding, 60% Normal
+        pulses = self.random.choices(["Bounding pulses", "Normal quality"], weights=[40, 60])[0]
+        # Temp: 60% Warm, 40% Normal
+        temp = self.random.choices(["Extremities Warm (Fever)", "Extremities Normal"], weights=[60, 40])[0]
+        return {
+            "peripheral_pulses_symmetry_and_quality": pulses,
+            "extremities_color_and_trophic_changes": "Normal", # 100%
+            "extremities_temperature_and_cap_refill": temp,
+            "extremities_edema": "No edema" # 100%
+        }
+
+    # ==========================================
+    # 6. PHYSICAL EXAM - ABDOMINAL
+    # ==========================================
+    def _gen_abd_all(self):
+        # Bowel Sounds: 90% Normal, 10% Hypoactive
+        bs = self.random.choices(["Normal bowel sounds", "Hypoactive bowel sounds"], weights=[90, 10])[0]
+        # Tenderness: 10% Upper abd (Referred), 90% Non-tender
+        tend = self.random.choices(["Upper abdominal tenderness (Referred)", "Non-tender"], weights=[10, 90])[0]
+        
+        return {
+            "inspection": "Flat/Normal", # 100%
+            "auscultation": {
+                "bowel_sounds": bs,
+                "vascular_bruits": "No bruits" # 100%
+            },
+            "percussion": {
+                "general": "Tympanic", # 100%
+                "organ_borders": "Normal" # 100%
+            },
+            "palpation": {
+                "superficial_tenderness": tend,
+                "deep_masses_and_organs": "No masses" # 100%
+            },
+            "peritoneal_signs": "Absent" # 100%
+        }
+
+    # ==========================================
+    # 7. PHYSICAL EXAM - NEURO & MSK
+    # ==========================================
+    def _gen_neuro_status(self):
+        # 25% Confusion, 75% Normal
+        ms = self.random.choices(["Confusion/Delirium", "Normal"], weights=[25, 75])[0]
+        return {
+            "mental_status_and_LOC": ms,
+            "cranial_nerves": "Intact", # 100%
+            "motor_strength_and_tone": "Normal", # 100%
+            "involuntary_movements": "None", # 100%
+            "sensory_light_touch_and_pain": "Intact", # 100%
+            "deep_tendon_reflexes": "Normal", # 100%
+            "coordination_and_gait": "Normal" # 100%
+        }
+
+    def _gen_msk_all(self):
+        # All 100% Normal according to file
+        return {
+            "inspection": {"joints": "Normal", "muscles": "Normal"},
+            "palpation": {"tenderness_and_crepitus": "Non-tender"},
+            "range_of_motion_active_passive": "Normal",
+            "stability_and_function": "Normal"
+        }
+
+    # ==========================================
+    # 8. PARACLINIC (PRESERVED & INTEGRATED)
+    # ==========================================
+    # ... Helper generators for paraclinic ...
     def _generate_hemoglobin_value(self):
         dists = [{"range": (12.0, 16.0), "weight": 50}, {"range": (10.0, 12.0), "weight": 30}, {"range": (7.0, 9.9), "weight": 20}]
         return f"{self._generate_value(dists, precision=1)} g/dL"
@@ -417,9 +403,6 @@ class PneumoniaDataGenerator:
     def _gen_ph(self):
         dists = [{"range": (7.35, 7.45), "weight": 80}, {"range": (7.46, 7.55), "weight": 15}, {"range": (7.25, 7.34), "weight": 5}]
         return self._generate_value(dists, precision=2)
-    def _gen_pao2(self):
-        dists = [{"range": (60, 80), "weight": 40}, {"range": (81, 100), "weight": 40}, {"range": (40, 59), "weight": 20}]
-        return f"{self._generate_value(dists, is_int=True)} mmHg"
     def _gen_gram_stain(self):
         return self.random.choices(["Positive for specific organism", "Normal Flora / Mixed", "No Organism seen"], weights=[50, 30, 20], k=1)[0]
     def _gen_sample_quality(self):
@@ -447,135 +430,126 @@ class PneumoniaDataGenerator:
     def _gen_peak(self): return self.random.choices(["within normal range", "reduced"], weights=[50, 50], k=1)[0]
     def _gen_pleth(self): return self.random.choices(["within normal range", "reduced Lung Volumes"], weights=[90, 10], k=1)[0]
     def _gen_bronch(self): return self.random.choices(["Normal Anatomy with Secretions", "Mucosal Inflammation or Obstruction"], weights=[90, 10], k=1)[0]
+    
+    def _gen_cxr(self):
+        # Using simplified logic consistent with previous version but generalized
+        return self.random.choice(["Lobar Consolidation", "Patchy Infiltrates", "Pleural Effusion present"])
+
+    def _gen_ct(self):
+        return "Consolidation or Infiltrates confirmed"
+
+    def _gen_thora(self):
+        # 30% chance of successful tap if effusion present (simplified for this context)
+        if self.random.random() < 0.3:
+            return "Fluid Aspirated: Exudative criteria met."
+        return "Not Indicated"
 
     def _get_dlco_finding(self):
-        """
-        بر اساس فراوانی‌های مشخص شده، وضعیت DLCO را برمی‌گرداند.
-        90% Reduced (< 80% predicted), 10% Normal.
-        """
-        # تعریف یافته‌ها و وزن‌های (فراوانی‌های) متناظر آن‌ها
-        findings = [
-            "Reduced",  # 90%
-            "Normal"                     # 10%
-        ]
-        
+        findings = ["Reduced", "Normal"]
         weights = [70, 30]
-        
-        # انتخاب تصادفی وضعیت
         chosen_status = self.random.choices(findings, weights=weights, k=1)[0]
-        
-        # تولید مقدار عددی منطبق بر وضعیت انتخاب شده
-        if chosen_status == "Reduced (< 80% predicted)":
-            dlco_val = self.random.randint(40, 79)
-        else:
-            dlco_val = self.random.randint(80, 100)
-            
-        # برگرداندن هر دو (متن و مقدار) برای سازگاری با ساختار داده
+        if chosen_status == "Reduced": dlco_val = self.random.randint(40, 79)
+        else: dlco_val = self.random.randint(80, 100)
         return chosen_status, f"{dlco_val}% predicted"
-    
+
     def _gen_reversibility(self):
-        """
-        تولید خروجی تست Reversibility (پاسخ به برونکودیلاتور) بر اساس منطق آسم.
-        توزیع احتمال: 80% مثبت، 10% منفی (حجمی)، 10% منفی (ثابت).
-        """
-        
-        # تعیین نوع خروجی بر اساس وزن‌های 80، 10 و 10 درصد
-        choice = self.random.choices(
-            ["Positive", "Negative"], 
-            weights=[5, 95], k=1
-        )[0]
-        
-        if choice == "Positive":
-            return "FEV1 increase > 12% AND > 200 mL"
-            
-        elif choice == "Negative":
-            return "FEV1 increase < 12% AND < 200 mL"
-            
-        return "Not Indicated"
-    
+        choice = self.random.choices(["Positive", "Negative"], weights=[5, 95], k=1)[0]
+        if choice == "Positive": return "FEV1 increase > 12% AND > 200 mL"
+        return "FEV1 increase < 12% AND < 200 mL"
+
+    # --- VBG Logic (Added in previous step) ---
+    def _gen_pco2_logic(self):
+        scenario = self.random.choices(["Hypocapnia", "Normal", "Hypercapnia"], weights=[60, 30, 10], k=1)[0]
+        if scenario == "Hypocapnia": val = self.random.randint(25, 34)
+        elif scenario == "Normal": val = self.random.randint(35, 45)
+        else: val = self.random.randint(46, 60)
+        return f"{val} mmHg"
+
+    def _gen_hco3_logic(self):
+        scenario = self.random.choices(["Normal", "Low"], weights=[80, 20], k=1)[0]
+        if scenario == "Normal": val = self.random.randint(22, 26)
+        else: val = self.random.randint(15, 21)
+        return f"{val} mEq/L"
+
+    # ==========================================
+    # MAIN GENERATION METHOD
+    # ==========================================
     def generate_paraclinic_case(self):
-        """
-        تولید داده‌ها دقیقاً با ساختار درخواستی و اعمال منطق هماهنگ‌سازی.
-        """
-        self.vital_signs = {
-            "BP": self._generate_bp_value(),
-            "T": self._generate_t_value(),
-            "PR": self._generate_pr_value(),
-            "RR": self._generate_rr_value(),
-            "SpO2": self._generate_spo2_value(),
-            "GCS": "15",
-        }
         
-        self.severity_level = self._determine_severity()
-        
-        self.vital_signs["GCS"] = self._generate_gcs_value()
-        
+        # 1. Personal Info
         personal_info = self._generate_personal_information()
         
-        jvp, s3, murmur, pulses, cap_refill = self._generate_cv_findings()
-        ms_neuro, motor_neuro = self._generate_neuro_findings()
-        msk_finding = self._generate_msk_findings()
+        # 2. Vital Signs (Rules Applied)
+        vitals = {
+            "BP": self._gen_vital_bp(),
+            "T": self._gen_vital_temp(),
+            "PR": self._gen_vital_pr(),
+            "RR": self._gen_vital_rr(),
+            "SpO2": self._gen_vital_spo2(),
+            "GCS": self._gen_vital_gcs()
+        }
         
+        # 3. General Appearance
+        ga_clues = self._gen_ga_clues()
+        general_appearance = {
+            "level_of_consciousness": self._gen_ga_loc(),
+            "mood_and_behavior": self._gen_ga_mood(),
+            "posture_and_position": self._gen_ga_posture(),
+            "overall_appearance": self._gen_ga_overall(),
+            "cardiopulmonary_and_circulatory_clues": ga_clues
+        }
+        
+        # 4. Head and Neck
+        head_neck = {
+            "head_and_face": {"symmetry_and_lesions": "Normal", "tenderness": "Non-tender"},
+            "eyes": {"sclera_and_conjunctiva": "Normal", "pupils_reaction": "PERRLA", "extraocular_movements": "Intact"},
+            "ears": {"external_and_tenderness": "Normal", "eardrum_appearance": self._gen_hn_ears()},
+            "nose_and_sinuses": {"septum_and_discharge": self._gen_hn_nose(), "sinus_tenderness": "Non-tender"},
+            "mouth_and_pharynx": {"oral_mucosa_and_lesions": self._gen_hn_mouth(), "pharynx_and_tonsils": "Normal"},
+            "neck_and_lymphatics": {
+                "inspection": "Normal", "tracheal_position": "Central", "thyroid_gland": "Non-palpable",
+                "carotid_bruit": "No bruits", "lymph_nodes_size_consistency": self._gen_hn_lymph(),
+                "lymph_nodes_mobility_tenderness": "N/A"
+            }
+        }
+        
+        # 5. Respiratory
+        respiratory = {
+            "inspection": self._gen_resp_inspection(),
+            "palpation": self._gen_resp_palpation(),
+            "percussion": self._gen_resp_percussion(),
+            "auscultation": self._gen_resp_auscultation()
+        }
+        
+        # 6. Cardiovascular
+        cardio = {
+            "JVP_assessment": "Normal JVP",
+            "palpation": {"precordial_palpation_heave_thrill": "No heaves or thrills", "pmi_assessment": "Normal location"},
+            "auscultation": self._gen_cv_auscultation(),
+            "peripheral_pulses_and_extremities": self._gen_cv_peripheral()
+        }
+        
+        # 7. Abdominal
+        abdominal = self._gen_abd_all()
+        
+        # 8. Neuro & MSK
+        neuro = self._gen_neuro_status()
+        msk = self._gen_msk_all()
+
+        # 9. Paraclinic Data Assembly
         data = {
             "patient_profile": {
                 "personal_information": personal_info
             },
             "physical_exam": {
-                "vital_signs": self.vital_signs,
-                "general_appearance": {
-                    "level_of_consciousness": self._gen_loc(),
-                    "mood_and_behavior": self._gen_mood(),
-                    "posture_and_position": self._gen_posture(),
-                    "overall_appearance": self._gen_overall_app(),
-                    "cardiopulmonary_and_circulatory_clues": {
-                        "cyanosis": self._gen_cyanosis(),
-                        "dyspnea": self._gen_dyspnea(),
-                        "edema": self._gen_edema()
-                    }
-                },
-                "head_and_neck": {
-                    "eyes": {
-                        "sclera_and_conjunctiva": self._gen_eyes()
-                    },
-                    "neck_and_lymphatics": {
-                        "tracheal_position": "Midline",
-                        "lymph_nodes": self._gen_lymph()
-                    }
-                },
-                "respiratory_system": {
-                    "inspection": {
-                        "accessory_muscles": self._gen_accessory_muscles(),
-                        "chest_shape_and_symmetry": self._gen_chest_shape()
-                    },
-                    "palpation": {
-                        "chest_expansion": self._gen_chest_expansion(),
-                        "tactile_fremitus": self._gen_tactile_fremitus()
-                    },
-                    "percussion": self._gen_percussion(),
-                    "auscultation": {
-                        "breath_sounds": self._gen_breath_sounds(),
-                        "adventitious_sounds": self._gen_adventitious()
-                    }
-                },
-                "cardiovascular_system": {
-                    "JVP_assessment": jvp,
-                    "auscultation": {
-                        "heart_sounds_s1_s2": s3,
-                        "murmurs": murmur
-                    },
-                    "peripheral_pulses": pulses,
-                    "cap_refill": cap_refill
-                },
-                "abdominal_system": {
-                    "percussion_palpation": self._generate_abdominal_system()
-                },
-                "neurological": {
-                    "mental_status_and_LOC": ms_neuro,
-                    "motor_strength_and_DTRs": motor_neuro
-                },
-                "musculoskeletal_system": {
-                    "joints_and_muscles": msk_finding
-                }
+                "vital_signs": vitals,
+                "general_appearance": general_appearance,
+                "head_and_neck": head_neck,
+                "respiratory_system": respiratory,
+                "cardiovascular_system": cardio,
+                "abdominal_system": abdominal,
+                "neurological": neuro,
+                "musculoskeletal_system": msk
             },
             "paraclinic": {
                 "basic_blood_tests": {
@@ -587,23 +561,20 @@ class PneumoniaDataGenerator:
                     "ESR": self._generate_esr_value(),
                     "CRP": self._generate_crp_value(),
                     "BMP": {
-                        "Na": self._gen_na(),
-                        "BUN": self._gen_bun(),
-                        "Cr": self._gen_cr()
+                        "Na": self._gen_na(), "BUN": self._gen_bun(), "Cr": self._gen_cr()
                     },
                     "LFTs": {
-                        "ALT": self._gen_liver(),
-                        "AST": self._gen_liver()
+                        "ALT": self._gen_liver(), "AST": self._gen_liver()
                     },
                     "VBG": {
                         "pH": self._gen_ph(),
-                        "PaO2": self._gen_pao2()
+                        "PCO2": self._gen_pco2_logic(),
+                        "HCO3": self._gen_hco3_logic()
                     }
                 },
                 "specialized_lung_tests": {
                     "Sputum_analysis": {
-                        "Gram_Stain": self._gen_gram_stain(),
-                        "Sample_Quality": self._gen_sample_quality()
+                        "Gram_Stain": self._gen_gram_stain(), "Sample_Quality": self._gen_sample_quality()
                     },
                     "Sputum_AFB": self._gen_afb(),
                     "a1_antitrypsin_level": self._gen_a1at(),
@@ -611,33 +582,22 @@ class PneumoniaDataGenerator:
                     "BNP_NT_proBNP": self._gen_bnp()
                 },
                 "immunity_and_serology": {
-                    "HIV_test": self._gen_hiv(),
-                    "Autoimmune_pannel_ANA_ANCA": self._gen_autoimmune()
+                    "HIV_test": self._gen_hiv(), "Autoimmune_pannel_ANA_ANCA": self._gen_autoimmune()
                 },
                 "simple_imaging": {
-                    "Chest_X_Ray": {
-                        "PA_Lateral_Findings_and_Effusion": self._gen_cxr()
-                    }
+                    "Chest_X_Ray": {"PA_Lateral_Findings_and_Effusion": self._gen_cxr()}
                 },
                 "advanced_imaging": {
-                    "Chest_CT_CTPA": {
-                        "Lung_Parenchyma_and_Pleura": self._gen_ct()
-                    },
-                    "MRI_chest": self._gen_mri(),
-                    "Pet_scan": self._gen_pet()
+                    "Chest_CT_CTPA": {"Lung_Parenchyma_and_Pleura": self._gen_ct()},
+                    "MRI_chest": self._gen_mri(), "Pet_scan": self._gen_pet()
                 },
                 "functional_tests": {
-                    "Spirometry": {
-                        "result": self._gen_spirometry(),
-                        "Reversibility": self._gen_reversibility()
-                    },
+                    "Spirometry": {"result": self._gen_spirometry(), "reversibility": self._gen_reversibility()},
                     "dlco": self._get_dlco_finding()[1],
-                    "peak_flow": self._gen_peak(),
-                    "plethysmography": self._gen_pleth()
+                    "peak_flow": self._gen_peak(), "plethysmography": self._gen_pleth()
                 },
                 "procedures": {
-                    "Bronchoscopy": self._gen_bronch(),
-                    "torachonthesis": self._gen_thora()
+                    "Bronchoscopy": self._gen_bronch(), "torachonthesis": self._gen_thora()
                 }
             }
         }

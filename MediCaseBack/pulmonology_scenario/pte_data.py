@@ -2,18 +2,10 @@ import random
 
 class PTEDataGenerator:
     """
-    کلاسی برای تولید داده‌های شبیه‌سازی شده PTE (آمبولی ریه) بر اساس فایل PTE.txt و منطق PTE.docx.
-    
-    Logic Drivers (متغیرهای اصلی برای حفظ سازگاری بالینی):
-    1. SEVERITY: Massive (Hemodynamically Unstable) vs Non-Massive (Stable)
-       - بر اساس فایل: 40% هیپوتانسیون (Massive)، 60% فشار خون نرمال (Non-Massive/Sub-massive).
-    2. RV_DYSFUNCTION: نارسایی بطن راست
-       - همبستگی قوی با Massive PTE (JVD, High BNP, Loud P2).
-    3. DVT_SOURCE: وجود علائم ترومبوز وریدی عمقی
-       - در 40% موارد (تورم یک‌طرفه پا).
+    کلاسی برای تولید داده‌های شبیه‌سازی شده PTE (آمبولی ریه).
+    اصلاح شده بر اساس قواعد آماری دقیق برای General Appearance.
     """
     
-    # لیست‌های داده‌های دموگرافیک (مشابه فایل COPD برای بومی‌سازی)
     RANDOM_DATA_LISTS = {
         "first_names_sample_100": {
             "MALE": [
@@ -52,29 +44,20 @@ class PTEDataGenerator:
         self.random = random
         
         # 1. CORE LOGIC INITIALIZATION
-        
-        # Severity / Hemodynamic Stability
-        # بر اساس فایل PTE.txt: هیپوتانسیون در 40% موارد دیده می‌شود.
-        # Massive = Hypotensive + High Risk
         self.severity = self.random.choices(
             ["Massive", "Non-Massive"], 
             weights=[40, 60], k=1
         )[0]
         
-        # DVT Signs (Source of Emboli)
-        # بر اساس فایل: 40% تورم یا تندرنس ساق پا دارند.
         self.has_dvt = self.random.choices(
             [True, False],
             weights=[40, 60], k=1
         )[0]
 
-        # Holders for consistency checks
         self.simulated_spo2_val = 95
         self.simulated_rr_val = 20
         self.simulated_bp_systolic = 120
         self.simulated_hr_val = 90
-        # تعیین RV Dysfunction برای منطق Light's Criteria
-        # Massive تقریباً همیشه RV Dysfunction دارد
         self.has_rv_dysfunction = (self.severity == "Massive") or (self.random.random() < 0.4 and self.severity != "Massive")
 
     # --- Helper Methods ---
@@ -90,7 +73,7 @@ class PTEDataGenerator:
 
     def _generate_personal_information(self):
         gender = self.random.choice(["مرد", "زن"])
-        age_num = self.random.randint(30, 85) # PTE can happen younger too, but often older
+        age_num = self.random.randint(30, 85)
         age_str = f"{age_num} ساله"
         
         name_key = "MALE" if gender == "مرد" else "FEMALE"
@@ -105,34 +88,26 @@ class PTEDataGenerator:
         return {
             "first_name": first_name, "last_name": last_name, "age": age_str,
             "gender": gender, "occupation": occupation,
-            "place_of_birth": birth, "place_of_residence": birth, # Simplified
+            "place_of_birth": birth, "place_of_residence": birth,
             "marital_status": "متاهل"
         }
 
     # --- 1. Vital Signs ---
     def _gen_vitals(self):
-        # BP Logic: Driven by Severity (Massive vs Non-Massive)
-        # Source: "In 40% of times BP is Hypotensive (Systolic < 90)"
         if self.severity == "Massive":
             sys = self.random.randint(70, 89)
             dia = self.random.randint(40, 60)
             bp_str = f"{sys}/{dia} mmHg (Hypotensive)"
         else:
-            # Non-Massive: Often normal or elevated due to pain/anxiety
-            # Source: "In 60% of times BP is < 140/90 mmHg" (Normal range)
             sys = self.random.randint(110, 139)
             dia = self.random.randint(70, 89)
             bp_str = f"{sys}/{dia} mmHg"
         
         self.simulated_bp_systolic = sys
 
-        # PR Logic: Tachycardia is main sign (80%)
-        # Source: "In 80% of times > 100 bpm"
         if self.severity == "Massive":
-            # Massive almost always has tachycardia to compensate CO
             pr = self.random.randint(110, 140)
         else:
-            # Stable cases: 80% Tachy, 20% Normal
             pr_choice = self.random.choices(["Tachy", "Normal"], weights=[70, 30])[0]
             if pr_choice == "Tachy":
                 pr = self.random.randint(101, 125)
@@ -141,23 +116,17 @@ class PTEDataGenerator:
         
         self.simulated_hr_val = pr
 
-        # RR Logic: Tachypnea is VERY common (95%)
-        # Source: "In 95% of times > 20 breaths/min"
         rr_choice = self.random.choices(["Tachypnea", "Normal"], weights=[95, 5])[0]
         if rr_choice == "Tachypnea":
-            rr = self.random.randint(22, 35) # High RR due to V/Q mismatch
+            rr = self.random.randint(22, 35)
         else:
             rr = self.random.randint(12, 20)
         
         self.simulated_rr_val = rr
 
-        # SpO2 Logic: Hypoxemia
-        # Source: 25% Severe (<90), 45% Moderate (90-94), 30% Normal (>94)
-        # Correlation: Massive PTE usually has lower SpO2
         if self.severity == "Massive":
             spo2 = self.random.randint(80, 91)
         else:
-            # Stable: Can be normal or mild
             spo2_choice = self.random.choices(["Normal", "Mild Hypoxemia"], weights=[40, 60])[0]
             if spo2_choice == "Normal":
                 spo2 = self.random.randint(95, 98)
@@ -166,16 +135,13 @@ class PTEDataGenerator:
         
         self.simulated_spo2_val = spo2
 
-        # Temperature: Usually normal or low grade
-        # Source: 70% Normal, 30% Low-grade fever
         temp_choice = self.random.choices(["Normal", "Low-grade"], weights=[70, 30])[0]
         if temp_choice == "Normal":
             temp = round(self.random.uniform(36.5, 37.5), 1)
         else:
             temp = round(self.random.uniform(37.6, 38.0), 1)
 
-        # GCS: 90% Normal, 10% Altered (Shock)
-        if self.severity == "Massive" and self.random.random() < 0.25: # Check if shock affects brain
+        if self.severity == "Massive" and self.random.random() < 0.25:
             gcs = self.random.randint(13, 14)
         else:
             gcs = 15
@@ -189,66 +155,78 @@ class PTEDataGenerator:
             "GCS": str(gcs)
         }
 
-    # --- 2. General Appearance ---
+    # --- 2. General Appearance (UPDATED) ---
     def _gen_general_appearance(self):
-        # LOC
-        if self.simulated_bp_systolic < 90:
-             loc = self.random.choices(
-                 ["Alert and Oriented", "Mildly confused/Lethargic due to hypotension"], 
-                 weights=[75, 25]
-             )[0]
-        else:
-             loc = "Alert and Oriented"
-
-        # Mood & Behavior: Anxiety is common (80%)
+        """
+        تولید داده‌های General Appearance بر اساس قواعد دقیق ارسالی:
+        - mood_and_behavior
+        - overall_appearance
+        - posture_and_position
+        - level_of_consciousness
+        - cardiopulmonary_and_circulatory_clues
+        """
+        
+        # 1. mood_and_behavior
+        # 50% Anxious/Apprehensive, 10% Confused/Lethargic, 40% Calm
         mood = self.random.choices(
-            ["Anxious and Distressed", "Calm/Euthymic"], 
-            weights=[80, 20]
+            ["Anxious or Apprehensive (Sense of impending doom)", "Confused or Lethargic (Altered sensorium)", "Calm and Cooperative"],
+            weights=[50, 10, 40]
         )[0]
         
-        behavior = "Restless, seeking position of comfort." if mood == "Anxious and Distressed" else "Cooperative."
-
-        # Cyanosis: Only if severe hypoxemia
-        if self.simulated_spo2_val < 90:
-            cyanosis = "Central Cyanosis or Acrocyanosis present."
-        elif self.simulated_bp_systolic < 90:
-            cyanosis = "Pale, cool skin (Shock signs)." # Acrocyanosis
-        else:
-            cyanosis = "No Central or Peripheral Cyanosis."
-
-        # Dyspnea: Very common (90%)
-        dyspnea_val = "Dyspnea at rest." if self.simulated_rr_val > 20 else "No obvious dyspnea at rest."
-
-        # Edema (General): Typically absent unless DVT or HF
-        if self.has_dvt:
-            edema = "Unilateral lower extremity swelling/edema."
-        elif self.severity == "Massive":
-            edema = "No peripheral edema (Acute event)." # RV failure acute doesn't cause instant massive edema usually, but DVT does.
-        else:
-            edema = "No Peripheral Edema."
+        # 2. overall_appearance
+        # 30% Diaphoretic, 40% Mild/Moderate Distress, 30% No Acute Distress
+        overall = self.random.choices(
+            ["Diaphoretic and Ill-appearing", "Mild to Moderate Distress (Pain)", "No Acute Distress"],
+            weights=[30, 40, 30]
+        )[0]
+        
+        # 3. posture_and_position
+        # 40% Splinting, 30% Upright, 30% No specific
+        posture = self.random.choices(
+            ["Splinting or guarding chest", "Sitting Upright", "No specific posture"],
+            weights=[40, 30, 30]
+        )[0]
+        
+        # 4. level_of_consciousness
+        # 80% Alert, 10% Syncope/Drowsy, 10% Unresponsive
+        loc = self.random.choices(
+            ["Alert and Oriented", "Post-syncopal or Drowsy", "Unresponsive or Comatose"],
+            weights=[80, 10, 10]
+        )[0]
+        
+        # 5. cardiopulmonary_and_circulatory_clues
+        # Edema: 40% Unilateral, 60% None
+        edema = self.random.choices(
+            ["Unilateral Pitting Edema (Asymmetric)", "No peripheral edema"],
+            weights=[40, 60]
+        )[0]
+        
+        # Dyspnea: 80% At rest, 15% Exertion, 5% None
+        dyspnea = self.random.choices(
+            ["Dyspnea at rest", "Dyspnea on exertion", "No visible dyspnea"],
+            weights=[80, 15, 5]
+        )[0]
+        
+        # Cyanosis: 10% Central, 10% Peripheral, 80% None
+        cyanosis = self.random.choices(
+            ["Central Cyanosis", "Peripheral Cyanosis", "No Cyanosis"],
+            weights=[10, 10, 80]
+        )[0]
 
         return {
-            "level_of_consciousness_mood_and_behavior": {
-                "level_of_consciousness": loc,
-                "mood": mood,
-                "behavior": behavior
-            },
-            "posture_and_position": {
-                "position_of_comfort": "Sitting Upright/Semi-Fowler's Position (Orthopnea)."
-            },
-            "overall_appearance": {
-                "nutritional_status": "Normal nutritional status."
-            },
+            "mood_and_behavior": mood,
+            "overall_appearance": overall,
+            "posture_and_position": posture,
+            "level_of_consciousness": loc,
             "cardiopulmonary_and_circulatory_clues": {
-                "cyanosis": cyanosis,
-                "dyspnea": dyspnea_val,
-                "edema": edema
+                "edema": edema,
+                "dyspnea": dyspnea,
+                "cyanosis": cyanosis
             }
         }
 
     # --- 3. Head and Neck ---
     def _gen_head_neck(self):
-        # Normal findings mostly
         return {
             "head_and_face": {
                 "symmetry_and_lesions": "Normal and Symmetric.",
@@ -283,13 +261,7 @@ class PTEDataGenerator:
 
     # --- 4. Respiratory System ---
     def _gen_respiratory(self):
-        # Inspection
         acc_muscles = "Accessory Muscle Use." if self.simulated_rr_val > 24 else "No Accessory Muscle Use."
-        
-        # Auscultation: IMPORTANT LOGIC
-        # Source: "Lungs are often clear (90%)."
-        # Source: "Friction rub (15%)" or "Localized crackles (10%)"
-        
         lung_sounds_choice = self.random.choices(
             ["Clear to Auscultation", "Pleural Friction Rub", "Localized Crackles"],
             weights=[85, 10, 5]
@@ -306,21 +278,18 @@ class PTEDataGenerator:
             },
             "percussion": "Normal Resonance.",
             "auscultation": {
-                "breath_sounds_intensity": "Normal Intensity.",
+                "breath_sounds": "Normal Intensity.",
                 "adventitious_sounds": lung_sounds_choice
             }
         }
 
     # --- 5. Cardiovascular System ---
     def _gen_cardio(self):
-        # JVP Logic: Elevated in Massive PTE (RV Failure)
-        # Source: 50% Elevated, 50% Normal
         if self.severity == "Massive":
             jvp = "Elevated JVP (> 4 cm above sternal angle) due to RV strain."
         else:
             jvp = "Normal JVP."
 
-        # Heart Sounds: Loud P2 in Pulmonary HTN (30% total, high correlation with massive)
         if self.severity == "Massive" or self.has_rv_dysfunction:
              s2_desc = "Loud P2 component of S2 (Pulmonary Hypertension)."
              heave = "Right Ventricular Heave Palpable."
@@ -330,7 +299,6 @@ class PTEDataGenerator:
              heave = "No Heave or Thrill."
              extra = "No S3, S4, or Murmurs."
 
-        # Peripheral Pulses
         if self.simulated_bp_systolic < 90:
             pulse_qual = "Weak/Thready Pulses."
             extremities = "Cool extremities, Capillary Refill > 2 seconds (Shock)."
@@ -338,7 +306,7 @@ class PTEDataGenerator:
             pulse_qual = "Peripheral Pulses Symmetric and 2+."
             extremities = "Extremities Warm, Capillary Refill < 2 seconds."
 
-        # DVT Signs in Extremities (Redundant check but good for consistency)
+        # DVT Signs logic handled in General Appearance now, but kept here for local consistency
         if self.has_dvt:
             edema_ext = "Unilateral calf swelling and tenderness (Suggests DVT)."
         else:
@@ -364,7 +332,6 @@ class PTEDataGenerator:
 
     # --- 6. Abdominal System ---
     def _gen_abdominal(self):
-        # Hepatomegaly: Possible in RV Failure (10%)
         if (self.severity == "Massive" or self.has_rv_dysfunction) and self.random.random() < 0.3:
             liver = "Mild Hepatomegaly (due to hepatic congestion)."
         else:
@@ -389,7 +356,6 @@ class PTEDataGenerator:
 
     # --- 7. Neurological ---
     def _gen_neuro(self):
-        # Consistent with General Appearance
         status = "Alert and Oriented" if self.simulated_bp_systolic >= 90 else "Mild Confusion/Disorientation"
         return {
             "mental_status_and_LOC": f"Mental Status: {status}.",
@@ -403,7 +369,6 @@ class PTEDataGenerator:
 
     # --- 8. Musculoskeletal ---
     def _gen_msk(self):
-        # DVT Signs focus
         if self.has_dvt:
             calf = "Calf Tenderness and Swelling."
             rom = "Full ROM, but pain on dorsiflexion of affected foot."
@@ -425,11 +390,6 @@ class PTEDataGenerator:
         
     # --- 9. Thoracentesis Logic ---
     def _gen_thoracentesis(self):
-        """
-        تولید خروجی توراسنتز بر اساس منطق احتمالی (95% بدون اندیکاسیون، 3% ترانسودا، 2% اگزودا).
-        """
-        
-        # تعیین نوع خروجی بر اساس وزن‌های 95، 3 و 2 درصد
         choice = self.random.choices(
             ["Not Indicated", "Transudate", "Exudate"], 
             weights=[95, 3, 2], k=1
@@ -456,42 +416,28 @@ class PTEDataGenerator:
             serum_albumin = round(random.uniform(3.5, 5.5), 1)
             return {"fluid_protein": f"{fluid_protein} g/dL", "serum_protein": f"{serum_protein} g/dL", "fluid_LDH": f"{fluid_LDH} U/L", "serum_LDH": f"{serum_LDH} U/L", "fluid_albumin": f"{fluid_albumin} g/dL", "serum_albumin": f"{serum_albumin} g/dL"}
         
-        
-
     def _gen_paraclinic(self):
         wbc = self._generate_value([{"range": (4500, 11000), "weight": 80}, {"range": (11000, 16000), "weight": 20}], is_int=True)
-        
         ddimer_choice = self.random.choices(["> 500 ng/mL", "< 500 ng/mL"], weights=[95, 5])[0]
 
         if self.severity == "Massive" or self.has_rv_dysfunction:
             bnp = "Elevated."
-            troponin = "Mildly Elevated." if self.random.random() < 0.6 else "Normal."
         else:
             bnp = self.random.choices(["Normal", "Mildly Elevated"], weights=[60, 40])[0]
-            troponin = "Normal."
 
-        
         if self.simulated_rr_val > 20:
             ph = str(round(self.random.uniform(7.46, 7.55), 2))
-            paco2 = str(self.random.randint(25, 34))
-            
-            hco3_scenario = self.random.choices(
-                ["Compensatory decrease", "Normal"], 
-                weights=[20, 80], 
-                k=1
-            )[0]
-
+            pco2 = str(self.random.randint(25, 34))
+            hco3_scenario = self.random.choices(["Compensatory decrease", "Normal"], weights=[20, 80], k=1)[0]
             if hco3_scenario == "Compensatory decrease":
                 num = random.randint(18, 21)
                 hco3 = f"{num} mEq/L"
             else:
                 num = random.randint(22, 26)
                 hco3 = f"{num} mEq/L"
-                
-            
         else:
             ph = str(round(self.random.uniform(7.35, 7.45), 2))
-            paco2 = str(self.random.randint(35, 45))
+            pco2 = str(self.random.randint(35, 45))
             num = random.randint(22, 26)
             hco3 = f"{num} mEq/L"
 
@@ -501,71 +447,36 @@ class PTEDataGenerator:
         )[0]
 
         ctpa = "Filling Defect."
-        
         thoracentesis_result = self._gen_thoracentesis()
 
         return {
             "basic_blood_tests": {
                 "CBC": {
-                    "Hb": "14.0 g/dL",
-                    "WBC": f"{wbc} /uL",
-                    "Plt": "250,000 /uL"
+                    "Hb": "14.0 g/dL", "WBC": f"{wbc} /uL", "Plt": "250,000 /uL"
                 },
-                "ESR": "< 30 mm/hr",
-                "CRP": "< 10 mg/L",
+                "ESR": "< 30 mm/hr", "CRP": "< 10 mg/L",
                 "BMP": {
-                    "Na": "140 mmol/L",
-                    "BUN": "15 mg/dL",
-                    "Cr": "1.0 mg/dL"
+                    "Na": "140 mmol/L", "BUN": "15 mg/dL", "Cr": "1.0 mg/dL"
                 },
-                "LFTs": {
-                    "ALT": "30 U/L",
-                    "AST": "30 U/L"
-                },
-                "VBG": {
-                    "pH": ph,
-                    "PaCO2": f"{paco2} mmHg",
-                    "HCO3": f"{hco3}",
-                }
+                "LFTs": { "ALT": "30 U/L", "AST": "30 U/L" },
+                "VBG": { "pH": ph, "PCO2": f"{pco2} mmHg", "HCO3": f"{hco3}" }
             },
             "specialized_lung_tests": {
-                "Sputum_analysis": {
-                    "Gram_Stain": "Not Indicated",
-                    "Sample_Quality": "Not Applicable"
-                },
+                "Sputum_analysis": { "Gram_Stain": "Not Indicated", "Sample_Quality": "Not Applicable" },
                 "Sputum_AFB": "Not Applicable",
                 "a1_antitrypsin_level": "Not Applicable",
                 "D_dimer": ddimer_choice,
-                "BNP_NT_proBNP": bnp,
-                "Troponin": troponin # Added Troponin for completeness
+                "BNP_NT_proBNP": bnp
             },
-            "immunity_and_serology": {
-                "HIV_test": "Not Applicable",
-                "Autoimmune_pannel_ANA_ANCA": "Not Applicable"
-            },
-            "simple_imaging": {
-                "Chest_X_Ray": {
-                    "PA_Lateral_Findings_and_Effusion": cxr
-                }
-            },
-            "advanced_imaging": {
-                "Chest_CT_CTPA": {
-                    "Lung_Parenchyma_and_Pleura": ctpa
-                }
-            },
+            "immunity_and_serology": { "HIV_test": "Not Applicable", "Autoimmune_pannel_ANA_ANCA": "Not Applicable" },
+            "simple_imaging": { "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": cxr } },
+            "advanced_imaging": { "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": ctpa } },
             "functional_tests": {
-                "Spirometry": {
-                    "result": "Not Indicated",
-                    "Reversibility": "FEV1 increase < 12% AND < 200 mL"    
-                },
-                "peak_flow": "Not Indicated",
-                "plethysmography": "Not Indicated",
+                "Spirometry": { "result": "Not Indicated", "reversibility": "FEV1 increase < 12% AND < 200 mL" },
+                "peak_flow": "Not Indicated", "plethysmography": "Not Indicated",
                 "dlco": "Disproportionately low compared to lung volumes."
             },
-            "procedures": {
-                "Bronchoscopy": "Not Indicated",
-                "torachonthesis": thoracentesis_result
-            }
+            "procedures": { "Bronchoscopy": "Not Indicated", "torachonthesis": thoracentesis_result }
         }
 
     def generate_paraclinic_case(self):
@@ -587,9 +498,7 @@ class PTEDataGenerator:
 
         # 4. Assembly
         data = {
-            "patient_profile": {
-                "personal_information": personal_info
-            },
+            "patient_profile": { "personal_information": personal_info },
             "physical_exam": {
                 "vital_signs": vitals,
                 "general_appearance": gen_app,

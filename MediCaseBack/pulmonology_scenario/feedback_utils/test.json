@@ -2,87 +2,86 @@
   "scenario": {
     "paraclinic": {
       "procedures": {
-        "Bronchoscopy": "Not Indicated.",
-        "torachonthesis": "Not Indicated."
+        "Bronchoscopy": "Not Indicated for Routine Stable Visit.",
+        "torachonthesis": "Not Indicated and fluid cannot be aspirated."
       },
       "simple_imaging": {
         "Chest_X_Ray": {
-          "PA_Lateral_Findings_and_Effusion": "Normal Lung Fields, Clear Costophrenic Angles."
+          "PA_Lateral_Findings_and_Effusion": "Hyperinflation findings (Flat Diaphragms)"
         }
       },
       "advanced_imaging": {
         "Chest_CT_CTPA": {
-          "Lung_Parenchyma_and_Pleura": "Air trapping on expiratory views."
+          "Lung_Parenchyma_and_Pleura": "Emphysema/Air Trapping Changes"
         }
       },
       "functional_tests": {
-        "peak_flow": "Reduced (compared to predicted) with significant diurnal variability.",
+        "dlco": "48% predicted",
+        "peak_flow": "Reduced",
         "Spirometry": {
           "result": {
-            "FVC": "Measured: 3.4 L, Predicted: 4.0 L, %Predicted: 85%",
-            "FEV1": "Measured: 2.57 L, Predicted: 3.5 L, %Predicted: 73%",
-            "FEV1/FVC_Ratio": "Measured: 0.75, Predicted: 0.8, %Predicted: 94%"
+            "FVC": "Measured: 4.21 L, Predicted: 4.0 L, %Predicted: 105%",
+            "FEV1": "Measured: 2.89 L, Predicted: 3.5 L, %Predicted: 83%",
+            "FEV1/FVC_Ratio": "Measured: 0.69, Predicted: 0.8, %Predicted: 86%"
           },
-          "Reversibility": "FEV1 increase > 12% AND > 200 mL"
+          "reversibility": "FEV1 increase < 12% AND < 200 mL"
         },
-        "plethysmography": "Mildly Increased Residual Volume (RV)."
+        "plethysmography": "Increased Lung Volumes"
       },
       "basic_blood_tests": {
         "BMP": {
-          "Cr": "0.7-1.2 mg/dL.",
-          "Na": "135-145 mEq/L.",
-          "BUN": "7-20 mg/dL."
+          "Cr": "0.9 mg/dL",
+          "Na": "136 mEq/L",
+          "BUN": "14 mg/dL"
         },
         "CBC": {
-          "Hb": "12 g/dL",
-          "Plt": "180000 /µL",
-          "WBC": "10340 /µL with Eosinophil count elevated (>5%)."
+          "Hb": "12.4 g/dL",
+          "Plt": "22 /µL",
+          "WBC": "14566 /µL"
         },
-        "CRP": "less than 10 mg/L.",
-        "ESR": "less than 20 mm/h.",
+        "CRP": "19 mg/L",
+        "ESR": "23 mm/h",
         "VBG": {
-          "pH": "7.44",
-          "HCO3": "22 mEq/L",
-          "PaO2": "49"
+          "pH": "7.38",
+          "HCO3": "23 mEq/L",
+          "PCO2": "29 mmHg"
         },
         "LFTs": {
-          "ALT": "within normal range.",
-          "AST": "within normal range."
+          "ALT": "27 U/L",
+          "AST": "28 U/L"
         }
       },
       "immunity_and_serology": {
         "HIV_test": "Negative",
-        "Total_IgE": "Elevated (>100 IU/mL)",
-        "Specific_IgE_Rast_Test": "Positive to common environmental allergens",
         "Autoimmune_pannel_ANA_ANCA": "Negative"
       },
       "specialized_lung_tests": {
-        "D_dimer": "less than 500 ng/mL FEU.",
-        "Sputum_AFB": "Negative.",
-        "BNP_NT_proBNP": "within normal range.",
+        "D_dimer": "< 500 ng/mL FEU",
+        "Sputum_AFB": "Negative",
+        "BNP_NT_proBNP": "within normal range",
         "Sputum_analysis": {
-          "Gram_Stain": "Normal Flora / Mixed.",
+          "Gram_Stain": "Positive for specific organism",
           "Sample_Quality": "Not Indicated for Routine Stable Visit."
         },
-        "a1_antitrypsin_level": "within normal range."
+        "a1_antitrypsin_level": "within normal range"
       }
     },
     "physical_exam": {
       "vital_signs": {
-        "T": "37.3 °C",
-        "BP": "124/78 mmHg",
-        "PR": "79 bpm and regular rhythm",
-        "RR": "12 breaths/min",
+        "T": "37.5 °C",
+        "BP": "119/86 mmHg",
+        "PR": "74 bpm and regular rhythm",
+        "RR": "20 breaths/min",
         "GCS": "15",
-        "SpO2": "97% (Room Air)"
+        "SpO2": "98% (Room Air)"
       },
       "neurological": {
         "cranial_nerves": "Cranial Nerves II-XII intact.",
-        "deep_tendon_reflexes": "2+ and Symmetrical.",
+        "deep_tendon_reflexes": "Asymmetrical DTRs.",
         "coordination_and_gait": "Normal coordination and Gait.",
         "involuntary_movements": "Absent.",
         "mental_status_and_LOC": "A&Ox3.",
-        "motor_strength_and_tone": "Motor Strength 5/5, Normal Tone.",
+        "motor_strength_and_tone": "Asymmetrical weakness.",
         "sensory_light_touch_and_pain": "Symmetrical and Intact."
       },
       "head_and_neck": {
@@ -93,26 +92,26 @@
         "eyes": {
           "pupils_reaction": "Pupils equal, round, and reactive to light (PERRL).",
           "extraocular_movements": "Full Range of Motion.",
-          "sclera_and_conjunctiva": "Mild periorbital darkening (Allergic Shiners)."
+          "sclera_and_conjunctiva": "Pink conjunctiva, Anicteric sclera."
         },
         "head_and_face": {
           "tenderness": "No tenderness on palpation of the skull.",
           "symmetry_and_lesions": "Symmetrical, No acute lesions or masses."
         },
         "nose_and_sinuses": {
-          "sinus_tenderness": "Mild tenderness.",
-          "septum_and_discharge": "Pale, boggy, swollen nasal mucosa with clear discharge."
+          "sinus_tenderness": "No sinus tenderness on palpation.",
+          "septum_and_discharge": "Midline Septum, No purulent/bloody discharge."
         },
         "mouth_and_pharynx": {
           "pharynx_and_tonsils": "Non-erythematous pharynx, Tonsils non-enlarged.",
-          "oral_mucosa_and_lesions": "Moist mucosa, No lesions."
+          "oral_mucosa_and_lesions": "Dry mucosa."
         },
         "neck_and_lymphatics": {
           "inspection": "No swelling, redness, or visible masses.",
           "carotid_bruit": "Absent.",
           "thyroid_gland": "Non-enlarged, non-tender.",
           "tracheal_position": "Midline, no deviation.",
-          "lymph_nodes_size_consistency": "small (<1 cm), firm, mobile nodes.",
+          "lymph_nodes_size_consistency": "Non-palpable or small, soft nodes.",
           "lymph_nodes_mobility_tenderness": "Mobile and non-tender."
         }
       },
@@ -133,45 +132,38 @@
         }
       },
       "general_appearance": {
-        "overall_appearance": {
-          "nutritional_status": "Normal weight"
-        },
-        "posture_and_position": {
-          "position_of_comfort": "Comfortable in bed or seated."
-        },
+        "mood_and_behavior": "Anxious or Irritable",
+        "overall_appearance": "Cachectic/Thin with muscle wasting",
+        "posture_and_position": "Tripod Position",
+        "level_of_consciousness": "Alert and Oriented",
         "cardiopulmonary_and_circulatory_clues": {
-          "edema": "Absent.",
-          "dyspnea": "Intermittent dyspnea on minimal activity or with specific triggers.",
-          "cyanosis": "Absent."
-        },
-        "level_of_consciousness_mood_and_behavior": {
-          "mood": "Mildly Anxious/Apprehensive.",
-          "behavior": "Cooperative.",
-          "level_of_consciousness": "Alert and Oriented to Person, Place, and Time, following commands."
+          "edema": "Pitting Edema to ankles",
+          "dyspnea": "No visible dyspnea",
+          "cyanosis": "Pink/Normal color"
         }
       },
       "respiratory_system": {
         "palpation": {
-          "chest_expansion": "Symmetrical and Mildly Reduced Expansion.",
-          "tactile_fremitus": "Normal and Symmetrical."
+          "chest_expansion": "Bilateral Reduced Expansion.",
+          "tactile_fremitus": "Decreased and Symmetrical"
         },
         "inspection": {
-          "accessory_muscles": "Accessory Muscles Present (Mild use).",
+          "accessory_muscles": "Present (Sternocleidomastoid/Scalene use).",
           "chest_shape_and_symmetry": "Symmetrical movement, Normal shape."
         },
-        "percussion": "Resonant.",
+        "percussion": "Diffuse Hyperresonant.",
         "auscultation": {
-          "adventitious_sounds": "Monophonic Wheeze (End-Expiratory).",
-          "breath_sounds_intensity": "Prolonged Expiration with normal intensity."
+          "breath_sounds": "Prolonged Expiration. Reduced intensity.",
+          "adventitious_sounds": "No Adventitious Sounds."
         }
       },
       "cardiovascular_system": {
         "palpation": {
-          "pmi_assessment": "ormal size/strength.",
+          "pmi_assessment": "Palpable in 5th ICS MCL, Normal size.",
           "precordial_palpation_heave_thrill": "No heave, lift, or thrill detected."
         },
         "auscultation": {
-          "heart_sounds_s1_s2": "Normal S1 and S2.",
+          "heart_sounds_s1_s2": "Muffled/Distant S1 and S2.",
           "extra_sounds_s3_s4_murmurs": "No S3/S4 or Murmur."
         },
         "JVP_assessment": "< 4 cm above sternal angle.",
@@ -179,7 +171,7 @@
           "extremities_edema": "Absent.",
           "extremities_color_and_trophic_changes": "No clubbing or trophic changes.",
           "extremities_temperature_and_cap_refill": "Extremities warm, Capillary Refill Time < 2 seconds.",
-          "peripheral_pulses_symmetry_and_quality": "Symmetrical, Regular, and Normal quality (60-100 bpm)."
+          "peripheral_pulses_symmetry_and_quality": "Symmetrical and Regular. Tachycardic quality."
         }
       },
       "musculoskeletal_system": {
@@ -191,101 +183,101 @@
           "muscles": "No obvious atrophy."
         },
         "stability_and_function": "Stable and Functional.",
-        "range_of_motion_active_passive": "Full ROM Active/Passive."
+        "range_of_motion_active_passive": "Reduced ROM."
       }
     },
     "history_taking": {
       "ros": {
-        "question1": "احساس خستگی دارم ولی تب یا لرز ندارم.",
-        "question2": "نه، راش یا تغییرات پوستی نداشته ام.",
-        "question3": "اخیراً سردرد ندارم ولی گاهی از بزرگی غدد لنفاوی گردن احساس نگرانی می کنم.",
-        "question4": "مشکلی در دید یا چشم هایم احساس نکرده ام.",
-        "question5": "نه، مشکل وزوز یا گرفتگی بینی ندارم.",
-        "question6": "بله، گاهی تپش قلب و تنگی نفس دارم ولی تورم پا ندارم.",
-        "question7": "سرفه خشک دارم و خس خس سینه شنیده می شود.",
-        "question8": "نه، مشکل گوارشی خاصی ندارم.",
-        "question9": "درد یا سوزش حین ادرار ندارم و کنترل خوبی روی ادرارم دارم.",
-        "question10": "گاهی ضعف عضلات دارم ولی درد یا تورم مفاصل نداشته ام.",
-        "question11": "نه، مشکل عصبی خاصی ندارم.",
-        "question12": "بله، گاهی مضطرب می شوم ولی افسردگی ندارم.",
-        "question13": "نه، افزایش تشنگی یا بی حوصلگی ناشی از گرما یا سرما ندارم.",
-        "question14": "نه، کبودی آسان یا کم خونی شدید ندارم."
+        "question1": "در ماه های اخیر احساس کمی کاهش وزن و خستگی زیاد داشته ام.",
+        "question2": "هیچ گونه راش، ضایعه پوستی یا کبودی غیرعادی ندارم.",
+        "question3": "گاهی علائم خفیف سردرد یا سرگیجه دارم ولی نه مشکل خاصی.",
+        "question4": "از تاری دید، دوبینی یا درد در ناحیه چشم ها شکایتی ندارم.",
+        "question5": "گلودرد یا مشکل بلع ندارم ولی گاهی احساس گرفتگی مزمن بینی دارم.",
+        "question6": "گاهی احساس سنگینی قفسه سینه همراه با تپش قلب داشته ام.",
+        "question7": "تنگی نفس تقریباً همیشه برایم مسئله است و سرفه های خشک و مداوم دارم.",
+        "question8": "از نظر گوارشی مشکلی ندارم و هیچ گونه تهوع، خونریزی یا زردی نداشته ام.",
+        "question9": "مشکل ادراری یا تناسلی برایم پیش نیامده است.",
+        "question10": "گاهی احساس ضعف عضلانی دارم اما درد مفاصل یا تورم در مشخصی ندارم.",
+        "question11": "مشکل عصبی مثل بی حسی یا سوزش انگشتان ندارم.",
+        "question12": "گاهی احساس افسردگی و اضطراب از اینکه تنگی نفسم بهبود نمی یابد دارم.",
+        "question13": "هیچ نشانه ای از تشنگی یا گرسنگی غیرطبیعی ندارم.",
+        "question14": "احساس زیادی کبودی یا خونریزی طولانی مدت ندارم ولی به نظرم رنگ پریده تر از قبل شده ام."
       },
       "allergies": {
         "question1": {
-          "question1a": "نسبت به گرده گل حساسیت دارم.",
-          "question1b": "وقتی در معرض گرده قرار می گیرم دچار خس خس و آبریزش بینی می شوم."
+          "question1a": "آلرژی شناخته شده ای ندارم اما به گرد و غبار و دود سیگار حساس هستم.",
+          "question1b": "در صورت حساسیت، معمولاً عطسه و سرفه شدید به همراه خس خس دارم."
         }
       },
       "drug_history": {
         "question1": {
-          "question1a": "فعلاً اسپری های تنفسی مثل سالبوتامول و بودزوناید مصرف می کنم.",
-          "question1b": "سالبوتامول را دو پاف در مواقع اضطراری و بودزوناید را هر روز یک پاف صبح و شب مصرف می کنم.",
-          "question1c": "اخیراً بودزوناید را در درمان خود اضافه کردم و قبلاً فقط سالبوتامول استفاده می کردم."
+          "question1a": "من از اسپری های استنشاقی مثل سالبوتامول و اسپری ترکیبی کورتیکواستروئید استفاده می کنم.",
+          "question1b": "معمولاً روزی دو بار از اسپری استفاده می کنم و در مواقع تشدید علائم بیشتر.",
+          "question1c": "در طول یک سال گذشته، پزشک دوز اسپری را کمی افزایش داد و یک داروی جدید اضافه کرد."
         },
-        "question2": "داروهای مکمل یا گیاهی مصرف نمی کنم."
+        "question2": "به ندرت مکمل غذایی یا مولتی ویتامین مصرف می کنم ولی داروی OTC استفاده نمی کنم."
       },
       "family_history": {
         "question1": {
-          "question1a": "پدرم آسم داشته است.",
-          "question1b": "پدرم از جوانی آسم داشت."
+          "question1a": "در خانواده ام کسی بیماری ریوی مشابه ندارد.",
+          "question1b": "اطلاعات خاصی از بیماری های سابق خانواده ندارم."
         },
-        "question2": "در خانواده درجه یکم سابقه حمله قلبی یا سکته وجود ندارد.",
+        "question2": "در خانواده ما سابقه سکته قلبی در افراد بزرگسال وجود داشته اما نه نارسایی قلبی.",
         "question3": {
-          "question3a": "نه، در خانواده ام سابقه سرطان وجود ندارد.",
-          "question3b": "هیچ نوع سرطانی تاکنون دیده نشده است."
+          "question3a": "تاکنون هیچ موردی از سرطان در بستگان درجه یک گزارش نشده است.",
+          "question3b": "جزئیاتی از نوع سرطان یا سن تشخیص در خانواده موجود نیست."
         }
       },
       "social_history": {
         "question1": {
-          "question1a": "سیگاری نیستم ولی قبلاً در معرض دود دست دوم سیگار بوده ام.",
-          "question1b": "از حدود پنج سال پیش دیگر در معرض دود سیگار نیستم."
+          "question1a": "من در حال حاضر سیگار نمی کشم اما قبلاً چند سال سیگاری فعال بودم.",
+          "question1b": "حدود پنج سال است که سیگار را ترک کرده ام."
         },
-        "question2": "الکل مصرف نمی کنم.",
+        "question2": "به ندرت الکل مصرف می کنم و میزان آن بسیار محدود بوده است.",
         "question3": {
-          "question3a": "مواد مخدر مصرف نمی کنم.",
-          "question3b": "تا به حال مصرف نکرده ام."
+          "question3a": "هیچ گاه مواد مخدر مصرف نکرده ام.",
+          "question3b": "اطلاعاتی در مورد مصرف گذشته ندارم."
         },
-        "question4": "با خانواده ام زندگی می کنم."
+        "question4": "با خانواده ام زندگی می کنم و در خانه حیوان خانگی نداریم."
       },
       "present_illness": {
-        "question1": "علائم از حدود پنج روز پیش شروع شدند و به تدریج بدتر شدند. اوایل فقط خس خس سینه داشتم ولی الان دیگر نفس کشیدن برایم سخت است.",
-        "question2": "شروع علائم تدریجی بود، بعد از اینکه در معرض گرد و خاک زیاد قرار گرفتم شروع شدند.",
-        "question3": "بله، تنگی نفس دارم. این تنگی نفس عمدتاً موقع فعالیت بدتر می شود ولی در حالت استراحت هم اذیت کننده است.",
-        "question4": "بله، سرفه دارم. معمولاً خشک است ولی گاهی اوقات مقدار کمی خلط سفید بیرون می آید.",
-        "question5": "بله، وقتی نفس می کشم خس خس سینه را می شنوم، مخصوصاً موقع بازدم.",
-        "question6": "نه، هیچ درد یا فشاری در قفسه سینه ندارم.",
-        "question7": "خیر، تب یا لرز نداشته ام ولی بعضی شب ها عرق می کنم.",
-        "question8": "نه، تورم پا یا تپش قلب ندارم ولی گاهی احساس سبکی سر دارم.",
-        "question9": "بله، قبلاً هم چنین حملاتی را تجربه کرده بودم و اسپری های تنفسی مثل سالبوتامول کمکم کرده اند.",
-        "question10": "احساس کاهش وزن یا بی اشتهایی ندارم ولی این روزها خیلی خسته هستم."
+        "question1": "علائم از حدود دو سال پیش شروع شدند و به مرور شدیدتر شدند. اوایل فقط در زمان فعالیت های سنگین مشکل داشتم ولی الان حتی در فعالیت های روزمره هم احساس محدودیت می کنم.",
+        "question2": "علائم به صورت تدریجی شروع شدند و در مقطعی خاص، مثل بعد از سرماخوردگی، سرعت افزایش پیدا کردند.",
+        "question3": "بله، تنگی نفس دارم و معمولاً هنگام فعالیت بدنی شدید یا حتی تند راه رفتن بدتر می شود. در حالت استراحت کمتر اذیت هستم ولی کاملاً برطرف نمی شود.",
+        "question4": "سرفه دارم که معمولاً همراه با خلط است. رنگ خلط معمولاً سفید یا شفاف است و نه خیلی زیاد ولی همیشه وجود دارد.",
+        "question5": "بله، خس خس سینه دارم که بیشتر شب ها و در زمان تغییرات دمای هوا یا برخورد با دود سیگار شدت پیدا می کند.",
+        "question6": "احساس سنگینی یا فشار در قفسه سینه دارم که گاهی بعد از سرفه شدید یا نفس های عمیق بیشتر می شود.",
+        "question7": "تب یا لرز نداشتم و تعریق شبانه هم گزارش نمی کنم.",
+        "question8": "متوجه تورم پاها نشده ام ولی گاهی احساس خفیف تپش قلب یا سبکی سر دارم.",
+        "question9": "قبلاً علائمی شبیه به این داشتم که با داروی استنشاقی بهتر می شد ولی در دوره های اخیر نیاز به استفاده مرتب تر دارو پیدا کردم.",
+        "question10": "خستگی روزانه و کمی کاهش وزن داشتم، ولی اشتهایم تغییر چشم گیری نکرده است."
       },
       "past_medical_history": {
         "question1": {
-          "question1a": "آسم داشته ام و تحت درمان بوده ام.",
-          "question1b": "حدود ده سال است که این بیماری را دارم."
+          "question1a": "از سابقه بیماری های قلبی و کلیوی اطلاع خاصی ندارم، اما سابقه آسم و برونشیت دارم.",
+          "question1b": "مدت حدود چهار سال است که با علائم ریوی درگیر هستم."
         },
         "question2": {
-          "question2a": "حدود دو سال پیش برای تشدید آسم در بیمارستان بستری شده بودم.",
-          "question2b": "بستری به دلیل حمله شدید آسم بود."
+          "question2a": "بله، حدود یک سال پیش برای تشدید علائم و تنظیم داروها بستری شدم.",
+          "question2b": "آخرین بار به دلیل تشدید سرفه و کاهش اکسیژن خون بستری شدم."
         },
-        "question3": "سابقه بیماری ریوی آسم دارم ولی بیماری قلبی یا مغزی نداشته ام.",
-        "question4": "خیر، سابقه سرطان فعال نداشته ام.",
-        "question5": "نه، در کودکی سابقه بیماری خاصی نداشته ام.",
-        "question6": "واکسیناسیون من کامل است و واکسن آنفولانزا و کووید-۱۹ را دریافت کرده ام."
+        "question3": "سابقه بیماری انسدادی مزمن ریه (COPD) و همچنین آسم در پرونده من وجود دارد.",
+        "question4": "هیچ سابقه ای از سرطان فعال ندارم.",
+        "question5": "در دوران کودکی گاهی عفونت های تنفسی شدید داشتم ولی بستری نشده ام.",
+        "question6": "تقریباً واکسن های لازم مثل آنفولانزا دریافت کرده ام ولی مطمئن نیستم که کاملاً بروز باشد."
       }
     },
     "patient_profile": {
-      "chief_complaint": "سختی در نفس کشیدن و خس خس شدید سینه",
+      "chief_complaint": "تنگی نفس، که به تدریج بدتر شده و تقریباً همیشه با انجام فعالیت بدنی شدید تشدید می شود.",
       "personal_information": {
-        "age": "23 ساله",
-        "gender": "مرد",
-        "last_name": "جهانی",
-        "first_name": "ناصر",
-        "occupation": "نقاش ساختمان",
-        "marital_status": "متأهل",
-        "place_of_birth": "شیراز",
-        "place_of_residence": "بوشهر"
+        "age": "52 ساله",
+        "gender": "زن",
+        "last_name": "یزدانی",
+        "first_name": "حدیث",
+        "occupation": "کارمند اداری",
+        "marital_status": "همسر متوفی",
+        "place_of_birth": "بیرجند",
+        "place_of_residence": "زاهدان"
       }
     }
   }

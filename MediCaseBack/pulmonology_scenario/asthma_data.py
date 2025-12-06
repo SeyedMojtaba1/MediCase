@@ -226,57 +226,89 @@ class AsthmaDataGenerator:
 
     # --- 2. General Appearance ---
     def _gen_general_appearance(self):
-        # LOC: Always Alert
-        loc = "Alert and Oriented to Person, Place, and Time, following commands."
-
-        # Mood & Behavior
-        if self.control_level == "Controlled":
-             mood = "Appears Well, Not in acute distress."
-             behav = "Cooperative."
-        else:
-             # Mild anxiety if not fully controlled
-             mood = self.random.choices(["Appears Well.", "Mildly Anxious/Apprehensive."], weights=[70, 30])[0]
-             behav = self.random.choices(["Cooperative.", "Anxious."], weights=[80, 20])[0]
-
-        # Posture
-        if self.control_level == "Uncontrolled":
-            pos = self.random.choices(["Comfortable in bed.", "Sitting upright."], weights=[60, 40])[0]
-        else:
-            pos = "Comfortable in bed or seated."
-
-        # Nutrition: BMI can be anything
-        nutr = self.random.choices(
-            ["Normal weight", "Overweight", "Obese"],
-            weights=[90, 5, 5]
+        """
+        تولید داده‌های General Appearance برای آسم بر اساس قواعد جدید:
+        - mood_and_behavior
+        - overall_appearance (Speech patterns)
+        - posture_and_position
+        - level_of_consciousness
+        - cardiopulmonary_and_circulatory_clues
+        """
+        
+        # 1. Mood and Behavior
+        # 50% Anxious/Agitated, 10% Drowsy/Confused, 40% Calm/Cooperative
+        mood = self.random.choices(
+            [
+                "Anxious or Agitated (Correlates with severity)", 
+                "Drowsy or Confused (Suggests CO2 narcosis/Impending failure)", 
+                "Calm and Cooperative (Mild/Well-controlled)"
+            ],
+            weights=[50, 10, 40]
         )[0]
 
-        # Cyanosis: Always Absent in stable asthma
-        cyan = "Absent."
+        # 2. Overall Appearance (Focus on Speech)
+        # 30% Short phrases, 10% Single words, 60% Full sentences
+        speech = self.random.choices(
+            [
+                "Speaks in short phrases (Moderate obstruction)", 
+                "Speaks in single words (Severe obstruction)", 
+                "Speaks in full sentences (Mild obstruction)"
+            ],
+            weights=[30, 10, 60]
+        )[0]
 
-        # Dyspnea: Strongly correlates with Control Level
-        if self.control_level == "Controlled":
-            dysp = "Absent/Mild dyspnea only on significant exertion."
-        elif self.control_level == "Partially Controlled":
-             dysp = "Intermittent dyspnea on minimal activity or with specific triggers."
-        else: # Uncontrolled
-             dysp = "Intermittent dyspnea on minimal activity."
+        # 3. Posture and Position
+        # 40% Tripod, 20% Upright, 40% Supine
+        posture = self.random.choices(
+            [
+                "Tripod position (Sitting forward to optimize accessory muscles)", 
+                "Prefers sitting upright (Orthopnea)", 
+                "Can lie supine (Comfortable)"
+            ],
+            weights=[40, 20, 40]
+        )[0]
+
+        # 4. Level of Consciousness
+        # 90% Alert, 10% Drowsy/Comatose
+        loc = self.random.choices(
+            [
+                "Alert (Usually preserved)", 
+                "Drowsy or Comatose (Life-threatening/Near-fatal)"
+            ],
+            weights=[90, 10]
+        )[0]
+
+        # 5. Cardiopulmonary Clues
+        # Edema: 100% No
+        edema = "No peripheral edema (Not a feature of asthma)"
+        
+        # Dyspnea: 60% At rest, 40% On exertion/Absent
+        dyspnea = self.random.choices(
+            [
+                "Dyspnea at rest (Expiratory difficulty)", 
+                "Dyspnea on exertion or absent at rest"
+            ],
+            weights=[60, 40]
+        )[0]
+        
+        # Cyanosis: 10% Central, 90% None
+        cyanosis = self.random.choices(
+            [
+                "Central Cyanosis (Late sign of severe hypoxia)", 
+                "No Cyanosis (Adequate oxygenation maintained)"
+            ],
+            weights=[10, 90]
+        )[0]
 
         return {
-            "level_of_consciousness_mood_and_behavior": {
-                "level_of_consciousness": loc,
-                "mood": mood,
-                "behavior": behav
-            },
-            "posture_and_position": {
-                "position_of_comfort": pos
-            },
-            "overall_appearance": {
-                "nutritional_status": nutr
-            },
+            "mood_and_behavior": mood,
+            "overall_appearance": speech, # نگاشت قاعده Overall به خروجی صحبت کردن
+            "posture_and_position": posture,
+            "level_of_consciousness": loc,
             "cardiopulmonary_and_circulatory_clues": {
-                "cyanosis": cyan,
-                "dyspnea": dysp,
-                "edema": "Absent."
+                "edema": edema,
+                "dyspnea": dyspnea,
+                "cyanosis": cyanosis
             }
         }
 
@@ -409,7 +441,7 @@ class AsthmaDataGenerator:
             },
             "percussion": perc_choice,
             "auscultation": {
-                "breath_sounds_intensity": bs_int,
+                "breath_sounds": bs_int,
                 "adventitious_sounds": adv_sounds
             }
         }
@@ -642,6 +674,28 @@ class AsthmaDataGenerator:
             "FEV1/FVC_Ratio": ratio_output
         }
     
+    def _get_dlco_logic(self):
+        """
+        تولید مقدار DLCO برای آسم (Asthma):
+        1. Normal (> 80% predicted): 60% (تمایز کلیدی از COPD/Emphysema)
+        2. Elevated (> 120% predicted): 40% (افزایش حجم خون مویرگی ریه - ویژگی آسم)
+        """
+        scenario = self.random.choices(
+            ["Normal", "Elevated"],
+            weights=[60, 40], k=1
+        )[0]
+
+        if scenario == "Normal":
+            # معمولاً بین 80 تا 120 درصد
+            val = self.random.randint(80, 119)
+            result_text = "Normal (> 80% predicted)"
+        else:
+            # بیشتر از 120 درصد (Elevated)
+            val = self.random.randint(121, 140)
+            result_text = "Elevated (> 120% predicted)"
+            
+        return result_text, f"{val}% predicted"
+    
     # --- 9. Paraclinic Tests ---
     def _gen_paraclinic(self):
         # CBC
@@ -663,12 +717,7 @@ class AsthmaDataGenerator:
         wbc_val = self.random.randint(wbc_range[0], wbc_range[1])
         wbc_str = f"{wbc_val} /µL"
 
-        if self.phenotype == "Allergic":
-             tot_ige = self.random.choices(["Elevated (>100 IU/mL)", "within normal range"], weights=[80, 20])[0]
-             spec_ige = self.random.choices(["Positive to common environmental allergens", "Negative"], weights=[80, 20])[0]
-        else:
-             tot_ige = "within normal range."
-             spec_ige = "Negative."
+
 
         if self.phenotype == "Allergic":
              sputum_gram = self.random.choices(["Normal Flora / Mixed.", "Eosinophils present."], weights=[70, 30])[0]
@@ -686,12 +735,13 @@ class AsthmaDataGenerator:
         )[0]
 
         fev1_pred = self.random.randint(60, 95)
+        dlco_text, dlco_val = self._get_dlco_logic()
         reversibility = self._gen_reversibility()
         spirometry_results = self._gen_spirometry_data()
         
         if self.simulated_rr_val > 20:
             ph = str(round(self.random.uniform(7.45, 7.60), 2))
-            paco2 = str(self.random.randint(30, 40))
+            pco2 = str(self.random.randint(30, 40))
             
             hco3_scenario = self.random.choices(
                 ["Compensatory decrease", "Normal"], 
@@ -709,7 +759,7 @@ class AsthmaDataGenerator:
             
         else:
             ph = str(round(self.random.uniform(7.35, 7.45), 2))
-            paco2 = str(self.random.randint(45, 50))
+            pco2 = str(self.random.randint(45, 50))
             num = random.randint(22, 26)
             hco3 = f"{num} mEq/L"
         
@@ -738,7 +788,7 @@ class AsthmaDataGenerator:
                 },
                 "VBG": {
                     "pH": f"{ph}",
-                    "PaO2": f"{paco2}",
+                    "PCO2": f"{pco2}",
                     "HCO3": f"{hco3}"
                 }
             },
@@ -754,9 +804,7 @@ class AsthmaDataGenerator:
             },
             "immunity_and_serology": {
                 "HIV_test": "Negative",
-                "Autoimmune_pannel_ANA_ANCA": "Negative",
-                "Total_IgE": tot_ige,
-                "Specific_IgE_Rast_Test": spec_ige
+                "Autoimmune_pannel_ANA_ANCA": "Negative"
             },
             "simple_imaging": {
                 "Chest_X_Ray": {
@@ -771,8 +819,9 @@ class AsthmaDataGenerator:
             "functional_tests": {
                 "Spirometry": {
                     "result": spirometry_results,
-                    "Reversibility": reversibility
+                    "reversibility": reversibility
                 },
+                "dlco": f"{dlco_val}",
                 "peak_flow": pf,
                 "plethysmography": self.random.choices(["within normal range.", "Mildly Increased Residual Volume (RV)."], weights=[70, 30])[0]
             },

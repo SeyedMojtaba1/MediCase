@@ -1,13 +1,16 @@
 import random
+import json
 
 class PHDataGenerator:
     """
     کلاسی برای تولید داده‌های شبیه‌سازی شده فشار خون ریوی (PH).
+    نسخه اصلاح شده: 
+    1. بخش General Appearance دقیقاً بر اساس قواعد آماری و ساختار درخواستی جدید به روز رسانی شده است.
     
     Logic Drivers (متغیرهای اصلی برای حفظ سازگاری بالینی):
-    1. RV_DYSFUNCTION: (None/Mild/Severe) - مهم‌ترین عامل تعیین‌کننده یافته‌های قلبی (JVD, Edema, P2).
-    2. FUNCTIONAL_CLASS: (FC I-II vs FC III-IV) - مهم‌ترین عامل تعیین‌کننده علائم حیاتی و تنگی نفس.
-    3. PH_GROUP: (Group 1 PAH, Group 3-ILD, Group 3-COPD) - مهم‌ترین عامل تعیین‌کننده PFT.
+    1. RV_DYSFUNCTION: (None/Mild/Severe)
+    2. FUNCTIONAL_CLASS: (FC I-II vs FC III-IV)
+    3. PH_GROUP: (Group 1 PAH, Group 3-ILD, Group 3-COPD)
     """
     
     # لیست‌های داده‌های دموگرافیک
@@ -45,26 +48,22 @@ class PHDataGenerator:
         
         # 1. CORE LOGIC INITIALIZATION
         
-        # PH Group (Source: PH.txt PFT distribution and general knowledge)
-        # Group 1 (PAH): 60%, Group 3 (ILD-PH): 20%, Group 3 (COPD-PH): 20%
+        # PH Group
         self.ph_group = self.random.choices(
             ["Group 1 (PAH)", "Group 3 (ILD-PH)", "Group 3 (COPD-PH)"], 
             weights=[60, 20, 20], k=1
         )[0]
         
-        # Functional Class (Source: PH.txt Tachycardia and Hypotension are common in FC III-IV)
-        # FC I-II (Mild/Moderate): 40%, FC III-IV (Severe): 60%
+        # Functional Class
         self.functional_class = self.random.choices(
             ["FC I-II", "FC III-IV"], 
             weights=[40, 60], k=1
         )[0]
 
-        # RV Dysfunction Severity (Cor Pulmonale) - Driven by Functional Class
+        # RV Dysfunction Severity
         if self.functional_class == "FC III-IV":
-            # 70% Severe Dysfunction/Cor Pulmonale
             self.rv_dysfunction = self.random.choices(["Severe", "Mild/None"], weights=[70, 30])[0]
         else:
-            # 85% Mild/None
             self.rv_dysfunction = self.random.choices(["Severe", "Mild/None"], weights=[15, 85])[0]
 
         # Holders for consistency checks
@@ -74,7 +73,6 @@ class PHDataGenerator:
 
     # --- Helper Methods ---
     def _generate_value(self, distributions, is_int=False, precision=2):
-        # Generates a value based on weighted ranges (simplified)
         ranges = [d["range"] for d in distributions]
         weights = [d["weight"] for d in distributions]
         chosen_range = self.random.choices(ranges, weights=weights, k=1)[0]
@@ -86,7 +84,6 @@ class PHDataGenerator:
 
     def _generate_personal_information(self):
         gender = self.random.choice(["مرد", "زن"])
-        # PH often presents in middle to older age groups
         age_num = self.random.randint(35, 75)
         age_str = f"{age_num} ساله"
         
@@ -105,12 +102,11 @@ class PHDataGenerator:
 
     # --- 1. Vital Signs ---
     def _gen_vitals(self):
-        # BP Logic: Driven by RV Dysfunction/FC (Source: PH.txt)
-        if self.rv_dysfunction == "Severe": # Hypotension (reduced cardiac output)
-            sys = self.random.randint(85, 99) # 15% < 100 mmHg
+        if self.rv_dysfunction == "Severe": 
+            sys = self.random.randint(85, 99) 
             dia = self.random.randint(50, 65)
         else:
-            bp_choice = self.random.choices(["Normal", "High"], weights=[70, 30])[0] # 60% Normal, 25% High
+            bp_choice = self.random.choices(["Normal", "High"], weights=[70, 30])[0]
             if bp_choice == "Normal":
                 sys = self.random.randint(110, 139)
                 dia = self.random.randint(70, 89)
@@ -120,31 +116,27 @@ class PHDataGenerator:
         
         self.simulated_bp_systolic = sys
 
-        # PR Logic: Tachycardia is compensatory (Source: PH.txt)
-        if self.functional_class == "FC III-IV": # 60% Tachy (100-120)
+        if self.functional_class == "FC III-IV": 
             pr = self.random.randint(100, 120)
         else:
-            pr = self.random.randint(65, 99) # 30% Normal
+            pr = self.random.randint(65, 99)
 
-        # RR Logic: Tachypnea common due to increased drive (Source: PH.txt)
-        if self.functional_class == "FC III-IV" or self.simulated_bp_systolic < 100: # 70% > 20
+        if self.functional_class == "FC III-IV" or self.simulated_bp_systolic < 100: 
             rr = self.random.randint(22, 30)
         else:
             rr = self.random.randint(14, 20)
         
         self.simulated_rr_val = rr
 
-        # SpO2 Logic: Hypoxemia common, especially in Group 3 (Source: PH.txt)
-        if self.rv_dysfunction == "Severe": # Severe Hypoxemia (<88%)
+        if self.rv_dysfunction == "Severe": 
             spo2 = self.random.randint(83, 87)
-        elif self.ph_group.startswith("Group 3"): # Mild/Moderate Hypoxemia (88-94%)
+        elif self.ph_group.startswith("Group 3"): 
             spo2 = self.random.randint(88, 94)
-        else: # Group 1 PAH (often better SpO2)
+        else: 
             spo2 = self.random.randint(95, 98) 
         
         self.simulated_spo2_val = spo2
 
-        # Temperature: 95% Normal (Source: PH.txt)
         temp = round(self.random.uniform(36.5, 37.5), 1)
 
         return {
@@ -156,45 +148,94 @@ class PHDataGenerator:
             "GCS": "15"
         }
 
-    # --- 2. General Appearance ---
+    # --- 2. General Appearance (CORRECTED) ---
     def _gen_general_appearance(self):
-        # Dyspnea (Tنگی نفس) driven by Functional Class
-        if self.functional_class == "FC III-IV":
-            dyspnea_val = "Dyspnea at rest or minimal exertion."
-        else:
-            dyspnea_val = "Dyspnea with moderate to strenuous exertion."
+        """
+        Updated to strictly follow the provided statistical rules and structure.
+        """
+        
+        # 1. Mood and Behavior
+        # Rules: 60% Anxious/Apprehensive, 40% Calm/Cooperative
+        mood_behavior = self.random.choices(
+            [
+                "Anxious or Apprehensive", 
+                "Calm and Cooperative"
+            ],
+            weights=[60, 40],
+            k=1
+        )[0]
 
-        # Cyanosis: Driven by SpO2
-        cyanosis = "Central Cyanosis Present." if self.simulated_spo2_val < 90 else "No Cyanosis."
+        # 2. Overall Appearance
+        # Rules: 20% Cachectic, 80% Well-nourished
+        overall = self.random.choices(
+            [
+                "Cachectic appearance with muscle wasting",
+                "Well-nourished appearance"
+            ],
+            weights=[20, 80],
+            k=1
+        )[0]
 
-        # Edema: Driven by RV Dysfunction
-        if self.rv_dysfunction == "Severe":
-            edema = "Pitting Edema (Bilateral, Dependent)."
-        else:
-            edema = "No Peripheral Edema."
+        # 3. Posture and Position
+        # Rules: 40% Tripod, 60% No specific preference
+        posture = self.random.choices(
+            [
+                "Prefers sitting upright (Tripod position)",
+                "No specific position of comfort preference"
+            ],
+            weights=[40, 60],
+            k=1
+        )[0]
 
+        # 4. Level of Consciousness
+        # Rules: 90% Alert, 10% Drowsy/Confused
+        loc = self.random.choices(
+            [
+                "Alert and Oriented",
+                "Drowsy or Confused"
+            ],
+            weights=[90, 10],
+            k=1
+        )[0]
+
+        # 5. Cardiopulmonary Clues (Edema, Dyspnea, Cyanosis)
+        
+        # Edema: 60% Peripheral Edema, 40% No Edema
+        edema = self.random.choices(
+            ["Peripheral Edema (Lower extremities)", "No Edema"],
+            weights=[60, 40],
+            k=1
+        )[0]
+
+        # Dyspnea: 40% Rest, 50% Minimal Exertion, 10% None
+        dyspnea = self.random.choices(
+            ["Dyspnea at rest", "Dyspnea with minimal exertion", "No visible dyspnea at rest"],
+            weights=[40, 50, 10],
+            k=1
+        )[0]
+
+        # Cyanosis: 15% Central, 15% Peripheral, 70% None
+        cyanosis = self.random.choices(
+            ["Central Cyanosis present", "Peripheral Cyanosis present", "No Cyanosis"],
+            weights=[15, 15, 70],
+            k=1
+        )[0]
+        
+        # Return structure matches the JSON request
         return {
-            "level_of_consciousness_mood_and_behavior": {
-                "level_of_consciousness": "Alert and Oriented.",
-                "mood": "Anxious or Distressed.",
-                "behavior": "Cooperative."
-            },
-            "posture_and_position": {
-                "position_of_comfort": "Orthopnea/Semi-Fowler's position may be preferred."
-            },
-            "overall_appearance": {
-                "nutritional_status": "Normal."
-            },
+            "mood_and_behavior": mood_behavior,
+            "overall_appearance": overall,
+            "posture_and_position": posture,
+            "level_of_consciousness": loc,
             "cardiopulmonary_and_circulatory_clues": {
-                "cyanosis": cyanosis,
-                "dyspnea": dyspnea_val,
-                "edema": edema
+                "edema": edema,
+                "dyspnea": dyspnea,
+                "cyanosis": cyanosis
             }
         }
 
-    # --- 3. Head and Neck (Mostly Normal) ---
+    # --- 3. Head and Neck ---
     def _gen_head_neck(self):
-        # JVP Logic: Driven by RV Dysfunction
         if self.rv_dysfunction == "Severe":
             jvp = "Elevated JVP (> 4 cm above sternal angle)."
         else:
@@ -217,7 +258,6 @@ class PHDataGenerator:
     
     # --- 4. Respiratory System ---
     def _gen_respiratory(self):
-        # Findings based on PH Group (Group 3 shows primary lung disease findings)
         if self.ph_group == "Group 3 (ILD-PH)":
             adventitious = "Bilateral Basilar Fine Crackles (Velcro Rales)."
         elif self.ph_group == "Group 3 (COPD-PH)":
@@ -233,14 +273,13 @@ class PHDataGenerator:
             "palpation": {"chest_expansion": "Normal."},
             "percussion": "Normal Resonance.",
             "auscultation": {
-                "breath_sounds_intensity": "Normal Intensity.",
+                "breath_sounds": "Normal Intensity.",
                 "adventitious_sounds": adventitious
             }
         }
 
-    # --- 5. Cardiovascular System (Crucial Section) ---
+    # --- 5. Cardiovascular System ---
     def _gen_cardio(self):
-        # Heart Sounds: P2 Loudness and Murmurs driven by RV Dysfunction
         if self.rv_dysfunction == "Severe":
             s2_desc = "Loud P2 component of S2 at the left sternal border."
             heave = "Right Ventricular Heave Palpable."
@@ -253,12 +292,9 @@ class PHDataGenerator:
             heave = "No Heave or Thrill."
             extra = "No Extra Sounds or Murmurs."
 
-        # Peripheral Pulses (Weak if Hypotensive/Shock)
         pulse_qual = "Weak and Thready" if self.simulated_bp_systolic < 100 else "Peripheral Pulses Symmetric and 2+."
         extremities = "Cool and Pale with Capillary Refill > 2 seconds." if self.simulated_bp_systolic < 100 else "Extremities Warm, Capillary Refill < 2 seconds."
         
-        # NOTE: JVP is already generated in Head and Neck section for structural consistency.
-
         return {
             "palpation": {
                 "precordial_palpation_heave_thrill": heave,
@@ -278,7 +314,6 @@ class PHDataGenerator:
 
     # --- 6. Abdominal System ---
     def _gen_abdominal(self):
-        # Hepatomegaly (جگر بزرگ) due to right heart failure
         if self.rv_dysfunction == "Severe" and self.random.random() < 0.6:
             organ = "Hepatomegaly (Tender, Pulsatile Liver) due to congestion."
         else:
@@ -291,7 +326,7 @@ class PHDataGenerator:
             "palpation": {"superficial_tenderness": "No Superficial Tenderness."}
         }
 
-    # --- 7. Neurological (Normal) ---
+    # --- 7. Neurological ---
     def _gen_neuro(self):
         return {
             "mental_status_and_LOC": "Mental Status: Alert and Oriented.",
@@ -300,7 +335,6 @@ class PHDataGenerator:
 
     # --- 8. Musculoskeletal ---
     def _gen_msk(self):
-        # Clubbing (چماقی شدن انگشتان) is only present if PH is secondary to a chronic lung disease (Group 3-ILD)
         if self.ph_group == "Group 3 (ILD-PH)":
              clubbing = self.random.choices(["Digital Clubbing Present", "No Clubbing"], weights=[60, 40])[0]
         else:
@@ -313,13 +347,6 @@ class PHDataGenerator:
         }
         
     def _get_radiology_finding(self):
-        """
-        تولید یافته‌های CT سینه (Lung Parenchyma and Pleura) بر اساس درصد‌های جهانی درخواستی 
-        و وابستگی‌های بالینی برای یافتن PA Enlargement.
-        """
-        
-        # 1. تعریف یافته‌های پارانشیم ریه (مجموع درصدها: 10% + 3% + 2% + 5% = 20%)
-        # اینها یافته‌هایی هستند که به نوع PH Group وابسته هستند، اما درصد آن‌ها در جمعیت کلی PH کم است.
         parenchymal_findings_choices = [
             "Mosaic perfusion pattern",  # CTEPH (Group 4) - 10%
             "Fibrotic changes",          # Group 3 PH (ILD-PH) - 3%
@@ -327,226 +354,236 @@ class PHDataGenerator:
             "Normal parenchyma"          # Group 1 (PAH) - 5%
         ]
         parenchymal_weights = [10, 3, 2, 5]
-        
-        # 2. تعریف یافته اصلی عروقی (PA Enlargement)
-        # این یافته در 80% کل موارد PH وجود دارد.
         pa_enlargement_finding = "PA diameter > Aorta diameter" 
-        
-        # 3. انتخاب تصادفی وضعیت کلی: آیا یافته اصلی عروقی وجود دارد یا نه؟ (80% در مقابل 20%)
-        # 80% احتمال دارد که PA Enlargement وجود داشته باشد.
-        # 20% احتمال دارد که یکی از یافته‌های پارانشیمال/نرمال (که در بالا تعریف شد) رخ دهد.
         
         overall_choice = self.random.choices(
             ["PA_ENLARGEMENT", "PARENCHYMAL_OR_NORMAL"], 
-            weights=[80, 20], 
-            k=1
+            weights=[80, 20], k=1
         )[0]
-        
-        final_output = []
-        
-        # --- ساختار خروجی بر اساس انتخاب ---
         
         if overall_choice == "PA_ENLARGEMENT":
             final_output=f"{pa_enlargement_finding}"
-            
         else:
-            # اگر یکی از 20% باقیمانده (یافته‌های پارانشیمال/نرمال) انتخاب شد.
-            # یکی از موارد 10%، 3%، 2%، یا 5% را انتخاب می‌کنیم.
             chosen_parenchymal = self.random.choices(
                 parenchymal_findings_choices, 
-                weights=parenchymal_weights, 
-                k=1
+                weights=parenchymal_weights, k=1
             )[0]
-            
-            # بر اساس یافته انتخاب شده، قاعده و خروجی مربوطه را تولید می‌کنیم.
-            if chosen_parenchymal == "Mosaic perfusion pattern":
-                final_output=f"{chosen_parenchymal}"
-            elif chosen_parenchymal == "Fibrotic changes":
-                final_output=f"{chosen_parenchymal}"
-            elif chosen_parenchymal == "Emphysematous changes":
-                final_output=f"{chosen_parenchymal}"
-            elif chosen_parenchymal == "Normal parenchyma":
-                final_output=f"{chosen_parenchymal}"
-
+            final_output=f"{chosen_parenchymal}"
         return final_output
     
-    # در داخل کلاس PHDataGenerator
     def _get_dlco_finding(self):
-        """
-        بر اساس فراوانی‌های مشخص شده، وضعیت DLCO را برمی‌گرداند.
-        90% Reduced (< 80% predicted), 10% Normal.
-        """
-        # تعریف یافته‌ها و وزن‌های (فراوانی‌های) متناظر آن‌ها
-        findings = [
-            "Reduced (< 80% predicted)",  # 90%
-            "Normal"                     # 10%
-        ]
-        
+        findings = ["Reduced (< 80% predicted)", "Normal"]
         weights = [90, 10]
-        
-        # انتخاب تصادفی وضعیت
         chosen_status = self.random.choices(findings, weights=weights, k=1)[0]
-        
-        # تولید مقدار عددی منطبق بر وضعیت انتخاب شده
         if chosen_status == "Reduced (< 80% predicted)":
             dlco_val = self.random.randint(40, 79)
         else:
             dlco_val = self.random.randint(80, 100)
-            
-        # برگرداندن هر دو (متن و مقدار) برای سازگاری با ساختار داده
         return chosen_status, f"{dlco_val}% predicted"
 
-    # در داخل کلاس PHDataGenerator
-
     def _get_spirometry_data(self):
-        """
-        تولید داده‌های FEV1, FVC و FEV1/FVC Ratio بر اساس وابستگی‌های اعلام شده.
-        این داده‌ها عمدتاً برای Group 1 PAH (بیماری عروقی خالص) معتبر هستند.
-        """
+        pred_fev1_val = self.random.uniform(3.50, 3.80)
+        pred_fvc_val = self.random.uniform(4.30, 4.70)
+        pred_ratio_val = self.random.uniform(0.79, 0.83)
         
-        # مقادیر مرجع (Predicted) را با اندکی تغییر در رنج‌های شما تعریف می‌کنیم
-        # این مقادیر فقط برای محاسبه 'Measured' استفاده می‌شوند.
-        pred_fev1_val = self.random.uniform(3.50, 3.80) # حول و حوش 3.65 L
-        pred_fvc_val = self.random.uniform(4.30, 4.70)  # حول و حوش 4.50 L
-        pred_ratio_val = self.random.uniform(0.79, 0.83) # حول و حوش 0.81
-        
-        # --- FEV1 Logic (80/20) ---
         fev1_pct_choices = [
             (self.random.uniform(80.0, 120.0), (2.90, 4.40), "80-120%"), # 80%
             (self.random.uniform(60.0, 79.0), (2.20, 2.90), "60-79%")   # 20%
         ]
         fev1_pct, fev1_range, fev1_pct_text = self.random.choices(fev1_pct_choices, weights=[80, 20], k=1)[0]
-        meas_fev1 = self.random.uniform(fev1_range[0], fev1_range[1]) # انتخاب مقدار Measured از رنج درخواستی
+        meas_fev1 = self.random.uniform(fev1_range[0], fev1_range[1])
         
-        # --- FVC Logic (80/20) ---
         fvc_pct_choices = [
             (self.random.uniform(80.0, 120.0), (3.60, 5.40), "80-120%"), # 80%
             (self.random.uniform(60.0, 79.0), (2.70, 3.55), "60-79%")   # 20%
         ]
         fvc_pct, fvc_range, fvc_pct_text = self.random.choices(fvc_pct_choices, weights=[80, 20], k=1)[0]
-        meas_fvc = self.random.uniform(fvc_range[0], fvc_range[1]) # انتخاب مقدار Measured از رنج درخواستی
+        meas_fvc = self.random.uniform(fvc_range[0], fvc_range[1])
 
-        # --- Ratio Logic (100%) ---
         meas_ratio = self.random.uniform(0.70, 0.85)
         
-        # در صورت وجود بیماری زمینه‌ای (Group 3)، باید این مقادیر تعدیل شوند
         if self.ph_group.startswith("Group 3"):
             if "ILD" in self.ph_group:
-                # الگوی محدودیت (Restriction): FVC و FEV1 کاهش یافته، نسبت نرمال یا بالا
                 meas_fvc = self.random.uniform(0.5 * pred_fvc_val, 0.79 * pred_fvc_val)
                 meas_ratio = self.random.uniform(0.80, 0.95)
-                meas_fev1 = meas_fvc * meas_ratio # حفظ تناسب
+                meas_fev1 = meas_fvc * meas_ratio
                 fev1_pct_text = fvc_pct_text = "50-79%"
             elif "COPD" in self.ph_group:
-                # الگوی انسداد (Obstruction): FEV1 کاهش یافته، نسبت پایین
                 meas_ratio = self.random.uniform(0.40, 0.69)
                 meas_fev1 = self.random.uniform(0.4 * pred_fev1_val, 0.79 * pred_fev1_val)
-                meas_fvc = meas_fev1 / meas_ratio # حفظ تناسب
+                meas_fvc = meas_fev1 / meas_ratio
                 fev1_pct_text = "40-79%"
                 fvc_pct_text = "80-100%"
                 
-        
-        # ساختار خروجی مطابق با جزئیات درخواستی
         return {
             "FEV1": f"Measured: {meas_fev1:.2f} L, Predicted: {pred_fev1_val:.2f} L, %Predicted: {fev1_pct_text}",
             "FVC": f"Measured: {meas_fvc:.2f} L, Predicted: {pred_fvc_val:.2f} L, %Predicted: {fvc_pct_text}",
             "FEV1/FVC_Ratio": f"Measured: {meas_ratio:.2f}, Predicted: {pred_ratio_val:.2f}, %Predicted: {(meas_ratio/pred_ratio_val)*100:.0f}%"
         }
     
-    # در داخل کلاس PHDataGenerator
     def _gen_functional_tests(self):
-        """
-        تولید مقادیر عددی برای تست‌های عملکرد ریه و سایر تست‌های عملکردی.
-        """
-        
-        # فراخوانی متد جدید برای تولید داده‌های اسپیرومتری
         spirometry_data = self._get_spirometry_data()
-        
-        # فراخوانی متد DLCO (اگر آن را به یک متد مجزا تبدیل کرده باشید)
         dlco_status, dlco_value = self._get_dlco_finding() 
-        
-        # --- 3. Other Tests (Simple Values) ---
-        pef_val = self.random.choices(
-            ["Normal PEF", "Reduced PEF"], 
-            weights=[80, 20], k=1
-        )[0]
-        
-        # Plethysmography
-        pleth_val = self.random.choices(
-            ["Normal Lung Volumes", "Abnormal Lung Volumes"], 
-            weights=[80, 20], k=1
-        )[0]
+        pef_val = self.random.choices(["Normal PEF", "Reduced PEF"], weights=[80, 20], k=1)[0]
+        pleth_val = self.random.choices(["Normal Lung Volumes", "Abnormal Lung Volumes"], weights=[80, 20], k=1)[0]
 
-        # --- Constructing the Dictionary based on your required structure ---
         return {
-            "spirometry": {
+            "Spirometry": {
                 "result": {
                     "FEV1": spirometry_data["FEV1"],
                     "FVC": spirometry_data["FVC"],
                     "FEV1/FVC_Ratio": spirometry_data["FEV1/FVC_Ratio"]
                 },
-                "Reversibility": "FEV1 increase < 12% AND < 200 mL"
+                "reversibility": "FEV1 increase < 12% AND < 200 mL"
             }, 
             "dlco": dlco_value,
             "peak_flow": pef_val,
             "plethysmography": pleth_val
         }
 
-    # --- 9. Paraclinic Tests (Crucial Section) ---
+    # --- 9. Paraclinic Tests (UPDATED) ---
     def _gen_paraclinic(self):
+        # ==================== BASIC BLOOD TESTS ====================
         
-        # 1. BNP/Troponin: Driven by RV Dysfunction
-        if self.rv_dysfunction == "Severe":
-            bnp = "Severely Elevated."
-            trop = "Borderline/Positive Troponin."
+        # BMP - Na
+        na_choice = self.random.choices(["Hyponatremia", "Normal"], weights=[20, 80], k=1)[0]
+        if na_choice == "Hyponatremia": 
+            na_val = self.random.randint(125, 134)
+        else: 
+            na_val = self.random.randint(135, 145)
+
+        # BMP - BUN
+        bun_choice = self.random.choices(["Elevated", "Normal"], weights=[25, 75], k=1)[0]
+        if bun_choice == "Elevated": 
+            bun_val = self.random.randint(21, 40)
+        else: 
+            bun_val = self.random.randint(7, 20)
+
+        # BMP - Cr
+        cr_choice = self.random.choices(["Elevated", "Normal"], weights=[20, 80], k=1)[0]
+        if cr_choice == "Elevated": 
+            cr_val = round(self.random.uniform(1.3, 2.5), 2)
+        else: 
+            cr_val = round(self.random.uniform(0.6, 1.2), 2)
+
+        # CBC - WBC
+        wbc_choice = self.random.choices(["Normal", "Leukocytosis"], weights=[90, 10], k=1)[0]
+        if wbc_choice == "Leukocytosis":
+             wbc_val = self.random.randint(11000, 16000)
         else:
-            bnp = "Normal or Mildly Elevated."
-            trop = "Negative Troponin."
+             wbc_val = self.random.randint(4500, 10500)
 
-        # 2. CBC: Polycythemia if chronic hypoxemia (Group 3)
-        if self.ph_group.startswith("Group 3") and self.simulated_spo2_val < 92:
-            hb = "17.0 g/dL."
+        # CBC - Hb
+        hb_choice = self.random.choices(["Polycythemia", "Anemia", "Normal"], weights=[30, 20, 50], k=1)[0]
+        if hb_choice == "Polycythemia":
+             hb_val = round(self.random.uniform(16.1, 18.0), 1)
+        elif hb_choice == "Anemia":
+             hb_val = round(self.random.uniform(9.0, 11.9), 1)
         else:
-            hb = "14.0 g/dL."
+             hb_val = round(self.random.uniform(12.0, 16.0), 1)
 
-        # 3. ABG: Respiratory Alkalosis if Tachypnea (RR > 22)
-        if self.simulated_rr_val > 22:
-            ph = "7.47"
-            paco2 = "32 mmHg"
-            
-            # --- HCO3 Logic for Chronic Respiratory Alkalosis (40/60) ---
-            # اگر آلکالوز تنفسی حاد باشد، بدن سعی می‌کند با کاهش HCO3 جبران کند.
-            hco3_scenario = self.random.choices(
-                ["Compensatory decrease", "Normal"], 
-                weights=[40, 60], 
-                k=1
-            )[0]
-
-            if hco3_scenario == "Compensatory decrease":
-                num = random.randint(18, 21)
-                hco3 = f"{num} mEq/L"
-            else:
-                num = random.randint(22, 26)
-                hco3 = f"{num} mEq/L"
-                
+        # CBC - Plt
+        plt_choice = self.random.choices(["Thrombocytopenia", "Normal"], weights=[20, 80], k=1)[0]
+        if plt_choice == "Thrombocytopenia":
+             plt_val = self.random.randint(100, 149) * 1000
         else:
-            ph = "7.40"
-            paco2 = "40 mmHg"
-            num = random.randint(22, 26)
-            hco3 = f"{num} mEq/L"
+             plt_val = self.random.randint(150, 450) * 1000
 
+        # ESR & CRP
+        esr_choice = self.random.choices(["Elevated", "Normal"], weights=[25, 75], k=1)[0]
+        esr_val = f"{self.random.randint(30, 80)} mm/hr" if esr_choice == "Elevated" else f"{self.random.randint(5, 20)} mm/hr"
+        
+        crp_choice = self.random.choices(["Elevated", "Normal"], weights=[30, 70], k=1)[0]
+        crp_val = f"{self.random.randint(11, 40)} mg/L" if crp_choice == "Elevated" else f"{self.random.randint(1, 10)} mg/L"
+
+        # LFTs
+        lft_choice = self.random.choices(["Elevated", "Normal"], weights=[30, 70], k=1)[0]
+        if lft_choice == "Elevated":
+             alt_val = f"{self.random.randint(41, 100)} U/L"
+             ast_val = f"{self.random.randint(41, 100)} U/L"
+        else:
+             alt_val = f"{self.random.randint(7, 40)} U/L"
+             ast_val = f"{self.random.randint(10, 40)} U/L"
+
+        # VBG
+        ph_choice = self.random.choices(["Alkalosis", "Acidosis", "Normal"], weights=[50, 10, 40], k=1)[0]
+        if ph_choice == "Alkalosis": ph_val = round(self.random.uniform(7.46, 7.55), 2)
+        elif ph_choice == "Acidosis": ph_val = round(self.random.uniform(7.25, 7.34), 2)
+        else: ph_val = round(self.random.uniform(7.35, 7.45), 2)
+
+        pco2_choice = self.random.choices(["Hypocapnia", "Hypercapnia", "Normal"], weights=[60, 10, 30], k=1)[0]
+        if pco2_choice == "Hypocapnia": pco2_val = self.random.randint(25, 34)
+        elif pco2_choice == "Hypercapnia": pco2_val = self.random.randint(46, 60)
+        else: pco2_val = self.random.randint(35, 45)
+
+        hco3_choice = self.random.choices(["Decreased", "Normal"], weights=[40, 60], k=1)[0]
+        if hco3_choice == "Decreased": hco3_val = self.random.randint(18, 21)
+        else: hco3_val = self.random.randint(22, 26)
+
+        # ==================== SPECIALIZED TESTS ====================
+        
+        # D-dimer
+        ddimer = self.random.choices(["> 500 ng/mL (Elevated)", "< 500 ng/mL (Normal)"], weights=[30, 70], k=1)[0]
+        
+        # BNP/NT-proBNP
+        bnp_choice = self.random.choices(["Elevated", "Normal"], weights=[90, 10], k=1)[0]
+        if bnp_choice == "Elevated":
+            bnp_val = "Elevated (> 100 pg/mL) or NT-proBNP (> 300 pg/mL)"
+        else:
+            bnp_val = "Normal Range"
+
+        # a1-antitrypsin
+        a1at = self.random.choices(["Low levels", "Normal levels"], weights=[5, 95], k=1)[0]
+
+        # ==================== IMMUNITY & SEROLOGY ====================
+        
+        # HIV
+        hiv = self.random.choices(["Positive", "Negative"], weights=[5, 95], k=1)[0]
+        
+        # Autoimmune
+        auto_choice = self.random.choices(["Positive", "Negative"], weights=[25, 75], k=1)[0]
+        auto_res = "Positive ANA or specific antibodies (Scl-70, Centromere)" if auto_choice == "Positive" else "Negative"
+
+        # Imaging Placeholder Logic (Already defined or simple)
         cxr = "Prominent Main Pulmonary Arteries and Enlarged Right Heart Border."
-
+        
         return {
             "basic_blood_tests": {
-                "CBC": {"Hb": hb, "WBC": "9000 /uL", "Plt": "250,000 /uL"},
-                "BMP": {"Na": "138", "BUN": "20", "Cr": "1.1"},
-                "VBG": {"pH": ph, "PaCO2": paco2, "HCO3": hco3}
+                "CBC": {
+                    "Hb": f"{hb_val} g/dL", 
+                    "WBC": f"{wbc_val} /uL", 
+                    "Plt": f"{plt_val} /uL"
+                },
+                "ESR": esr_val,
+                "CRP": crp_val,
+                "BMP": {
+                    "Na": f"{na_val} mEq/L", 
+                    "BUN": f"{bun_val} mg/dL", 
+                    "Cr": f"{cr_val} mg/dL"
+                },
+                "LFTs": {
+                    "ALT": alt_val, 
+                    "AST": ast_val
+                },
+                "VBG": {
+                    "pH": str(ph_val), 
+                    "PCO2": f"{pco2_val} mmHg", 
+                    "HCO3": f"{hco3_val} mEq/L"
+                }
             },
             "specialized_lung_tests": {
-                "D_dimer": "Normal",
-                "BNP_NT_proBNP": bnp,
-                "Troponin": trop
+                "D_dimer": ddimer,
+                "BNP_NT_proBNP": bnp_val,
+                "Sputum_AFB": "Negative",
+                "Sputum_analysis": {
+                    "Gram_Stain": "No organisms seen",
+                    "Sample_Quality": "N/A"
+                },
+                "a1_antitrypsin_level": a1at
+            },
+            "immunity_and_serology": {
+                "HIV_test": hiv,
+                "Autoimmune_pannel_ANA_ANCA": auto_res
             },
             "simple_imaging": {
                 "Chest_X_Ray": {"PA_Lateral_Findings_and_Effusion": cxr}
@@ -563,9 +600,7 @@ class PHDataGenerator:
 
     def generate_paraclinic_case(self):
         personal_info = self._generate_personal_information()
-        
         vitals = self._gen_vitals()
-        
         gen_app = self._gen_general_appearance()
         hn_exam = self._gen_head_neck()
         resp_exam = self._gen_respiratory()
