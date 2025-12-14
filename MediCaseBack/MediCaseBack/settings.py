@@ -50,7 +50,7 @@ ALLOWED_HOSTS = [
     'medicase.local',
     'localhost',
     '127.0.0.1',
-    'https://zizmart.ir',
+    'zizmart.ir',
 ]
 
 MEDIA_URL = '/media/'
