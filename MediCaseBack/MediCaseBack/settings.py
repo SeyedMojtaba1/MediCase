@@ -42,7 +42,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://89.42.211.35:8000",
     "http://medicase.local:4200",
     "http://medicase.local:8000",
-    "http://zizmart.ir",
+    "https://zizmart.ir",
 ]
 
 ALLOWED_HOSTS = [
