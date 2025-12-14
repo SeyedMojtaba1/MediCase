@@ -63,6 +63,7 @@ services:
   celery:
     build: .
     container_name: celery_worker
+    restart: unless-stopped
     command: >
       sh -c "cd MediCaseBack/ &&
              celery -A MediCaseBack worker -l info -P solo"
