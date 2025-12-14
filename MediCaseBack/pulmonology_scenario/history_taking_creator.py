@@ -1,10 +1,13 @@
+import os
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
+from langchain_deepseek import ChatDeepSeek
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from .document import documents
-from pydantic import BaseModel, Field
-import traceback
+from document import documents
+from pydantic import BaseModel, Field, Json
+import json
+from pydantic import BaseModel, field_validator
 from typing import Optional
 
 # --- Patient Profile ---
@@ -113,9 +116,26 @@ class HistoryTaking(BaseModel):
     ros: ROS
 
 class MedicalCase(BaseModel):
-    # این تغییر باعث می‌شود اگر دیتایی ناقص باشد (مثلاً هنوز history_taking پر نشده)، ارور ندهد.
     patient_profile: PatientProfile
-    history_taking: HistoryTaking
+    
+    # CHANGE 1: Remove "Json[]". We want the final result to be an object, 
+    # and we will handle the parsing manually in the validator.
+    history_taking: HistoryTaking 
+    
+    @field_validator('history_taking', mode='before')
+    @classmethod
+    def parse_nested_json(cls, v):
+        # Case 1: The model returned a JSON string (most common with DeepSeek)
+        if isinstance(v, str):
+            try:
+                # CLEANUP: DeepSeek often adds ```json ... ``` markdown. Remove it.
+                clean_v = v.replace("```json", "").replace("```", "").strip()
+                return json.loads(clean_v)
+            except json.JSONDecodeError:
+                raise ValueError(f"Invalid JSON string received: {v[:50]}...")
+        
+        # Case 2: The model actually returned a dict (rare but possible)
+        return v
 
 def clean_persian_text(data):
     """Recursively removes the zero-width non-joiner character (\u200c) from all string values in a dict or list."""
@@ -128,10 +148,17 @@ def clean_persian_text(data):
     return data
 
 model = init_chat_model(
-  model="gpt-4o",
-  base_url="https://api.avalai.ir/v1",
-  api_key="aa-3merXIxJbKqFQqE69uVBXvWAJXVg1OAD7e1Tqq2BttJmJoVj",
+    base_url="https://api.avalai.ir/v1", 
+    api_key="aa-o3nQicuKCc2ND0IuSOHDXouISJ0GQHvK1cqQmtGgBvORi2FH",
+    model="gpt-5-mini"
 )
+
+# os.environ["DEEPSEEK_API_KEY"] = "sk-15c9eff080484dcbb80d315cba3fefe4"
+
+# model = ChatDeepSeek(
+#     base_url="https://api.deepseek.com/deepseek-v3.2",
+#     model="deepseek-chat",
+# )
 
 embedding_model = OpenAIEmbeddings(
     api_key="aa-3merXIxJbKqFQqE69uVBXvWAJXVg1OAD7e1Tqq2BttJmJoVj",
@@ -215,13 +242,16 @@ def history_taking_creator(target_disease):
     try:
         output_pydantic_object = structured_chat_model.invoke(final_prompt)
         
+        # --- ADD THIS CHECK ---
+        if output_pydantic_object is None:
+            return {"error": "The model failed to generate a valid JSON structure (returned None)."}
+        # ----------------------
+
         output_dict = output_pydantic_object.model_dump(by_alias=True)
         
         final_cleaned_output = clean_persian_text(output_dict)
         
-        # این تابع اکنون فقط دیکشنری history_taking را برمی‌گرداند
         return final_cleaned_output 
 
     except Exception as e:
-        # اگر خطا رخ دهد، همچنان دیکشنری خطا را برمی‌گرداند.
         return {"error": f"Pydantic Validation Failed: {e}"}
