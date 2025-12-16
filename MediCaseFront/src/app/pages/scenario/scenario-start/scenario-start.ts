@@ -1,15 +1,13 @@
 import {Component, signal} from '@angular/core';
-import {ProgressBar} from 'primeng/progressbar';
 import {NgClass} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {ProgressBar} from 'primeng/progressbar';
 
 
 @Component({
   selector: 'app-scenario-start',
   imports: [
-    ProgressBar,
     NgClass,
-    RouterLink
+    ProgressBar
   ],
   templateUrl: './scenario-start.html',
   styleUrl: './scenario-start.css'
@@ -32,8 +30,21 @@ export class ScenarioStart {
   ngOnInit() {
     this.selectRandomText()
     this.setTimer()
+    document.addEventListener('click', this.playVideoOnce);
+
   }
 
+
+  playVideoOnce = () => {
+    const video = document.getElementById('myVideo') as HTMLVideoElement;
+
+    if (video && video.paused) {
+      video.play().catch(err => console.log('Autoplay blocked:', err));
+
+      // بعد از اولین کلیک، لیسنر رو پاک کن
+      document.removeEventListener('click', this.playVideoOnce);
+    }
+  }
 
   selectRandomText(): void {
     const randomIndex = Math.floor(Math.random() * this.text.length);
@@ -55,4 +66,6 @@ export class ScenarioStart {
       }
     }, stepTime);
   }
+
+
 }

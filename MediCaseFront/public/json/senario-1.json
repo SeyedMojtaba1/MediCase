@@ -101,139 +101,91 @@
         "PR": "ضربان قلب",
         "RR": "تعداد تنفس",
         "SpO2": "غلظت O2",
-        "GCS": "سطح هوشیاری"
+        "GCS": "GCS"
     },
-      "general_appearance": {
-                "mood_and_behavior": "مود و رفتار",
-                "overall_appearance": "ظاهر کلی",
-                "posture_and_position": "حالت و وضعیت",
+            "general_appearance": {
+                "mood_and_behavior": "حالت و رفتار",
+                "overall_appearance": "نمای کلی بیمار",
+                "posture_and_position": "موقعیت بیمار",
                 "level_of_consciousness": "سطح هوشیاری",
                 "cardiopulmonary_and_circulatory_clues": {
-                    "edema": "اِدم",
-                    "dyspnea": "دیسپنه",
-                    "cyanosis": "سیانوز"
+                    "edema": "تورم ناشی از تجمع مایع (edema)",
+                    "dyspnea": "تنگی نفس",
+                    "cyanosis": "کبودی پوست"
                 }
             },
     "head_and_neck": {
-      "head_and_face": {
-        "symmetry_and_lesions": "سر و صورت: تقارن و ضایعات",
-        "tenderness": "سر و صورت: حساسیت به لمس (Tenderness)"
-      },
-      "eyes": {
-        "sclera_and_conjunctiva": "چشم: صلبیه و ملتحمه",
-        "pupils_reaction": "چشم: واکنش های مردمک",
-        "extraocular_movements": "چشم: حرکات خارج چشمی (EOM)"
-      },
-      "ears": {
-        "external_and_tenderness": "گوش: حساسیت به لمس گوش خارجی",
-        "eardrum_appearance": "گوش: مشاهده پرده صماخ"
-      },
-      "nose_and_sinuses": {
-        "septum_and_discharge": "بینی و سینوس: سپتوم بینی و ترشحات",
-        "sinus_tenderness": "بینی و سینوس: حساسیت به لمس سینوس ها"
-      },
-      "mouth_and_pharynx": {
-        "oral_mucosa_and_lesions": "دهان و حلق: مخاط دهان و ضایعات",
-        "pharynx_and_tonsils": "دهان و حلق: حلق و لوزه ها"
-      },
-      "neck_and_lymphatics": {
-        "inspection": "گردن و غدد لنفاوی: مشاهده",
-        "tracheal_position": "گردن و غدد لنفاوی: موقعیت تراشه",
-        "thyroid_gland": "گردن و غدد لنفاوی: معاینه غده تیرویید",
-        "carotid_bruit": "گردن و غدد لنفاوی: برویی کاروتید",
-        "lymph_nodes_size_consistency": "گردن و غدد لنفاوی: سایز و قوام لنف نودها",
-        "lymph_nodes_mobility_tenderness": "گردن و غدد لنفاوی: تحرک و حساسیت به لمس لنف نودها"
 
-    }},
+         "eyes": {
+                    "sclera_and_conjunctiva": "صلبیه و ملتحمه (conjunctiva)"
+                },
+          "neck_and_lymphatics": {
+                    "lymph_nodes": "غدد لنفاوی",
+                    "tracheal_position": "وضعیت نای"
+                }
+
+    },
     "respiratory_system": {
-      "inspection": {
-        "accessory_muscles": "استفاده از عضلات فرعی",
-        "chest_shape_and_symmetry": "شکل و تقارن قفسه سینه"
-      },
       "palpation": {
-        "chest_expansion": "گسترش قفسه سینه",
-        "tactile_fremitus": "Tactile Fremitus"
-      },
-      "percussion": "دق",
-      "auscultation": {
-        "breath_sounds": "صداهای تنفسی",
-        "adventitious_sounds": "صداهای اضافی"
-    }},
+          "chest_expansion": "گسترش قفسه سینه هنگام دم و بازدم",
+          "tactile_fremitus": "لرزش قابل لمس قفسه سینه هنگام صحبت کردن"
+        },
+        "inspection": {
+                    "accessory_muscles": "عضلات کمکی تنفس",
+                    "chest_shape_and_symmetry": "شکل و تقارن قفسه سینه"
+                },
+                "percussion": "ناکوبیدن (percussion)",
+                "auscultation": {
+                    "breath_sounds": "صدای دم و بازدم",
+                    "adventitious_sounds": "صدا های غیر طبیعی ریه"
+                }
+    },
     "cardiovascular_system": {
-      "JVP_assessment": "فشار ورید ژوگولار",
-      "palpation": {
-        "precordial_palpation_heave_thrill": "لمس",
-        "pmi_assessment": "بررسی PMI"
-      },
-      "auscultation": {
-        "heart_sounds_s1_s2": "صداهای قلب S1-S2",
-        "extra_sounds_s3_s4_murmurs":"صدا های اضافه قلب S3-S4",
-        "murmurs": "Murmur"
-      },
-      "peripheral_pulses_and_extremities": {
-        "peripheral_pulses_symmetry_and_quality": "قرینگی و شدت نبض های محیطی",
-        "extremities_color_and_trophic_changes": "تغییرات رنگ و آتروفیک اندام های فوقانی و تحتانی",
-        "extremities_temperature_and_cap_refill": "دمای اندام های فوقانی و تحتانی و پرشدگی مویرگی",
-        "extremities_edema": "ادم اندام های فوقانی و تحتانی"
-      }
+                "cap_refill": "پر شدن مویرگی(cap refill)",
+                "auscultation": {
+                    "murmurs": "صدای غیر طبیعی قلب",
+                    "heart_sounds_s1_s2": "صدای قلب S1 و S2"
+                },
+                "JVP_assessment": "ارزیابی فشار و ارتفاع ورید Jugular",
+                "peripheral_pulses": "نبض"
     },
     "abdominal_system": {
-      "inspection": "مشاهده",
-      "auscultation": {
-        "bowel_sounds": "صداهای روده",
-        "vascular_bruits": "برویی عروق شکمی"
+                      "percussion_palpation": "معاینه با ضربه‌زنی و لمس"
       },
-      
       "percussion": {
-        "general": "صداهای دق",
-        "organ_borders": "حدود کبد و طحال"
+        "general": " یا dulness وجود داردآیا صدای غالب دق، تیمپانی (Tympany) است؟",
+        "organ_borders": "آیا حدود کبد یا طحال در دق، غیرعادی است؟"
       },
       "palpation": {
-        "superficial_tenderness": "لمس سطحی",
-        "deep_masses_and_organs": "ارگان ها و توده های عمقی",
-              "peritoneal_signs": " علائم پریتونیت "
-
-      }
-    },
+        "superficial_tenderness": "آیا در لمس سطحی، حساسیت به لمس (Tenderness) موضعی یا عمومی وجود دارد؟",
+        "deep_masses_and_organs": "آیا در لمس عمقی، توده (Mass) غیرعادی، بزرگی کبد (Hepatomegaly) یا طحال (Splenomegaly) احساس می‌شود؟"
+      },
+      "peritoneal_signs": "آیا علائم پریتونیت (مانند ریفاند تندرنس - Rebound Tenderness، یا سفتی غیرارادی عضلات - Guarding) وجود دارد؟",
     "neurological": {
-      "mental_status_and_LOC": "وضعیت ذهنی و سطح هوشیاری",
-      "cranial_nerves": "اعصاب مغزی",
-      "motor_strength_and_tone": "تون و قدرت عضلانی",
-      "involuntary_movements": "حرکات غیرارادی",
-      "sensory_light_touch_and_pain": "حس لمس سطحی و درد",
-      "deep_tendon_reflexes": "رفلکس‌های عمیق تاندونی",
-      "coordination_and_gait": "تعادل و راه رفتن (Gait)"
+       "mental_status_and_LOC": "وضعیت روانی و LOC",
+        "motor_strength_and_DTRs": "قدرت حرکتی و DTR ها" 
     },
     "musculoskeletal_system": {
-      "inspection": {
-        "joints": "مفاصل",
-        "muscles": "عضلات"
-      },
-      "palpation": {
-        "tenderness_and_crepitus": "  یا صدای ساییده شدن و  حساسیت به لمس (Crepitus)"
-      },
-      "range_of_motion_active_passive": "دامنه حرکتی فعال و غیرفعال",
-      "stability_and_function": "پایداری و عملکرد"
-    }
+          "joints_and_muscles": "معاینه و بررسی مفاصل و عضلات"
+      }
   },
   "paraclinic": {
     "basic_blood_tests": {
                 "BMP": {
+                    "Cr": "Cr",
                     "Na": "Na",
-                    "BUN": "BUN",
-                    "Cr": "Cr"
+                    "BUN": "BUN"
                 },
                 "CBC": {
-                    "WBC": "WBC",
                     "Hb": "Hb",
-                    "Plt": "Plt"
+                    "Plt": "Plt",
+                    "WBC": "WBC"
                 },
-                "ESR": "ESR",
                 "CRP": "CRP",
+                "ESR": "ESR",
                 "VBG": {
                     "pH": "ph",
-                    "PCO2": "PCO2",
-                    "HCO3" : "HCO3"
+                    "PaO2": "PaO2"
                 },
                 "LFTs": {
                     "ALT": "ALT",
@@ -246,7 +198,7 @@
                 "BNP_NT_proBNP": "BNP NT proBNP",
                 "Sputum_analysis": {
                     "Gram_Stain": "Gram Stain",
-                    "Sample_Quality": "Sample Quality"
+                    "Sample_Quality": "| Sample Quality"
                 },
                 "a1_antitrypsin_level": "a1 antitrypsin level"
             },
@@ -256,27 +208,25 @@
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "PA_Lateral_Findings_and_Effusion": ""
+        "PA_Lateral_Findings_and_Effusion": " "
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "Lung_Parenchyma_and_Pleura": ""
+        "Lung_Parenchyma_and_Pleura": " "
       },
        "Pet_scan": "Pet scan",
       "MRI_chest": "MRI"
     },
     "functional_tests": {
-      "dlco":"DLCO",
-      "peak_flow": "Peak Flow",
-      "Spirometry":{
-        "result" : "result",
-        "reversibility" : "Reversibillity"},
-      "plethysmography": "plethysmography"
+      "dlco":"dlco",
+       "peak_flow": "peak flow",
+        "Spirometry": "Spirometry",
+        "plethysmography": "plethysmography"
     },
     "procedures": {
-      "Bronchoscopy": "Bronchoscopy",
-      "torachonthesis": "Thorachocentesis"
+      "Bronchoscopy": "برونکوسکوپی",
+      "torachonthesis": "تراکوسنتز"
     }
   }
 }
