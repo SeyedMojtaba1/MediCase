@@ -1,85 +1,45 @@
-Comprehensive Project Documentation: Clinical AI-Based Simulation Application
-1. Overview
-This project is an innovative clinical simulation system powered by Artificial Intelligence (AI) designed to enhance the practical skills of medical students. The system addresses the gap between theoretical knowledge and practical experience in clinical settings by providing a safe, interactive, and feedback-rich environment for students to practice clinical decision-making.
+# Clinical AI-Based Simulation Application
 
-2. Key Objectives
-The project focuses on achieving the following objectives:
+**An innovative clinical simulation system powered by Artificial Intelligence (AI) to enhance medical students' practical skills.**
 
-Create Realistic Clinical Scenarios: Develop simulations covering the entire patient care journey—from admission to discharge—focusing on respiratory diseases initially.
+## 📄 Overview
 
-Skill Enhancement: Provide a safe environment for students to practice and improve their clinical decision-making and diagnostic skills without the risk of harming patients.
+This project addresses the gap between theoretical knowledge and practical experience in clinical settings. It provides a safe, interactive, and feedback-rich environment where medical students can practice clinical decision-making without the risks associated with real-life patient care.
 
-AI-Driven Performance Analysis: Use AI to assess and provide feedback on students' clinical decisions, offering quantitative evaluations and insights into areas for improvement.
+The system is designed to simulate the entire patient care journey—from admission to discharge—offering real-time, data-driven feedback to help students track their progress and improve their diagnostic and treatment skills.
 
-Modular Expansion: Gradually add modules for other medical specialties such as cardiology, gastroenterology, and rheumatology.
+## 🚀 Key Features
 
-Support for Assessments: Incorporate features for conducting practical exams and measuring student competencies in clinical skills.
+* **Interactive Simulation:** Practice clinical scenarios covering patient admission, diagnosis, treatment, and discharge.
+* **AI-Powered Feedback:** Receive real-time, quantitative evaluations and insights on clinical decisions to identify areas for improvement.
+* **Safe Learning Environment:** A risk-free space to make mistakes and learn without harming actual patients.
+* **Customizable Scenarios:** Institutions can tailor clinical scenarios to fit their specific curriculum needs.
+* **Scalable Architecture:** Designed to support multiple medical specializations.
 
-3. Features
-The application includes the following key features:
+## 🎯 Objectives
 
-Interactive Simulation: Students can practice clinical scenarios from patient admission to diagnosis, treatment, and discharge.
+1.  **Realistic Scenarios:** Develop comprehensive simulations for the entire patient care loop.
+2.  **Skill Enhancement:** Improve clinical decision-making and diagnostic capabilities.
+3.  **Performance Analysis:** Utilize AI to assess competency and provide actionable feedback.
+4.  **Assessment Support:** Facilitate practical exams and competency measurements.
 
-AI-Powered Feedback: Real-time, data-driven feedback on student performance, allowing them to track their progress and make improvements.
+## 🗺️ Roadmap & Scope
 
-Safe Learning Environment: Provides a risk-free space for students to make mistakes and learn without harming actual patients.
+The project initially focuses on **Respiratory Diseases**. 
 
-Scalable and Expandable: Initial focus on respiratory diseases, with the ability to add more modules for other specialties as required by the institution.
+Future expansion plans, based on institutional needs, include modules for:
+* 🫀 **Cardiology**
+* 🥗 **Gastroenterology**
+* 🦴 **Rheumatology**
 
-Customizable Scenarios: Institutions can design their own clinical scenarios tailored to their curriculum.
+## ⚖️ License
 
-4. Scope and Future Plans
-The project will initially focus on respiratory diseases. Plans to expand to other specializations are based on the needs of the educational institution and include:
-
-Cardiology
-
-Gastroenterology
-
-Rheumatology
-
-5. Legal and License Information
 This project is licensed under the MIT License.
 
+**Copyright (c) 2025 Seyed Mojtaba Mirsoleimani**
 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-مستندات جامع پروژه: اپلیکیشن شبیه‌سازی بالینی مبتنی بر هوش مصنوعی (Clinical AI-Based Simulation Application)
-۱. معرفی و کلیات (Overview)
-این پروژه یک سیستم شبیه‌سازی بالینی نوآورانه است که با قدرت هوش مصنوعی (AI) طراحی شده تا مهارت‌های عملی دانشجویان پزشکی را ارتقا دهد. هدف اصلی این سیستم، پر کردن شکاف میان دانش نظری و تجربه عملی در محیط‌های بالینی است. این پلتفرم محیطی امن، تعاملی و غنی از بازخورد را برای دانشجویان فراهم می‌کند تا تصمیم‌گیری‌های بالینی را تمرین کنند.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-۲. اهداف کلیدی پروژه (Key Objectives)
-این پروژه بر دستیابی به اهداف زیر متمرکز است:
-
-ایجاد سناریوهای بالینی واقع‌گرایانه: توسعه شبیه‌سازی‌هایی که تمام مراحل مراقبت از بیمار (از پذیرش تا ترخیص) را پوشش می‌دهند، با تمرکز اولیه بر بیماری‌های تنفسی.
-
-ارتقای مهارت: فراهم کردن محیطی امن برای دانشجویان جهت تمرین و بهبود مهارت‌های تصمیم‌گیری بالینی و تشخیص، بدون ریسک آسیب رساندن به بیماران واقعی.
-
-تحلیل عملکرد مبتنی بر هوش مصنوعی: استفاده از AI برای ارزیابی و ارائه بازخورد در مورد تصمیمات بالینی دانشجویان، ارائه ارزیابی‌های کمی و بینش‌هایی برای بهبود عملکرد.
-
-توسعه ماژولار: افزودن تدریجی ماژول‌ها برای سایر تخصص‌های پزشکی مانند کاردیولوژی (قلب و عروق)، گوارش و روماتولوژی.
-
-پشتیبانی از ارزیابی‌ها: گنجاندن ویژگی‌هایی برای برگزاری آزمون‌های عملی و سنجش صلاحیت‌های دانشجویان در مهارت‌های بالینی.
-
-۳. ویژگی‌های سیستم (Features)
-این اپلیکیشن دارای ویژگی‌های برجسته زیر می‌باشد:
-
-شبیه‌سازی تعاملی (Interactive Simulation): دانشجویان می‌توانند سناریوهای بالینی را از لحظه پذیرش بیمار تا تشخیص، درمان و ترخیص تمرین کنند.
-
-بازخورد هوشمند (AI-Powered Feedback): ارائه بازخورد در لحظه (Real-time) و مبتنی بر داده در مورد عملکرد دانشجو که به آن‌ها اجازه می‌دهد پیشرفت خود را ردیابی کرده و بهبود بخشند.
-
-محیط یادگیری امن (Safe Learning Environment): فضایی بدون ریسک برای اشتباه کردن و یادگیری بدون آسیب به بیماران واقعی.
-
-قابلیت مقیاس‌پذیری و توسعه (Scalable and Expandable): تمرکز اولیه پروژه بر بیماری‌های تنفسی است، اما قابلیت افزودن ماژول‌های بیشتر برای سایر تخصص‌ها بر اساس نیاز موسسه وجود دارد.
-
-سناریوهای قابل شخصی‌سازی (Customizable Scenarios): موسسات آموزشی می‌توانند سناریوهای بالینی خود را متناسب با برنامه درسی‌شان طراحی کنند.
-
-۴. دامنه پروژه و برنامه‌های آتی
-پروژه در ابتدا بر روی بیماری‌های تنفسی متمرکز خواهد بود. برنامه‌ریزی برای گسترش به سایر تخصص‌ها شامل موارد زیر بر اساس نیاز موسسه آموزشی انجام شده است:
-
-کاردیولوژی (Cardiology)
-
-گوارش (Gastroenterology)
-
-روماتولوژی (Rheumatology)
-
-۵. اطلاعات حقوقی و مجوز (License)
-این پروژه تحت مجوز MIT منتشر شده است.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
