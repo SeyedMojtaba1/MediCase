@@ -1197,9 +1197,3 @@ class PneumoniaDataGenerator:
             "paraclinic": paraclinic
         }
         return data
-
-# --- Testing Section (Optional) ---
-if __name__ == "__main__":
-    generator = PneumoniaDataGenerator()
-    case = generator.generate_paraclinic_case()
-    print(json.dumps(case, indent=4, ensure_ascii=False))

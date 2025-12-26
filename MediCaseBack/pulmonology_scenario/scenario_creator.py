@@ -179,5 +179,3 @@ OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH"]
 def scenario_creator():
     target_disease = random.choice(OPTIMAL_SCENARIO)
     return case[f"{target_disease}"](target_disease), target_disease
-
-print(json.dumps(scenario_creator(), ensure_ascii=False))

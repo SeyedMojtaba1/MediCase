@@ -1175,15 +1175,3 @@ class AsthmaDataGenerator:
         
         return data
     
-if __name__ == "__main__":
-    import json
-
-    # 1. ایجاد نمونه از کلاس
-    generator = AsthmaDataGenerator()
-
-    # 2. تولید یک پرونده بیمار (Case)
-    case_data = generator.generate_paraclinic_case()
-
-    # 3. نمایش خروجی
-    # نکته: ensure_ascii=False برای نمایش صحیح حروف فارسی ضروری است
-    print(json.dumps(case_data, indent=4, ensure_ascii=False))

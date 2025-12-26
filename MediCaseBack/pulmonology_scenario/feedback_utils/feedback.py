@@ -667,32 +667,30 @@ class ClinicalEvaluator:
 # ==========================================
 
 # فرض کنید متغیرهای OPTIMAL_SCENARIO_COPD و STUDENT_LOG وجود دارند
-evaluator = ClinicalEvaluator(OPTIMAL_SCENARIO, STUDENT_LOG)
+# evaluator = ClinicalEvaluator(OPTIMAL_SCENARIO, STUDENT_LOG)
 
-# اجرای ارزیابی (فقط یک متد کافی است)
-final_score_percent = evaluator.evaluate_performance()
+# # اجرای ارزیابی (فقط یک متد کافی است)
+# final_score_percent = evaluator.evaluate_performance()
 
-# محاسبات زمان
-duration_seconds, total_seconds = evaluator.calculate_duration()
-time_analysis = evaluator.analyze_time_performance(duration_seconds, total_seconds)
-category = evaluator.get_category(final_score_percent)
+# # محاسبات زمان
+# duration_seconds, total_seconds = evaluator.calculate_duration()
+# time_analysis = evaluator.analyze_time_performance(duration_seconds, total_seconds)
+# category = evaluator.get_category(final_score_percent)
 
-output = {
-    "overall_result": {
-        "title": category['label'],
-        "english_title": category['eng'],
-        "color_code": category['color'],
-        "is_passed": final_score_percent >= 60
-    },
-    "score": {
-        "obtained": round(final_score_percent),
-        "total": 100
-    },
-    "time_management": {
-        "duration_formatted": f"{evaluator.format_time(duration_seconds)}",
-        "total_allowed_formatted": "15:00",
-        "analysis": time_analysis
-    }
-}
-
-print(json.dumps(output, indent=4, ensure_ascii=False))
+# output = {
+#     "overall_result": {
+#         "title": category['label'],
+#         "english_title": category['eng'],
+#         "color_code": category['color'],
+#         "is_passed": final_score_percent >= 60
+#     },
+#     "score": {
+#         "obtained": round(final_score_percent),
+#         "total": 100
+#     },
+#     "time_management": {
+#         "duration_formatted": f"{evaluator.format_time(duration_seconds)}",
+#         "total_allowed_formatted": "15:00",
+#         "analysis": time_analysis
+#     }
+# }

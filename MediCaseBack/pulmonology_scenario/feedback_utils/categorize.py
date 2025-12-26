@@ -1012,12 +1012,12 @@ def process_diagnostic_efficiency(optimal_scenario, student_log, full_scenario_t
     
     return response
 
-# ==========================================
-# 4. MAIN EXECUTION
-# ==========================================
-if __name__ == "__main__":
+# # ==========================================
+# # 4. MAIN EXECUTION
+# # ==========================================
+# if __name__ == "__main__":
     
-    final_output = process_diagnostic_efficiency(OPTIMAL_SCENARIO, STUDENT_LOG, FULL_SCENARIO)
+#     final_output = process_diagnostic_efficiency(OPTIMAL_SCENARIO, STUDENT_LOG, FULL_SCENARIO)
     
-    print(json.dumps(final_output, indent=4, ensure_ascii=False))
+#     print(json.dumps(final_output, indent=4, ensure_ascii=False))
     

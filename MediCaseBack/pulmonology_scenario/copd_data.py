@@ -1181,9 +1181,3 @@ class COPDDataGenerator:
         }
         
         return data
-
-# --- Testing Block ---
-if __name__ == "__main__":
-    generator = COPDDataGenerator()
-    case = generator.generate_paraclinic_case()
-    print(json.dumps(case, indent=4, ensure_ascii=False))

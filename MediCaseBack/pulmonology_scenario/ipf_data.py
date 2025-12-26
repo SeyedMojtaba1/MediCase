@@ -1124,9 +1124,3 @@ class IPFDataGenerator:
         }
         
         return data
-
-# --- Testing Block ---
-if __name__ == "__main__":
-    generator = IPFDataGenerator()
-    case = generator.generate_paraclinic_case()
-    print(json.dumps(case, indent=4, ensure_ascii=False))
