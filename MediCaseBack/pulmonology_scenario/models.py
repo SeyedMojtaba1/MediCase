@@ -6,8 +6,9 @@ User = get_user_model()
 
 class PulmonologyDisease(models.Model):
     disease_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    english_name = models.CharField(max_length=50, default=None, unique=True)
-    persian_name = models.CharField(max_length=50, default=None, unique=True)
+    english_name = models.CharField(max_length=50, default=None)
+    persian_name = models.CharField(max_length=50, default=None)
+    type_disease = models.CharField(max_length=50, default=None)
 
 
 class OptimalCostPulmonologyParaclinic(models.Model):
