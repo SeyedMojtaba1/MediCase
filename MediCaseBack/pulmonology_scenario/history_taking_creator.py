@@ -4,7 +4,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_deepseek import ChatDeepSeek
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from document import documents
+from .document import documents
 from pydantic import BaseModel, Field, Json
 import json
 from pydantic import BaseModel, field_validator
