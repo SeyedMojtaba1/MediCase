@@ -75,7 +75,7 @@ class ScenarioListView(generics.ListAPIView):
         except User.DoesNotExist:
             return Response({"message": "User is not exist."})
                 
-        queryset = self.get_queryset().filter(user=user.personal_number)
+        queryset = self.get_queryset().filter(user=user.user_id)
         serializer = ScenarioListSerializer(queryset, many=True)
         
         return Response(serializer.data)
