@@ -62,23 +62,11 @@ class ScenarioListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ScenarioListSerializer
-    queryset = PulmonologyScenario.objects.all()
-    lookup_field = 'personal_number'
-    lookup_value_regex = '[^/]+'
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        lookup_value = self.kwargs.get(self.lookup_field)
+    def get_queryset(self):
+        personal_num = self.kwargs.get('personal_number')
         
-        try:
-            user = User.objects.get(personal_number=lookup_value)
-        except User.DoesNotExist:
-            return Response({"message": "User is not exist."})
-                
-        queryset = self.get_queryset().filter(user=user.user_id)
-        serializer = ScenarioListSerializer(queryset, many=True)
-        
-        return Response(serializer.data)
+        return PulmonologyScenario.objects.filter(user__personal_number=personal_num)
 
 @extend_schema(
     request=StudentLogSerializer,
