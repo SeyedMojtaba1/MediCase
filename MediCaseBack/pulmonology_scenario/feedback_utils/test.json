@@ -1,284 +1,105 @@
 {
-  "scenario": {
-    "paraclinic": {
-      "procedures": {
-        "Bronchoscopy": "Not Indicated for Routine Stable Visit.",
-        "torachonthesis": "Not Indicated and fluid cannot be aspirated."
-      },
-      "simple_imaging": {
-        "Chest_X_Ray": {
-          "PA_Lateral_Findings_and_Effusion": "Hyperinflation findings (Flat Diaphragms)"
-        }
-      },
-      "advanced_imaging": {
-        "Chest_CT_CTPA": {
-          "Lung_Parenchyma_and_Pleura": "Emphysema/Air Trapping Changes"
-        }
-      },
-      "functional_tests": {
-        "dlco": "48% predicted",
-        "peak_flow": "Reduced",
-        "Spirometry": {
-          "result": {
-            "FVC": "Measured: 4.21 L, Predicted: 4.0 L, %Predicted: 105%",
-            "FEV1": "Measured: 2.89 L, Predicted: 3.5 L, %Predicted: 83%",
-            "FEV1/FVC_Ratio": "Measured: 0.69, Predicted: 0.8, %Predicted: 86%"
-          },
-          "reversibility": "FEV1 increase < 12% AND < 200 mL"
-        },
-        "plethysmography": "Increased Lung Volumes"
-      },
-      "basic_blood_tests": {
-        "BMP": {
-          "Cr": "0.9 mg/dL",
-          "Na": "136 mEq/L",
-          "BUN": "14 mg/dL"
-        },
-        "CBC": {
-          "Hb": "12.4 g/dL",
-          "Plt": "22 /µL",
-          "WBC": "14566 /µL"
-        },
-        "CRP": "19 mg/L",
-        "ESR": "23 mm/h",
-        "VBG": {
-          "pH": "7.38",
-          "HCO3": "23 mEq/L",
-          "PCO2": "29 mmHg"
-        },
-        "LFTs": {
-          "ALT": "27 U/L",
-          "AST": "28 U/L"
-        }
-      },
-      "immunity_and_serology": {
-        "HIV_test": "Negative",
-        "Autoimmune_pannel_ANA_ANCA": "Negative"
-      },
-      "specialized_lung_tests": {
-        "D_dimer": "< 500 ng/mL FEU",
-        "Sputum_AFB": "Negative",
-        "BNP_NT_proBNP": "within normal range",
-        "Sputum_analysis": {
-          "Gram_Stain": "Positive for specific organism",
-          "Sample_Quality": "Not Indicated for Routine Stable Visit."
-        },
-        "a1_antitrypsin_level": "within normal range"
-      }
+  "chart_data": {
+    "signal_value": 18,
+    "noise_value": 5,
+    "missed_value": 43,
+    "efficiency_score": 78,
+    "total_actions": 23
+  },
+  "details": {
+    "missed_items": [
+      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.cyanosis",
+      "physical_exam.respiratory_system.percussion",
+      "history_taking.social_history.question1.question1a",
+      "physical_exam.respiratory_system.auscultation.breath_sounds_intensity",
+      "paraclinic.advanced_imaging.Chest_CT_CTPA",
+      "paraclinic.basic_blood_tests.ESR/CRP",
+      "history_taking.present_illness.question4",
+      "physical_exam.cardiovascular_system.peripheral_pulses_and_extremities.extremities_color_and_trophic_changes",
+      "history_taking.present_illness.question9",
+      "history_taking.present_illness.question2",
+      "paraclinic.functional_tests.peak_flow",
+      "history_taking.drug_history.question1.question1c",
+      "physical_exam.general_appearance.level_of_consciousness_mood_and_behavior.behavior",
+      "history_taking.drug_history.question1.question1b",
+      "differential_diagnosis.disease6",
+      "history_taking.drug_history.question1.question1a",
+      "history_taking.social_history.question1.question1b",
+      "history_taking.ROS.question1",
+      "history_taking.family_history.question3.question3a",
+      "physical_exam.respiratory_system.palpation.tactile_fremitus",
+      "history_taking.present_illness.question10",
+      "history_taking.medical_history.question4",
+      "paraclinic.basic_blood_tests.CBC",
+      "physical_exam.respiratory_system.palpation.chest_expansion",
+      "physical_exam.general_appearance.overall_appearance.nutritional_status",
+      "history_taking.ROS.question6",
+      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.edema",
+      "history_taking.family_history.question1.question1b",
+      "differential_diagnosis.disease1",
+      "history_taking.medical_history.question6",
+      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.dyspnea",
+      "paraclinic.specialized_lung_tests.BNP/NT_proBNP",
+      "physical_exam.general_appearance.level_of_consciousness_mood_and_behavior.level_of_consciousness",
+      "physical_exam.cardiovascular_system.peripheral_pulses_and_extremities.extremities_edema",
+      "physical_exam.cardiovascular_system.auscultation.heart_sounds_s1_s2",
+      "history_taking.family_history.question2",
+      "physical_exam.cardiovascular_system.peripheral_pulses_and_extremities.peripheral_pulses_symmetry_and_quality",
+      "history_taking.family_history.question3.question3b",
+      "history_taking.present_illness.question5",
+      "physical_exam.general_appearance.posture_and_position.position_of_comfort",
+      "physical_exam.general_appearance.level_of_consciousness_mood_and_behavior.mood",
+      "history_taking.family_history.question1.question1a",
+      "history_taking.ROS.question7"
+    ],
+    "noise_items": [
+      "paraclinic.specialized_lung_tests.BNP_NT_proBNP",
+      "differential_diagnosis.disease7",
+      "differential_diagnosis.disease2",
+      "final_diagnosis.disease3",
+      "paraclinic.basic_blood_tests.CBC.Hb"
+    ],
+    "correct_items": [
+      "history_taking.present_illness.question1",
+      "paraclinic.simple_imaging.Chest_X_Ray.Lateral",
+      "paraclinic.functional_tests.plethysmography",
+      "paraclinic.simple_imaging.Chest_X_Ray.PA",
+      "history_taking.present_illness.question8",
+      "physical_exam.cardiovascular_system.JVP_assessment",
+      "physical_exam.respiratory_system.inspection.chest_shape_and_symmetry",
+      "history_taking.present_illness.question3",
+      "paraclinic.basic_blood_tests.VBG",
+      "differential_diagnosis.disease3",
+      "history_taking.medical_history.question1.question1b",
+      "paraclinic.functional_tests.Spirometry",
+      "history_taking.medical_history.question3",
+      "history_taking.medical_history.question1.question1a",
+      "paraclinic.specialized_lung_tests.a1_antitrypsin_level",
+      "differential_diagnosis.disease5",
+      "physical_exam.respiratory_system.auscultation.adventitious_sounds",
+      "physical_exam.respiratory_system.inspection.accessory_muscles"
+    ]
+  },
+  "analysis": {
+    "strengths": "دانش‌آموز در گرفتن تاریخچه بیماری، انجام آزمایشات پاراکلینیک و ارزیابی‌های فیزیکی توانسته است به نتایج خوبی دست یابد. او سوالات حیاتی در مورد نشا انه‌های بیماری، سابقه پزشکی و دارویی، و انجام تست‌های تنفسی مانند اسپیرومتری و پلتی‌سیموگرافی را به درستی مورد توجه قرار داده است.",
+    "missed_criticals": {
+      "cyanosis": "عدم بررسی علائم سیانوز می‌تواند نشانه‌ای از کمبود اکسیژن در خون باشد، که در بیماری‌های ریوی و قلبی به شدت حائز اهمیت است و می‌تواند به تشخیص ز   زودهنگام و درمان مناسب کمک کند.",
+      "percussion": "معاینه از طریق ضربه زدن به قفسه سینه می‌تواند اطلاعات مهمی در مورد حالت ریه‌ها، مانند وجود مایع یا توده در ریه‌ها ارائه دهد. عدم انجام این م  معاینه می‌تواند منجر به از دست رفتن تشخیصی حیاتی شود.",
+      "present_illness.question4": "سوال درباره سرفه و ویژگی‌های آن می‌تواند به درک بهتر نوع و شدت بیماری کمک کند. این اطلاعات می‌تواند در تشخیص‌های تمایزی بسیار   ر مهم باشد.",
+      "extremities_color_and_trophic_changes": "بررسی تغییرات رنگ و تروفیک در اندام‌ها می‌تواند به تشخیص مشکلات عروقی یا سوء تغذیه کمک کند. از دست رفتن این ارزیا ابی می‌تواند به تشخیص مردد منجر شود.",
+      "present_illness.question9": "سوال درباره علائم قبلی و درمان‌های موثر می‌تواند به پیش‌بینی رفتار بیماری و رژیم درمانی کمک کند. این اطلاعات می‌تواند به شخصی   ی‌سازی بیشتر روش درمان کمک کند.",
+      "present_illness.question2": "سوال در مورد شروع تدریجی یا ناگهانی علائم بسیار مهم است؛ این می‌تواند به شناسایی علل زمینه‌ای و تشخیص‌های سریع‌تر کمک کند.",
+      "functional_tests.peak_flow": "عدم ارزیابی جریان اوج می‌تواند مانع از شناسایی مشکلات تنفسی خاص مانند آسم شود.",
+      "drug_history.question1.question1c": "عدم در نظر گرفتن تغییرات اخیر در داروها می‌تواند به تشخیص عوارض جانبی یا عدم اثربخشی درمان منجر شود.",
+      "behavior": "بررسی رفتار بیمار می‌تواند نشانه‌هایی از اضطراب یا افسردگی را نشان دهد که در مدیریت درمان اهمیت دارد."
     },
-    "physical_exam": {
-      "vital_signs": {
-        "T": "37.5 °C",
-        "BP": "119/86 mmHg",
-        "PR": "74 bpm and regular rhythm",
-        "RR": "20 breaths/min",
-        "GCS": "15",
-        "SpO2": "98% (Room Air)"
-      },
-      "neurological": {
-        "cranial_nerves": "Cranial Nerves II-XII intact.",
-        "deep_tendon_reflexes": "Asymmetrical DTRs.",
-        "coordination_and_gait": "Normal coordination and Gait.",
-        "involuntary_movements": "Absent.",
-        "mental_status_and_LOC": "A&Ox3.",
-        "motor_strength_and_tone": "Asymmetrical weakness.",
-        "sensory_light_touch_and_pain": "Symmetrical and Intact."
-      },
-      "head_and_neck": {
-        "ears": {
-          "eardrum_appearance": "Normal appearance.",
-          "external_and_tenderness": "Normal external appearance, No mastoid tenderness."
-        },
-        "eyes": {
-          "pupils_reaction": "Pupils equal, round, and reactive to light (PERRL).",
-          "extraocular_movements": "Full Range of Motion.",
-          "sclera_and_conjunctiva": "Pink conjunctiva, Anicteric sclera."
-        },
-        "head_and_face": {
-          "tenderness": "No tenderness on palpation of the skull.",
-          "symmetry_and_lesions": "Symmetrical, No acute lesions or masses."
-        },
-        "nose_and_sinuses": {
-          "sinus_tenderness": "No sinus tenderness on palpation.",
-          "septum_and_discharge": "Midline Septum, No purulent/bloody discharge."
-        },
-        "mouth_and_pharynx": {
-          "pharynx_and_tonsils": "Non-erythematous pharynx, Tonsils non-enlarged.",
-          "oral_mucosa_and_lesions": "Dry mucosa."
-        },
-        "neck_and_lymphatics": {
-          "inspection": "No swelling, redness, or visible masses.",
-          "carotid_bruit": "Absent.",
-          "thyroid_gland": "Non-enlarged, non-tender.",
-          "tracheal_position": "Midline, no deviation.",
-          "lymph_nodes_size_consistency": "Non-palpable or small, soft nodes.",
-          "lymph_nodes_mobility_tenderness": "Mobile and non-tender."
-        }
-      },
-      "abdominal_system": {
-        "palpation": {
-          "peritoneal_signs": "Absent (No Rebound Tenderness or Guarding).",
-          "deep_masses_and_organs": "No masses, Liver/Spleen non-palpable.",
-          "superficial_tenderness": "No superficial tenderness."
-        },
-        "inspection": "Flat/Rounded, Symmetrical, No obvious scars or masses.",
-        "percussion": {
-          "general": "Tympanic throughout.",
-          "organ_borders": "Liver/Spleen borders not percussed as enlarged."
-        },
-        "auscultation": {
-          "bowel_sounds": "Normoactive Bowel Sounds.",
-          "vascular_bruits": "Absent."
-        }
-      },
-      "general_appearance": {
-        "mood_and_behavior": "Anxious or Irritable",
-        "overall_appearance": "Cachectic/Thin with muscle wasting",
-        "posture_and_position": "Tripod Position",
-        "level_of_consciousness": "Alert and Oriented",
-        "cardiopulmonary_and_circulatory_clues": {
-          "edema": "Pitting Edema to ankles",
-          "dyspnea": "No visible dyspnea",
-          "cyanosis": "Pink/Normal color"
-        }
-      },
-      "respiratory_system": {
-        "palpation": {
-          "chest_expansion": "Bilateral Reduced Expansion.",
-          "tactile_fremitus": "Decreased and Symmetrical"
-        },
-        "inspection": {
-          "accessory_muscles": "Present (Sternocleidomastoid/Scalene use).",
-          "chest_shape_and_symmetry": "Symmetrical movement, Normal shape."
-        },
-        "percussion": "Diffuse Hyperresonant.",
-        "auscultation": {
-          "breath_sounds": "Prolonged Expiration. Reduced intensity.",
-          "adventitious_sounds": "No Adventitious Sounds."
-        }
-      },
-      "cardiovascular_system": {
-        "palpation": {
-          "pmi_assessment": "Palpable in 5th ICS MCL, Normal size.",
-          "precordial_palpation_heave_thrill": "No heave, lift, or thrill detected."
-        },
-        "auscultation": {
-          "heart_sounds_s1_s2": "Muffled/Distant S1 and S2.",
-          "extra_sounds_s3_s4_murmurs": "No S3/S4 or Murmur."
-        },
-        "JVP_assessment": "< 4 cm above sternal angle.",
-        "peripheral_pulses_and_extremities": {
-          "extremities_edema": "Absent.",
-          "extremities_color_and_trophic_changes": "No clubbing or trophic changes.",
-          "extremities_temperature_and_cap_refill": "Extremities warm, Capillary Refill Time < 2 seconds.",
-          "peripheral_pulses_symmetry_and_quality": "Symmetrical and Regular. Tachycardic quality."
-        }
-      },
-      "musculoskeletal_system": {
-        "palpation": {
-          "tenderness_and_crepitus": "No tenderness or crepitus."
-        },
-        "inspection": {
-          "joints": "No swelling, redness, or deformity.",
-          "muscles": "No obvious atrophy."
-        },
-        "stability_and_function": "Stable and Functional.",
-        "range_of_motion_active_passive": "Reduced ROM."
-      }
+    "inefficiencies": {
+      "BNP_NT_proBNP": "این آزمایش به طور خاص برای تشخیص نارسایی قلبی استفاده می‌شود و در این مورد ضروری به نظر نمی‌رسد. انجام این آزمایش به دلیل نبود شواهد کافی ی در تاریخچه بیماری می‌تواند منابع را بیهوده مصرف کند.",
+      "disease7": "تشخیص بیماری ادم پلورال بر اساس اطلاعات موجود و علائم بیمار صحیح نیست و می‌تواند وقت و منابع را به هدر دهد.",
+      "disease2": "تشخیص ذات الریه با توجه به علائم و یافته‌ها منطقی نیست و انرژی تیم پزشکی را در جهت نادرستی قرار می‌دهد.",
+      "disease3": "ارایه تشخیص نادرست به عنوان بیماری COPD با توجه به شواهد بالینی موجود می‌تواند نتیجه‌گیری نادرستی را به همراه داشته باشد.",
+      "CBC.Hb": "اندازه‌گیری هموگلوبین (Hb) به صورت جداگانه در این مورد ممکن است غیرضروری باشد، زیرا اطلاعات کافی از بررسی‌های دیگر موجود است."
     },
-    "history_taking": {
-      "ros": {
-        "question1": "در ماه های اخیر احساس کمی کاهش وزن و خستگی زیاد داشته ام.",
-        "question2": "هیچ گونه راش، ضایعه پوستی یا کبودی غیرعادی ندارم.",
-        "question3": "گاهی علائم خفیف سردرد یا سرگیجه دارم ولی نه مشکل خاصی.",
-        "question4": "از تاری دید، دوبینی یا درد در ناحیه چشم ها شکایتی ندارم.",
-        "question5": "گلودرد یا مشکل بلع ندارم ولی گاهی احساس گرفتگی مزمن بینی دارم.",
-        "question6": "گاهی احساس سنگینی قفسه سینه همراه با تپش قلب داشته ام.",
-        "question7": "تنگی نفس تقریباً همیشه برایم مسئله است و سرفه های خشک و مداوم دارم.",
-        "question8": "از نظر گوارشی مشکلی ندارم و هیچ گونه تهوع، خونریزی یا زردی نداشته ام.",
-        "question9": "مشکل ادراری یا تناسلی برایم پیش نیامده است.",
-        "question10": "گاهی احساس ضعف عضلانی دارم اما درد مفاصل یا تورم در مشخصی ندارم.",
-        "question11": "مشکل عصبی مثل بی حسی یا سوزش انگشتان ندارم.",
-        "question12": "گاهی احساس افسردگی و اضطراب از اینکه تنگی نفسم بهبود نمی یابد دارم.",
-        "question13": "هیچ نشانه ای از تشنگی یا گرسنگی غیرطبیعی ندارم.",
-        "question14": "احساس زیادی کبودی یا خونریزی طولانی مدت ندارم ولی به نظرم رنگ پریده تر از قبل شده ام."
-      },
-      "allergies": {
-        "question1": {
-          "question1a": "آلرژی شناخته شده ای ندارم اما به گرد و غبار و دود سیگار حساس هستم.",
-          "question1b": "در صورت حساسیت، معمولاً عطسه و سرفه شدید به همراه خس خس دارم."
-        }
-      },
-      "drug_history": {
-        "question1": {
-          "question1a": "من از اسپری های استنشاقی مثل سالبوتامول و اسپری ترکیبی کورتیکواستروئید استفاده می کنم.",
-          "question1b": "معمولاً روزی دو بار از اسپری استفاده می کنم و در مواقع تشدید علائم بیشتر.",
-          "question1c": "در طول یک سال گذشته، پزشک دوز اسپری را کمی افزایش داد و یک داروی جدید اضافه کرد."
-        },
-        "question2": "به ندرت مکمل غذایی یا مولتی ویتامین مصرف می کنم ولی داروی OTC استفاده نمی کنم."
-      },
-      "family_history": {
-        "question1": {
-          "question1a": "در خانواده ام کسی بیماری ریوی مشابه ندارد.",
-          "question1b": "اطلاعات خاصی از بیماری های سابق خانواده ندارم."
-        },
-        "question2": "در خانواده ما سابقه سکته قلبی در افراد بزرگسال وجود داشته اما نه نارسایی قلبی.",
-        "question3": {
-          "question3a": "تاکنون هیچ موردی از سرطان در بستگان درجه یک گزارش نشده است.",
-          "question3b": "جزئیاتی از نوع سرطان یا سن تشخیص در خانواده موجود نیست."
-        }
-      },
-      "social_history": {
-        "question1": {
-          "question1a": "من در حال حاضر سیگار نمی کشم اما قبلاً چند سال سیگاری فعال بودم.",
-          "question1b": "حدود پنج سال است که سیگار را ترک کرده ام."
-        },
-        "question2": "به ندرت الکل مصرف می کنم و میزان آن بسیار محدود بوده است.",
-        "question3": {
-          "question3a": "هیچ گاه مواد مخدر مصرف نکرده ام.",
-          "question3b": "اطلاعاتی در مورد مصرف گذشته ندارم."
-        },
-        "question4": "با خانواده ام زندگی می کنم و در خانه حیوان خانگی نداریم."
-      },
-      "present_illness": {
-        "question1": "علائم از حدود دو سال پیش شروع شدند و به مرور شدیدتر شدند. اوایل فقط در زمان فعالیت های سنگین مشکل داشتم ولی الان حتی در فعالیت های روزمره هم احساس محدودیت می کنم.",
-        "question2": "علائم به صورت تدریجی شروع شدند و در مقطعی خاص، مثل بعد از سرماخوردگی، سرعت افزایش پیدا کردند.",
-        "question3": "بله، تنگی نفس دارم و معمولاً هنگام فعالیت بدنی شدید یا حتی تند راه رفتن بدتر می شود. در حالت استراحت کمتر اذیت هستم ولی کاملاً برطرف نمی شود.",
-        "question4": "سرفه دارم که معمولاً همراه با خلط است. رنگ خلط معمولاً سفید یا شفاف است و نه خیلی زیاد ولی همیشه وجود دارد.",
-        "question5": "بله، خس خس سینه دارم که بیشتر شب ها و در زمان تغییرات دمای هوا یا برخورد با دود سیگار شدت پیدا می کند.",
-        "question6": "احساس سنگینی یا فشار در قفسه سینه دارم که گاهی بعد از سرفه شدید یا نفس های عمیق بیشتر می شود.",
-        "question7": "تب یا لرز نداشتم و تعریق شبانه هم گزارش نمی کنم.",
-        "question8": "متوجه تورم پاها نشده ام ولی گاهی احساس خفیف تپش قلب یا سبکی سر دارم.",
-        "question9": "قبلاً علائمی شبیه به این داشتم که با داروی استنشاقی بهتر می شد ولی در دوره های اخیر نیاز به استفاده مرتب تر دارو پیدا کردم.",
-        "question10": "خستگی روزانه و کمی کاهش وزن داشتم، ولی اشتهایم تغییر چشم گیری نکرده است."
-      },
-      "past_medical_history": {
-        "question1": {
-          "question1a": "از سابقه بیماری های قلبی و کلیوی اطلاع خاصی ندارم، اما سابقه آسم و برونشیت دارم.",
-          "question1b": "مدت حدود چهار سال است که با علائم ریوی درگیر هستم."
-        },
-        "question2": {
-          "question2a": "بله، حدود یک سال پیش برای تشدید علائم و تنظیم داروها بستری شدم.",
-          "question2b": "آخرین بار به دلیل تشدید سرفه و کاهش اکسیژن خون بستری شدم."
-        },
-        "question3": "سابقه بیماری انسدادی مزمن ریه (COPD) و همچنین آسم در پرونده من وجود دارد.",
-        "question4": "هیچ سابقه ای از سرطان فعال ندارم.",
-        "question5": "در دوران کودکی گاهی عفونت های تنفسی شدید داشتم ولی بستری نشده ام.",
-        "question6": "تقریباً واکسن های لازم مثل آنفولانزا دریافت کرده ام ولی مطمئن نیستم که کاملاً بروز باشد."
-      }
-    },
-    "patient_profile": {
-      "chief_complaint": "تنگی نفس، که به تدریج بدتر شده و تقریباً همیشه با انجام فعالیت بدنی شدید تشدید می شود.",
-      "personal_information": {
-        "age": "52 ساله",
-        "gender": "زن",
-        "last_name": "یزدانی",
-        "first_name": "حدیث",
-        "occupation": "کارمند اداری",
-        "marital_status": "همسر متوفی",
-        "place_of_birth": "بیرجند",
-        "place_of_residence": "زاهدان"
-      }
-    }
+    "conclusion": "دانش‌آموز عملکرد خوبی در جمع‌آوری اطلاعات و انجام معاینات اولیه داشته است، اما در زمینه تشخیص‌های مهم و ارزیابی‌های فیزیکی دقت کافی نداشته و برخ   خی منبع‌ها به طور غیرضروری استفاده شده‌اند. توجه به نقاط ضعف و نواقص می‌تواند به بهبود کارایی تشخیصی کمک کند."
   }
 }

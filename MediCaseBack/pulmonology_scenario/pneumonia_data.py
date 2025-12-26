@@ -1,13 +1,17 @@
 import random
-import re
 import json
 
 class PneumoniaDataGenerator:
     """
-    کلاسی برای تولید داده‌های شبیه‌سازی شده پنومونی.
-    اصلاح شده بر اساس قواعد آماری دقیق فایل متنی 'معاینات فیزیکی'.
+    کلاسی برای تولید داده‌های شبیه‌سازی شده پنومونی بر اساس فایل پنومونی.txt.
+    
+    Scenarios:
+    1. typical_lobar (70%)
+    2. complicated_effusion (20%)
+    3. atypical_walking (10%)
     """
     
+    # --- داده‌های دموگرافیک (حفظ شده از کد قبلی) ---
     RANDOM_DATA_LISTS = {
         "first_names_sample_100": {
             "MALE": [
@@ -85,10 +89,690 @@ class PneumoniaDataGenerator:
         }
     }
     
+    # --- داده‌های استخراج شده از پنومونی.txt ---
+    DATA_SOURCE = {
+      "physical_exam": {
+        "vital_signs": {
+          "BP": {
+            "typical_lobar": [{"min": 110, "max": 130}, {"min": 70, "max": 85}],
+            "complicated_effusion": [{"min": 100, "max": 125}, {"min": 65, "max": 80}],
+            "atypical_walking": [{"min": 110, "max": 130}, {"min": 70, "max": 85}]
+          },
+          "T": {
+            "typical_lobar": [{"min": 38.5, "max": 40.0}],
+            "complicated_effusion": [{"min": 38.0, "max": 39.5}],
+            "atypical_walking": [{"min": 37.5, "max": 38.5}]
+          },
+          "PR": {
+            "typical_lobar": [{"min": 100, "max": 120}],
+            "complicated_effusion": [{"min": 100, "max": 125}],
+            "atypical_walking": [{"min": 80, "max": 100}]
+          },
+          "RR": {
+            "typical_lobar": [{"min": 20, "max": 28}],
+            "complicated_effusion": [{"min": 22, "max": 30}],
+            "atypical_walking": [{"min": 16, "max": 22}]
+          },
+          "SpO2": {
+            "typical_lobar": [{"min": 90, "max": 94}],
+            "complicated_effusion": [{"min": 88, "max": 93}],
+            "atypical_walking": [{"min": 95, "max": 98}]
+          },
+          "GCS": {
+            "typical_lobar": [{"min": 14, "max": 15}],
+            "complicated_effusion": [{"min": 14, "max": 15}],
+            "atypical_walking": [{"min": 15, "max": 15}]
+          }
+        },
+        "general_appearance": {
+          "mood_and_behavior": {
+            "typical_lobar": ["Toxic and ill-appearing", "Anxious and restless"],
+            "complicated_effusion": ["Mildly distressed due to pain", "Toxic and ill-appearing"],
+            "atypical_walking": ["Calm with no acute distress", "Alert and cooperative"]
+          },
+          "overall_appearance": {
+            "typical_lobar": ["Plethoric or ruddy complexion", "Diaphoretic"],
+            "complicated_effusion": ["Pale", "Diaphoretic"],
+            "atypical_walking": ["Well-nourished and well-developed"]
+          },
+          "posture_and_position": {
+            "typical_lobar": ["Supine with no distress"],
+            "complicated_effusion": ["Splinting to one side", "Unable to lie flat"],
+            "atypical_walking": ["Supine with no distress"]
+          },
+          "level_of_consciousness": {
+            "typical_lobar": ["Alert and oriented x3", "Confused or disoriented"],
+            "complicated_effusion": ["Alert and oriented x3"],
+            "atypical_walking": ["Alert and oriented x3"]
+          },
+          "cardiopulmonary_and_circulatory_clues": {
+            "edema": {
+              "typical_lobar": ["No edema"],
+              "complicated_effusion": ["No edema"],
+              "atypical_walking": ["No edema"]
+            },
+            "dyspnea": {
+              "typical_lobar": ["Speaking in short phrases or single words", "Dyspnea at rest"],
+              "complicated_effusion": ["Dyspnea at rest", "Speaking in short phrases or single words"],
+              "atypical_walking": ["Speaking in full sentences"]
+            },
+            "cyanosis": {
+              "typical_lobar": ["No cyanosis", "Central cyanosis"],
+              "complicated_effusion": ["No cyanosis"],
+              "atypical_walking": ["No cyanosis"]
+            }
+          }
+        },
+        "head_and_neck": {
+          "head_and_face": {
+            "symmetry_and_lesions": {
+              "typical_lobar": ["Facial flushing"],
+              "complicated_effusion": ["Symmetric with no lesions"],
+              "atypical_walking": ["Symmetric with no lesions"]
+            },
+            "tenderness": {
+              "typical_lobar": ["Non-tender"],
+              "complicated_effusion": ["Non-tender"],
+              "atypical_walking": ["Sinus tenderness on percussion", "Non-tender"]
+            }
+          },
+          "eyes": {
+            "sclera_and_conjunctiva": {
+              "typical_lobar": ["Injected or red conjunctiva"],
+              "complicated_effusion": ["Normal sclera and pink conjunctiva"],
+              "atypical_walking": ["Normal sclera and pink conjunctiva"]
+            },
+            "pupils_reaction": {
+              "typical_lobar": ["PERRLA"],
+              "complicated_effusion": ["PERRLA"],
+              "atypical_walking": ["PERRLA"]
+            },
+            "extraocular_movements": {
+              "typical_lobar": ["Intact"],
+              "complicated_effusion": ["Intact"],
+              "atypical_walking": ["Intact"]
+            }
+          },
+          "ears": {
+            "external_and_tenderness": {
+              "typical_lobar": ["Normal external ear, no tenderness"],
+              "complicated_effusion": ["Normal external ear, no tenderness"],
+              "atypical_walking": ["Normal external ear, no tenderness"]
+            },
+            "eardrum_appearance": {
+              "typical_lobar": ["Intact pearly gray tympanic membrane"],
+              "complicated_effusion": ["Intact pearly gray tympanic membrane"],
+              "atypical_walking": ["Intact pearly gray tympanic membrane"]
+            }
+          },
+          "nose_and_sinuses": {
+            "septum_and_discharge": {
+              "typical_lobar": ["Midline septum, no discharge"],
+              "complicated_effusion": ["Midline septum, no discharge"],
+              "atypical_walking": ["Clear rhinorrhea", "Midline septum, no discharge"]
+            },
+            "sinus_tenderness": {
+              "typical_lobar": ["Non-tender"],
+              "complicated_effusion": ["Non-tender"],
+              "atypical_walking": ["Sinus tenderness on percussion", "Non-tender"]
+            }
+          },
+          "mouth_and_pharynx": {
+            "oral_mucosa_and_lesions": {
+              "typical_lobar": ["Dry mucous membranes"],
+              "complicated_effusion": ["Dry mucous membranes"],
+              "atypical_walking": ["Moist and pink"]
+            },
+            "pharynx_and_tonsils": {
+              "typical_lobar": ["Non-erythematous, no exudates"],
+              "complicated_effusion": ["Non-erythematous, no exudates"],
+              "atypical_walking": ["Erythematous pharynx", "Non-erythematous, no exudates"]
+            }
+          },
+          "neck_and_lymphatics": {
+            "inspection": {
+              "typical_lobar": ["Trachea midline"],
+              "complicated_effusion": ["Trachea deviated to the healthy side", "Trachea midline"],
+              "atypical_walking": ["Trachea midline"]
+            },
+            "tracheal_position": {
+              "typical_lobar": ["Trachea midline"],
+              "complicated_effusion": ["Trachea deviated to the healthy side", "Trachea midline"],
+              "atypical_walking": ["Trachea midline"]
+            },
+            "thyroid_gland": {
+              "typical_lobar": ["Non-palpable"],
+              "complicated_effusion": ["Non-palpable"],
+              "atypical_walking": ["Non-palpable"]
+            },
+            "carotid_bruit": {
+              "typical_lobar": ["No bruits"],
+              "complicated_effusion": ["No bruits"],
+              "atypical_walking": ["No bruits"]
+            },
+            "lymph_nodes_size_consistency": {
+              "typical_lobar": ["No lymphadenopathy"],
+              "complicated_effusion": ["No lymphadenopathy"],
+              "atypical_walking": ["Tender cervical lymphadenopathy", "No lymphadenopathy"]
+            },
+            "lymph_nodes_mobility_tenderness": {
+              "typical_lobar": ["No lymphadenopathy"],
+              "complicated_effusion": ["No lymphadenopathy"],
+              "atypical_walking": ["Tender cervical lymphadenopathy", "No lymphadenopathy"]
+            }
+          }
+        },
+        "respiratory_system": {
+          "inspection": {
+            "accessory_muscles": {
+              "typical_lobar": ["Intercostal retractions", "No accessory muscle use"],
+              "complicated_effusion": ["Intercostal retractions"],
+              "atypical_walking": ["No accessory muscle use"]
+            },
+            "chest_shape_and_symmetry": {
+              "typical_lobar": ["Symmetric chest rise"],
+              "complicated_effusion": ["Asymmetric chest expansion"],
+              "atypical_walking": ["Symmetric chest rise"]
+            }
+          },
+          "palpation": {
+            "chest_expansion": {
+              "typical_lobar": ["Symmetric expansion"],
+              "complicated_effusion": ["Decreased expansion on the right side", "Decreased expansion on the left side"],
+              "atypical_walking": ["Symmetric expansion"]
+            },
+            "tactile_fremitus": {
+              "typical_lobar": ["Increased tactile fremitus"],
+              "complicated_effusion": ["Absent tactile fremitus", "Decreased tactile fremitus"],
+              "atypical_walking": ["Normal tactile fremitus"]
+            }
+          },
+          "percussion": {
+            "typical_lobar": ["Dull"],
+            "complicated_effusion": ["Stony Dull"],
+            "atypical_walking": ["Resonant"]
+          },
+          "auscultation": {
+            "breath_sounds_intensity": {
+              "typical_lobar": ["Bronchial breath sounds"],
+              "complicated_effusion": ["Absent breath sounds at bases", "Decreased breath sounds"],
+              "atypical_walking": ["Vesicular sounds, normal intensity"]
+            },
+            "adventitious_sounds": {
+              "typical_lobar": ["Coarse Crackles", "Fine Crackles"],
+              "complicated_effusion": ["Pleural Friction Rub", "No adventitious sounds"],
+              "atypical_walking": ["Fine Crackles", "No adventitious sounds"]
+            }
+          }
+        },
+        "cardiovascular_system": {
+          "JVP_assessment": {
+            "typical_lobar": ["JVP not elevated"],
+            "complicated_effusion": ["JVP not elevated"],
+            "atypical_walking": ["JVP not elevated"]
+          },
+          "palpation": {
+            "precordial_palpation_heave_thrill": {
+              "typical_lobar": ["No heaves or thrills"],
+              "complicated_effusion": ["No heaves or thrills"],
+              "atypical_walking": ["No heaves or thrills"]
+            },
+            "pmi_assessment": {
+              "typical_lobar": ["PMI at 5th ICS MCL"],
+              "complicated_effusion": ["PMI at 5th ICS MCL", "PMI displaced laterally"],
+              "atypical_walking": ["PMI at 5th ICS MCL"]
+            }
+          },
+          "auscultation": {
+            "heart_sounds_s1_s2": {
+              "typical_lobar": ["Normal S1, S2"],
+              "complicated_effusion": ["Normal S1, S2"],
+              "atypical_walking": ["Normal S1, S2"]
+            },
+            "extra_sounds_s3_s4_murmurs": {
+              "typical_lobar": ["No extra sounds or murmurs"],
+              "complicated_effusion": ["No extra sounds or murmurs"],
+              "atypical_walking": ["No extra sounds or murmurs"]
+            }
+          },
+          "2_pulses_and_extremities": {
+            "peripheral_pulses_symmetry_and_quality": {
+              "typical_lobar": ["Bounding pulses"],
+              "complicated_effusion": ["Pulses 2+ and symmetric"],
+              "atypical_walking": ["Pulses 2+ and symmetric"]
+            },
+            "extremities_color_and_trophic_changes": {
+              "typical_lobar": ["No trophic changes"],
+              "complicated_effusion": ["No trophic changes"],
+              "atypical_walking": ["No trophic changes"]
+            },
+            "extremities_temperature_and_cap_refill": {
+              "typical_lobar": ["Warm extremities"],
+              "complicated_effusion": ["Warm extremities"],
+              "atypical_walking": ["Warm, Capillary refill < 2 sec"]
+            },
+            "extremities_edema": {
+              "typical_lobar": ["No edema"],
+              "complicated_effusion": ["No edema"],
+              "atypical_walking": ["No edema"]
+            }
+          }
+        },
+        "abdominal_system": {
+          "inspection": {
+            "typical_lobar": ["Flat, non-distended"],
+            "complicated_effusion": ["Flat, non-distended"],
+            "atypical_walking": ["Flat, non-distended"]
+          },
+          "auscultation": {
+            "bowel_sounds": {
+              "typical_lobar": ["Normoactive bowel sounds"],
+              "complicated_effusion": ["Normoactive bowel sounds"],
+              "atypical_walking": ["Normoactive bowel sounds"]
+            },
+            "vascular_bruits": {
+              "typical_lobar": ["No bruits"],
+              "complicated_effusion": ["No bruits"],
+              "atypical_walking": ["No bruits"]
+            }
+          },
+          "percussion": {
+            "general": {
+              "typical_lobar": ["Resonant"],
+              "complicated_effusion": ["Resonant"],
+              "atypical_walking": ["Resonant"]
+            },
+            "organ_borders": {
+              "typical_lobar": ["Normal liver span"],
+              "complicated_effusion": ["Normal liver span"],
+              "atypical_walking": ["Normal liver span"]
+            }
+          },
+          "palpation": {
+            "superficial_tenderness": {
+              "typical_lobar": ["Soft, non-tender"],
+              "complicated_effusion": ["Soft, non-tender"],
+              "atypical_walking": ["Soft, non-tender"]
+            },
+            "deep_masses_and_organs": {
+              "typical_lobar": ["No masses or organomegaly"],
+              "complicated_effusion": ["No masses or organomegaly"],
+              "atypical_walking": ["No masses or organomegaly"]
+            }
+          },
+          "peritoneal_signs": {
+            "typical_lobar": ["None"],
+            "complicated_effusion": ["None"],
+            "atypical_walking": ["None"]
+          }
+        },
+        "neurological": {
+          "mental_status_and_LOC": {
+            "typical_lobar": ["Confused or disoriented", "Alert and Oriented"],
+            "complicated_effusion": ["Alert and Oriented"],
+            "atypical_walking": ["Alert and Oriented"]
+          },
+          "cranial_nerves": {
+            "typical_lobar": ["Intact"],
+            "complicated_effusion": ["Intact"],
+            "atypical_walking": ["Intact"]
+          },
+          "motor_strength_and_tone": {
+            "typical_lobar": ["5/5 strength globally"],
+            "complicated_effusion": ["5/5 strength globally"],
+            "atypical_walking": ["5/5 strength globally"]
+          },
+          "involuntary_movements": {
+            "typical_lobar": ["None"],
+            "complicated_effusion": ["None"],
+            "atypical_walking": ["None"]
+          },
+          "sensory_light_touch_and_pain": {
+            "typical_lobar": ["Intact"],
+            "complicated_effusion": ["Intact"],
+            "atypical_walking": ["Intact"]
+          },
+          "deep_tendon_reflexes": {
+            "typical_lobar": ["2+"],
+            "complicated_effusion": ["2+"],
+            "atypical_walking": ["2+"]
+          },
+          "coordination_and_gait": {
+            "typical_lobar": ["Intact"],
+            "complicated_effusion": ["Intact"],
+            "atypical_walking": ["Intact"]
+          }
+        },
+        "musculoskeletal_system": {
+          "inspection": {
+            "joints": {
+              "typical_lobar": ["Normal joints"],
+              "complicated_effusion": ["Normal joints"],
+              "atypical_walking": ["Normal joints"]
+            },
+            "muscles": {
+              "typical_lobar": ["Normal bulk"],
+              "complicated_effusion": ["Normal bulk"],
+              "atypical_walking": ["Normal bulk"]
+            }
+          },
+          "palpation": {
+            "tenderness_and_crepitus": {
+              "typical_lobar": ["No tenderness"],
+              "complicated_effusion": ["Chest wall tenderness"],
+              "atypical_walking": ["No tenderness"]
+            }
+          },
+          "range_of_motion_active_passive": {
+            "typical_lobar": ["Full"],
+            "complicated_effusion": ["Full"],
+            "atypical_walking": ["Full"]
+          },
+          "stability_and_function": {
+            "typical_lobar": ["Stable"],
+            "complicated_effusion": ["Stable"],
+            "atypical_walking": ["Stable"]
+          }
+        }
+      },
+      "paraclinic": {
+        "basic_blood_tests": {
+          "BMP": {
+            "Na": {
+              "typical_lobar": [{"min": 133, "max": 145}],
+              "complicated_effusion": [{"min": 135, "max": 145}],
+              "atypical_walking": [{"min": 135, "max": 145}]
+            },
+            "BUN": {
+              "typical_lobar": [{"min": 15, "max": 35}],
+              "complicated_effusion": [{"min": 10, "max": 25}],
+              "atypical_walking": [{"min": 7, "max": 20}]
+            },
+            "Cr": {
+              "typical_lobar": [{"min": 0.8, "max": 1.4}],
+              "complicated_effusion": [{"min": 0.7, "max": 1.2}],
+              "atypical_walking": [{"min": 0.7, "max": 1.1}]
+            }
+          },
+          "CBC": {
+            "WBC": {
+              "typical_lobar": [{"min": 14000, "max": 25000}],
+              "complicated_effusion": [{"min": 12000, "max": 20000}],
+              "atypical_walking": [{"min": 4500, "max": 11000}]
+            },
+            "Hb": {
+              "typical_lobar": [{"min": 13.0, "max": 16.0}],
+              "complicated_effusion": [{"min": 12.0, "max": 15.0}],
+              "atypical_walking": [{"min": 13.0, "max": 16.0}]
+            },
+            "Plt": {
+              "typical_lobar": [{"min": 150000, "max": 450000}],
+              "complicated_effusion": [{"min": 200000, "max": 500000}],
+              "atypical_walking": [{"min": 150000, "max": 400000}]
+            }
+          },
+          "ESR": {
+            "typical_lobar": [{"min": 40, "max": 90}],
+            "complicated_effusion": [{"min": 50, "max": 100}],
+            "atypical_walking": [{"min": 10, "max": 30}]
+          },
+          "CRP": {
+            "typical_lobar": [{"min": 50, "max": 200}],
+            "complicated_effusion": [{"min": 60, "max": 250}],
+            "atypical_walking": [{"min": 5, "max": 20}]
+          },
+          "VBG": {
+            "pH": {
+              "typical_lobar": [{"min": 7.30, "max": 7.45}],
+              "complicated_effusion": [{"min": 7.30, "max": 7.42}],
+              "atypical_walking": [{"min": 7.35, "max": 7.45}]
+            },
+            "PCO2": {
+              "typical_lobar": [{"min": 30, "max": 40}],
+              "complicated_effusion": [{"min": 32, "max": 42}],
+              "atypical_walking": [{"min": 35, "max": 45}]
+            },
+            "HCO3": {
+              "typical_lobar": [{"min": 20, "max": 24}],
+              "complicated_effusion": [{"min": 20, "max": 24}],
+              "atypical_walking": [{"min": 22, "max": 26}]
+            }
+          },
+          "LFTs": {
+            "ALT": {
+              "typical_lobar": [{"min": 20, "max": 60}],
+              "complicated_effusion": [{"min": 15, "max": 45}],
+              "atypical_walking": [{"min": 10, "max": 40}]
+            },
+            "AST": {
+              "typical_lobar": [{"min": 20, "max": 60}],
+              "complicated_effusion": [{"min": 15, "max": 45}],
+              "atypical_walking": [{"min": 10, "max": 40}]
+            }
+          }
+        },
+        "specialized_lung_tests": {
+          "D_dimer": {
+            "typical_lobar": ["Negative"],
+            "complicated_effusion": ["Negative"],
+            "atypical_walking": ["Negative"]
+          },
+          "Sputum_AFB": {
+            "typical_lobar": ["Negative"],
+            "complicated_effusion": ["Negative"],
+            "atypical_walking": ["Negative"]
+          },
+          "BNP_NT_proBNP": {
+            "typical_lobar": ["Normal"],
+            "complicated_effusion": ["Normal"],
+            "atypical_walking": ["Normal"]
+          },
+          "Sputum_analysis": {
+            "Gram_Stain": {
+              "typical_lobar": ["Positive for Gram-positive cocci"],
+              "complicated_effusion": ["Positive for Gram-positive cocci"],
+              "atypical_walking": ["Normal flora"]
+            },
+            "Sample_Quality": {
+              "typical_lobar": ["Adequate"],
+              "complicated_effusion": ["Adequate"],
+              "atypical_walking": ["Adequate"]
+            }
+          },
+          "a1_antitrypsin_level": {
+            "typical_lobar": ["Normal range"],
+            "complicated_effusion": ["Normal range"],
+            "atypical_walking": ["Normal range"]
+          }
+        },
+        "immunity_and_serology": {
+          "HIV_test": {
+            "typical_lobar": ["Negative"],
+            "complicated_effusion": ["Negative"],
+            "atypical_walking": ["Negative"]
+          },
+          "Autoimmune_pannel_ANA_ANCA": {
+            "typical_lobar": ["Negative"],
+            "complicated_effusion": ["Negative"],
+            "atypical_walking": ["Negative"]
+          }
+        },
+        "simple_imaging": {
+          "Chest_X_Ray": {
+            "PA_Lateral_Findings_and_Effusion": {
+              "typical_lobar": ["Lobar consolidation"],
+              "complicated_effusion": ["Pleural effusion", "Lobar consolidation"],
+              "atypical_walking": ["Patchy infiltrates"]
+            }
+          }
+        },
+        "advanced_imaging": {
+          "Chest_CT_CTPA": {
+            "Lung_Parenchyma_and_Pleura": {
+              "typical_lobar": ["Air bronchogram", "Consolidation"],
+              "complicated_effusion": ["Pleural effusion", "Consolidation"],
+              "atypical_walking": ["Ground glass opacities"]
+            }
+          }
+        },
+        "functional_tests": {
+          "dlco": {
+            "typical_lobar": ["N/A"],
+            "complicated_effusion": ["N/A"],
+            "atypical_walking": ["N/A"]
+          },
+          "peak_flow": {
+            "typical_lobar": ["N/A"],
+            "complicated_effusion": ["N/A"],
+            "atypical_walking": ["N/A"]
+          },
+          "Spirometry": {
+            "Result": {
+              "FEV1": {
+                "typical_lobar": [{"min": 70, "max": 90}],
+                "complicated_effusion": [{"min": 60, "max": 80}],
+                "atypical_walking": [{"min": 80, "max": 100}]
+              },
+              "FVC": {
+                "typical_lobar": [{"min": 70, "max": 90}],
+                "complicated_effusion": [{"min": 60, "max": 80}],
+                "atypical_walking": [{"min": 80, "max": 100}]
+              },
+              "FEV1/FVC": {
+                "typical_lobar": [{"min": 75, "max": 85}],
+                "complicated_effusion": [{"min": 75, "max": 85}],
+                "atypical_walking": [{"min": 75, "max": 85}]
+              }
+            },
+            "reversibility": {
+              "typical_lobar": ["No significant reversibility"],
+              "complicated_effusion": ["No significant reversibility"],
+              "atypical_walking": ["No significant reversibility"]
+            }
+          },
+          "plethysmography": {
+            "typical_lobar": ["N/A"],
+            "complicated_effusion": ["N/A"],
+            "atypical_walking": ["N/A"]
+          }
+        },
+        "procedures": {
+          "Bronchoscopy": {
+            "typical_lobar": ["N/A"],
+            "complicated_effusion": ["N/A"],
+            "atypical_walking": ["N/A"]
+          },
+          "torachonthesis": {
+            "Serum": {
+              "Protein": {
+                "typical_lobar": ["N/A"],
+                "complicated_effusion": [{"min": 6.0, "max": 8.0}],
+                "atypical_walking": ["N/A"]
+              },
+              "LDH": {
+                "typical_lobar": ["N/A"],
+                "complicated_effusion": [{"min": 140, "max": 200}],
+                "atypical_walking": ["N/A"]
+              },
+              "Albumin": {
+                "typical_lobar": ["N/A"],
+                "complicated_effusion": [{"min": 3.5, "max": 5.0}],
+                "atypical_walking": ["N/A"]
+              }
+            },
+            "Fluid": {
+              "Protein": {
+                "typical_lobar": ["N/A"],
+                "complicated_effusion": [{"min": 3.5, "max": 6.0}],
+                "atypical_walking": ["N/A"]
+              },
+              "LDH": {
+                "typical_lobar": ["N/A"],
+                "complicated_effusion": [{"min": 1000, "max": 3000}],
+                "atypical_walking": ["N/A"]
+              },
+              "Albumin": {
+                "typical_lobar": ["N/A"],
+                "complicated_effusion": [{"min": 2.0, "max": 3.0}],
+                "atypical_walking": ["N/A"]
+              }
+            }
+          }
+        }
+      }
+    }
+    
     def __init__(self):
         self.random = random
-        # دیگر نیازی به self.case_type یا severity_level برای تعیین منطق نیست
-        # زیرا منطق دقیقا بر اساس درصدهای فایل متنی پیاده می‌شود.
+        
+        # 1. SCENARIO SELECTION
+        # typical_lobar (70%), complicated_effusion (20%), atypical_walking (10%)
+        self.scenario = self.random.choices(
+            ["typical_lobar", "complicated_effusion", "atypical_walking"], 
+            weights=[70, 10, 20], k=1
+        )[0]
+
+    # --- Helper to extract data from DATA_SOURCE ---
+    def _get_val(self, category, system, key, subkey=None, subsubkey=None):
+        """
+        این متد داده مربوط به سناریوی جاری را از دیکشنری استخراج می‌کند.
+        اگر داده لیست رشته باشد -> random.choice
+        اگر داده لیست بازه عددی باشد -> random between min/max
+        اگر داده دیکشنری باشد (مثل BP) -> کل لیست دیکشنری را برمی‌گرداند تا تابع فراخوان هندل کند
+        """
+        try:
+            node = self.DATA_SOURCE[category][system][key]
+            if subkey:
+                node = node[subkey]
+            if subsubkey:
+                node = node[subsubkey]
+                
+            # دسترسی به سناریوی خاص
+            scenario_data = node[self.scenario]
+            
+            # اگر داده رشته ساده (مثل N/A) باشد
+            if isinstance(scenario_data, str):
+                return scenario_data
+
+            # اگر لیست نباشد (مثلا N/A نبود اما دیکشنری هم نیست - بعید است در این ساختار)
+            if not isinstance(scenario_data, list):
+                return str(scenario_data)
+
+            # اگر لیست خالی باشد
+            if not scenario_data:
+                return "N/A"
+
+            # بررسی آیتم اول برای تشخیص نوع
+            first_item = scenario_data[0]
+            
+            # حالت بازه عددی: [{"min": x, "max": y}]
+            if isinstance(first_item, dict) and "min" in first_item:
+                if len(scenario_data) == 1:
+                    r = scenario_data[0]
+                    val = self.random.uniform(r["min"], r["max"])
+                    # اگر اعداد صحیح هستند، int کن
+                    if isinstance(r["min"], int) and isinstance(r["max"], int):
+                        return int(val)
+                    return round(val, 1) # برای دما و ... 
+                else:
+                    # برای BP که دو تا دیکشنری دارد، لیست را برمی‌گردانیم تا caller هندل کند
+                    results = []
+                    for r in scenario_data:
+                        val = self.random.uniform(r["min"], r["max"])
+                        if isinstance(r["min"], int) and isinstance(r["max"], int):
+                            results.append(int(val))
+                        else:
+                            results.append(round(val, 1))
+                    return results
+
+            # حالت انتخاب رشته: ["Option A", "Option B"]
+            elif isinstance(first_item, str):
+                return self.random.choice(scenario_data)
+                
+            return "Unknown Format"
+
+        except Exception as e:
+            return f"Error ({key}): {str(e)}"
 
     # --- Demographic Helpers ---
     def _select_occupation(self, gender, age_str):
@@ -126,350 +810,352 @@ class PneumoniaDataGenerator:
             "marital_status": self._select_marital_status(gender, age_str)
         }
 
-    def _generate_value(self, distributions, is_int=False, precision=2):
-        ranges = [d["range"] for d in distributions]
-        weights = [d["weight"] for d in distributions]
-        chosen_range = self.random.choices(ranges, weights=weights, k=1)[0]
-        if is_int: return str(self.random.randint(chosen_range[0], chosen_range[1]))
-        return str(round(self.random.uniform(chosen_range[0], chosen_range[1]), precision))
-
     # ==========================================
-    # 1. PHYSICAL EXAM - VITAL SIGNS (RULES APPLIED)
+    # 1. PHYSICAL EXAM GENERATION
     # ==========================================
-    def _gen_vital_bp(self):
-        # 20% <90, 60% 90-140, 20% >140
-        scenario = self.random.choices(["Hypotension", "Normal", "Hypertension"], weights=[20, 60, 20])[0]
-        if scenario == "Hypotension":
-            sys = self.random.randint(70, 89)
-            dia = self.random.randint(40, 59)
-        elif scenario == "Normal":
-            sys = self.random.randint(90, 140)
-            dia = self.random.randint(60, 90)
-        else: # Hypertension
-            sys = self.random.randint(141, 180)
-            dia = self.random.randint(91, 110)
-        return f"{sys}/{dia} mmHg"
-
-    def _gen_vital_temp(self):
-        # 75% > 38.0, 25% < 37.5
-        scenario = self.random.choices(["Fever", "Normal/Low"], weights=[75, 25])[0]
-        if scenario == "Fever":
-            return f"{round(self.random.uniform(38.1, 40.0), 1)} C"
+    def _gen_vitals(self):
+        cat = "physical_exam"
+        sys = "vital_signs"
+        
+        bp_raw = self._get_val(cat, sys, "BP") # Returns [sys, dia] list
+        temp = self._get_val(cat, sys, "T")
+        pr = self._get_val(cat, sys, "PR")
+        rr = self._get_val(cat, sys, "RR")
+        spo2 = self._get_val(cat, sys, "SpO2")
+        gcs = self._get_val(cat, sys, "GCS")
+        
+        # Format BP
+        if isinstance(bp_raw, list) and len(bp_raw) == 2:
+            bp_str = f"{bp_raw[0]}/{bp_raw[1]} mmHg"
         else:
-            return f"{round(self.random.uniform(36.0, 37.4), 1)} C"
+            bp_str = str(bp_raw)
 
-    def _gen_vital_pr(self):
-        # 80% > 100, 20% 60-100
-        scenario = self.random.choices(["Tachycardia", "Normal"], weights=[80, 20])[0]
-        if scenario == "Tachycardia":
-            val = self.random.randint(101, 130)
-        else:
-            val = self.random.randint(60, 100)
-        return f"{val} bpm"
-
-    def _gen_vital_rr(self):
-        # 85% > 20, 15% 12-20
-        scenario = self.random.choices(["Tachypnea", "Normal"], weights=[85, 15])[0]
-        if scenario == "Tachypnea":
-            val = self.random.randint(21, 35)
-        else:
-            val = self.random.randint(12, 20)
-        return f"{val} breaths/min"
-
-    def _gen_vital_spo2(self):
-        # 60% < 94, 40% >= 94
-        scenario = self.random.choices(["Hypoxemia", "Normal"], weights=[60, 40])[0]
-        if scenario == "Hypoxemia":
-            val = self.random.randint(85, 93)
-        else:
-            val = self.random.randint(94, 99)
-        return f"{val}% on Room Air"
-
-    def _gen_vital_gcs(self):
-        # 80% 15/15, 20% < 15
-        scenario = self.random.choices(["Normal", "Confusion"], weights=[80, 20])[0]
-        if scenario == "Normal":
-            return "15/15"
-        else:
-            return str(self.random.randint(13, 14))
-
-    # ==========================================
-    # 2. PHYSICAL EXAM - GENERAL APPEARANCE
-    # ==========================================
-    def _gen_ga_mood(self):
-        # 40% Anxious, 20% Lethargic, 40% Calm
-        return self.random.choices(
-            ["Anxious due to dyspnea", "Lethargic (Severe infection)", "Calm"],
-            weights=[40, 20, 40]
-        )[0]
-
-    def _gen_ga_overall(self):
-        # 60% Ill-appearing, 30% Mild distress, 10% Comfortable
-        return self.random.choices(
-            ["Ill-appearing/Toxic", "Mildly distressed", "Comfortable, No acute distress"],
-            weights=[60, 30, 10]
-        )[0]
-
-    def _gen_ga_posture(self):
-        # 30% Splinting, 20% Tripod, 50% No specific
-        return self.random.choices(
-            ["Splinting (lying on affected side)", "Tripod position", "Supine/No specific preference"],
-            weights=[30, 20, 50]
-        )[0]
-
-    def _gen_ga_loc(self):
-        # 80% Alert, 20% Confused
-        return self.random.choices(
-            ["Alert and Oriented", "Confused (Sepsis/Hypoxia)"],
-            weights=[80, 20]
-        )[0]
-    
-    def _gen_ga_clues(self):
-        # Edema: 100% No
-        edema = "No peripheral edema"
-        # Dyspnea: 80% Visible, 20% Absent
-        dyspnea = self.random.choices(["Visible dyspnea present", "No visible dyspnea"], weights=[80, 20])[0]
-        # Cyanosis: 15% Central, 85% Absent
-        cyanosis = self.random.choices(["Central Cyanosis present", "Absent"], weights=[15, 85])[0]
-        return {"edema": edema, "dyspnea": dyspnea, "cyanosis": cyanosis}
-
-    # ==========================================
-    # 3. PHYSICAL EXAM - HEAD AND NECK
-    # ==========================================
-    def _gen_hn_ears(self):
-        # 95% Normal, 5% Bullous
-        return self.random.choices(
-            ["Normal appearance", "Bullous Myringitis (Bullous lesions)"],
-            weights=[95, 5]
-        )[0]
-
-    def _gen_hn_nose(self):
-        # 40% Nasal flaring, 60% Normal
-        return self.random.choices(
-            ["Nasal flaring present", "Normal, no flaring"],
-            weights=[40, 60]
-        )[0]
-
-    def _gen_hn_mouth(self):
-        # 50% Dry, 50% Moist
-        return self.random.choices(
-            ["Dry mucous membranes (Dehydration)", "Moist mucous membranes"],
-            weights=[50, 50]
-        )[0]
-
-    def _gen_hn_lymph(self):
-        # 90% Normal, 10% Reactive
-        return self.random.choices(
-            ["No lymphadenopathy", "Mild cervical lymphadenopathy (Reactive)"],
-            weights=[90, 10]
-        )[0]
-
-    # ==========================================
-    # 4. PHYSICAL EXAM - RESPIRATORY SYSTEM
-    # ==========================================
-    def _gen_resp_inspection(self):
-        # Accessory: 50% Present, 50% Normal
-        acc = self.random.choices(["Accessory muscle use present", "No accessory muscle use"], weights=[50, 50])[0]
-        # Chest Shape: 30% Splinting/Lag, 70% Normal
-        shape = self.random.choices(["Asymmetrical movement (Lag on affected side)", "Symmetrical movement"], weights=[30, 70])[0]
-        return {"accessory_muscles": acc, "chest_shape_and_symmetry": shape}
-
-    def _gen_resp_palpation(self):
-        # Expansion: 40% Reduced, 60% Normal
-        exp = self.random.choices(["Reduced expansion on affected side", "Symmetrical expansion"], weights=[40, 60])[0]
-        # Fremitus: 70% Increased, 30% Normal
-        frem = self.random.choices(["Increased tactile fremitus over consolidation", "Normal tactile fremitus"], weights=[70, 30])[0]
-        return {"chest_expansion": exp, "tactile_fremitus": frem}
-
-    def _gen_resp_percussion(self):
-        # 75% Dullness, 25% Resonant
-        return self.random.choices(["Dullness to percussion", "Resonant"], weights=[75, 25])[0]
-
-    def _gen_resp_auscultation(self):
-        # Breath Sounds: 60% Bronchial, 40% Vesicular
-        bs = self.random.choices(["Bronchial breath sounds", "Vesicular breath sounds (Normal)"], weights=[60, 40])[0]
-        # Adventitious: 70% Crackles, 15% Rhonchi, 10% Egophony, 5% Clear
-        adv = self.random.choices(
-            ["Localized crackles (Rales)", "Rhonchi", "Egophony (E to A change)", "Clear"],
-            weights=[70, 15, 10, 5]
-        )[0]
-        return {"breath_sounds": bs, "adventitious_sounds": adv}
-
-    # ==========================================
-    # 5. PHYSICAL EXAM - CARDIOVASCULAR
-    # ==========================================
-    def _gen_cv_auscultation(self):
-        # Heart Sounds: 70% Tachycardia, 30% Normal
-        hs = self.random.choices(["Tachycardic S1, S2", "Normal rate and rhythm"], weights=[70, 30])[0]
-        # Murmurs: 100% None
-        mur = "No murmurs"
-        return {"heart_sounds_s1_s2": hs, "murmurs": mur}
-
-    def _gen_cv_peripheral(self):
-        # Pulses: 40% Bounding, 60% Normal
-        pulses = self.random.choices(["Bounding pulses", "Normal quality"], weights=[40, 60])[0]
-        # Temp: 60% Warm, 40% Normal
-        temp = self.random.choices(["Extremities Warm (Fever)", "Extremities Normal"], weights=[60, 40])[0]
         return {
-            "peripheral_pulses_symmetry_and_quality": pulses,
-            "extremities_color_and_trophic_changes": "Normal", # 100%
-            "extremities_temperature_and_cap_refill": temp,
-            "extremities_edema": "No edema" # 100%
+            "BP": bp_str,
+            "T": f"{temp} °C",
+            "PR": f"{pr} bpm",
+            "RR": f"{rr} breaths/min",
+            "SpO2": f"{spo2}% on Room Air",
+            "GCS": str(gcs)
         }
 
-    # ==========================================
-    # 6. PHYSICAL EXAM - ABDOMINAL
-    # ==========================================
-    def _gen_abd_all(self):
-        # Bowel Sounds: 90% Normal, 10% Hypoactive
-        bs = self.random.choices(["Normal bowel sounds", "Hypoactive bowel sounds"], weights=[90, 10])[0]
-        # Tenderness: 10% Upper abd (Referred), 90% Non-tender
-        tend = self.random.choices(["Upper abdominal tenderness (Referred)", "Non-tender"], weights=[10, 90])[0]
+    def _gen_general_appearance(self):
+        cat = "physical_exam"
+        sys = "general_appearance"
         
         return {
-            "inspection": "Flat/Normal", # 100%
-            "auscultation": {
-                "bowel_sounds": bs,
-                "vascular_bruits": "No bruits" # 100%
+            "mood_and_behavior": self._get_val(cat, sys, "mood_and_behavior"),
+            "overall_appearance": self._get_val(cat, sys, "overall_appearance"),
+            "posture_and_position": self._get_val(cat, sys, "posture_and_position"),
+            "level_of_consciousness": self._get_val(cat, sys, "level_of_consciousness"),
+            "cardiopulmonary_and_circulatory_clues": {
+                "edema": self._get_val(cat, sys, "cardiopulmonary_and_circulatory_clues", "edema"),
+                "dyspnea": self._get_val(cat, sys, "cardiopulmonary_and_circulatory_clues", "dyspnea"),
+                "cyanosis": self._get_val(cat, sys, "cardiopulmonary_and_circulatory_clues", "cyanosis")
+            }
+        }
+
+    def _gen_head_neck(self):
+        cat = "physical_exam"
+        sys = "head_and_neck"
+        
+        return {
+            "head_and_face": {
+                "symmetry_and_lesions": self._get_val(cat, sys, "head_and_face", "symmetry_and_lesions"),
+                "tenderness": self._get_val(cat, sys, "head_and_face", "tenderness")
             },
-            "percussion": {
-                "general": "Tympanic", # 100%
-                "organ_borders": "Normal" # 100%
+            "eyes": {
+                "sclera_and_conjunctiva": self._get_val(cat, sys, "eyes", "sclera_and_conjunctiva"),
+                "pupils_reaction": self._get_val(cat, sys, "eyes", "pupils_reaction"),
+                "extraocular_movements": self._get_val(cat, sys, "eyes", "extraocular_movements")
+            },
+            "ears": {
+                "external_and_tenderness": self._get_val(cat, sys, "ears", "external_and_tenderness"),
+                "eardrum_appearance": self._get_val(cat, sys, "ears", "eardrum_appearance")
+            },
+            "nose_and_sinuses": {
+                "septum_and_discharge": self._get_val(cat, sys, "nose_and_sinuses", "septum_and_discharge"),
+                "sinus_tenderness": self._get_val(cat, sys, "nose_and_sinuses", "sinus_tenderness")
+            },
+            "mouth_and_pharynx": {
+                "oral_mucosa_and_lesions": self._get_val(cat, sys, "mouth_and_pharynx", "oral_mucosa_and_lesions"),
+                "pharynx_and_tonsils": self._get_val(cat, sys, "mouth_and_pharynx", "pharynx_and_tonsils")
+            },
+            "neck_and_lymphatics": {
+                "inspection": self._get_val(cat, sys, "neck_and_lymphatics", "inspection"),
+                "tracheal_position": self._get_val(cat, sys, "neck_and_lymphatics", "tracheal_position"),
+                "thyroid_gland": self._get_val(cat, sys, "neck_and_lymphatics", "thyroid_gland"),
+                "carotid_bruit": self._get_val(cat, sys, "neck_and_lymphatics", "carotid_bruit"),
+                "lymph_nodes_size_consistency": self._get_val(cat, sys, "neck_and_lymphatics", "lymph_nodes_size_consistency"),
+                "lymph_nodes_mobility_tenderness": self._get_val(cat, sys, "neck_and_lymphatics", "lymph_nodes_mobility_tenderness")
+            }
+        }
+
+    def _gen_respiratory(self):
+        cat = "physical_exam"
+        sys = "respiratory_system"
+        
+        return {
+            "inspection": {
+                "accessory_muscles": self._get_val(cat, sys, "inspection", "accessory_muscles"),
+                "chest_shape_and_symmetry": self._get_val(cat, sys, "inspection", "chest_shape_and_symmetry")
             },
             "palpation": {
-                "superficial_tenderness": tend,
-                "deep_masses_and_organs": "No masses" # 100%
+                "chest_expansion": self._get_val(cat, sys, "palpation", "chest_expansion"),
+                "tactile_fremitus": self._get_val(cat, sys, "palpation", "tactile_fremitus")
             },
-            "peritoneal_signs": "Absent" # 100%
+            "percussion": self._get_val(cat, sys, "percussion"),
+            "auscultation": {
+                "breath_sounds": self._get_val(cat, sys, "auscultation", "breath_sounds_intensity"),
+                "adventitious_sounds": self._get_val(cat, sys, "auscultation", "adventitious_sounds")
+            }
         }
 
-    # ==========================================
-    # 7. PHYSICAL EXAM - NEURO & MSK
-    # ==========================================
-    def _gen_neuro_status(self):
-        # 25% Confusion, 75% Normal
-        ms = self.random.choices(["Confusion/Delirium", "Normal"], weights=[25, 75])[0]
+    def _gen_cardio(self):
+        cat = "physical_exam"
+        sys = "cardiovascular_system"
+        
+        # Note: input key is "2_pulses_and_extremities", output key "peripheral_pulses_and_extremities"
+        
         return {
-            "mental_status_and_LOC": ms,
-            "cranial_nerves": "Intact", # 100%
-            "motor_strength_and_tone": "Normal", # 100%
-            "involuntary_movements": "None", # 100%
-            "sensory_light_touch_and_pain": "Intact", # 100%
-            "deep_tendon_reflexes": "Normal", # 100%
-            "coordination_and_gait": "Normal" # 100%
+            "JVP_assessment": self._get_val(cat, sys, "JVP_assessment"),
+            "palpation": {
+                "precordial_palpation_heave_thrill": self._get_val(cat, sys, "palpation", "precordial_palpation_heave_thrill"),
+                "pmi_assessment": self._get_val(cat, sys, "palpation", "pmi_assessment")
+            },
+            "auscultation": {
+                "heart_sounds_s1_s2": self._get_val(cat, sys, "auscultation", "heart_sounds_s1_s2"),
+                "extra_sounds_s3_s4_murmurs": self._get_val(cat, sys, "auscultation", "extra_sounds_s3_s4_murmurs")
+            },
+            "peripheral_pulses_and_extremities": {
+                "peripheral_pulses_symmetry_and_quality": self._get_val(cat, sys, "2_pulses_and_extremities", "peripheral_pulses_symmetry_and_quality"),
+                "extremities_color_and_trophic_changes": self._get_val(cat, sys, "2_pulses_and_extremities", "extremities_color_and_trophic_changes"),
+                "extremities_temperature_and_cap_refill": self._get_val(cat, sys, "2_pulses_and_extremities", "extremities_temperature_and_cap_refill"),
+                "extremities_edema": self._get_val(cat, sys, "2_pulses_and_extremities", "extremities_edema")
+            }
         }
 
-    def _gen_msk_all(self):
-        # All 100% Normal according to file
+    def _gen_abdominal(self):
+        cat = "physical_exam"
+        sys = "abdominal_system"
+        
         return {
-            "inspection": {"joints": "Normal", "muscles": "Normal"},
-            "palpation": {"tenderness_and_crepitus": "Non-tender"},
-            "range_of_motion_active_passive": "Normal",
-            "stability_and_function": "Normal"
+            "inspection": self._get_val(cat, sys, "inspection"),
+            "auscultation": {
+                "bowel_sounds": self._get_val(cat, sys, "auscultation", "bowel_sounds"),
+                "vascular_bruits": self._get_val(cat, sys, "auscultation", "vascular_bruits")
+            },
+            "percussion": {
+                "general": self._get_val(cat, sys, "percussion", "general"),
+                "organ_borders": self._get_val(cat, sys, "percussion", "organ_borders")
+            },
+            "palpation": {
+                "superficial_tenderness": self._get_val(cat, sys, "palpation", "superficial_tenderness"),
+                "deep_masses_and_organs": self._get_val(cat, sys, "palpation", "deep_masses_and_organs")
+            },
+            "peritoneal_signs": self._get_val(cat, sys, "peritoneal_signs")
+        }
+
+    def _gen_neuro(self):
+        cat = "physical_exam"
+        sys = "neurological"
+        
+        return {
+            "mental_status_and_LOC": self._get_val(cat, sys, "mental_status_and_LOC"),
+            "cranial_nerves": self._get_val(cat, sys, "cranial_nerves"),
+            "motor_strength_and_tone": self._get_val(cat, sys, "motor_strength_and_tone"),
+            "involuntary_movements": self._get_val(cat, sys, "involuntary_movements"),
+            "sensory_light_touch_and_pain": self._get_val(cat, sys, "sensory_light_touch_and_pain"),
+            "deep_tendon_reflexes": self._get_val(cat, sys, "deep_tendon_reflexes"),
+            "coordination_and_gait": self._get_val(cat, sys, "coordination_and_gait")
+        }
+
+    def _gen_msk(self):
+        cat = "physical_exam"
+        sys = "musculoskeletal_system"
+        
+        return {
+            "inspection": {
+                "joints": self._get_val(cat, sys, "inspection", "joints"),
+                "muscles": self._get_val(cat, sys, "inspection", "muscles")
+            },
+            "palpation": {
+                "tenderness_and_crepitus": self._get_val(cat, sys, "palpation", "tenderness_and_crepitus")
+            },
+            "range_of_motion_active_passive": self._get_val(cat, sys, "range_of_motion_active_passive"),
+            "stability_and_function": self._get_val(cat, sys, "stability_and_function")
         }
 
     # ==========================================
-    # 8. PARACLINIC (PRESERVED & INTEGRATED)
+    # 2. PARACLINIC GENERATION
     # ==========================================
-    # ... Helper generators for paraclinic ...
-    def _generate_hemoglobin_value(self):
-        dists = [{"range": (12.0, 16.0), "weight": 50}, {"range": (10.0, 12.0), "weight": 30}, {"range": (7.0, 9.9), "weight": 20}]
-        return f"{self._generate_value(dists, precision=1)} g/dL"
-    def _generate_wbc_count(self): 
-        dists = [{"range": (12000, 25000), "weight": 70}, {"range": (4000, 12000), "weight": 20}, {"range": (2000, 3999), "weight": 10}]
-        return f"{self._generate_value(dists, is_int=True)} /µL"
-    def _generate_platelet_count(self): 
-        dists = [{"range": (150000, 450000), "weight": 60}, {"range": (450001, 600000), "weight": 30}, {"range": (50000, 149000), "weight": 10}]
-        return f"{self._generate_value(dists, is_int=True)} /µL"
-    def _generate_esr_value(self): 
-        dists = [{"range": (51, 120), "weight": 50}, {"range": (20, 50), "weight": 30}, {"range": (5, 19), "weight": 20}]
-        return f"{self._generate_value(dists, is_int=True)} mm/h"
-    def _generate_crp_value(self): 
-        dists = [{"range": (101, 200), "weight": 65}, {"range": (20, 100), "weight": 25}, {"range": (1, 19), "weight": 10}]
-        return f"{self._generate_value(dists, is_int=True)} mg/L"
-    def _gen_na(self):
-        dists = [{"range": (135, 145), "weight": 85}, {"range": (125, 134), "weight": 15}]
-        return f"{self._generate_value(dists, is_int=True)} mEq/L"
-    def _gen_bun(self):
-        dists = [{"range": (7, 20), "weight": 75}, {"range": (21, 50), "weight": 25}]
-        return f"{self._generate_value(dists, is_int=True)} mg/dL"
-    def _gen_cr(self):
-        dists = [{"range": (0.7, 1.2), "weight": 75}, {"range": (1.3, 2.5), "weight": 25}]
-        return f"{self._generate_value(dists, precision=2)} mg/dL"
-    def _gen_liver(self):
-        dists = [{"range": (22, 45), "weight": 80}, {"range": (46, 90), "weight": 20}]
-        val = self._generate_value(dists, is_int=True)
-        return f"{val} U/L"
-    def _gen_ph(self):
-        dists = [{"range": (7.35, 7.45), "weight": 80}, {"range": (7.46, 7.55), "weight": 15}, {"range": (7.25, 7.34), "weight": 5}]
-        return self._generate_value(dists, precision=2)
-    def _gen_gram_stain(self):
-        return self.random.choices(["Positive for specific organism", "Normal Flora / Mixed", "No Organism seen"], weights=[50, 30, 20], k=1)[0]
-    def _gen_sample_quality(self):
-        return self.random.choices(["Good Quality (>25 PMNs, <10 Epithelial cells)", "Poor Quality"], weights=[70, 30], k=1)[0]
-    def _gen_afb(self):
-        return self.random.choices(["Negative", "Positive"], weights=[95, 5], k=1)[0]
-    def _gen_a1at(self):
-        return self.random.choices(["within normal range", "below normal range"], weights=[99, 1], k=1)[0]
-    def _gen_ddimer(self):
-        dists = [{"range": (501, 2000), "weight": 60}, {"range": (100, 500), "weight": 40}]
-        return f"{self._generate_value(dists, is_int=True)} ng/mL FEU"
-    def _gen_bnp(self):
-        return self.random.choices(["within normal range", "mildly elevated"], weights=[80, 20], k=1)[0]
-    def _gen_hiv(self): return self.random.choices(["Negative", "Positive"], weights=[98, 2], k=1)[0]
-    def _gen_autoimmune(self): return self.random.choices(["Negative", "Positive"], weights=[95, 5], k=1)[0]
-    def _gen_mri(self): return self.random.choices(["Normal", "Abnormal signal intensity"], weights=[95, 5], k=1)[0]
-    def _gen_pet(self): return self.random.choices(["Increased metabolic activity in affected area", "Normal metabolic activity"], weights=[90, 10], k=1)[0]
-    def _gen_spirometry(self):
-        opts = [
-            "Not Indicated or Unable to perform",
-            "FEV1 Measured 55-70% Predicted, FVC Measured 50-65% Predicted, FEV1/FVC Measured 85-110% Predicted",
-            "FEV1 Measured 85-110% Predicted, FVC Measured 85-110% Predicted, FEV1/FVC Measured 80-110% Predicted"
-        ]
-        return self.random.choices(opts, weights=[60, 30, 10], k=1)[0]
-    def _gen_peak(self): return self.random.choices(["within normal range", "reduced"], weights=[50, 50], k=1)[0]
-    def _gen_pleth(self): return self.random.choices(["within normal range", "reduced Lung Volumes"], weights=[90, 10], k=1)[0]
-    def _gen_bronch(self): return self.random.choices(["Normal Anatomy with Secretions", "Mucosal Inflammation or Obstruction"], weights=[90, 10], k=1)[0]
-    
-    def _gen_cxr(self):
-        # Using simplified logic consistent with previous version but generalized
-        return self.random.choice(["Lobar Consolidation", "Patchy Infiltrates", "Pleural Effusion present"])
+    def _gen_paraclinic(self):
+        cat = "paraclinic"
+        
+        # --- Basic Blood Tests ---
+        sys = "basic_blood_tests"
+        
+        na = self._get_val(cat, sys, "BMP", "Na")
+        bun = self._get_val(cat, sys, "BMP", "BUN")
+        cr = self._get_val(cat, sys, "BMP", "Cr")
+        
+        wbc = self._get_val(cat, sys, "CBC", "WBC")
+        hb = self._get_val(cat, sys, "CBC", "Hb")
+        plt = self._get_val(cat, sys, "CBC", "Plt")
+        
+        esr = self._get_val(cat, sys, "ESR")
+        crp = self._get_val(cat, sys, "CRP")
+        
+        ph = self._get_val(cat, sys, "VBG", "pH")
+        pco2 = self._get_val(cat, sys, "VBG", "PCO2")
+        hco3 = self._get_val(cat, sys, "VBG", "HCO3")
+        
+        alt = self._get_val(cat, sys, "LFTs", "ALT")
+        ast = self._get_val(cat, sys, "LFTs", "AST")
+        
+        # --- Specialized Lung Tests ---
+        sys = "specialized_lung_tests"
+        d_dimer = self._get_val(cat, sys, "D_dimer")
+        afb = self._get_val(cat, sys, "Sputum_AFB")
+        bnp = self._get_val(cat, sys, "BNP_NT_proBNP")
+        gram = self._get_val(cat, sys, "Sputum_analysis", "Gram_Stain")
+        quality = self._get_val(cat, sys, "Sputum_analysis", "Sample_Quality")
+        a1 = self._get_val(cat, sys, "a1_antitrypsin_level")
+        
+        # --- Immunity ---
+        sys = "immunity_and_serology"
+        hiv = self._get_val(cat, sys, "HIV_test")
+        ana = self._get_val(cat, sys, "Autoimmune_pannel_ANA_ANCA")
+        
+        # --- Imaging ---
+        cxr = self._get_val(cat, "simple_imaging", "Chest_X_Ray", "PA_Lateral_Findings_and_Effusion")
+        ct = self._get_val(cat, "advanced_imaging", "Chest_CT_CTPA", "Lung_Parenchyma_and_Pleura")
+        
+        # --- Functional ---
+        sys = "functional_tests"
+        dlco = self._get_val(cat, sys, "dlco")
+        peak_flow = self._get_val(cat, sys, "peak_flow")
+        pleth = self._get_val(cat, sys, "plethysmography")
+        
+        # Spirometry Calculation
+        # The text file provides %Predicted ranges. We simulate "Measured" based on that.
+        # Predicted Values (Constants for simulation)
+        P_FEV1 = 3.50
+        P_FVC = 4.00
+        
+        fev1_pct = self._get_val(cat, sys, "Spirometry", "Result", "FEV1")
+        fvc_pct = self._get_val(cat, sys, "Spirometry", "Result", "FVC")
+        ratio_pct = self._get_val(cat, sys, "Spirometry", "Result", "FEV1/FVC")
+        reversibility = self._get_val(cat, sys, "Spirometry", "reversibility")
+        
+        if isinstance(fev1_pct, (int, float)):
+             fev1_meas = round(P_FEV1 * (fev1_pct / 100), 2)
+             fev1_out = f"Measured: {fev1_meas} L, Predicted: {P_FEV1} L, %Predicted: {fev1_pct}%"
+        else:
+             fev1_out = fev1_pct # N/A case
+             
+        if isinstance(fvc_pct, (int, float)):
+             fvc_meas = round(P_FVC * (fvc_pct / 100), 2)
+             fvc_out = f"Measured: {fvc_meas} L, Predicted: {P_FVC} L, %Predicted: {fvc_pct}%"
+        else:
+             fvc_out = fvc_pct
+             
+        if isinstance(ratio_pct, (int, float)):
+             ratio_meas = round(ratio_pct / 100, 2)
+             ratio_out = f"Value: {ratio_meas} ({ratio_pct}%)"
+        else:
+             ratio_out = ratio_pct
 
-    def _gen_ct(self):
-        return "Consolidation or Infiltrates confirmed"
+        # --- Procedures (Thoracentesis) ---
+        sys = "procedures"
+        bronch = self._get_val(cat, sys, "Bronchoscopy")
+        
+        # Thoracentesis Nested Logic
+        try:
+            serum_prot = self._get_val(cat, sys, "torachonthesis", "Serum", "Protein")
+            serum_ldh = self._get_val(cat, sys, "torachonthesis", "Serum", "LDH")
+            serum_alb = self._get_val(cat, sys, "torachonthesis", "Serum", "Albumin")
+            
+            fluid_prot = self._get_val(cat, sys, "torachonthesis", "Fluid", "Protein")
+            fluid_ldh = self._get_val(cat, sys, "torachonthesis", "Fluid", "LDH")
+            fluid_alb = self._get_val(cat, sys, "torachonthesis", "Fluid", "Albumin")
+            
+            if serum_prot == "N/A":
+                thora_result = "Not Indicated"
+            else:
+                thora_result = {
+                    "Serum": {"Protein": f"{serum_prot} g/dL", "LDH": f"{serum_ldh} U/L", "Albumin": f"{serum_alb} g/dL"},
+                    "Fluid": {"Protein": f"{fluid_prot} g/dL", "LDH": f"{fluid_ldh} U/L", "Albumin": f"{fluid_alb} g/dL"}
+                }
+        except:
+            thora_result = "N/A"
 
-    def _gen_thora(self):
-        # 30% chance of successful tap if effusion present (simplified for this context)
-        if self.random.random() < 0.3:
-            return "Fluid Aspirated: Exudative criteria met."
-        return "Not Indicated"
-
-    def _get_dlco_finding(self):
-        findings = ["Reduced", "Normal"]
-        weights = [70, 30]
-        chosen_status = self.random.choices(findings, weights=weights, k=1)[0]
-        if chosen_status == "Reduced": dlco_val = self.random.randint(40, 79)
-        else: dlco_val = self.random.randint(80, 100)
-        return chosen_status, f"{dlco_val}% predicted"
-
-    def _gen_reversibility(self):
-        choice = self.random.choices(["Positive", "Negative"], weights=[5, 95], k=1)[0]
-        if choice == "Positive": return "FEV1 increase > 12% AND > 200 mL"
-        return "FEV1 increase < 12% AND < 200 mL"
-
-    # --- VBG Logic (Added in previous step) ---
-    def _gen_pco2_logic(self):
-        scenario = self.random.choices(["Hypocapnia", "Normal", "Hypercapnia"], weights=[60, 30, 10], k=1)[0]
-        if scenario == "Hypocapnia": val = self.random.randint(25, 34)
-        elif scenario == "Normal": val = self.random.randint(35, 45)
-        else: val = self.random.randint(46, 60)
-        return f"{val} mmHg"
-
-    def _gen_hco3_logic(self):
-        scenario = self.random.choices(["Normal", "Low"], weights=[80, 20], k=1)[0]
-        if scenario == "Normal": val = self.random.randint(22, 26)
-        else: val = self.random.randint(15, 21)
-        return f"{val} mEq/L"
+        return {
+            "basic_blood_tests": {
+                "CBC": {
+                    "Hb": f"{hb} g/dL",
+                    "WBC": f"{wbc} /µL",
+                    "Plt": f"{plt} /µL"
+                },
+                "ESR": f"{esr} mm/h",
+                "CRP": f"{crp} mg/L",
+                "BMP": {
+                    "Na": f"{na} mEq/L",
+                    "BUN": f"{bun} mg/dL",
+                    "Cr": f"{cr} mg/dL"
+                },
+                "LFTs": {
+                    "ALT": f"{alt} U/L",
+                    "AST": f"{ast} U/L"
+                },
+                "VBG": {
+                    "pH": f"{ph}",
+                    "PCO2": f"{pco2} mmHg",
+                    "HCO3": f"{hco3} mEq/L"
+                }
+            },
+            "specialized_lung_tests": {
+                "Sputum_analysis": {
+                    "Gram_Stain": gram,
+                    "Sample_Quality": quality
+                },
+                "Sputum_AFB": afb,
+                "a1_antitrypsin_level": a1,
+                "D_dimer": d_dimer,
+                "BNP_NT_proBNP": bnp
+            },
+            "immunity_and_serology": {
+                "HIV_test": hiv,
+                "Autoimmune_pannel_ANA_ANCA": ana
+            },
+            "simple_imaging": {
+                "Chest_X_Ray": {
+                    "PA_Lateral_Findings_and_Effusion": cxr
+                }
+            },
+            "advanced_imaging": {
+                "Chest_CT_CTPA": {
+                    "Lung_Parenchyma_and_Pleura": ct
+                }
+            },
+            "functional_tests": {
+                "Spirometry": {
+                    "result": {
+                        "FEV1": fev1_out,
+                        "FVC": fvc_out,
+                        "FEV1/FVC_Ratio": ratio_out
+                    },
+                    "reversibility": reversibility
+                },
+                "dlco": dlco,
+                "peak_flow": peak_flow,
+                "plethysmography": pleth
+            },
+            "procedures": {
+                "Bronchoscopy": bronch,
+                "torachonthesis": thora_result
+            }
+        }
 
     # ==========================================
     # MAIN GENERATION METHOD
@@ -478,72 +1164,29 @@ class PneumoniaDataGenerator:
         
         # 1. Personal Info
         personal_info = self._generate_personal_information()
+        personal_info["Scenario"] = self.scenario # Tag for validation
         
-        # 2. Vital Signs (Rules Applied)
-        vitals = {
-            "BP": self._gen_vital_bp(),
-            "T": self._gen_vital_temp(),
-            "PR": self._gen_vital_pr(),
-            "RR": self._gen_vital_rr(),
-            "SpO2": self._gen_vital_spo2(),
-            "GCS": self._gen_vital_gcs()
-        }
-        
-        # 3. General Appearance
-        ga_clues = self._gen_ga_clues()
-        general_appearance = {
-            "level_of_consciousness": self._gen_ga_loc(),
-            "mood_and_behavior": self._gen_ga_mood(),
-            "posture_and_position": self._gen_ga_posture(),
-            "overall_appearance": self._gen_ga_overall(),
-            "cardiopulmonary_and_circulatory_clues": ga_clues
-        }
-        
-        # 4. Head and Neck
-        head_neck = {
-            "head_and_face": {"symmetry_and_lesions": "Normal", "tenderness": "Non-tender"},
-            "eyes": {"sclera_and_conjunctiva": "Normal", "pupils_reaction": "PERRLA", "extraocular_movements": "Intact"},
-            "ears": {"external_and_tenderness": "Normal", "eardrum_appearance": self._gen_hn_ears()},
-            "nose_and_sinuses": {"septum_and_discharge": self._gen_hn_nose(), "sinus_tenderness": "Non-tender"},
-            "mouth_and_pharynx": {"oral_mucosa_and_lesions": self._gen_hn_mouth(), "pharynx_and_tonsils": "Normal"},
-            "neck_and_lymphatics": {
-                "inspection": "Normal", "tracheal_position": "Central", "thyroid_gland": "Non-palpable",
-                "carotid_bruit": "No bruits", "lymph_nodes_size_consistency": self._gen_hn_lymph(),
-                "lymph_nodes_mobility_tenderness": "N/A"
-            }
-        }
-        
-        # 5. Respiratory
-        respiratory = {
-            "inspection": self._gen_resp_inspection(),
-            "palpation": self._gen_resp_palpation(),
-            "percussion": self._gen_resp_percussion(),
-            "auscultation": self._gen_resp_auscultation()
-        }
-        
-        # 6. Cardiovascular
-        cardio = {
-            "JVP_assessment": "Normal JVP",
-            "palpation": {"precordial_palpation_heave_thrill": "No heaves or thrills", "pmi_assessment": "Normal location"},
-            "auscultation": self._gen_cv_auscultation(),
-            "peripheral_pulses_and_extremities": self._gen_cv_peripheral()
-        }
-        
-        # 7. Abdominal
-        abdominal = self._gen_abd_all()
-        
-        # 8. Neuro & MSK
-        neuro = self._gen_neuro_status()
-        msk = self._gen_msk_all()
+        # 2. Physical Exam
+        vitals = self._gen_vitals()
+        gen_app = self._gen_general_appearance()
+        head_neck = self._gen_head_neck()
+        respiratory = self._gen_respiratory()
+        cardio = self._gen_cardio()
+        abdominal = self._gen_abdominal()
+        neuro = self._gen_neuro()
+        msk = self._gen_msk()
 
-        # 9. Paraclinic Data Assembly
+        # 3. Paraclinic
+        paraclinic = self._gen_paraclinic()
+
+        # 4. Assembly
         data = {
             "patient_profile": {
                 "personal_information": personal_info
             },
             "physical_exam": {
                 "vital_signs": vitals,
-                "general_appearance": general_appearance,
+                "general_appearance": gen_app,
                 "head_and_neck": head_neck,
                 "respiratory_system": respiratory,
                 "cardiovascular_system": cardio,
@@ -551,54 +1194,12 @@ class PneumoniaDataGenerator:
                 "neurological": neuro,
                 "musculoskeletal_system": msk
             },
-            "paraclinic": {
-                "basic_blood_tests": {
-                    "CBC": {
-                        "Hb": self._generate_hemoglobin_value(),
-                        "WBC": self._generate_wbc_count(),
-                        "Plt": self._generate_platelet_count()
-                    },
-                    "ESR": self._generate_esr_value(),
-                    "CRP": self._generate_crp_value(),
-                    "BMP": {
-                        "Na": self._gen_na(), "BUN": self._gen_bun(), "Cr": self._gen_cr()
-                    },
-                    "LFTs": {
-                        "ALT": self._gen_liver(), "AST": self._gen_liver()
-                    },
-                    "VBG": {
-                        "pH": self._gen_ph(),
-                        "PCO2": self._gen_pco2_logic(),
-                        "HCO3": self._gen_hco3_logic()
-                    }
-                },
-                "specialized_lung_tests": {
-                    "Sputum_analysis": {
-                        "Gram_Stain": self._gen_gram_stain(), "Sample_Quality": self._gen_sample_quality()
-                    },
-                    "Sputum_AFB": self._gen_afb(),
-                    "a1_antitrypsin_level": self._gen_a1at(),
-                    "D_dimer": self._gen_ddimer(),
-                    "BNP_NT_proBNP": self._gen_bnp()
-                },
-                "immunity_and_serology": {
-                    "HIV_test": self._gen_hiv(), "Autoimmune_pannel_ANA_ANCA": self._gen_autoimmune()
-                },
-                "simple_imaging": {
-                    "Chest_X_Ray": {"PA_Lateral_Findings_and_Effusion": self._gen_cxr()}
-                },
-                "advanced_imaging": {
-                    "Chest_CT_CTPA": {"Lung_Parenchyma_and_Pleura": self._gen_ct()},
-                    "MRI_chest": self._gen_mri(), "Pet_scan": self._gen_pet()
-                },
-                "functional_tests": {
-                    "Spirometry": {"result": self._gen_spirometry(), "reversibility": self._gen_reversibility()},
-                    "dlco": self._get_dlco_finding()[1],
-                    "peak_flow": self._gen_peak(), "plethysmography": self._gen_pleth()
-                },
-                "procedures": {
-                    "Bronchoscopy": self._gen_bronch(), "torachonthesis": self._gen_thora()
-                }
-            }
+            "paraclinic": paraclinic
         }
         return data
+
+# --- Testing Section (Optional) ---
+if __name__ == "__main__":
+    generator = PneumoniaDataGenerator()
+    case = generator.generate_paraclinic_case()
+    print(json.dumps(case, indent=4, ensure_ascii=False))

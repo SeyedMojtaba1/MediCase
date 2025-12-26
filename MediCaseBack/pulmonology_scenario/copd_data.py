@@ -3,10 +3,15 @@ import json
 
 class COPDDataGenerator:
     """
-    کلاسی برای تولید داده‌های شبیه‌سازی شده COPD.
-    نسخه اصلاح شده: بخش General Appearance دقیقاً بر اساس قواعد آماری و ساختار درخواستی به روز رسانی شده است.
+    کلاسی برای تولید داده‌های شبیه‌سازی شده COPD بر اساس فایل COPD.txt.
+    
+    Scenarios:
+    1. chronic_bronchitis (40%)
+    2. emphysema (30%)
+    3. copd_cor_pulmonale (30%)
     """
     
+    # --- داده‌های دموگرافیک (حفظ شده از کد قبلی) ---
     RANDOM_DATA_LISTS = {
         "first_names_sample_100": {
             "MALE": [
@@ -84,27 +89,687 @@ class COPDDataGenerator:
         }
     }
     
+    # --- داده‌های استخراج شده از COPD.txt ---
+    DATA_SOURCE = {
+      "physical_exam": {
+        "vital_signs": {
+          "BP": {
+            "chronic_bronchitis": [{"min": 130, "max": 150}, {"min": 80, "max": 95}],
+            "emphysema": [{"min": 110, "max": 130}, {"min": 70, "max": 85}],
+            "copd_cor_pulmonale": [{"min": 100, "max": 130}, {"min": 60, "max": 85}]
+          },
+          "T": {
+            "chronic_bronchitis": [{"min": 36.5, "max": 37.2}],
+            "emphysema": [{"min": 36.5, "max": 37.2}],
+            "copd_cor_pulmonale": [{"min": 36.5, "max": 37.2}]
+          },
+          "PR": {
+            "chronic_bronchitis": [{"min": 80, "max": 100}],
+            "emphysema": [{"min": 85, "max": 105}],
+            "copd_cor_pulmonale": [{"min": 90, "max": 110}]
+          },
+          "RR": {
+            "chronic_bronchitis": [{"min": 18, "max": 24}],
+            "emphysema": [{"min": 20, "max": 28}],
+            "copd_cor_pulmonale": [{"min": 22, "max": 30}]
+          },
+          "SpO2": {
+            "chronic_bronchitis": [{"min": 85, "max": 92}],
+            "emphysema": [{"min": 90, "max": 95}],
+            "copd_cor_pulmonale": [{"min": 84, "max": 90}]
+          },
+          "GCS": {
+            "chronic_bronchitis": [{"min": 14, "max": 15}],
+            "emphysema": [{"min": 15, "max": 15}],
+            "copd_cor_pulmonale": [{"min": 13, "max": 15}]
+          }
+        },
+        "general_appearance": {
+          "mood_and_behavior": {
+            "chronic_bronchitis": ["Lethargic or drowsy", "Calm with no acute distress"],
+            "emphysema": ["Anxious and restless"],
+            "copd_cor_pulmonale": ["Lethargic or drowsy", "Irritable"]
+          },
+          "overall_appearance": {
+            "chronic_bronchitis": ["Obese or overweight", "Plethoric or ruddy complexion"],
+            "emphysema": ["Cachectic and thin"],
+            "copd_cor_pulmonale": ["Obese or overweight", "Plethoric or ruddy complexion"]
+          },
+          "posture_and_position": {
+            "chronic_bronchitis": ["Supine with no distress"],
+            "emphysema": ["Sitting upright in tripod position", "Leaning forward"],
+            "copd_cor_pulmonale": ["Orthopnea", "Unable to lie flat"]
+          },
+          "level_of_consciousness": {
+            "chronic_bronchitis": ["Somnolent but rousable", "Alert and oriented x3"],
+            "emphysema": ["Alert and oriented x3"],
+            "copd_cor_pulmonale": ["Confused or disoriented", "Somnolent but rousable"]
+          },
+          "cardiopulmonary_and_circulatory_clues": {
+            "edema": {
+              "chronic_bronchitis": ["Trace pedal edema", "No edema"],
+              "emphysema": ["No edema"],
+              "copd_cor_pulmonale": ["Pitting edema in lower extremities", "Generalized edema"]
+            },
+            "dyspnea": {
+              "chronic_bronchitis": ["Dyspnea on exertion", "Dyspnea at rest"],
+              "emphysema": ["Pursed-lip breathing", "Dyspnea at rest"],
+              "copd_cor_pulmonale": ["Dyspnea at rest", "Dyspnea on exertion"]
+            },
+            "cyanosis": {
+              "chronic_bronchitis": ["Central cyanosis", "Peripheral cyanosis"],
+              "emphysema": ["No cyanosis"],
+              "copd_cor_pulmonale": ["Central cyanosis"]
+            }
+          }
+        },
+        "head_and_neck": {
+          "head_and_face": {
+            "symmetry_and_lesions": {
+              "chronic_bronchitis": ["Facial flushing"],
+              "emphysema": ["Symmetric with no lesions"],
+              "copd_cor_pulmonale": ["Facial flushing", "Symmetric with no lesions"]
+            },
+            "tenderness": {
+              "chronic_bronchitis": ["Non-tender"],
+              "emphysema": ["Non-tender"],
+              "copd_cor_pulmonale": ["Non-tender"]
+            }
+          },
+          "eyes": {
+            "sclera_and_conjunctiva": {
+              "chronic_bronchitis": ["Injected or red conjunctiva"],
+              "emphysema": ["Normal sclera and pink conjunctiva"],
+              "copd_cor_pulmonale": ["Injected or red conjunctiva"]
+            },
+            "pupils_reaction": {
+              "chronic_bronchitis": ["PERRLA"],
+              "emphysema": ["PERRLA"],
+              "copd_cor_pulmonale": ["PERRLA"]
+            },
+            "extraocular_movements": {
+              "chronic_bronchitis": ["Intact"],
+              "emphysema": ["Intact"],
+              "copd_cor_pulmonale": ["Intact"]
+            }
+          },
+          "ears": {
+            "external_and_tenderness": {
+              "chronic_bronchitis": ["Normal external ear, no tenderness"],
+              "emphysema": ["Normal external ear, no tenderness"],
+              "copd_cor_pulmonale": ["Normal external ear, no tenderness"]
+            },
+            "eardrum_appearance": {
+              "chronic_bronchitis": ["Intact pearly gray tympanic membrane"],
+              "emphysema": ["Intact pearly gray tympanic membrane"],
+              "copd_cor_pulmonale": ["Intact pearly gray tympanic membrane"]
+            }
+          },
+          "nose_and_sinuses": {
+            "septum_and_discharge": {
+              "chronic_bronchitis": ["Midline septum, no discharge"],
+              "emphysema": ["Midline septum, no discharge"],
+              "copd_cor_pulmonale": ["Midline septum, no discharge"]
+            },
+            "sinus_tenderness": {
+              "chronic_bronchitis": ["Non-tender"],
+              "emphysema": ["Non-tender"],
+              "copd_cor_pulmonale": ["Non-tender"]
+            }
+          },
+          "mouth_and_pharynx": {
+            "oral_mucosa_and_lesions": {
+              "chronic_bronchitis": ["Central cyanosis under the tongue"],
+              "emphysema": ["Moist and pink"],
+              "copd_cor_pulmonale": ["Central cyanosis under the tongue"]
+            },
+            "pharynx_and_tonsils": {
+              "chronic_bronchitis": ["Non-erythematous, no exudates"],
+              "emphysema": ["Non-erythematous, no exudates"],
+              "copd_cor_pulmonale": ["Non-erythematous, no exudates"]
+            }
+          },
+          "neck_and_lymphatics": {
+            "inspection": {
+              "chronic_bronchitis": ["Trachea midline"],
+              "emphysema": ["Trachea midline"],
+              "copd_cor_pulmonale": ["Trachea midline"]
+            },
+            "tracheal_position": {
+              "chronic_bronchitis": ["Trachea midline"],
+              "emphysema": ["Trachea midline"],
+              "copd_cor_pulmonale": ["Trachea midline"]
+            },
+            "thyroid_gland": {
+              "chronic_bronchitis": ["Non-palpable"],
+              "emphysema": ["Non-palpable"],
+              "copd_cor_pulmonale": ["Non-palpable"]
+            },
+            "carotid_bruit": {
+              "chronic_bronchitis": ["No bruits"],
+              "emphysema": ["No bruits"],
+              "copd_cor_pulmonale": ["No bruits"]
+            },
+            "lymph_nodes_size_consistency": {
+              "chronic_bronchitis": ["No lymphadenopathy"],
+              "emphysema": ["No lymphadenopathy"],
+              "copd_cor_pulmonale": ["No lymphadenopathy"]
+            },
+            "lymph_nodes_mobility_tenderness": {
+              "chronic_bronchitis": ["No lymphadenopathy"],
+              "emphysema": ["No lymphadenopathy"],
+              "copd_cor_pulmonale": ["No lymphadenopathy"]
+            }
+          }
+        },
+        "respiratory_system": {
+          "inspection": {
+            "accessory_muscles": {
+              "chronic_bronchitis": ["No accessory muscle use"],
+              "emphysema": ["Supraclavicular retractions", "Use of sternocleidomastoid muscles"],
+              "copd_cor_pulmonale": ["No accessory muscle use", "Intercostal retractions"]
+            },
+            "chest_shape_and_symmetry": {
+              "chronic_bronchitis": ["Symmetric chest rise"],
+              "emphysema": ["Barrel chest"],
+              "copd_cor_pulmonale": ["Barrel chest", "Symmetric chest rise"]
+            }
+          },
+          "palpation": {
+            "chest_expansion": {
+              "chronic_bronchitis": ["Symmetric expansion"],
+              "emphysema": ["Globally decreased expansion"],
+              "copd_cor_pulmonale": ["Globally decreased expansion"]
+            },
+            "tactile_fremitus": {
+              "chronic_bronchitis": ["Normal tactile fremitus"],
+              "emphysema": ["Decreased tactile fremitus"],
+              "copd_cor_pulmonale": ["Normal tactile fremitus", "Decreased tactile fremitus"]
+            }
+          },
+          "percussion": {
+            "chronic_bronchitis": ["Resonant"],
+            "emphysema": ["Hyper-resonant"],
+            "copd_cor_pulmonale": ["Resonant", "Dull"]
+          },
+          "auscultation": {
+            "breath_sounds_intensity": {
+              "chronic_bronchitis": ["Vesicular sounds, normal intensity"],
+              "emphysema": ["Decreased breath sounds"],
+              "copd_cor_pulmonale": ["Decreased breath sounds"]
+            },
+            "adventitious_sounds": {
+              "chronic_bronchitis": ["Rhonchi", "Coarse Crackles"],
+              "emphysema": ["No adventitious sounds", "Wheezing"],
+              "copd_cor_pulmonale": ["Rhonchi", "Coarse Crackles"]
+            }
+          }
+        },
+        "cardiovascular_system": {
+          "JVP_assessment": {
+            "chronic_bronchitis": ["JVP not elevated"],
+            "emphysema": ["JVP not elevated"],
+            "copd_cor_pulmonale": ["Distended neck veins", "Elevated JVP", "Positive Hepatojugular reflux"]
+          },
+          "palpation": {
+            "precordial_palpation_heave_thrill": {
+              "chronic_bronchitis": ["No heaves or thrills"],
+              "emphysema": ["No heaves or thrills"],
+              "copd_cor_pulmonale": ["Right Ventricular Heave", "Parasternal lift"]
+            },
+            "pmi_assessment": {
+              "chronic_bronchitis": ["PMI at 5th ICS MCL"],
+              "emphysema": ["PMI strictly unpalpable"],
+              "copd_cor_pulmonale": ["PMI displaced laterally"]
+            }
+          },
+          "auscultation": {
+            "heart_sounds_s1_s2": {
+              "chronic_bronchitis": ["Normal S1, S2"],
+              "emphysema": ["Normal S1, S2"],
+              "copd_cor_pulmonale": ["Loud P2", "Fixed split S2"]
+            },
+            "extra_sounds_s3_s4_murmurs": {
+              "chronic_bronchitis": ["No extra sounds or murmurs"],
+              "emphysema": ["No extra sounds or murmurs"],
+              "copd_cor_pulmonale": ["Holosystolic murmur at left lower sternal border", "S3 Gallop"]
+            }
+          },
+          "2_pulses_and_extremities": {
+            "peripheral_pulses_symmetry_and_quality": {
+              "chronic_bronchitis": ["Pulses 2+ and symmetric"],
+              "emphysema": ["Pulses 2+ and symmetric"],
+              "copd_cor_pulmonale": ["Bounding pulses"]
+            },
+            "extremities_color_and_trophic_changes": {
+              "chronic_bronchitis": ["Nicotine staining on fingers"],
+              "emphysema": ["Nicotine staining on fingers"],
+              "copd_cor_pulmonale": ["Clubbing of fingers", "Nicotine staining on fingers"]
+            },
+            "extremities_temperature_and_cap_refill": {
+              "chronic_bronchitis": ["Warm extremities"],
+              "emphysema": ["Warm extremities"],
+              "copd_cor_pulmonale": ["Warm extremities"]
+            },
+            "extremities_edema": {
+              "chronic_bronchitis": ["No edema"],
+              "emphysema": ["No edema"],
+              "copd_cor_pulmonale": ["Bilateral pitting edema"]
+            }
+          }
+        },
+        "abdominal_system": {
+          "inspection": {
+            "chronic_bronchitis": ["Distended", "Flat, non-distended"],
+            "emphysema": ["Scaphoid"],
+            "copd_cor_pulmonale": ["Distended"]
+          },
+          "auscultation": {
+            "bowel_sounds": {
+              "chronic_bronchitis": ["Normoactive bowel sounds"],
+              "emphysema": ["Normoactive bowel sounds"],
+              "copd_cor_pulmonale": ["Normoactive bowel sounds"]
+            },
+            "vascular_bruits": {
+              "chronic_bronchitis": ["No bruits"],
+              "emphysema": ["No bruits"],
+              "copd_cor_pulmonale": ["No bruits"]
+            }
+          },
+          "percussion": {
+            "general": {
+              "chronic_bronchitis": ["Resonant"],
+              "emphysema": ["Resonant"],
+              "copd_cor_pulmonale": ["Resonant"]
+            },
+            "organ_borders": {
+              "chronic_bronchitis": ["Normal liver span"],
+              "emphysema": ["Normal liver span"],
+              "copd_cor_pulmonale": ["Hepatomegaly"]
+            }
+          },
+          "palpation": {
+            "superficial_tenderness": {
+              "chronic_bronchitis": ["Soft, non-tender"],
+              "emphysema": ["Soft, non-tender"],
+              "copd_cor_pulmonale": ["Right upper quadrant tenderness"]
+            },
+            "deep_masses_and_organs": {
+              "chronic_bronchitis": ["No masses or organomegaly"],
+              "emphysema": ["No masses or organomegaly"],
+              "copd_cor_pulmonale": ["Pulsatile liver edge"]
+            }
+          },
+          "peritoneal_signs": {
+            "chronic_bronchitis": ["None"],
+            "emphysema": ["None"],
+            "copd_cor_pulmonale": ["None"]
+          }
+        },
+        "neurological": {
+          "mental_status_and_LOC": {
+            "chronic_bronchitis": ["Somnolent but rousable", "Alert and Oriented"],
+            "emphysema": ["Alert and Oriented"],
+            "copd_cor_pulmonale": ["Mild confusion", "Somnolent but rousable"]
+          },
+          "cranial_nerves": {
+            "chronic_bronchitis": ["Intact"],
+            "emphysema": ["Intact"],
+            "copd_cor_pulmonale": ["Intact"]
+          },
+          "motor_strength_and_tone": {
+            "chronic_bronchitis": ["5/5 strength globally"],
+            "emphysema": ["5/5 strength globally"],
+            "copd_cor_pulmonale": ["5/5 strength globally"]
+          },
+          "involuntary_movements": {
+            "chronic_bronchitis": ["Asterixis"],
+            "emphysema": ["None"],
+            "copd_cor_pulmonale": ["Asterixis", "Flapping tremor"]
+          },
+          "sensory_light_touch_and_pain": {
+            "chronic_bronchitis": ["Intact"],
+            "emphysema": ["Intact"],
+            "copd_cor_pulmonale": ["Intact"]
+          },
+          "deep_tendon_reflexes": {
+            "chronic_bronchitis": ["2+"],
+            "emphysema": ["2+"],
+            "copd_cor_pulmonale": ["2+"]
+          },
+          "coordination_and_gait": {
+            "chronic_bronchitis": ["Intact"],
+            "emphysema": ["Intact"],
+            "copd_cor_pulmonale": ["Intact"]
+          }
+        },
+        "musculoskeletal_system": {
+          "inspection": {
+            "joints": {
+              "chronic_bronchitis": ["Normal joints"],
+              "emphysema": ["Normal joints"],
+              "copd_cor_pulmonale": ["Normal joints"]
+            },
+            "muscles": {
+              "chronic_bronchitis": ["Normal bulk"],
+              "emphysema": ["Muscle wasting"],
+              "copd_cor_pulmonale": ["Normal bulk"]
+            }
+          },
+          "palpation": {
+            "tenderness_and_crepitus": {
+              "chronic_bronchitis": ["No tenderness"],
+              "emphysema": ["No tenderness"],
+              "copd_cor_pulmonale": ["No tenderness"]
+            }
+          },
+          "range_of_motion_active_passive": {
+            "chronic_bronchitis": ["Full"],
+            "emphysema": ["Full"],
+            "copd_cor_pulmonale": ["Full"]
+          },
+          "stability_and_function": {
+            "chronic_bronchitis": ["Stable"],
+            "emphysema": ["Stable"],
+            "copd_cor_pulmonale": ["Stable"]
+          }
+        }
+      },
+      "paraclinic": {
+        "basic_blood_tests": {
+          "BMP": {
+            "Na": {
+              "chronic_bronchitis": [{"min": 135, "max": 145}],
+              "emphysema": [{"min": 135, "max": 145}],
+              "copd_cor_pulmonale": [{"min": 130, "max": 140}]
+            },
+            "BUN": {
+              "chronic_bronchitis": [{"min": 10, "max": 25}],
+              "emphysema": [{"min": 10, "max": 25}],
+              "copd_cor_pulmonale": [{"min": 15, "max": 30}]
+            },
+            "Cr": {
+              "chronic_bronchitis": [{"min": 0.8, "max": 1.2}],
+              "emphysema": [{"min": 0.7, "max": 1.1}],
+              "copd_cor_pulmonale": [{"min": 0.9, "max": 1.4}]
+            }
+          },
+          "CBC": {
+            "WBC": {
+              "chronic_bronchitis": [{"min": 5000, "max": 10000}],
+              "emphysema": [{"min": 5000, "max": 10000}],
+              "copd_cor_pulmonale": [{"min": 5000, "max": 11000}]
+            },
+            "Hb": {
+              "chronic_bronchitis": [{"min": 16.0, "max": 19.0}],
+              "emphysema": [{"min": 13.0, "max": 16.0}],
+              "copd_cor_pulmonale": [{"min": 15.0, "max": 18.0}]
+            },
+            "Plt": {
+              "chronic_bronchitis": [{"min": 150000, "max": 400000}],
+              "emphysema": [{"min": 150000, "max": 400000}],
+              "copd_cor_pulmonale": [{"min": 150000, "max": 400000}]
+            }
+          },
+          "ESR": {
+            "chronic_bronchitis": [{"min": 0, "max": 20}],
+            "emphysema": [{"min": 0, "max": 20}],
+            "copd_cor_pulmonale": [{"min": 5, "max": 25}]
+          },
+          "CRP": {
+            "chronic_bronchitis": [{"min": 0, "max": 5}],
+            "emphysema": [{"min": 0, "max": 5}],
+            "copd_cor_pulmonale": [{"min": 0, "max": 10}]
+          },
+          "VBG": {
+            "pH": {
+              "chronic_bronchitis": [{"min": 7.32, "max": 7.38}],
+              "emphysema": [{"min": 7.38, "max": 7.42}],
+              "copd_cor_pulmonale": [{"min": 7.30, "max": 7.40}]
+            },
+            "PCO2": {
+              "chronic_bronchitis": [{"min": 50, "max": 65}],
+              "emphysema": [{"min": 35, "max": 45}],
+              "copd_cor_pulmonale": [{"min": 50, "max": 70}]
+            },
+            "HCO3": {
+              "chronic_bronchitis": [{"min": 28, "max": 34}],
+              "emphysema": [{"min": 22, "max": 26}],
+              "copd_cor_pulmonale": [{"min": 26, "max": 32}]
+            }
+          },
+          "LFTs": {
+            "ALT": {
+              "chronic_bronchitis": [{"min": 15, "max": 45}],
+              "emphysema": [{"min": 10, "max": 40}],
+              "copd_cor_pulmonale": [{"min": 30, "max": 80}]
+            },
+            "AST": {
+              "chronic_bronchitis": [{"min": 15, "max": 45}],
+              "emphysema": [{"min": 10, "max": 40}],
+              "copd_cor_pulmonale": [{"min": 30, "max": 80}]
+            }
+          }
+        },
+        "specialized_lung_tests": {
+          "D_dimer": {
+            "chronic_bronchitis": ["Negative"],
+            "emphysema": ["Negative"],
+            "copd_cor_pulmonale": ["Negative"]
+          },
+          "Sputum_AFB": {
+            "chronic_bronchitis": ["Negative"],
+            "emphysema": ["Negative"],
+            "copd_cor_pulmonale": ["Negative"]
+          },
+          "BNP_NT_proBNP": {
+            "chronic_bronchitis": ["Normal"],
+            "emphysema": ["Normal"],
+            "copd_cor_pulmonale": ["Elevated"]
+          },
+          "Sputum_analysis": {
+            "Gram_Stain": {
+              "chronic_bronchitis": ["Mixed flora", "Normal flora"],
+              "emphysema": ["Normal flora"],
+              "copd_cor_pulmonale": ["Normal flora"]
+            },
+            "Sample_Quality": {
+              "chronic_bronchitis": ["Adequate"],
+              "emphysema": ["Adequate"],
+              "copd_cor_pulmonale": ["Adequate"]
+            }
+          },
+          "a1_antitrypsin_level": {
+            "chronic_bronchitis": ["Normal range"],
+            "emphysema": ["Low levels", "Normal range"],
+            "copd_cor_pulmonale": ["Normal range"]
+          }
+        },
+        "immunity_and_serology": {
+          "HIV_test": {
+            "chronic_bronchitis": ["Negative"],
+            "emphysema": ["Negative"],
+            "copd_cor_pulmonale": ["Negative"]
+          },
+          "Autoimmune_pannel_ANA_ANCA": {
+            "chronic_bronchitis": ["Negative"],
+            "emphysema": ["Negative"],
+            "copd_cor_pulmonale": ["Negative"]
+          }
+        },
+        "simple_imaging": {
+          "Chest_X_Ray": {
+            "PA_Lateral_Findings_and_Effusion": {
+              "chronic_bronchitis": ["Increased bronchovascular markings"],
+              "emphysema": ["Hyperinflation", "Flattened diaphragm"],
+              "copd_cor_pulmonale": ["Cardiomegaly", "Pleural effusion", "Hyperinflation"]
+            }
+          }
+        },
+        "advanced_imaging": {
+          "Chest_CT_CTPA": {
+            "Lung_Parenchyma_and_Pleura": {
+              "chronic_bronchitis": ["Bronchial wall thickening"],
+              "emphysema": ["Emphysematous bullae", "Destruction of alveolar walls"],
+              "copd_cor_pulmonale": ["Enlarged pulmonary arteries", "Pleural effusion"]
+            }
+          }
+        },
+        "functional_tests": {
+          "dlco": {
+            "chronic_bronchitis": ["Normal"],
+            "emphysema": ["Decreased"],
+            "copd_cor_pulmonale": ["Decreased"]
+          },
+          "peak_flow": {
+            "chronic_bronchitis": ["Reduced"],
+            "emphysema": ["Reduced"],
+            "copd_cor_pulmonale": ["Significantly reduced"]
+          },
+          "Spirometry": {
+            "Result": {
+              "FEV1": {
+                "chronic_bronchitis": [{"min": 50, "max": 70}],
+                "emphysema": [{"min": 30, "max": 50}],
+                "copd_cor_pulmonale": [{"min": 30, "max": 50}]
+              },
+              "FVC": {
+                "chronic_bronchitis": [{"min": 80, "max": 95}],
+                "emphysema": [{"min": 70, "max": 90}],
+                "copd_cor_pulmonale": [{"min": 60, "max": 80}]
+              },
+              "FEV1/FVC": {
+                "chronic_bronchitis": [{"min": 50, "max": 65}],
+                "emphysema": [{"min": 40, "max": 60}],
+                "copd_cor_pulmonale": [{"min": 40, "max": 60}]
+              }
+            },
+            "reversibility": {
+              "chronic_bronchitis": ["No significant reversibility"],
+              "emphysema": ["No significant reversibility"],
+              "copd_cor_pulmonale": ["No significant reversibility"]
+            }
+          },
+          "plethysmography": {
+            "chronic_bronchitis": ["Normal lung volumes"],
+            "emphysema": ["Increased TLC and RV"],
+            "copd_cor_pulmonale": ["Increased TLC and RV"]
+          }
+        },
+        "procedures": {
+          "Bronchoscopy": {
+            "chronic_bronchitis": ["N/A"],
+            "emphysema": ["N/A"],
+            "copd_cor_pulmonale": ["N/A"]
+          },
+          "torachonthesis": {
+            "Serum": {
+              "Protein": {
+                "chronic_bronchitis": ["N/A"],
+                "emphysema": ["N/A"],
+                "copd_cor_pulmonale": [{"min": 6.0, "max": 8.0}]
+              },
+              "LDH": {
+                "chronic_bronchitis": ["N/A"],
+                "emphysema": ["N/A"],
+                "copd_cor_pulmonale": [{"min": 140, "max": 200}]
+              },
+              "Albumin": {
+                "chronic_bronchitis": ["N/A"],
+                "emphysema": ["N/A"],
+                "copd_cor_pulmonale": [{"min": 3.5, "max": 5.0}]
+              }
+            },
+            "Fluid": {
+              "Protein": {
+                "chronic_bronchitis": ["N/A"],
+                "emphysema": ["N/A"],
+                "copd_cor_pulmonale": [{"min": 1.0, "max": 2.5}]
+              },
+              "LDH": {
+                "chronic_bronchitis": ["N/A"],
+                "emphysema": ["N/A"],
+                "copd_cor_pulmonale": [{"min": 50, "max": 100}]
+              },
+              "Albumin": {
+                "chronic_bronchitis": ["N/A"],
+                "emphysema": ["N/A"],
+                "copd_cor_pulmonale": [{"min": 1.5, "max": 3.0}]
+              }
+            }
+          }
+        }
+      }
+    }
+    
     def __init__(self):
         self.random = random
         
-        # 1. CORE LOGIC INITIALIZATION (Drivers)
-        self.phenotype = self.random.choices(
-            ["Emphysema", "Chronic Bronchitis"], 
-            weights=[60, 40], k=1
-        )[0]
-        
-        self.severity = self.random.choices(
-            ["GOLD_1", "GOLD_2", "GOLD_3", "GOLD_4"],
-            weights=[10, 40, 30, 20], k=1
-        )[0]
-        
-        self.cor_pulmonale = self.random.choices(
-            ["Present", "Absent"],
-            weights=[30, 70], k=1
+        # 1. SCENARIO SELECTION
+        # chronic_bronchitis (40%), emphysema (30%), copd_cor_pulmonale (30%)
+        self.scenario = self.random.choices(
+            ["chronic_bronchitis", "emphysema", "copd_cor_pulmonale"], 
+            weights=[40, 30, 30], k=1
         )[0]
 
-        self.simulated_spo2_val = 95
-        self.simulated_gcs_val = 15
+    # --- Helper to extract data from DATA_SOURCE ---
+    def _get_val(self, category, system, key, subkey=None, subsubkey=None):
+        """
+        Extracts data for the current scenario from DATA_SOURCE.
+        Handles:
+        1. Lists of strings (Choice)
+        2. Lists of dicts (Ranges)
+        3. Single strings ("N/A", "Elevated")
+        """
+        try:
+            node = self.DATA_SOURCE[category][system][key]
+            if subkey:
+                node = node[subkey]
+            if subsubkey:
+                node = node[subsubkey]
+                
+            scenario_data = node[self.scenario]
+            
+            # Simple String (e.g., "N/A" or "Elevated")
+            if isinstance(scenario_data, str):
+                return scenario_data
+
+            # List Handling
+            if isinstance(scenario_data, list):
+                if not scenario_data:
+                    return "N/A"
+                
+                first_item = scenario_data[0]
+                
+                # Range Logic: [{"min": x, "max": y}]
+                if isinstance(first_item, dict) and "min" in first_item:
+                    # Special case for BP which might have 2 ranges [Sys, Dia] or just one
+                    if len(scenario_data) > 1 and "min" in scenario_data[1]:
+                        # Return list of generated values
+                        results = []
+                        for r in scenario_data:
+                            val = self.random.uniform(r["min"], r["max"])
+                            if isinstance(r["min"], int) and isinstance(r["max"], int):
+                                results.append(int(val))
+                            else:
+                                results.append(round(val, 1))
+                        return results
+                    else:
+                        # Single range
+                        r = scenario_data[0]
+                        val = self.random.uniform(r["min"], r["max"])
+                        if isinstance(r["min"], int) and isinstance(r["max"], int):
+                            return int(val)
+                        return round(val, 1)
+
+                # String Choice Logic: ["A", "B"]
+                elif isinstance(first_item, str):
+                    return self.random.choice(scenario_data)
+
+            return str(scenario_data)
+
+        except Exception as e:
+            return f"Error ({key}): {str(e)}"
 
     # --- Demographic Helpers ---
     def _select_occupation(self, gender, age_str):
@@ -142,553 +807,360 @@ class COPDDataGenerator:
             "marital_status": marital
         }
 
-    # --- Value Generator Helper ---
-    def _generate_value(self, distributions, is_int=False, precision=2):
-        ranges = [d["range"] for d in distributions]
-        weights = [d["weight"] for d in distributions]
-        chosen_range = self.random.choices(ranges, weights=weights, k=1)[0]
-        if is_int:
-            val = self.random.randint(chosen_range[0], chosen_range[1])
-            return str(val)
-        val = self.random.uniform(chosen_range[0], chosen_range[1])
-        return str(round(val, precision))
-
-    # --- 1. Vital Signs ---
+    # ==========================================
+    # 1. PHYSICAL EXAM GENERATION
+    # ==========================================
     def _gen_vitals(self):
-        bp_choice = self.random.choices(["Normal/HTN", "Low Normal"], weights=[80, 20])[0]
-        if bp_choice == "Normal/HTN":
-            sys = self.random.randint(100, 140)
-            dia = self.random.randint(60, 90)
-        else:
-            sys = self.random.randint(90, 100)
-            dia = self.random.randint(60, 70)
-            
-        t_choice = self.random.choices(["Normal", "Low Grade"], weights=[95, 5])[0]
-        temp = round(self.random.uniform(36.5, 37.5), 1) if t_choice == "Normal" else round(self.random.uniform(37.5, 38.0), 1)
-
-        pr_choice = self.random.choices(["Normal", "Tachycardia"], weights=[70, 30])[0]
-        pr = self.random.randint(60, 100) if pr_choice == "Normal" else self.random.randint(101, 115)
-
-        if self.severity in ["GOLD_3", "GOLD_4"]:
-            rr_val = self.random.randint(20, 22)
-        else:
-            rr_val = self.random.choice([self.random.randint(16, 18), self.random.randint(18, 20)])
-
-        if self.severity in ["GOLD_3", "GOLD_4"]:
-            if self.random.random() < 0.6: 
-                 spo2_val = self.random.randint(88, 92)
-            else:
-                 spo2_val = self.random.randint(92, 94)
-        else:
-            spo2_val = self.random.randint(93, 98)
+        cat = "physical_exam"
+        sys = "vital_signs"
         
-        self.simulated_spo2_val = spo2_val
-
-        if self.severity == "GOLD_4" and self.random.random() < 0.25:
-             gcs_val = self.random.randint(13, 14)
-        else:
-             gcs_val = 15
+        bp_raw = self._get_val(cat, sys, "BP") # [Sys, Dia]
+        temp = self._get_val(cat, sys, "T")
+        pr = self._get_val(cat, sys, "PR")
+        rr = self._get_val(cat, sys, "RR")
+        spo2 = self._get_val(cat, sys, "SpO2")
+        gcs = self._get_val(cat, sys, "GCS")
         
-        self.simulated_gcs_val = gcs_val
+        if isinstance(bp_raw, list) and len(bp_raw) == 2:
+            bp_str = f"{bp_raw[0]}/{bp_raw[1]} mmHg"
+        else:
+            bp_str = str(bp_raw)
 
         return {
-            "BP": f"{sys}/{dia} mmHg",
+            "BP": bp_str,
             "T": f"{temp} °C",
-            "PR": f"{pr} bpm and regular rhythm",
-            "RR": f"{rr_val} breaths/min",
-            "SpO2": f"{spo2_val}% (Room Air)",
-            "GCS": str(gcs_val)
+            "PR": f"{pr} bpm",
+            "RR": f"{rr} breaths/min",
+            "SpO2": f"{spo2}% (Room Air)",
+            "GCS": str(gcs)
         }
 
-    # --- 2. General Appearance (CORRECTED BASED ON USER PROMPT) ---
     def _gen_general_appearance(self):
-        """
-        Updated to strictly follow the provided statistical rules and structure.
-        """
+        cat = "physical_exam"
+        sys = "general_appearance"
         
-        # 1. Mood and Behavior
-        # Rules: 60% Anxious/Irritable, 10% Drowsy/Confused, 30% Calm/Cooperative
-        mood_behavior = self.random.choices(
-            [
-                "Anxious or Irritable", 
-                "Drowsy or Confused", 
-                "Calm and Cooperative"
-            ],
-            weights=[60, 10, 30],
-            k=1
-        )[0]
-
-        # 2. Overall Appearance
-        # Rules: 40% Cachectic/Thin, 40% Stocky/Overweight, 20% Normal
-        overall = self.random.choices(
-            [
-                "Cachectic/Thin with muscle wasting",
-                "Stocky/Overweight",
-                "Normal body habitus"
-            ],
-            weights=[40, 40, 20],
-            k=1
-        )[0]
-
-        # 3. Posture and Position
-        # Rules: 60% Tripod, 20% Pursed-Lip, 20% No specific preference
-        posture = self.random.choices(
-            [
-                "Tripod Position",
-                "Sitting with Pursed-Lip Breathing",
-                "No specific preference"
-            ],
-            weights=[60, 20, 20],
-            k=1
-        )[0]
-
-        # 4. Level of Consciousness
-        # Rules: 85% Alert, 15% Somnolent
-        loc = self.random.choices(
-            [
-                "Alert and Oriented",
-                "Somnolent or Confused"
-            ],
-            weights=[85, 15],
-            k=1
-        )[0]
-
-        # 5. Cardiopulmonary Clues (Edema, Dyspnea, Cyanosis)
-        
-        # Edema: 40% Pitting, 60% No Edema
-        edema = self.random.choices(
-            ["Pitting Edema to ankles", "No Edema"],
-            weights=[40, 60],
-            k=1
-        )[0]
-
-        # Dyspnea: 50% Exertion, 40% Rest, 10% None
-        dyspnea = self.random.choices(
-            ["Dyspnea on exertion", "Dyspnea at rest", "No visible dyspnea"],
-            weights=[50, 40, 10],
-            k=1
-        )[0]
-
-        # Cyanosis: 30% Central, 40% Pink, 30% No Cyanosis
-        cyanosis = self.random.choices(
-            ["Central Cyanosis", "Pink/Normal color", "No Cyanosis"],
-            weights=[30, 40, 30],
-            k=1
-        )[0]
-        
-        # Return structure matches the JSON request
         return {
-            "mood_and_behavior": mood_behavior,
-            "overall_appearance": overall,
-            "posture_and_position": posture,
-            "level_of_consciousness": loc,
+            "mood_and_behavior": self._get_val(cat, sys, "mood_and_behavior"),
+            "overall_appearance": self._get_val(cat, sys, "overall_appearance"),
+            "posture_and_position": self._get_val(cat, sys, "posture_and_position"),
+            "level_of_consciousness": self._get_val(cat, sys, "level_of_consciousness"),
             "cardiopulmonary_and_circulatory_clues": {
-                "edema": edema,
-                "dyspnea": dyspnea,
-                "cyanosis": cyanosis
+                "edema": self._get_val(cat, sys, "cardiopulmonary_and_circulatory_clues", "edema"),
+                "dyspnea": self._get_val(cat, sys, "cardiopulmonary_and_circulatory_clues", "dyspnea"),
+                "cyanosis": self._get_val(cat, sys, "cardiopulmonary_and_circulatory_clues", "cyanosis")
             }
         }
 
-    # --- 3. Head and Neck ---
     def _gen_head_neck(self):
-        conjunctiva = self.random.choices(["Pink conjunctiva, Anicteric sclera.", "Pale conjunctiva."], weights=[95, 5])[0]
-        mucosa = self.random.choices(["Moist mucosa, No lesions.", "Dry mucosa."], weights=[90, 10])[0]
-        carotid = self.random.choices(["Absent.", "Present."], weights=[90, 10])[0]
-        nodes = self.random.choices(
-            ["Non-palpable or small, soft nodes.", "small (less than 1 cm), firm."],
-            weights=[90, 10]
-        )[0]
-
+        cat = "physical_exam"
+        sys = "head_and_neck"
+        
         return {
             "head_and_face": {
-                "symmetry_and_lesions": "Symmetrical, No acute lesions or masses.",
-                "tenderness": "No tenderness on palpation of the skull."
+                "symmetry_and_lesions": self._get_val(cat, sys, "head_and_face", "symmetry_and_lesions"),
+                "tenderness": self._get_val(cat, sys, "head_and_face", "tenderness")
             },
             "eyes": {
-                "sclera_and_conjunctiva": conjunctiva,
-                "pupils_reaction": "Pupils equal, round, and reactive to light (PERRL).",
-                "extraocular_movements": "Full Range of Motion."
+                "sclera_and_conjunctiva": self._get_val(cat, sys, "eyes", "sclera_and_conjunctiva"),
+                "pupils_reaction": self._get_val(cat, sys, "eyes", "pupils_reaction"),
+                "extraocular_movements": self._get_val(cat, sys, "eyes", "extraocular_movements")
             },
             "ears": {
-                "external_and_tenderness": "Normal external appearance, No mastoid tenderness.",
-                "eardrum_appearance": "Normal appearance."
+                "external_and_tenderness": self._get_val(cat, sys, "ears", "external_and_tenderness"),
+                "eardrum_appearance": self._get_val(cat, sys, "ears", "eardrum_appearance")
             },
             "nose_and_sinuses": {
-                "septum_and_discharge": self.random.choices(["Midline Septum, No purulent/bloody discharge.", "Mild mucosal swelling."], weights=[95, 5])[0],
-                "sinus_tenderness": "No sinus tenderness on palpation."
+                "septum_and_discharge": self._get_val(cat, sys, "nose_and_sinuses", "septum_and_discharge"),
+                "sinus_tenderness": self._get_val(cat, sys, "nose_and_sinuses", "sinus_tenderness")
             },
             "mouth_and_pharynx": {
-                "oral_mucosa_and_lesions": mucosa,
-                "pharynx_and_tonsils": "Non-erythematous pharynx, Tonsils non-enlarged."
+                "oral_mucosa_and_lesions": self._get_val(cat, sys, "mouth_and_pharynx", "oral_mucosa_and_lesions"),
+                "pharynx_and_tonsils": self._get_val(cat, sys, "mouth_and_pharynx", "pharynx_and_tonsils")
             },
             "neck_and_lymphatics": {
-                "inspection": "No swelling, redness, or visible masses.",
-                "tracheal_position": "Midline, no deviation.",
-                "thyroid_gland": "Non-enlarged, non-tender.",
-                "carotid_bruit": carotid,
-                "lymph_nodes_size_consistency": nodes,
-                "lymph_nodes_mobility_tenderness": "Mobile and non-tender."
+                "inspection": self._get_val(cat, sys, "neck_and_lymphatics", "inspection"),
+                "tracheal_position": self._get_val(cat, sys, "neck_and_lymphatics", "tracheal_position"),
+                "thyroid_gland": self._get_val(cat, sys, "neck_and_lymphatics", "thyroid_gland"),
+                "carotid_bruit": self._get_val(cat, sys, "neck_and_lymphatics", "carotid_bruit"),
+                "lymph_nodes_size_consistency": self._get_val(cat, sys, "neck_and_lymphatics", "lymph_nodes_size_consistency"),
+                "lymph_nodes_mobility_tenderness": self._get_val(cat, sys, "neck_and_lymphatics", "lymph_nodes_mobility_tenderness")
             }
         }
 
-    # --- 4. Respiratory System ---
     def _gen_respiratory(self):
-        acc_muscles = self.random.choices(["Present (Sternocleidomastoid/Scalene use).", "Absent."], weights=[90, 10])[0]
-        barrel = self.random.choices(["Symmetrical movement, Normal shape.", "Barrel Chest."], weights=[60, 40])[0]
-        expansion = self.random.choices(["Bilateral Reduced Expansion.", "Symmetrical expansion."], weights=[85, 15])[0]
-        fremitus = self.random.choices(["Decreased and Symmetrical", "Normal and Symmetrical"], weights=[70, 30])[0]
-        percussion = self.random.choices(["Diffuse Hyperresonant.", "Resonant."], weights=[90, 10])[0]
+        cat = "physical_exam"
+        sys = "respiratory_system"
         
-        if self.phenotype == "Emphysema":
-            bs = self.random.choices(["Reduced intensity.", "Normal Vesicular breath sounds."], weights=[85, 15])[0]
-        else:
-            bs = self.random.choices(["Reduced intensity.", "Normal Vesicular breath sounds."], weights=[70, 30])[0]
-            
-        bs_full = f"Prolonged Expiration. {bs}"
-        adv_opts = ["Wheezing Diffuse.", "No Adventitious Sounds."]
-        
-        if self.cor_pulmonale == "Present":
-            chosen_adv = self.random.choices(
-                ["Wheezing Diffuse.", "Fine Crackles.", "No Adventitious Sounds."],
-                weights=[50, 5, 45]
-            )[0]
-        else:
-            chosen_adv = self.random.choices(adv_opts, weights=[55, 45])[0]
-
         return {
             "inspection": {
-                "accessory_muscles": acc_muscles,
-                "chest_shape_and_symmetry": barrel
+                "accessory_muscles": self._get_val(cat, sys, "inspection", "accessory_muscles"),
+                "chest_shape_and_symmetry": self._get_val(cat, sys, "inspection", "chest_shape_and_symmetry")
             },
             "palpation": {
-                "chest_expansion": expansion,
-                "tactile_fremitus": fremitus
+                "chest_expansion": self._get_val(cat, sys, "palpation", "chest_expansion"),
+                "tactile_fremitus": self._get_val(cat, sys, "palpation", "tactile_fremitus")
             },
-            "percussion": percussion,
+            "percussion": self._get_val(cat, sys, "percussion"),
             "auscultation": {
-                "breath_sounds": bs_full,
-                "adventitious_sounds": chosen_adv
+                "breath_sounds_intensity": self._get_val(cat, sys, "auscultation", "breath_sounds_intensity"),
+                "adventitious_sounds": self._get_val(cat, sys, "auscultation", "adventitious_sounds")
             }
         }
 
-    # --- 5. Cardiovascular System ---
     def _gen_cardio(self):
-        if self.cor_pulmonale == "Present":
-            jvp = self.random.choices(["> 4 cm above sternal angle.", "< 4 cm above sternal angle."], weights=[70, 30])[0]
-            heave = self.random.choices(["Right Ventricular Heave (RVH) detected.", "No heave, lift, or thrill detected."], weights=[10, 90])[0]
-            murmur = self.random.choices(["Soft Systolic Murmur or S3 detected.", "No S3/S4 or Murmur."], weights=[10, 90])[0]
-        else:
-            jvp = "< 4 cm above sternal angle."
-            heave = "No heave, lift, or thrill detected."
-            murmur = "No S3/S4 or Murmur."
-
-        pmi = self.random.choices(["PMI non-palpable or muffled.", "Palpable in 5th ICS MCL, Normal size."], weights=[70, 30])[0]
-        s1s2 = self.random.choices(["Muffled/Distant S1 and S2.", "Normal S1 and S2."], weights=[70, 30])[0]
-        pulses_qual = self.random.choices(["Normal quality.", "Tachycardic quality."], weights=[70, 30])[0]
+        cat = "physical_exam"
+        sys = "cardiovascular_system"
         
-        if self.simulated_spo2_val < 92:
-            ext_col = "Central Cyanosis and/or mild clubbing."
-        else:
-            ext_col = "No clubbing or trophic changes."
-            
-        if self.severity in ["GOLD_3", "GOLD_4"] or self.simulated_spo2_val < 92:
-            crt = self.random.choices(["Capillary Refill Time < 2 seconds.", "Capillary Refill Time > 2 seconds."], weights=[85, 15])[0]
-        else:
-            crt = "Capillary Refill Time < 2 seconds."
-            
-        if self.cor_pulmonale == "Present":
-            pedal_edema = "Bilateral Pitting Edema."
-        else:
-            pedal_edema = "Absent."
-
         return {
-            "JVP_assessment": jvp,
+            "JVP_assessment": self._get_val(cat, sys, "JVP_assessment"),
             "palpation": {
-                "precordial_palpation_heave_thrill": heave,
-                "pmi_assessment": pmi
+                "precordial_palpation_heave_thrill": self._get_val(cat, sys, "palpation", "precordial_palpation_heave_thrill"),
+                "pmi_assessment": self._get_val(cat, sys, "palpation", "pmi_assessment")
             },
             "auscultation": {
-                "heart_sounds_s1_s2": s1s2,
-                "extra_sounds_s3_s4_murmurs": murmur
+                "heart_sounds_s1_s2": self._get_val(cat, sys, "auscultation", "heart_sounds_s1_s2"),
+                "extra_sounds_s3_s4_murmurs": self._get_val(cat, sys, "auscultation", "extra_sounds_s3_s4_murmurs")
             },
             "peripheral_pulses_and_extremities": {
-                "peripheral_pulses_symmetry_and_quality": f"Symmetrical and Regular. {pulses_qual}",
-                "extremities_color_and_trophic_changes": ext_col,
-                "extremities_temperature_and_cap_refill": f"Extremities warm, {crt}",
-                "extremities_edema": pedal_edema
+                "peripheral_pulses_symmetry_and_quality": self._get_val(cat, sys, "2_pulses_and_extremities", "peripheral_pulses_symmetry_and_quality"),
+                "extremities_color_and_trophic_changes": self._get_val(cat, sys, "2_pulses_and_extremities", "extremities_color_and_trophic_changes"),
+                "extremities_temperature_and_cap_refill": self._get_val(cat, sys, "2_pulses_and_extremities", "extremities_temperature_and_cap_refill"),
+                "extremities_edema": self._get_val(cat, sys, "2_pulses_and_extremities", "extremities_edema")
             }
         }
 
-    # --- 6. Abdominal System ---
     def _gen_abdominal(self):
-        bruits = self.random.choices(["Absent.", "Present (Comorbidity)."], weights=[95, 5])[0]
+        cat = "physical_exam"
+        sys = "abdominal_system"
         
-        if self.cor_pulmonale == "Present":
-            palp = self.random.choices(
-                ["No masses, Liver/Spleen non-palpable.", "Mildly palpable liver edge below the costal margin."],
-                weights=[95, 5] 
-            )[0]
-        else:
-            palp = "No masses, Liver/Spleen non-palpable."
-
         return {
-            "inspection": "Flat/Rounded, Symmetrical, No obvious scars or masses.",
+            "inspection": self._get_val(cat, sys, "inspection"),
             "auscultation": {
-                "bowel_sounds": "Normoactive Bowel Sounds.",
-                "vascular_bruits": bruits
+                "bowel_sounds": self._get_val(cat, sys, "auscultation", "bowel_sounds"),
+                "vascular_bruits": self._get_val(cat, sys, "auscultation", "vascular_bruits")
             },
             "percussion": {
-                "general": "Tympanic throughout.",
-                "organ_borders": "Liver/Spleen borders not percussed as enlarged."
+                "general": self._get_val(cat, sys, "percussion", "general"),
+                "organ_borders": self._get_val(cat, sys, "percussion", "organ_borders")
             },
             "palpation": {
-                "superficial_tenderness": "No superficial tenderness.",
-                "deep_masses_and_organs": palp,
-                "peritoneal_signs": "Absent (No Rebound Tenderness or Guarding)."
-            }
+                "superficial_tenderness": self._get_val(cat, sys, "palpation", "superficial_tenderness"),
+                "deep_masses_and_organs": self._get_val(cat, sys, "palpation", "deep_masses_and_organs")
+            },
+            "peritoneal_signs": self._get_val(cat, sys, "peritoneal_signs")
         }
 
-    # --- 7. Neurological ---
     def _gen_neuro(self):
-        if self.simulated_gcs_val < 15:
-            ms = "Drowsy or Mildly Confused."
-        else:
-            ms = "A&Ox3."
-            
-        motor_w = [70, 20, 10]
-        if self.severity == "GOLD_4":
-             motor = self.random.choices(
-                ["Motor Strength 5/5, Normal Tone.", "Motor Strength 4/5.", "Asymmetrical weakness."],
-                weights=[40, 50, 10]
-             )[0]
-        else:
-             motor = self.random.choices(
-                ["Motor Strength 5/5, Normal Tone.", "Motor Strength 4/5.", "Asymmetrical weakness."],
-                weights=motor_w
-             )[0]
-             
-        tremor = self.random.choices(["Absent.", "Fine Tremor."], weights=[95, 5])[0]
+        cat = "physical_exam"
+        sys = "neurological"
         
         return {
-            "mental_status_and_LOC": ms,
-            "cranial_nerves": "Cranial Nerves II-XII intact.",
-            "motor_strength_and_tone": motor,
-            "involuntary_movements": tremor,
-            "sensory_light_touch_and_pain": "Symmetrical and Intact.",
-            "deep_tendon_reflexes": self.random.choices(["2+ and Symmetrical.", "Asymmetrical DTRs."], weights=[90, 10])[0],
-            "coordination_and_gait": self.random.choices(["Normal coordination and Gait.", "Mild Unsteadiness or slightly broad-based Gait."], weights=[90, 10])[0]
+            "mental_status_and_LOC": self._get_val(cat, sys, "mental_status_and_LOC"),
+            "cranial_nerves": self._get_val(cat, sys, "cranial_nerves"),
+            "motor_strength_and_tone": self._get_val(cat, sys, "motor_strength_and_tone"),
+            "involuntary_movements": self._get_val(cat, sys, "involuntary_movements"),
+            "sensory_light_touch_and_pain": self._get_val(cat, sys, "sensory_light_touch_and_pain"),
+            "deep_tendon_reflexes": self._get_val(cat, sys, "deep_tendon_reflexes"),
+            "coordination_and_gait": self._get_val(cat, sys, "coordination_and_gait")
         }
 
-    # --- 8. Musculoskeletal ---
     def _gen_msk(self):
-        atrophy = self.random.choices(["No obvious atrophy.", "Atrophy Present."], weights=[80, 20])[0]
-        rom = self.random.choices(["Full ROM Active/Passive.", "Reduced ROM."], weights=[80, 20])[0]
+        cat = "physical_exam"
+        sys = "musculoskeletal_system"
         
         return {
             "inspection": {
-                "joints": "No swelling, redness, or deformity.",
-                "muscles": atrophy
+                "joints": self._get_val(cat, sys, "inspection", "joints"),
+                "muscles": self._get_val(cat, sys, "inspection", "muscles")
             },
             "palpation": {
-                "tenderness_and_crepitus": self.random.choices(["No tenderness or crepitus.", "Diffuse tenderness."], weights=[80, 20])[0]
+                "tenderness_and_crepitus": self._get_val(cat, sys, "palpation", "tenderness_and_crepitus")
             },
-            "range_of_motion_active_passive": rom,
-            "stability_and_function": "Stable and Functional."
+            "range_of_motion_active_passive": self._get_val(cat, sys, "range_of_motion_active_passive"),
+            "stability_and_function": self._get_val(cat, sys, "stability_and_function")
         }
 
-    def _gen_reversibility(self):
-        choice = self.random.choices(
-            ["Positive", "Negative_Volume", "Negative_Fixed"], 
-            weights=[50, 30, 20], k=1
-        )[0]
+    # ==========================================
+    # 2. PARACLINIC GENERATION
+    # ==========================================
+    def _gen_paraclinic(self):
+        cat = "paraclinic"
         
-        if choice == "Positive":
-            return "FEV1 increase < 12% AND < 200 mL"
-        elif choice == "Negative_Volume":
-            return "FEV1 increase > 12% but < 200 mL"
-        elif choice == "Negative_Fixed":
-            return "FEV1 increase > 12% AND > 200 mL"
-        return "Not Indicated"
-    
-    def _get_dlco_finding(self):
-        findings = ["Reduced (< 80% predicted)", "Normal (> 80% predicted)"]
-        weights = [60, 40]
-        chosen_status = self.random.choices(findings, weights=weights, k=1)[0]
-        if chosen_status == "Reduced (< 80% predicted)":
-            dlco_val = self.random.randint(40, 79)
-        else:
-            dlco_val = self.random.randint(80, 100)
-        return chosen_status, f"{dlco_val}% predicted"
-    
-    def _gen_spirometry_data(self):
+        # --- Basic Blood Tests ---
+        sys = "basic_blood_tests"
+        
+        na = self._get_val(cat, sys, "BMP", "Na")
+        bun = self._get_val(cat, sys, "BMP", "BUN")
+        cr = self._get_val(cat, sys, "BMP", "Cr")
+        
+        wbc = self._get_val(cat, sys, "CBC", "WBC")
+        hb = self._get_val(cat, sys, "CBC", "Hb")
+        plt = self._get_val(cat, sys, "CBC", "Plt")
+        
+        esr = self._get_val(cat, sys, "ESR")
+        crp = self._get_val(cat, sys, "CRP")
+        
+        ph = self._get_val(cat, sys, "VBG", "pH")
+        pco2 = self._get_val(cat, sys, "VBG", "PCO2")
+        hco3 = self._get_val(cat, sys, "VBG", "HCO3")
+        
+        alt = self._get_val(cat, sys, "LFTs", "ALT")
+        ast = self._get_val(cat, sys, "LFTs", "AST")
+        
+        # --- Specialized Lung Tests ---
+        sys = "specialized_lung_tests"
+        d_dimer = self._get_val(cat, sys, "D_dimer")
+        afb = self._get_val(cat, sys, "Sputum_AFB")
+        bnp = self._get_val(cat, sys, "BNP_NT_proBNP")
+        gram = self._get_val(cat, sys, "Sputum_analysis", "Gram_Stain")
+        quality = self._get_val(cat, sys, "Sputum_analysis", "Sample_Quality")
+        a1 = self._get_val(cat, sys, "a1_antitrypsin_level")
+        
+        # --- Immunity ---
+        sys = "immunity_and_serology"
+        hiv = self._get_val(cat, sys, "HIV_test")
+        ana = self._get_val(cat, sys, "Autoimmune_pannel_ANA_ANCA")
+        
+        # --- Imaging ---
+        cxr = self._get_val(cat, "simple_imaging", "Chest_X_Ray", "PA_Lateral_Findings_and_Effusion")
+        ct = self._get_val(cat, "advanced_imaging", "Chest_CT_CTPA", "Lung_Parenchyma_and_Pleura")
+        
+        # --- Functional ---
+        sys = "functional_tests"
+        dlco = self._get_val(cat, sys, "dlco")
+        peak_flow = self._get_val(cat, sys, "peak_flow")
+        pleth = self._get_val(cat, sys, "plethysmography")
+        
+        # Spirometry Calculation
         P_FEV1 = 3.50
         P_FVC = 4.00
-        P_RATIO = 0.80 
+        P_RATIO = 0.80 # Constant reference
 
-        pattern = self.random.choices(["GOLD 2&3", "GOLD 4", "GOLD 1"], weights=[50, 20, 30], k=1)[0]
+        fev1_pct = self._get_val(cat, sys, "Spirometry", "Result", "FEV1")
+        fvc_pct = self._get_val(cat, sys, "Spirometry", "Result", "FVC")
+        ratio_pct = self._get_val(cat, sys, "Spirometry", "Result", "FEV1/FVC")
+        reversibility = self._get_val(cat, sys, "Spirometry", "reversibility")
         
-        if pattern == "GOLD 2&3":
-            fev1_range = (1.10, 2.80)
-        elif pattern == "GOLD 4":
-            fev1_range = (0.70, 1.05)
-        elif pattern == "GOLD 1":
-            fev1_range = (2.85, 3.40)
-            
-        fvc_range_choice = self.random.choices(
-            [(3.20, 4.40), (2.00, 3.15)], weights=[70, 30], k=1
-        )[0]
-        fvc_range = fvc_range_choice
-        
-        FVC_val = self.random.uniform(*fvc_range)
-        FEV1_val = self.random.uniform(*fev1_range)
+        if isinstance(fev1_pct, (int, float)):
+             fev1_meas = round(P_FEV1 * (fev1_pct / 100), 2)
+             fev1_out = f"Measured: {fev1_meas} L, Predicted: {P_FEV1} L, %Predicted: {fev1_pct}%"
+        else:
+             fev1_out = str(fev1_pct)
+             
+        if isinstance(fvc_pct, (int, float)):
+             fvc_meas = round(P_FVC * (fvc_pct / 100), 2)
+             fvc_out = f"Measured: {fvc_meas} L, Predicted: {P_FVC} L, %Predicted: {fvc_pct}%"
+        else:
+             fvc_out = str(fvc_pct)
+             
+        if isinstance(ratio_pct, (int, float)):
+             ratio_meas = round(ratio_pct / 100, 2)
+             ratio_out = f"Value: {ratio_meas} ({ratio_pct}%)"
+        else:
+             ratio_out = str(ratio_pct)
 
-        while True:
-            new_fev1_max_ratio = FVC_val * 0.69
-            new_fev1_max_physio = FVC_val
-            overall_max_fev1 = min(fev1_range[1], new_fev1_max_ratio, new_fev1_max_physio)
-            if overall_max_fev1 < fev1_range[0]:
-                min_fvc_required = fev1_range[0] / 0.69
-                FVC_val = self.random.uniform(min_fvc_required, max(fvc_range[1], min_fvc_required + 0.5))
-                FEV1_val = self.random.uniform(*fev1_range)
-                continue
-            FEV1_val = self.random.uniform(fev1_range[0], overall_max_fev1)
-            Ratio_val = FEV1_val / FVC_val
-            if Ratio_val < 0.70 and FEV1_val <= FVC_val:
-                break
+        # --- Procedures (Thoracentesis) ---
+        sys = "procedures"
+        bronch = self._get_val(cat, sys, "Bronchoscopy")
+        
+        try:
+            serum_prot = self._get_val(cat, sys, "torachonthesis", "Serum", "Protein")
+            if serum_prot == "N/A":
+                thora_result = "Not Indicated"
             else:
-                continue
-
-        Ratio_val = FEV1_val / FVC_val
-        fev1_measured_str = f"{round(FEV1_val, 2)} L"
-        fev1_percent_predicted = round(FEV1_val / P_FEV1 * 100)
-        fev1_output = f"Measured: {fev1_measured_str}, Predicted: {P_FEV1} L, %Predicted: {fev1_percent_predicted}%"
-        fvc_measured_str = f"{round(FVC_val, 2)} L"
-        fvc_percent_predicted = round(FVC_val / P_FVC * 100)
-        fvc_output = f"Measured: {fvc_measured_str}, Predicted: {P_FVC} L, %Predicted: {fvc_percent_predicted}%"
-        ratio_measured_str = f"{round(Ratio_val, 2)}"
-        ratio_percent_predicted = round(Ratio_val / P_RATIO * 100)
-        ratio_output = f"Measured: {ratio_measured_str}, Predicted: {P_RATIO}, %Predicted: {ratio_percent_predicted}%"
-
-        return {
-            "FEV1": f"{fev1_output}",
-            "FVC": f"{fvc_output}",
-            "FEV1/FVC_Ratio": f"{ratio_output}"
-        }
-    
-    def _gen_pco2_logic(self):
-        scenario = self.random.choices(
-            ["Hypercapnia", "Normal", "Hypocapnia"],
-            weights=[50, 30, 20], k=1
-        )[0]
-        if scenario == "Hypercapnia": val = self.random.randint(46, 65)
-        elif scenario == "Normal": val = self.random.randint(35, 45)
-        else: val = self.random.randint(25, 34)
-        return f"{val} mmHg"
-    
-    def _gen_paraclinic(self):
-        if self.simulated_spo2_val < 92 and self.cor_pulmonale == "Present":
-            hb_choice = self.random.choices(["Normal", "Polycythemia"], weights=[50, 50])[0]
-        else:
-            hb_choice = self.random.choices(["Normal", "Polycythemia"], weights=[85, 15])[0]
-        hb = self.random.uniform(12, 17) if hb_choice == "Normal" else self.random.uniform(17.1, 19.0)
-        
-        wbc = self._generate_value([{"range": (4000, 12000), "weight": 90}, {"range": (12000, 15000), "weight": 10}], is_int=True)
-        plt = self._generate_value([{"range": (15, 45), "weight": 60}, {"range": (450001, 600000), "weight": 30}, {"range": (100000, 149999), "weight": 10}], is_int=True)
-
-        if self.severity == "GOLD_4" and self.random.random() < 0.25: 
-             ph = self.random.uniform(7.30, 7.34)
-        else:
-             ph_choice = self.random.choices(["Normal", "Alkalosis"], weights=[75, 20])[0]
-             ph = self.random.uniform(7.35, 7.45) if ph_choice == "Normal" else self.random.uniform(7.46, 7.50)
-        
-        pco2_str = self._gen_pco2_logic()
-
-        if float(ph) < 7.35 or self.severity == "GOLD_4":
-            hco3 = self.random.randint(27, 32)
-        else:
-            hco3 = self.random.randint(22, 26)
-
-        if self.cor_pulmonale == "Present":
-             bnp = self.random.choices(["within normal range", "elevated"], weights=[30, 70])[0]
-        else:
-             bnp = "within normal range"
-
-        spirometry_results = self._gen_spirometry_data()
-        reversibility = self._gen_reversibility()
+                serum_ldh = self._get_val(cat, sys, "torachonthesis", "Serum", "LDH")
+                serum_alb = self._get_val(cat, sys, "torachonthesis", "Serum", "Albumin")
+                
+                fluid_prot = self._get_val(cat, sys, "torachonthesis", "Fluid", "Protein")
+                fluid_ldh = self._get_val(cat, sys, "torachonthesis", "Fluid", "LDH")
+                fluid_alb = self._get_val(cat, sys, "torachonthesis", "Fluid", "Albumin")
+                
+                thora_result = {
+                    "Serum": {"Protein": f"{serum_prot} g/dL", "LDH": f"{serum_ldh} U/L", "Albumin": f"{serum_alb} g/dL"},
+                    "Fluid": {"Protein": f"{fluid_prot} g/dL", "LDH": f"{fluid_ldh} U/L", "Albumin": f"{fluid_alb} g/dL"}
+                }
+        except Exception:
+            thora_result = "N/A"
 
         return {
             "basic_blood_tests": {
                 "CBC": {
-                    "Hb": f"{round(hb, 1)} g/dL",
+                    "Hb": f"{hb} g/dL",
                     "WBC": f"{wbc} /µL",
                     "Plt": f"{plt} /µL"
                 },
-                "ESR": self._generate_value([{"range": (5, 29), "weight": 70}, {"range": (30, 60), "weight": 30}], is_int=True) + " mm/h",
-                "CRP": self._generate_value([{"range": (1, 19), "weight": 70}, {"range": (20, 50), "weight": 30}], is_int=True) + " mg/L",
+                "ESR": f"{esr} mm/h",
+                "CRP": f"{crp} mg/L",
                 "BMP": {
-                    "Na": self._generate_value([{"range": (135, 145), "weight": 85}, {"range": (128, 134), "weight": 15}], is_int=True) + " mEq/L",
-                    "BUN": self._generate_value([{"range": (7, 20), "weight": 80}, {"range": (21, 35), "weight": 20}], is_int=True) + " mg/dL",
-                    "Cr": self._generate_value([{"range": (0.7, 1.2), "weight": 80}, {"range": (1.3, 1.8), "weight": 20}], precision=1) + " mg/dL"
+                    "Na": f"{na} mEq/L",
+                    "BUN": f"{bun} mg/dL",
+                    "Cr": f"{cr} mg/dL"
                 },
                 "LFTs": {
-                    "ALT": self._generate_value([{"range": (22, 45), "weight": 90}, {"range": (46, 90), "weight": 10}], is_int=True) + " U/L",
-                    "AST": self._generate_value([{"range": (22, 45), "weight": 90}, {"range": (46, 90), "weight": 10}], is_int=True) + " U/L"
+                    "ALT": f"{alt} U/L",
+                    "AST": f"{ast} U/L"
                 },
                 "VBG": {
-                    "pH": str(round(ph, 2)),
-                    "PCO2": pco2_str,
+                    "pH": f"{ph}",
+                    "PCO2": f"{pco2} mmHg",
                     "HCO3": f"{hco3} mEq/L"
                 }
             },
             "specialized_lung_tests": {
                 "Sputum_analysis": {
-                    "Gram_Stain": self.random.choices(["Normal Flora / Mixed", "Positive for specific organism"], weights=[80, 20])[0],
-                    "Sample_Quality": "Not Indicated for Routine Stable Visit."
+                    "Gram_Stain": gram,
+                    "Sample_Quality": quality
                 },
-                "Sputum_AFB": self.random.choices(["Negative", "Positive"], weights=[95, 5])[0],
-                "a1_antitrypsin_level": self.random.choices(["within normal range", "below normal range"], weights=[99, 1])[0],
-                "D_dimer": self.random.choices(["< 500 ng/mL FEU", "> 500 ng/mL FEU"], weights=[90, 10])[0],
+                "Sputum_AFB": afb,
+                "a1_antitrypsin_level": a1,
+                "D_dimer": d_dimer,
                 "BNP_NT_proBNP": bnp
             },
             "immunity_and_serology": {
-                "HIV_test": self.random.choices(["Negative", "Positive"], weights=[98, 2])[0],
-                "Autoimmune_pannel_ANA_ANCA": self.random.choices(["Negative", "Positive"], weights=[95, 5])[0]
+                "HIV_test": hiv,
+                "Autoimmune_pannel_ANA_ANCA": ana
             },
             "simple_imaging": {
                 "Chest_X_Ray": {
-                    "PA_Lateral_Findings_and_Effusion": self.random.choices(["Hyperinflation findings (Flat Diaphragms)", "Bullae"], weights=[70, 30])[0]
+                    "PA_Lateral_Findings_and_Effusion": cxr
                 }
             },
             "advanced_imaging": {
                 "Chest_CT_CTPA": {
-                    "Lung_Parenchyma_and_Pleura": self.random.choices(["Emphysema/Air Trapping Changes", "Bullae or Bronchiectatic Changes"], weights=[70, 30])[0]
+                    "Lung_Parenchyma_and_Pleura": ct
                 }
             },
             "functional_tests": {
                 "Spirometry": {
-                    "result": spirometry_results,
+                    "result": {
+                        "FEV1": fev1_out,
+                        "FVC": fvc_out,
+                        "FEV1/FVC_Ratio": ratio_out
+                    },
                     "reversibility": reversibility
                 },
-                "dlco": self._get_dlco_finding()[1],
-                "peak_flow": self.random.choices(["Reduced", "within normal range"], weights=[80, 20])[0],
-                "plethysmography": self.random.choices(["Increased Lung Volumes", "within normal range"], weights=[70, 30])[0]
+                "dlco": dlco,
+                "peak_flow": peak_flow,
+                "plethysmography": pleth
             },
             "procedures": {
-                "Bronchoscopy": "Not Indicated for Routine Stable Visit.",
-                "torachonthesis": "Not Indicated and fluid cannot be aspirated."
+                "Bronchoscopy": bronch,
+                "torachonthesis": thora_result
             }
         }
 
     def generate_paraclinic_case(self):
         personal_info = self._generate_personal_information()
+        personal_info["Scenario"] = self.scenario
+        
         vitals = self._gen_vitals()
         gen_app = self._gen_general_appearance()
-        hn_exam = self._gen_head_neck()
-        resp_exam = self._gen_respiratory()
-        cv_exam = self._gen_cardio()
-        abd_exam = self._gen_abdominal()
-        neuro_exam = self._gen_neuro()
-        msk_exam = self._gen_msk()
+        head_neck = self._gen_head_neck()
+        respiratory = self._gen_respiratory()
+        cardio = self._gen_cardio()
+        abdominal = self._gen_abdominal()
+        neuro = self._gen_neuro()
+        msk = self._gen_msk()
         paraclinic = self._gen_paraclinic()
 
         data = {
@@ -698,14 +1170,20 @@ class COPDDataGenerator:
             "physical_exam": {
                 "vital_signs": vitals,
                 "general_appearance": gen_app,
-                "head_and_neck": hn_exam,
-                "respiratory_system": resp_exam,
-                "cardiovascular_system": cv_exam,
-                "abdominal_system": abd_exam,
-                "neurological": neuro_exam,
-                "musculoskeletal_system": msk_exam
+                "head_and_neck": head_neck,
+                "respiratory_system": respiratory,
+                "cardiovascular_system": cardio,
+                "abdominal_system": abdominal,
+                "neurological": neuro,
+                "musculoskeletal_system": msk
             },
             "paraclinic": paraclinic
         }
         
         return data
+
+# --- Testing Block ---
+if __name__ == "__main__":
+    generator = COPDDataGenerator()
+    case = generator.generate_paraclinic_case()
+    print(json.dumps(case, indent=4, ensure_ascii=False))

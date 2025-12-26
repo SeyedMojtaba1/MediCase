@@ -1,12 +1,13 @@
-from .pneumonia_data import PneumoniaDataGenerator
-from .copd_data import COPDDataGenerator
-from .asthma_data import AsthmaDataGenerator
-from .pte_data import PTEDataGenerator
-from .ipf_data import IPFDataGenerator
-from .ph_data import PHDataGenerator
-from .ards_data import ARDSDataGenerator
-from .history_taking_creator import history_taking_creator
+from pneumonia_data import PneumoniaDataGenerator
+from copd_data import COPDDataGenerator
+from asthma_data import AsthmaDataGenerator
+from pte_data import PTEDataGenerator
+from ipf_data import IPFDataGenerator
+from ph_data import PHDataGenerator
+from ards_data import ARDSDataGenerator
+from history_taking_creator import history_taking_creator
 import random
+import json
 
 def create_full_pneumonia_case(target_disease):
     paraclinic_generator = PneumoniaDataGenerator()
@@ -176,5 +177,8 @@ OPTIMAL_SCENARIO = ["Asthma", "Pneumonia", "COPD", "PTE", "IPF", "PH"]
 # , "ARDS"
 
 def scenario_creator():
-    target_disease = random.choice(OPTIMAL_SCENARIO)
+    target_disease = "PTE"
+    # random.choice(OPTIMAL_SCENARIO)
     return case[f"{target_disease}"](target_disease), target_disease
+
+print(json.dumps(scenario_creator(), ensure_ascii=False))
