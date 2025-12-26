@@ -4,7 +4,7 @@ from .asthma_data import AsthmaDataGenerator
 from .pte_data import PTEDataGenerator
 from .ipf_data import IPFDataGenerator
 from .ph_data import PHDataGenerator
-from .ards_data import ARDSDataGenerator
+# from .ards_data import ARDSDataGenerator
 from .history_taking_creator import history_taking_creator
 import random
 import json

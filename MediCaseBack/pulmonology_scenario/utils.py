@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 User = get_user_model()
 
 @shared_task
-def scenario_creator_celery(personal_number, tracking_code):
+def senario_creator_celery(personal_number, tracking_code):
     scenario_data, target_disease, type_disease = scenario_creator()
     
     if isinstance(scenario_data, dict) and "error" in scenario_data:
