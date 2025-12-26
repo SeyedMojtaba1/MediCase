@@ -1173,5 +1173,5 @@ class AsthmaDataGenerator:
             "paraclinic": paraclinic
         }
         
-        return data
+        return data, self.scenario
     

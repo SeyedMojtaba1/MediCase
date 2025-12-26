@@ -1196,4 +1196,4 @@ class PneumoniaDataGenerator:
             },
             "paraclinic": paraclinic
         }
-        return data
+        return data, self.scenario

@@ -1088,4 +1088,4 @@ class PTEDataGenerator:
             "paraclinic": paraclinic
         }
         
-        return data
+        return data, self.scenario

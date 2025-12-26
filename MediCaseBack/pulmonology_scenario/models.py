@@ -28,6 +28,7 @@ class PulmonologyScenario(models.Model):
     scenario_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     scenario = models.JSONField()
     tracking_code = models.CharField(blank=True, max_length=10)
+    done = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="userPulmonologyScenario")
     disease = models.ForeignKey(PulmonologyDisease, on_delete=models.SET_NULL, null=True, related_name="pulmonologydiseasescenario")
     created_date = models.DateTimeField(auto_now_add=True)

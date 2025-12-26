@@ -1180,4 +1180,4 @@ class COPDDataGenerator:
             "paraclinic": paraclinic
         }
         
-        return data
+        return data, self.scenario

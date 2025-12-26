@@ -27,6 +27,15 @@ class ScenarioRetrieveSerializer(serializers.ModelSerializer):
             "url": {'lookup_field': 'tracking_code'}
         }
 
+class ScenarioListSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = PulmonologyScenario
+        fields = [
+            'tracking_code',
+            'done'
+        ]
+
 class feedbackCreateSerializer(serializers.Serializer):
     tracking_code = serializers.CharField()
     

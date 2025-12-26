@@ -9,41 +9,27 @@ User = get_user_model()
 
 @shared_task
 def senario_creator_celery(user, tracking_code):
-    print("before-call-scenario-creator")
-    scenario, target_disease = scenario_creator()
-    print(target_disease)
+    scenario, target_disease, type_disease = scenario_creator()
     
-    # 1. NEW: Check for error dictionary returned by scenario_creator
     if isinstance(scenario, dict) and "error" in scenario:
-        print(f"Scenario creation failed: {scenario['error']}")
-        # Returning a dictionary to indicate failure status instead of attempting DB operations
         return {"detail": scenario["error"]}
         
-    print("after-call-scenario-creator")
-    
     try:
-        # Renamed variable to user_obj for clarity
         user_obj = User.objects.get(personal_number=user) 
     except User.DoesNotExist:
-        # NOTE: Returning Response objects inside Celery is unusual; usually a dictionary/string is returned.
         return {"detail": "User is not exist."}
     
     try:
-        disease = PulmonologyDisease.objects.get(english_name=target_disease)
+        disease = PulmonologyDisease.objects.get(english_name=target_disease, type_disease=type_disease)
     except PulmonologyDisease.DoesNotExist:
         return {"detail": "Disease is not exist."}
-        
-    print("before-PulmonologyScenario")
     
-    # 2. FIX: Correctly unpack the tuple from get_or_create
     scenario_obj, created = PulmonologyScenario.objects.get_or_create(
         scenario = scenario,
         tracking_code = tracking_code,
-        user = user_obj, # Use user_obj
+        user = user_obj,
         disease = disease
     )
-    
-    print("after-PulmonologyScenario")
     
     # Use user_obj
     user_obj.scenario_credit -= 1
@@ -80,8 +66,10 @@ def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, dise
         scenario = scenario
     )
     
+    scenario.done = True
     # Call save() on the object, not the tuple
     final_student_log_obj.save()
     final_feedback_obj.save()
+    scenario.save()
     
     return {"detail": "Feedback created successfully."}
