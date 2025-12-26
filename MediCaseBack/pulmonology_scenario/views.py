@@ -10,6 +10,7 @@ from .serializer import (
     StudentLogSerializer, 
     FeedbackRetrieveSerializer,
     ScenarioListSerializer,
+    FeedbackListSerializer,
 )
 from .models import PulmonologyScenario, PulmonologyFeedback
 from django.contrib.auth import get_user_model
@@ -111,3 +112,12 @@ class FeedbackRetrieveView(generics.RetrieveAPIView):
     lookup_field = 'tracking_code'
     lookup_value_regex = '[^/]+'
 
+class FeedbackListView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = FeedbackListSerializer
+
+    def get_queryset(self):
+        personal_num = self.kwargs.get('personal_number')
+        
+        return PulmonologyFeedback.objects.filter(scenario__user__personal_number=personal_num)

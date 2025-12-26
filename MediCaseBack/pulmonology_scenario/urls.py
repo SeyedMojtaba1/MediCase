@@ -7,4 +7,5 @@ urlpatterns = [
    path('scenariolist/<str:personal_number>/', views.ScenarioListView.as_view(), name='scenariolist'),
    path('feedbackcreate/<str:scenario_tracking_code>', views.feedback_create, name='feedbackcreate'),
    path('feedbackretrieve/<str:tracking_code>/', views.FeedbackRetrieveView.as_view(), name='feedbackretrieve'),
+   path('feedbacklist/<str:personal_number>/', views.FeedbackListView.as_view(), name='feedbacklist'),
 ]

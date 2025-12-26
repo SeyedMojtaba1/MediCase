@@ -57,3 +57,12 @@ class FeedbackRetrieveSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "url": {'lookup_field': 'tracking_code'}
         }
+        
+class FeedbackListSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = PulmonologyFeedback
+        fields = [
+            'tracking_code',
+            'generated'
+        ]
