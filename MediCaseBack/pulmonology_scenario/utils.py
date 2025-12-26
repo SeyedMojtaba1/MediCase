@@ -5,6 +5,7 @@ from .models import PulmonologyScenario, PulmonologyDisease, PulmonologyFeedback
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from django.db import transaction
+from django.db.models import F
 import logging
 
 logger = logging.getLogger(__name__)
