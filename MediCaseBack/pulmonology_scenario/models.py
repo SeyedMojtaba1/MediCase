@@ -45,6 +45,7 @@ class PulmonologyFeedback(models.Model):
     evaluation = models.JSONField()
     transition = models.JSONField()
     tracking_code = models.CharField(blank=True, max_length=10)
+    generated = models.BooleanField(default=False)
     scenario = models.ForeignKey(PulmonologyScenario, on_delete=models.SET_NULL, null=True, related_name="feedbackpulmonologyscenario")
     created_date = models.DateTimeField(auto_now_add=True)
     

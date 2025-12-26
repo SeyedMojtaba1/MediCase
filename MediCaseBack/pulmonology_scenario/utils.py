@@ -90,6 +90,7 @@ def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, dise
             # 4. ثبت فیدبک
             final_feedback_obj, created_feedback = PulmonologyFeedback.objects.get_or_create(
                 tracking_code=feedback_tracking_code,
+                generated = True,
                 defaults={
                     'feedback': feedback,
                     'evaluation': evaluation,

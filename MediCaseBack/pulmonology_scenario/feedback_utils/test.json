@@ -1,105 +1,258 @@
 {
-  "chart_data": {
-    "signal_value": 18,
-    "noise_value": 5,
-    "missed_value": 43,
-    "efficiency_score": 78,
-    "total_actions": 23
-  },
-  "details": {
-    "missed_items": [
-      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.cyanosis",
-      "physical_exam.respiratory_system.percussion",
-      "history_taking.social_history.question1.question1a",
-      "physical_exam.respiratory_system.auscultation.breath_sounds_intensity",
-      "paraclinic.advanced_imaging.Chest_CT_CTPA",
-      "paraclinic.basic_blood_tests.ESR/CRP",
-      "history_taking.present_illness.question4",
-      "physical_exam.cardiovascular_system.peripheral_pulses_and_extremities.extremities_color_and_trophic_changes",
-      "history_taking.present_illness.question9",
-      "history_taking.present_illness.question2",
-      "paraclinic.functional_tests.peak_flow",
-      "history_taking.drug_history.question1.question1c",
-      "physical_exam.general_appearance.level_of_consciousness_mood_and_behavior.behavior",
-      "history_taking.drug_history.question1.question1b",
-      "differential_diagnosis.disease6",
-      "history_taking.drug_history.question1.question1a",
-      "history_taking.social_history.question1.question1b",
-      "history_taking.ROS.question1",
-      "history_taking.family_history.question3.question3a",
-      "physical_exam.respiratory_system.palpation.tactile_fremitus",
-      "history_taking.present_illness.question10",
-      "history_taking.medical_history.question4",
-      "paraclinic.basic_blood_tests.CBC",
-      "physical_exam.respiratory_system.palpation.chest_expansion",
-      "physical_exam.general_appearance.overall_appearance.nutritional_status",
-      "history_taking.ROS.question6",
-      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.edema",
-      "history_taking.family_history.question1.question1b",
-      "differential_diagnosis.disease1",
-      "history_taking.medical_history.question6",
-      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.dyspnea",
-      "paraclinic.specialized_lung_tests.BNP/NT_proBNP",
-      "physical_exam.general_appearance.level_of_consciousness_mood_and_behavior.level_of_consciousness",
-      "physical_exam.cardiovascular_system.peripheral_pulses_and_extremities.extremities_edema",
-      "physical_exam.cardiovascular_system.auscultation.heart_sounds_s1_s2",
-      "history_taking.family_history.question2",
-      "physical_exam.cardiovascular_system.peripheral_pulses_and_extremities.peripheral_pulses_symmetry_and_quality",
-      "history_taking.family_history.question3.question3b",
-      "history_taking.present_illness.question5",
-      "physical_exam.general_appearance.posture_and_position.position_of_comfort",
-      "physical_exam.general_appearance.level_of_consciousness_mood_and_behavior.mood",
-      "history_taking.family_history.question1.question1a",
-      "history_taking.ROS.question7"
-    ],
-    "noise_items": [
-      "paraclinic.specialized_lung_tests.BNP_NT_proBNP",
-      "differential_diagnosis.disease7",
-      "differential_diagnosis.disease2",
-      "final_diagnosis.disease3",
-      "paraclinic.basic_blood_tests.CBC.Hb"
-    ],
-    "correct_items": [
-      "history_taking.present_illness.question1",
-      "paraclinic.simple_imaging.Chest_X_Ray.Lateral",
-      "paraclinic.functional_tests.plethysmography",
-      "paraclinic.simple_imaging.Chest_X_Ray.PA",
-      "history_taking.present_illness.question8",
-      "physical_exam.cardiovascular_system.JVP_assessment",
-      "physical_exam.respiratory_system.inspection.chest_shape_and_symmetry",
-      "history_taking.present_illness.question3",
-      "paraclinic.basic_blood_tests.VBG",
-      "differential_diagnosis.disease3",
-      "history_taking.medical_history.question1.question1b",
-      "paraclinic.functional_tests.Spirometry",
-      "history_taking.medical_history.question3",
-      "history_taking.medical_history.question1.question1a",
-      "paraclinic.specialized_lung_tests.a1_antitrypsin_level",
-      "differential_diagnosis.disease5",
-      "physical_exam.respiratory_system.auscultation.adventitious_sounds",
-      "physical_exam.respiratory_system.inspection.accessory_muscles"
-    ]
-  },
-  "analysis": {
-    "strengths": "دانش‌آموز در گرفتن تاریخچه بیماری، انجام آزمایشات پاراکلینیک و ارزیابی‌های فیزیکی توانسته است به نتایج خوبی دست یابد. او سوالات حیاتی در مورد نشا انه‌های بیماری، سابقه پزشکی و دارویی، و انجام تست‌های تنفسی مانند اسپیرومتری و پلتی‌سیموگرافی را به درستی مورد توجه قرار داده است.",
-    "missed_criticals": {
-      "cyanosis": "عدم بررسی علائم سیانوز می‌تواند نشانه‌ای از کمبود اکسیژن در خون باشد، که در بیماری‌های ریوی و قلبی به شدت حائز اهمیت است و می‌تواند به تشخیص ز   زودهنگام و درمان مناسب کمک کند.",
-      "percussion": "معاینه از طریق ضربه زدن به قفسه سینه می‌تواند اطلاعات مهمی در مورد حالت ریه‌ها، مانند وجود مایع یا توده در ریه‌ها ارائه دهد. عدم انجام این م  معاینه می‌تواند منجر به از دست رفتن تشخیصی حیاتی شود.",
-      "present_illness.question4": "سوال درباره سرفه و ویژگی‌های آن می‌تواند به درک بهتر نوع و شدت بیماری کمک کند. این اطلاعات می‌تواند در تشخیص‌های تمایزی بسیار   ر مهم باشد.",
-      "extremities_color_and_trophic_changes": "بررسی تغییرات رنگ و تروفیک در اندام‌ها می‌تواند به تشخیص مشکلات عروقی یا سوء تغذیه کمک کند. از دست رفتن این ارزیا ابی می‌تواند به تشخیص مردد منجر شود.",
-      "present_illness.question9": "سوال درباره علائم قبلی و درمان‌های موثر می‌تواند به پیش‌بینی رفتار بیماری و رژیم درمانی کمک کند. این اطلاعات می‌تواند به شخصی   ی‌سازی بیشتر روش درمان کمک کند.",
-      "present_illness.question2": "سوال در مورد شروع تدریجی یا ناگهانی علائم بسیار مهم است؛ این می‌تواند به شناسایی علل زمینه‌ای و تشخیص‌های سریع‌تر کمک کند.",
-      "functional_tests.peak_flow": "عدم ارزیابی جریان اوج می‌تواند مانع از شناسایی مشکلات تنفسی خاص مانند آسم شود.",
-      "drug_history.question1.question1c": "عدم در نظر گرفتن تغییرات اخیر در داروها می‌تواند به تشخیص عوارض جانبی یا عدم اثربخشی درمان منجر شود.",
-      "behavior": "بررسی رفتار بیمار می‌تواند نشانه‌هایی از اضطراب یا افسردگی را نشان دهد که در مدیریت درمان اهمیت دارد."
+  "patient_profile": {
+    "personal_information": {
+      "first_name": "کوروش",
+      "last_name": "پورحسن",
+      "age": "39 ساله",
+      "gender": "مرد",
+      "occupation": "معلم",
+      "place_of_birth": "زنجان",
+      "place_of_residence": "زنجان",
+      "marital_status": "متاهل",
+      "Scenario": "peripheral_infarct"
     },
-    "inefficiencies": {
-      "BNP_NT_proBNP": "این آزمایش به طور خاص برای تشخیص نارسایی قلبی استفاده می‌شود و در این مورد ضروری به نظر نمی‌رسد. انجام این آزمایش به دلیل نبود شواهد کافی ی در تاریخچه بیماری می‌تواند منابع را بیهوده مصرف کند.",
-      "disease7": "تشخیص بیماری ادم پلورال بر اساس اطلاعات موجود و علائم بیمار صحیح نیست و می‌تواند وقت و منابع را به هدر دهد.",
-      "disease2": "تشخیص ذات الریه با توجه به علائم و یافته‌ها منطقی نیست و انرژی تیم پزشکی را در جهت نادرستی قرار می‌دهد.",
-      "disease3": "ارایه تشخیص نادرست به عنوان بیماری COPD با توجه به شواهد بالینی موجود می‌تواند نتیجه‌گیری نادرستی را به همراه داشته باشد.",
-      "CBC.Hb": "اندازه‌گیری هموگلوبین (Hb) به صورت جداگانه در این مورد ممکن است غیرضروری باشد، زیرا اطلاعات کافی از بررسی‌های دیگر موجود است."
+    "chief_complaint": "یهو نفسم گرفت"
+  },
+  "history_taking": {
+    "present_illness": {
+      "question1": "داشتم راه می رفتم یهو نفسم گرفت و تپش قلب شدیدی افتاد؛ خیلی ترسیدم و نتونستم صاف وایستم.",
+      "question2": "همه چی یهویی شد؛ تازه از مسافرت برگشته بودم و فکر کردم خستگیه اما بدتر شد و دیگه برنگشت.",
+      "question3": "آره، نفس کشیدنم خیلی سخت شده حتی وقتی نشسته م، بعضی وقتا سرم گیج می ره و نزدیک بود بیفتم.",
+      "question4": "نه، سرفه ندارم و خلط خونی هم ندیدم.",
+      "question5": "نه، صدای خاصی تو سینه یا خس خس حس نمی کنم.",
+      "question6": "آره، وقتی نفس عمیق می کشم سینه م تیر می کشه و هم زمان تپش قلب شدید می گیرم.",
+      "question7": "نه، تب یا لرز ندارم.",
+      "question8": "آره، پام پشت ساق یه مقدار درد و کمی ورم داشت، اول فکر کردم ضربه خورده ولی چیزی یادم نیست.",
+      "question9": "نه، قبلاً همچین حمله ای نداشتم.",
+      "question10": "کمی خسته م ولی وزنم کم نشده و احساس ضعف خیلی زیاد ندارم."
     },
-    "conclusion": "دانش‌آموز عملکرد خوبی در جمع‌آوری اطلاعات و انجام معاینات اولیه داشته است، اما در زمینه تشخیص‌های مهم و ارزیابی‌های فیزیکی دقت کافی نداشته و برخ   خی منبع‌ها به طور غیرضروری استفاده شده‌اند. توجه به نقاط ضعف و نواقص می‌تواند به بهبود کارایی تشخیصی کمک کند."
+    "past_medical_history": {
+      "question1": {
+        "question1a": "نه، من سالمِ سالمم.",
+        "question1b": "تا حالا بیماری مزمن خاصی نداشتم و دارویی هم مرتب مصرف نمی کنم."
+      },
+      "question2": {
+        "question2a": "نه، عمل جراحی جدی ییا بستری طولانی نداشتم.",
+        "question2b": "نه، چیز خاصی نبوده که حالا تأثیر داشته باشه."
+      },
+      "question3": "نه، مریضی قلبی یا ریه یا مغزی نداشتم.",
+      "question4": "نه، داروی مزمن مصرف نمی کنم.",
+      "question5": "نه، دوران کودکی هم مشکل جدی نداشتم.",
+      "question6": "نه، سابقه خاص دیگری ندارم."
+    },
+    "drug_history": {
+      "question1": {
+        "question1a": "هیچی مصرف نمی کنم.",
+        "question1b": "ندارم",
+        "question1c": "نه"
+      },
+      "question2": "نه"
+    },
+    "allergies": {
+      "question1": { "question1a": "حساسیت ندارم.", "question1b": "نه" }
+    },
+    "family_history": {
+      "question1": {
+        "question1a": "نه، کسی تو فامیل لخته یا سکته نداشته.",
+        "question1b": "نه"
+      },
+      "question2": "نه",
+      "question3": { "question3a": "نه", "question3b": "نه" }
+    },
+    "social_history": {
+      "question1": { "question1a": "نه، اهل سیگار نیستم.", "question1b": "نه" },
+      "question2": "نه، الکل نمی خورم.",
+      "question3": {
+        "question3a": "آره، یه سگ کوچیک دارم.",
+        "question3b": "آره، سگ کوچیکه و تو خونه مونه."
+      },
+      "question4": "با همسرم زندگی می کنم."
+    },
+    "ros": {
+      "question1": "نه",
+      "question2": "نه",
+      "question3": "آره، گاهی سرم گیج می ره وقتی نفس کم میارم",
+      "question4": "نه",
+      "question5": "نه",
+      "question6": "آره، تپش قلب شدید دارم و وقتی نفس می کشم درد در قفسه سینه احساس می کنم",
+      "question7": "آره، سرفه دارم و نفس تنگی هم هست",
+      "question8": "نه",
+      "question9": "نه",
+      "question10": "آره، پشت ساق پام یه مدت درد می کرد",
+      "question11": "نه",
+      "question12": "نه",
+      "question13": "نه",
+      "question14": "نه"
+    }
+  },
+  "physical_exam": {
+    "vital_signs": {
+      "BP": "124/73 mmHg",
+      "T": "37.5 °C",
+      "PR": "97 bpm",
+      "RR": "25 breaths/min",
+      "SpO2": "93% (Room Air)",
+      "GCS": "15"
+    },
+    "general_appearance": {
+      "mood_and_behavior": "Alert and cooperative",
+      "overall_appearance": "Well-nourished and well-developed",
+      "posture_and_position": "Splinting to one side",
+      "level_of_consciousness": "Alert and oriented x3",
+      "cardiopulmonary_and_circulatory_clues": {
+        "edema": "Unilateral leg swelling with tenderness",
+        "dyspnea": "Speaking in full sentences",
+        "cyanosis": "No cyanosis"
+      }
+    },
+    "head_and_neck": {
+      "head_and_face": {
+        "symmetry_and_lesions": "Symmetric with no lesions",
+        "tenderness": "Non-tender"
+      },
+      "eyes": {
+        "sclera_and_conjunctiva": "Normal sclera and pink conjunctiva",
+        "pupils_reaction": "PERRLA",
+        "extraocular_movements": "Intact"
+      },
+      "ears": {
+        "external_and_tenderness": "Normal external ear, no tenderness",
+        "eardrum_appearance": "Intact pearly gray tympanic membrane"
+      },
+      "nose_and_sinuses": {
+        "septum_and_discharge": "Midline septum, no discharge",
+        "sinus_tenderness": "Non-tender"
+      },
+      "mouth_and_pharynx": {
+        "oral_mucosa_and_lesions": "Moist and pink",
+        "pharynx_and_tonsils": "Non-erythematous, no exudates"
+      },
+      "neck_and_lymphatics": {
+        "inspection": "Trachea midline",
+        "tracheal_position": "Trachea midline",
+        "thyroid_gland": "Non-palpable",
+        "carotid_bruit": "No bruits",
+        "lymph_nodes_size_consistency": "No lymphadenopathy",
+        "lymph_nodes_mobility_tenderness": "No lymphadenopathy"
+      }
+    },
+    "respiratory_system": {
+      "inspection": {
+        "accessory_muscles": "No accessory muscle use",
+        "chest_shape_and_symmetry": "Symmetric chest rise"
+      },
+      "palpation": {
+        "chest_expansion": "Decreased expansion on the right side",
+        "tactile_fremitus": "Decreased tactile fremitus"
+      },
+      "percussion": "Dull",
+      "auscultation": {
+        "breath_sounds_intensity": "Decreased breath sounds",
+        "adventitious_sounds": "No adventitious sounds"
+      }
+    },
+    "cardiovascular_system": {
+      "JVP_assessment": "JVP not elevated",
+      "palpation": {
+        "precordial_palpation_heave_thrill": "No heaves or thrills",
+        "pmi_assessment": "PMI at 5th ICS MCL"
+      },
+      "auscultation": {
+        "heart_sounds_s1_s2": "Normal S1, S2",
+        "extra_sounds_s3_s4_murmurs": "No extra sounds or murmurs"
+      },
+      "peripheral_pulses_and_extremities": {
+        "peripheral_pulses_symmetry_and_quality": "Pulses 2+ and symmetric",
+        "extremities_color_and_trophic_changes": "No trophic changes",
+        "extremities_temperature_and_cap_refill": "Warm, Capillary refill < 2 sec",
+        "extremities_edema": "Unilateral leg swelling with tenderness"
+      }
+    },
+    "abdominal_system": {
+      "inspection": "Flat, non-distended",
+      "auscultation": {
+        "bowel_sounds": "Normoactive bowel sounds",
+        "vascular_bruits": "No bruits"
+      },
+      "percussion": {
+        "general": "Resonant",
+        "organ_borders": "Normal liver span"
+      },
+      "palpation": {
+        "superficial_tenderness": "Soft, non-tender",
+        "deep_masses_and_organs": "No masses or organomegaly"
+      },
+      "peritoneal_signs": "None"
+    },
+    "neurological": {
+      "mental_status_and_LOC": "Alert and Oriented",
+      "cranial_nerves": "Intact",
+      "motor_strength_and_tone": "5/5 strength globally",
+      "involuntary_movements": "None",
+      "sensory_light_touch_and_pain": "Intact",
+      "deep_tendon_reflexes": "2+",
+      "coordination_and_gait": "Intact"
+    },
+    "musculoskeletal_system": {
+      "inspection": { "joints": "Normal joints", "muscles": "Normal bulk" },
+      "palpation": { "tenderness_and_crepitus": "Calf tenderness" },
+      "range_of_motion_active_passive": "Stable",
+      "stability_and_function": "Stable"
+    }
+  },
+  "paraclinic": {
+    "basic_blood_tests": {
+      "CBC": { "Hb": "13.5 g/dL", "WBC": "6478 /µL", "Plt": "301385 /µL" },
+      "ESR": "37 mm/h",
+      "CRP": "17 mg/L",
+      "BMP": { "Na": "143 mEq/L", "BUN": "7 mg/dL", "Cr": "1.1 mg/dL" },
+      "LFTs": { "ALT": "12 U/L", "AST": "20 U/L" },
+      "VBG": { "pH": "7.4", "PCO2": "35 mmHg", "HCO3": "24 mEq/L" }
+    },
+    "specialized_lung_tests": {
+      "Sputum_analysis": { "Gram_Stain": "N/A", "Sample_Quality": "N/A" },
+      "Sputum_AFB": "Negative",
+      "a1_antitrypsin_level": "Normal range",
+      "D_dimer": "Elevated",
+      "BNP_NT_proBNP": "Normal"
+    },
+    "immunity_and_serology": {
+      "HIV_test": "Negative",
+      "Autoimmune_pannel_ANA_ANCA": "Negative"
+    },
+    "simple_imaging": {
+      "Chest_X_Ray": {
+        "PA_Lateral_Findings_and_Effusion": "Wedge-shaped opacity"
+      }
+    },
+    "advanced_imaging": {
+      "Chest_CT_CTPA": {
+        "Lung_Parenchyma_and_Pleura": "Small pleural effusion"
+      }
+    },
+    "functional_tests": {
+      "Spirometry": {
+        "result": { "FEV1": "N/A", "FVC": "N/A", "FEV1/FVC_Ratio": "N/A" },
+        "reversibility": "N/A"
+      },
+      "dlco": "N/A",
+      "peak_flow": "N/A",
+      "plethysmography": "N/A"
+    },
+    "procedures": {
+      "Bronchoscopy": "N/A",
+      "torachonthesis": {
+        "Serum": {
+          "Protein": "7.5 g/dL",
+          "LDH": "240 U/L",
+          "Albumin": "4.6 g/dL"
+        },
+        "Fluid": {
+          "Protein": "4.2 g/dL",
+          "LDH": "281 U/L",
+          "Albumin": "2.9 g/dL"
+        }
+      }
+    }
   }
 }

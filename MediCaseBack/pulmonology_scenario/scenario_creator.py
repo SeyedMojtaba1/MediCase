@@ -180,3 +180,5 @@ def scenario_creator():
     target_disease = random.choice(OPTIMAL_SCENARIO)
     case_data, type_disease = case[target_disease](target_disease)
     return case_data, target_disease, type_disease
+
+# print(json.dumps(scenario_creator(), ensure_ascii=False))
