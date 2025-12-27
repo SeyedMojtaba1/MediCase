@@ -1,18 +1,12 @@
 {
-  "meta": {
-    "disease": "PTE",
-    "scenario": "MASSIVE_PTE"
-  },
+  "meta": { "disease": "PTE", "scenario": "massive_pte" },
   "overall_result": {
     "title": "قابل قبول (مرزی)",
     "english_title": "Borderline",
     "color_code": "#F9A825",
     "is_passed": true
   },
-  "score": {
-    "obtained": 60.0,
-    "total": 100
-  },
+  "score": { "obtained": 60.0, "total": 100, "efficiency_score": 82 },
   "time_management": {
     "duration_formatted": "10:55",
     "total_allowed_formatted": "15:00",
@@ -22,334 +16,106 @@
       "message": "زمان‌بندی عالی."
     }
   },
-  "detailed_actions": [
-    {
-      "action": "history_taking.ros.question14",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.2_pulses_and_extremities.extremities_edema",
-      "status": "missed"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.CBC.Plt",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.present_illness.question2",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.respiratory_system.palpation.chest_expansion",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.respiratory_system.auscultation.breath_sounds_intensity",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.simple_imaging.Chest_X_Ray.PA_Lateral_Findings_and_Effusion",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.present_illness.question1",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.VBG.pH",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.present_illness.question5",
-      "status": "noise"
-    },
-    {
-      "action": "history_taking.present_illness.question8",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.present_illness.question7",
-      "status": "noise"
-    },
-    {
-      "action": "history_taking.social_history.question2",
-      "status": "noise"
-    },
-    {
-      "action": "history_taking.past_medical_history.question1.question1b",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.past_medical_history.question2.question2a",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.family_history.question1.question1b",
-      "status": "missed"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.BMP.BUN",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.social_history.question1.question1a",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.abdominal_system.palpation.deep_masses_and_organs",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.2_pulses_and_extremities.peripheral_pulses_symmetry_and_quality",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.neurological.mental_status_and_LOC",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.auscultation.heart_sounds_s1_s2",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.BMP.Cr",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.CBC.WBC",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.vital_signs.SpO2",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.functional_tests.peak_flow",
-      "status": "noise"
-    },
-    {
-      "action": "history_taking.drug_history.question2",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.vital_signs.PR",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.allergies.question1.question1b",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.family_history.question2",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.palpation.pmi_assessment",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.general_appearance.overall_appearance",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.VBG.PCO2",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.2_pulses_and_extremities.extremities_temperature_and_cap_refill",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.past_medical_history.question3",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.auscultation.extra_sounds_s3_s4_murmurs",
-      "status": "missed"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.VBG.HCO3",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.past_medical_history.question1.question1a",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.general_appearance.mood_and_behavior",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.ros.question6",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.respiratory_system.percussion",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.ESR",
-      "status": "noise"
-    },
-    {
-      "action": "history_taking.allergies.question1.question1a",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.head_and_neck.neck_and_lymphatics.inspection",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.present_illness.question9",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.drug_history.question1.question1a",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.drug_history.question1.question1b",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.ros.question7",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.general_appearance.level_of_consciousness",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.edema",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.cyanosis",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.BMP.Na",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.vital_signs.BP",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.vital_signs.T",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.specialized_lung_tests.D_dimer",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.general_appearance.posture_and_position",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.respiratory_system.inspection.chest_shape_and_symmetry",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.2_pulses_and_extremities.extremities_color_and_trophic_changes",
-      "status": "missed"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.LFTs.AST",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.palpation.precordial_palpation_heave_thrill",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.respiratory_system.auscultation.adventitious_sounds",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.abdominal_system.inspection",
-      "status": "noise"
-    },
-    {
-      "action": "physical_exam.cardiovascular_system.JVP_assessment",
-      "status": "missed"
-    },
-    {
-      "action": "paraclinic.advanced_imaging.Chest_CT_CTPA.Lung_Parenchyma_and_Pleura",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.social_history.question1.question1b",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.present_illness.question4",
-      "status": "noise"
-    },
-    {
-      "action": "physical_exam.vital_signs.GCS",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.abdominal_system.palpation.superficial_tenderness",
-      "status": "noise"
-    },
-    {
-      "action": "history_taking.past_medical_history.question4",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.respiratory_system.inspection.accessory_muscles",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.family_history.question1.question1a",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.specialized_lung_tests.BNP_NT_proBNP",
-      "status": "correct"
-    },
-    {
-      "action": "physical_exam.vital_signs.RR",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.ros.question11",
-      "status": "missed"
-    },
-    {
-      "action": "physical_exam.abdominal_system.percussion.organ_borders",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.present_illness.question3",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.CBC.Hb",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.present_illness.question6",
-      "status": "correct"
-    },
-    {
-      "action": "paraclinic.basic_blood_tests.LFTs.ALT",
-      "status": "missed"
-    },
-    {
-      "action": "history_taking.ros.question1",
-      "status": "noise"
-    },
-    {
-      "action": "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.dyspnea",
-      "status": "correct"
-    },
-    {
-      "action": "history_taking.past_medical_history.question2.question2b",
-      "status": "missed"
-    }
-  ]
+  "chart_data": {
+    "signal_value": 43,
+    "noise_value": 9,
+    "missed_value": 30,
+    "total_actions": 52
+  },
+  "detailed_lists": {
+    "missed_items": [
+      "physical_exam.cardiovascular_system.2_pulses_and_extremities.peripheral_pulses_symmetry_and_quality",
+      "physical_exam.general_appearance.posture_and_position",
+      "history_taking.present_illness.question9",
+      "history_taking.past_medical_history.question4",
+      "history_taking.ros.question14",
+      "paraclinic.basic_blood_tests.LFTs.ALT",
+      "physical_exam.cardiovascular_system.JVP_assessment",
+      "paraclinic.basic_blood_tests.VBG.PCO2",
+      "physical_exam.cardiovascular_system.2_pulses_and_extremities.extremities_temperature_and_cap_refill",
+      "physical_exam.respiratory_system.inspection.accessory_muscles",
+      "physical_exam.general_appearannce.cardiopulmonary_and_circulatory_clues.edema",
+      "paraclinic.basic_blood_tests.LFTs.AST",
+      "physical_exam.neurological.mental_status_and_LOC",
+      "physical_exam.cardiovascular_system.palpation.pmi_assessment",
+      "physical_exam.cardiovascular_system.palpation.precordial_palpation_heave_thrill",
+      "physical_exam.cardiovascular_system.2_pulses_and_extremities.extremities_color_and_trophic_changes",
+      "history_taking.ros.question11",
+      "history_taking.past_medical_history.question2.question2b",
+      "physical_exam.cardiovascular_system.auscultation.extra_sounds_s3_s4_murmurs",
+      "physical_exam.abdominal_system.palpation.deep_masses_and_organs",
+      "physical_exam.general_appearance.level_of_consciousness",
+      "history_taking.allergies.question1.question1b",
+      "history_taking.drug_history.question2",
+      "history_taking.family_history.question1.question1b",
+      "physical_exam.cardiovascular_system.2_pulses_and_extremities.extremities_edema",
+      "physical_exam.vital_signs.GCS",
+      "paraclinic.basic_blood_tests.VBG.HCO3",
+      "physical_exam.abdominal_system.percussion.organ_borders",
+      "history_taking.social_history.question1.question1b",
+      "history_taking.family_history.question2"
+    ],
+    "noise_items": [
+      "history_taking.present_illness.question5",
+      "history_taking.social_history.question2",
+      "physical_exam.abdominal_system.palpation.superficial_tenderness",
+      "history_taking.present_illness.question4",
+      "paraclinic.basic_blood_tests.ESR",
+      "paraclinic.functional_tests.peak_flow",
+      "history_taking.ros.question1",
+      "history_taking.present_illness.question7",
+      "physical_exam.abdominal_system.inspection"
+    ],
+    "correct_items": [
+      "history_taking.present_illness.question2",
+      "history_taking.allergies.question1.question1a",
+      "history_taking.present_illness.question6",
+      "paraclinic.simple_imaging.Chest_X_Ray.PA_Lateral_Findings_and_Effusion",
+      "physical_exam.respiratory_system.palpation.chest_expansion",
+      "history_taking.drug_history.question1.question1a",
+      "physical_exam.general_appearance.overall_appearance",
+      "paraclinic.basic_blood_tests.BMP.Cr",
+      "physical_exam.respiratory_system.percussion",
+      "history_taking.drug_history.question1.question1b",
+      "physical_exam.head_and_neck.neck_and_lymphatics.inspection",
+      "physical_exam.vital_signs.T",
+      "history_taking.past_medical_history.question2.question2a",
+      "paraclinic.basic_blood_tests.CBC.WBC",
+      "paraclinic.specialized_lung_tests.BNP_NT_proBNP",
+      "history_taking.past_medical_history.question1.question1a",
+      "history_taking.social_history.question1.question1a",
+      "physical_exam.vital_signs.BP",
+      "physical_exam.respiratory_system.auscultation.adventitious_sounds",
+      "physical_exam.respiratory_system.auscultation.breath_sounds_intensity",
+      "paraclinic.basic_blood_tests.CBC.Hb",
+      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.dyspnea",
+      "history_taking.ros.question6",
+      "history_taking.present_illness.question3",
+      "history_taking.ros.question7",
+      "paraclinic.basic_blood_tests.BMP.Na",
+      "history_taking.past_medical_history.question1.question1b",
+      "history_taking.family_history.question1.question1a",
+      "paraclinic.advanced_imaging.Chest_CT_CTPA.Lung_Parenchyma_and_Pleura",
+      "history_taking.present_illness.question1",
+      "physical_exam.respiratory_system.inspection.chest_shape_and_symmetry",
+      "paraclinic.basic_blood_tests.VBG.pH",
+      "physical_exam.vital_signs.PR",
+      "physical_exam.cardiovascular_system.auscultation.heart_sounds_s1_s2",
+      "paraclinic.basic_blood_tests.CBC.Plt",
+      "physical_exam.vital_signs.SpO2",
+      "history_taking.past_medical_history.question3",
+      "paraclinic.basic_blood_tests.BMP.BUN",
+      "physical_exam.general_appearance.mood_and_behavior",
+      "physical_exam.general_appearance.cardiopulmonary_and_circulatory_clues.cyanosis",
+      "physical_exam.vital_signs.RR",
+      "paraclinic.specialized_lung_tests.D_dimer",
+      "history_taking.present_illness.question8"
+    ]
+  },
+  "ai_analysis": {
+    "strengths": "شما در تاریخ‌گیری بیمار به خوبی عمل کردید و سوالاات کلیدی را به موقع و به درستی مطرح کردید. ارزیابی‌های شما در زمینه معاینه فیزیکی و آزمایش‌های پاراکلینیکی به تشخیص درست بیماری کمک کرد.",
+    "missed_criticals": "عدم ارزی یابی نبض‌های محیطی و وضعیت وریدی ژوگولار (JVP) می‌تواند به خطرات جدی در تشخیص نارسایی قلبی یا بیماری‌های عروقی منجر شود. همچنین عدم بررسی وضعیت عملکرد کبد و احتمال وجود  د مشکلات گوارشی می‌تواند به تشخیص نادرست و عدم درمان به موقع بیمار منجر گردد.",
+    "inefficiencies": "برخی از سوالاتی که در تاریخ‌گیری پرسیدید، مانند سوالات مربوط به سرفه   یا وضعیت اجتماعی بیمار، نیاز خاصی در این مورد خاص نداشتند و از آنجایی که می‌توانند زمان و منابع را هدر بدهند، توجه شما را به موارد اولویت‌دارتر کاهش می‌دهند. همچنین بر  ررسی‌های اضافی مانند آزمایش ESR و آزمون‌های عملکردی غیرضروری بودند که می‌توانستند هزینه و زمان را بی‌جهت افزایش دهند.",
+    "conclusion": "عملکرد شما در اکثر جنبه‌ها عالی ب    بود، اما توجه به جزئیات بیشتر و ارزیابی‌های ضروری می‌تواند به پیشرفت شما در آینده کمک کند. پیشنهاد می‌کنم به قدرت‌های بیوشیمیایی و ارزیابی‌های کاردیولوژیک بیشتر توجه کن    نید."
+  }
 }

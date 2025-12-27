@@ -1,518 +1,57 @@
+import json
+import sys
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-import json
 
-OPTIMAL_SCENARIO = {
-  "history_taking": {
-    "present_illness": {
-      "question1": "True",
-      "question2": "True",
-      "question3": "True",
-      "question4": "True",
-      "question5": "True",
-      "question6": "False",
-      "question7": "False",
-      "question8": "True",
-      "question9": "True",
-      "question10": "True"
-    },
-    "medical_history": {
-      "question1": {
-        "question1a": "True",
-        "question1b": "True"
-      },
-      "question2": {
-        "question2a": "False",
-        "question2b": "False"
-      },
-      "question3": "True",
-      "question4": "True",
-      "question5": "False",
-      "question6": "True"
-    },
-    "drug_history": {
-      "question1": {
-        "question1a": "True",
-        "question1b": "True",
-        "question1c": "True"
-      },
-      "question2": "False"
-    },
-    "allergies": {
-      "question1": {
-        "question1a": "False",
-        "question1b": "False"
-      }
-    },
-    "family_history": {
-      "question1": {
-        "question1a": "True",
-        "question1b": "True"
-      },
-      "question2": "True",
-      "question3": {
-        "question3a": "True",
-        "question3b": "True"
-      }
-    },
-    "social_history": {
-      "question1": {
-        "question1a": "True",
-        "question1b": "True"
-      },
-      "question2": "False",
-      "question3": {
-        "question3a": "False",
-        "question3b": "False"
-      },
-      "question4": "False"
-    },
-    "ROS": {
-      "question1": "True",
-      "question2": "False",
-      "question3": "False",
-      "question4": "False",
-      "question5": "False",
-      "question6": "True",
-      "question7": "True",
-      "question8": "False",
-      "question9": "False",
-      "question10": "False",
-      "question11": "False",
-      "question12": "False",
-      "question13": "False",
-      "question14": "False"
-    }
-  },
-  "physical_exam": {
-    "general_appearance": {
-      "level_of_consciousness_mood_and_behavior": {
-        "level_of_consciousness": "True",
-        "mood": "True",
-        "behavior": "True"
-      },
-      "posture_and_position": {
-        "position_of_comfort": "True"
-      },
-      "overall_appearance": {
-        "nutritional_status": "True"
-      },
-      "cardiopulmonary_and_circulatory_clues": {
-        "cyanosis": "True",
-        "dyspnea": "True",
-        "edema": "True"
-      }
-    },
-    "head_and_neck": {
-      "head_and_face": {
-        "symmetry_and_lesions": "False",
-        "tenderness": "False"
-      },
-      "eyes": {
-        "sclera_and_conjunctiva": "False",
-        "pupils_reaction": "False",
-        "extraocular_movements": "False"
-      },
-      "ears": {
-        "external_and_tenderness": "False",
-        "eardrum_appearance": "False"
-      },
-      "nose_and_sinuses": {
-        "septum_and_discharge": "False",
-        "sinus_tenderness": "False"
-      },
-      "mouth_and_pharynx": {
-        "oral_mucosa_and_lesions": "False",
-        "pharynx_and_tonsils": "False"
-      },
-      "neck_and_lymphatics": {
-        "inspection": "False",
-        "tracheal_position": "False",
-        "thyroid_gland": "False",
-        "carotid_bruit": "False",
-        "lymph_nodes_size_consistency": "False",
-        "lymph_nodes_mobility_tenderness": "False"
-      }
-    },
-    "respiratory_system": {
-      "inspection": {
-        "accessory_muscles": "True",
-        "chest_shape_and_symmetry": "True"
-      },
-      "palpation": {
-        "chest_expansion": "True",
-        "tactile_fremitus": "True"
-      },
-      "percussion": "True",
-      "auscultation": {
-        "breath_sounds_intensity": "True",
-        "adventitious_sounds": "True"
-      }
-    },
-    "cardiovascular_system": {
-      "JVP_assessment": "True",
-      "palpation": {
-        "precordial_palpation_heave_thrill": "False",
-        "pmi_assessment": "False"
-      },
-      "auscultation": {
-        "heart_sounds_s1_s2": "True",
-        "extra_sounds_s3_s4_murmurs": "False"
-      },
-      "peripheral_pulses_and_extremities": {
-        "peripheral_pulses_symmetry_and_quality": "True",
-        "extremities_color_and_trophic_changes": "True",
-        "extremities_temperature_and_cap_refill": "False",
-        "extremities_edema": "True"
-      }
-    },
-    "abdominal_system": {
-      "inspection": "False",
-      "auscultation": {
-        "bowel_sounds": "False",
-        "vascular_bruits": "False"
-      },
-      "percussion": {
-        "general": "False",
-        "organ_borders": "False"
-      },
-      "palpation": {
-        "superficial_tenderness": "False",
-        "deep_masses_and_organs": "False",
-        "peritoneal_signs": "False"
-      }
-    },
-    "neurological": {
-      "mental_status_and_LOC": "False",
-      "cranial_nerves": "False",
-      "motor_strength_and_tone": "False",
-      "involuntary_movements": "False",
-      "sensory_light_touch_and_pain": "False",
-      "deep_tendon_reflexes": "False",
-      "coordination_and_gait": "False"
-    },
-    "musculoskeletal_system": {
-      "inspection": {
-        "joints": "False",
-        "muscles": "False"
-      },
-      "palpation": {
-        "tenderness_and_crepitus": "False"
-      },
-      "range_of_motion_active_passive": "False",
-      "stability_and_function": "False"
-    }
-  },
-  "paraclinic": {
-    "basic_blood_tests": {
-      "CBC": "True",
-      "ESR/CRP": "True",
-      "BMP": "False",
-      "LFTs": "False",
-      "VBG": "True"
-    },
-    "specialized_lung_tests": {
-      "Sputum_analysis": "False",
-      "Sputum_AFB": "False",
-      "a1_antitrypsin_level": "True",
-      "D_dimer": "False",
-      "BNP/NT_proBNP": "True"
-    },
-    "immunity_and_serology": {
-      "HIV_test": "False",
-      "Autoimmune_pannel_ANA_ANCA": "False"
-    },
-    "simple_imaging": {
-      "Chest_X_Ray": {
-        "PA": "True",
-        "Lateral": "True"
-      }
-    },
-    "advanced_imaging": {
-      "Chest_CT_CTPA": "True",
-      "MRI_chest": "False",
-      "Pet_scan": "False"
-    },
-    "functional_tests": {
-      "Spirometry": "True",
-      "peak_flow": "True",
-      "plethysmography": "True"
-    },
-    "procedures": {
-      "Bronchoscopy": "False",
-      "torachonthesis": "False"
-    }
-  },
-  "differential_diagnosis": {
-    "disease1": "True",
-    "disease2": "False",
-    "disease3": "True",
-    "disease4": "False",
-    "disease5": "True",
-    "disease6": "True",
-    "disease7": "False",
-    "disease8": "False"
-  }
-}
+# ==========================================
+# 1. IMPORT DISEASE SCENARIOS
+# ==========================================
+# فرض بر این است که فایل‌های زیر در کنار همین اسکریپت قرار دارند
+try:
+    from asthma import *
+    from pte import *
+    from ph import *
+    from copd import *
+    from ipf import *
+    from pneumenia import *
+except ImportError as e:
+    print(f"Error importing disease files: {e}")
+    print("Please ensure asthma.py, pte.py, etc. are in the same directory.")
 
-STUDENT_LOG = {
-    "history_taking": {
-        "present_illness": {
-            "question1": "15:00",
-            "question2": "False",
-            "question3": "14:00",
-            "question4": "False",
-            "question5": "False",
-            "question6": "False",
-            "question7": "False",
-            "question8": "13:00",
-            "question9": "False",
-            "question10": "False"
-        },
-        "medical_history": {
-            "question1": {
-                    "question1a": "14:30",
-                    "question1b": "14:35"
-                },
-            "question2": {
-                    "question2a": "False",
-                    "question2b": "False"
-                },
-            "question3": "12:30",
-            "question4": "False",
-            "question5": "False",
-            "question6": "False"
-        },
-        "drug_history": {
-            "question1": {
-                    "question1a": "False",
-                    "question1b": "False",
-                    "question1c": "False"
-                },
-            "question2": "False"
-        },
-        "allergies": {
-            "question1": {
-                "question1a": "False",
-                "question1b": "False"
-            }
-        },
-        "family_history": {
-            "question1": {
-                    "question1a": "False",
-                    "question1b": "False"
-                },
-            "question2": "False",
-            "question3": {
-                "question3a": "False",
-                "question3b": "False"
-            }
-        },
-        "social_history": {
-            "question1": {
-                    "question1a": "False",
-                    "question1b": "False"
-                },
-            "question2": "False",
-            "question3": {
-                    "question3a": "False",
-                    "question3b": "False"
-                },
-            "question4": "False"
-        },
-        "ROS": {
-            "question1": "False",
-            "question2": "False",
-            "question3": "False",
-            "question4": "False",
-            "question5": "False",
-            "question6": "False",
-            "question7": "False",
-            "question8": "False",
-            "question9": "False",
-            "question10": "False",
-            "question11": "False",
-            "question12": "False",
-            "question13": "False",
-            "question14": "False"
-        }
+# ==========================================
+# 2. SCENARIO MAPPING
+# ==========================================
+SCENARIO_MAP = {
+    "Asthma": {
+        "exercise_induced": ASTHMA_EXERCISE_INDUCED,
+        "mild_allergic": ASTHMA_MILD_ALLERGIC,
+        "severe_uncontrolled": ASTHMA_SEVERE_UNCONTROLLED
     },
-    "physical_exam": {
-        "general_appearance": {
-            "level_of_consciousness_mood_and_behavior": {
-                "level_of_consciousness": "False",
-                "mood": "False",
-                "behavior": "False"
-            },
-            "posture_and_position": {
-                "position_of_comfort": "False"
-            },
-            "overall_appearance": {
-                "nutritional_status": "False"
-            },
-            "cardiopulmonary_and_circulatory_clues": {
-                "cyanosis": "False",
-                "dyspnea": "False",
-                "edema": "False"
-            }
-        },
-        "head_and_neck": {
-            "head_and_face": {
-                "symmetry_and_lesions": "False",
-                "tenderness": "ّFalse"
-            },
-            "eyes": {
-                "sclera_and_conjunctiva": "False",
-                "pupils_reaction": "ّFalse",
-                "extraocular_movements": "False"
-            },
-            "ears": {
-                "external_and_tenderness": "False",
-                "eardrum_appearance": "ّFalse"
-            },
-            "nose_and_sinuses": {
-                "septum_and_discharge": "False",
-                "sinus_tenderness": "False"
-            },
-            "mouth_and_pharynx": {
-                "oral_mucosa_and_lesions": "False",
-                "pharynx_and_tonsils": "False"
-            },
-            "neck_and_lymphatics": {
-                "inspection": "False",
-                "tracheal_position": "False",
-                "thyroid_gland": "False",
-                "carotid_bruit": "False",
-                "lymph_nodes_size_consistency": "False",
-                "lymph_nodes_mobility_tenderness": "False"
-            }
-        },
-        "respiratory_system": {
-            "inspection": {
-                "accessory_muscles": "12:00",
-                "chest_shape_and_symmetry": "12:05"
-            },
-            "palpation": {
-                "chest_expansion": "False",
-                "tactile_fremitus": "False"
-            },
-            "percussion": "False",
-            "auscultation": {
-                "breath_sounds_intensity": "False",
-                "adventitious_sounds": "11:30"
-            }
-        },
-        "cardiovascular_system": {
-            "JVP_assessment": "11:00",
-            "palpation": {
-                "precordial_palpation_heave_thrill": "False",
-                "pmi_assessment": "False"
-            },
-            "auscultation": {
-                "heart_sounds_s1_s2": "False",
-                "extra_sounds_s3_s4_murmurs": "False"
-            },
-            "peripheral_pulses_and_extremities": {
-                "peripheral_pulses_symmetry_and_quality": "False",
-                "extremities_color_and_trophic_changes": "False",
-                "extremities_temperature_and_cap_refill": "False",
-                "extremities_edema": "False"
-            },
-            "abdominal_system": {
-                "inspection": "False",
-                "auscultation": {
-                    "bowel_sounds": "False",
-                    "vascular_bruits": "False"
-                },
-                "percussion": {
-                    "general": "False",
-                    "organ_borders": "False"
-                },
-                "palpation": {
-                    "superficial_tenderness": "False",
-                    "deep_masses_and_organs": "False"
-                },
-                "peritoneal_signs": "False"
-            }
-        },
-        "neurological": {
-            "mental_status_and_LOC": "False",
-            "cranial_nerves": "False",
-            "motor_strength_and_tone": "False",
-            "involuntary_movements": "False",
-            "sensory_light_touch_and_pain": "False",
-            "deep_tendon_reflexes": "False",
-            "coordination_and_gait": "False"
-        },
-        "musculoskeletal_system": {
-            "inspection": {
-                "joints": "False",
-                "muscles": "False"
-            },
-            "palpation": {
-                "tenderness_and_crepitus": "False"
-            },
-            "range_of_motion_active_passive": "False",
-            "stability_and_function": "False"
-        }
+    "PTE": {
+        "massive_pte": PTE_MASSIVE_PTE,
+        "peripheral_infarct": PTE_PERIPHERAL_INFARCT,
+        "submassive_pte": PTE_SUBMASSIVE_PTE
     },
-    "paraclinic": {
-        "basic_blood_tests": {
-            "CBC": {
-                "Hb": "9:30", 
-                "WBC": "False", 
-                "Plt": "False"
-            },
-            "ESR/CRP": "False",
-            "BMP": "False",
-            "LFTs": "False",
-            "VBG": "10:30"
-        },
-        "specialized_lung_tests": {
-            "Sputum_analysis": "False",
-            "Sputum_AFB": "False",
-            "a1_antitrypsin_level": "06:15",
-            "D_dimer": "False",
-            "BNP_NT_proBNP": "10:15"
-        },
-        "immunity_and_serology": {
-            "HIV_test": "False",
-            "Autoimmune_pannel_ANA_ANCA": "False"
-        },
-        "simple_imaging": {
-            "Chest_X_Ray": {
-                "PA": "10:00",
-                "Lateral": "10:05"
-            }
-        },
-        "advanced_imaging": {
-            "Chest_CT_CTPA": "False",
-            "MRI_chest": "False",
-            "Pet_scan": "False"
-        },
-        "functional_tests": {
-            "Spirometry": "08:00",
-            "peak_flow": "False",
-            "plethysmography": "07:00"
-        },
-        "procedures": {
-            "Bronchoscopy": "False",
-            "torachonthesis": "False"
-        }
+    "PH": {
+        "idiopathic_pah": PH_IDIOPATHIC_PAH,
+        "ph_left_heart": PH_LEFT_HEART,
+        "ph_lung_disease": PH_LUNG_DISEASE
     },
-    "differential_diagnosis": {
-        "disease1": "False",
-        "disease2": "05:15",
-        "disease3": "05:30",
-        "disease4": "False",
-        "disease5": "05:10",
-        "disease6": "False",
-        "disease7": "05:00",
-        "disease8": "False"
+    "COPD": {
+        "chronic_bronchitis": COPD_CHRONIC_BRONCHITIS,
+        "copd_cor_pulmonale": COPD_COR_PULMONALE,
+        "emphysema": COPD_EMPHYSEMA
     },
-    "final_diagnosis": {
-        "disease3": "02:00"
+    "IPF": {
+        "acute_ipf_exacerbation": IPF_ACUTE_IPF_EXACERBATION,
+        "rheumatoid_ild": IPF_RHEUMATOID_ILD,
+        "stable_ipf": IPF_STABLE_IPF
+    },
+    "Pneumonia": { # توجه: نام فایل pneumenia.py است اما اینجا اصلاح شده خوانده میشود
+        "atypical_walking": PNEUMENIA_ATYPICAL_WALKING,
+        "complicated_effusion": PNEUMENIA_COMPLICATED_EFFUSION,
+        "typical_lobar": PNEUMENIA_TYPICAL_LOBAR
     }
 }
 
@@ -801,47 +340,6 @@ def flatten_dict(d, parent_key='', sep='.'):
             items.append((new_key, v))
     return dict(items)
 
-def format_list_for_prompt(items_list):
-    """Converts a list of action keys into a readable bulleted string for LLM."""
-    if not items_list:
-        return "None"
-    return "\n".join([f"- {item}" for item in items_list])
-
-def analyze_and_return(optimal, student):
-    """
-    Compares flattened dictionaries to find Correct, Missed, and Noise items.
-    """
-    flat_optimal = flatten_dict(optimal)
-    flat_student = flatten_dict(student)
-    
-    results = {
-        "correct": [],
-        "missed": [],
-        "noise": []
-    }
-    
-    # Union of all keys ensures we check everything
-    all_keys = set(flat_optimal.keys()) | set(flat_student.keys())
-    
-    for key in all_keys:
-        # 1. Check Optimal Status
-        opt_val = flat_optimal.get(key, "False")
-        is_required = str(opt_val).strip().lower() == "true"
-        
-        # 2. Check Student Status
-        stud_val = flat_student.get(key, "False")
-        is_performed = stud_val is not None and str(stud_val).strip().replace("ّ", "").lower() not in ["false", "none", ""]
-        
-        # 3. Categorize
-        if is_required and is_performed:
-            results["correct"].append(key)
-        elif is_required and not is_performed:
-            results["missed"].append(key)
-        elif not is_required and is_performed:
-            results["noise"].append(key)
-            
-    return results
-
 def calculate_metrics(optimal, student):
     """
     Analyzes the logs and calculates pure numbers for the chart.
@@ -849,7 +347,6 @@ def calculate_metrics(optimal, student):
     flat_optimal = flatten_dict(optimal)
     flat_student = flatten_dict(student)
     
-    # 1. Categorization Lists
     categorized = {
         "correct": [],
         "missed": [],
@@ -861,11 +358,14 @@ def calculate_metrics(optimal, student):
     for key in all_keys:
         # Check Optimal Requirement
         opt_val = flat_optimal.get(key, "False")
+        # Handle simple "true"/"false" strings or booleans
         is_required = str(opt_val).strip().lower() == "true"
         
         # Check Student Action
         stud_val = flat_student.get(key, "False")
-        is_performed = stud_val is not None and str(stud_val).strip().replace("ّ", "").lower() not in ["false", "none", ""]
+        # Clean up the student value (remove potential Persian chars like 'ّ')
+        clean_stud_val = str(stud_val).strip().replace("ّ", "").lower()
+        is_performed = stud_val is not None and clean_stud_val not in ["false", "none", "", "0"]
         
         if is_required and is_performed:
             categorized["correct"].append(key)
@@ -874,15 +374,13 @@ def calculate_metrics(optimal, student):
         elif not is_required and is_performed:
             categorized["noise"].append(key)
             
-    # 2. Calculation for Chart
+    # Calculation
     correct_count = len(categorized["correct"])
     noise_count = len(categorized["noise"])
     missed_count = len(categorized["missed"])
     
-    # Total Actions Taken (Denominator for Signal-to-Noise Ratio)
     total_actions_performed = correct_count + noise_count
     
-    # Efficiency Score (0 to 100)
     efficiency_score = 0
     if total_actions_performed > 0:
         efficiency_score = int((correct_count / total_actions_performed) * 100)
@@ -895,22 +393,21 @@ def calculate_metrics(optimal, student):
             "total_performed": total_actions_performed
         },
         "score": efficiency_score,
-        "details": categorized # لیست کامل برای استفاده در پرامپت
+        "details": categorized
     }
-
-# ==========================================
-# 3. AI FEEDBACK GENERATION
-# ==========================================
 
 def generate_analysis_json(metrics_data, full_scenario_ref):
     """
     Uses LLM to generate text analysis based on the metrics.
-    Returns a JSON object.
     """
-    
-    # Preparing data strings for the prompt
     def list_to_str(lst):
-        return "\n".join([f"- {item}" for item in lst]) if lst else "None"
+        # Limit the list to top 15 items to avoid token limits if list is huge
+        limit = 15
+        items = lst[:limit]
+        text = "\n".join([f"- {item}" for item in items])
+        if len(lst) > limit:
+            text += f"\n... and {len(lst)-limit} more."
+        return text if items else "None"
 
     correct_str = list_to_str(metrics_data["details"]["correct"])
     missed_str = list_to_str(metrics_data["details"]["missed"])
@@ -918,38 +415,37 @@ def generate_analysis_json(metrics_data, full_scenario_ref):
     
     full_scenario_str = json.dumps(full_scenario_ref, ensure_ascii=False)
     
-    # Define Parser
     parser = JsonOutputParser()
 
-    # Define Prompt
     template_text = """
-    Role: Senior Clinical Professor.
+    Role: Senior Clinical Professor evaluating a medical student.
     
     ---
-    ### REFERENCE MAP (Scenario Content)
+    ### CONTEXT MAP (What questions/tests mean)
     {full_scenario_reference}
     ---
     
-    ### STUDENT STATS
-    - Efficiency Score: {efficiency_score}%
-    - CORRECT Actions (Signal):
+    ### STUDENT PERFORMANCE METRICS
+    - **Efficiency Score:** {efficiency_score}% (Higher is better, means less noise)
+    
+    - **CORRECT Actions (Signal - Good Clinical Judgment):**
     {correct_list}
     
-    - MISSED Actions (Gap):
+    - **MISSED Actions (Gap - Important things forgotten):**
     {missed_list}
     
-    - NOISE Actions (Waste):
+    - **NOISE Actions (Waste - Unnecessary tests/questions performed):**
     {noise_list}
     
-    ### TASK
+    ### INSTRUCTIONS
     Analyze the student's "Diagnostic Efficiency".
-    Return a valid JSON object (Keys: "strengths", "missed_criticals", "inefficiencies", "conclusion").
-    Values must be in **Persian**.
+    Return a valid JSON object with these keys: 
+    1. "strengths": (Persian text) Praise the correct critical actions.
+    2. "missed_criticals": (Persian text) Explain the medical risk of missing the items in the 'MISSED' list.
+    3. "inefficiencies": (Persian text) Explain why the items in 'NOISE' list were unnecessary for this specific case.
+    4. "conclusion": (Persian text) A brief final verdict.
     
-    Guidelines:
-    1. Look up the meaning of missed/noise keys in the REFERENCE MAP.
-    2. Explain WHY a missed item is critical.
-    3. Explain WHY a noise item was a waste of resources.
+    **Important:** The output MUST be in **Persian (Farsi)**.
     
     {format_instructions}
     """
@@ -960,14 +456,13 @@ def generate_analysis_json(metrics_data, full_scenario_ref):
         partial_variables={"format_instructions": parser.get_format_instructions()}
     )
     
-    # Initialize Model (تنظیمات مدل خود را اینجا انجام دهید)
+    # Initialize Model (Using the config provided in categorize.py)
     model = init_chat_model(
-    base_url="https://api.avalai.ir/v1", 
-    api_key="aa-o3nQicuKCc2ND0IuSOHDXouISJ0GQHvK1cqQmtGgBvORi2FH",
-    model="gpt-4o-mini"
-)
+        base_url="https://api.avalai.ir/v1", 
+        api_key="aa-o3nQicuKCc2ND0IuSOHDXouISJ0GQHvK1cqQmtGgBvORi2FH",
+        model="gpt-4o-mini"
+    )
 
-    # 6. ساخت Chain (اتصال پرامپت -> مدل -> پارسر JSON)
     chain = prompt | model | parser
     
     try:
@@ -980,20 +475,26 @@ def generate_analysis_json(metrics_data, full_scenario_ref):
         })
     except Exception as e:
         return {
-            "strengths": "خطا در تولید",
-            "missed_criticals": "خطا در تولید",
-            "inefficiencies": "خطا در تولید",
+            "strengths": "خطا در تولید گزارش",
+            "missed_criticals": "خطا در ارتباط با هوش مصنوعی",
+            "inefficiencies": "Error Details",
             "conclusion": f"Error: {str(e)}"
         }
 
-def process_diagnostic_efficiency(optimal_scenario, student_log, full_scenario_text):
-    # 1. Calculate Numbers
+def process_diagnostic_efficiency(disease_cat, scenario_key, student_log):
+    # 1. Get Optimal Scenario
+    try:
+        optimal_scenario = SCENARIO_MAP[disease_cat][scenario_key]
+    except KeyError:
+        return {"error": f"Scenario {disease_cat} -> {scenario_key} not found."}
+
+    # 2. Calculate Numbers
     metrics = calculate_metrics(optimal_scenario, student_log)
     
-    # 2. Generate Analysis
-    ai_analysis = generate_analysis_json(metrics, full_scenario_text)
+    # 3. Generate Analysis with AI
+    ai_analysis = generate_analysis_json(metrics, FULL_SCENARIO)
     
-    # 3. Final Response (Updated)
+    # 4. Construct Final Response
     response = {
         "chart_data": {
             "signal_value": metrics["counts"]["signal"],
@@ -1003,8 +504,8 @@ def process_diagnostic_efficiency(optimal_scenario, student_log, full_scenario_t
             "total_actions": metrics["counts"]["total_performed"]
         },
         "details": {
-            "missed_items": metrics["details"]["missed"], # لیست سوالات پرسیده نشده (جدید)
-            "noise_items": metrics["details"]["noise"],   # لیست سوالات اضافی
+            "missed_items": metrics["details"]["missed"],
+            "noise_items": metrics["details"]["noise"],
             "correct_items": metrics["details"]["correct"]
         },
         "analysis": ai_analysis
@@ -1012,12 +513,4 @@ def process_diagnostic_efficiency(optimal_scenario, student_log, full_scenario_t
     
     return response
 
-# # ==========================================
-# # 4. MAIN EXECUTION
-# # ==========================================
-# if __name__ == "__main__":
-    
-#     final_output = process_diagnostic_efficiency(OPTIMAL_SCENARIO, STUDENT_LOG, FULL_SCENARIO)
-    
-#     print(json.dumps(final_output, indent=4, ensure_ascii=False))
     
