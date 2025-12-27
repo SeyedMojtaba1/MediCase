@@ -1,6 +1,6 @@
 from celery import shared_task
 from .scenario_creator import scenario_creator
-from .feedback_generator import feedback_generator
+from .feedback_utils.generate_feedback import generate_feedback
 from .models import PulmonologyScenario, PulmonologyDisease, PulmonologyFeedback, StudentLog
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
@@ -62,12 +62,12 @@ def senario_creator_celery(personal_number, tracking_code):
         return {"detail": "An internal error occurred."}
     
 @shared_task
-def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, disease, student_log):
+def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, disease, type_disease, student_log):
     logger.info(f"Starting feedback creation for scenario: {scenario_tracking_code}")
     
     # 1. تولید فیدبک از طریق هوش مصنوعی یا متد مربوطه
     try:
-        feedback, evaluation, transition = feedback_generator(disease, student_log)
+        feedback = generate_feedback(disease, type_disease, student_log)
     except Exception as e:
         logger.error(f"Error in feedback_generator: {str(e)}")
         return {"detail": "Error generating feedback content."}
@@ -93,8 +93,6 @@ def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, dise
                 generated = True,
                 defaults={
                     'feedback': feedback,
-                    'evaluation': evaluation,
-                    'transition': transition,
                     'scenario': scenario
                 }
             )

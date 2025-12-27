@@ -98,9 +98,10 @@ def feedback_create(request, *args, **kwargs):
         )
     
     disease = pulmonology_scenario.disease.english_name
+    disease_type = pulmonology_scenario.disease.type_disease
     
     feedback_tracking_code = generate_tracking_code(10)
-    feedback_creator_celery.delay(feedback_tracking_code, scenario_tracking_code, disease, student_log)
+    feedback_creator_celery.delay(feedback_tracking_code, scenario_tracking_code, disease, disease_type, student_log)
 
     return Response({"tracking_code": feedback_tracking_code}, status=status.HTTP_200_OK)
 
