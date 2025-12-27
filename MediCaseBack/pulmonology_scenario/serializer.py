@@ -55,10 +55,12 @@ class FeedbackRetrieveSerializer(serializers.ModelSerializer):
         }
         
 class FeedbackListSerializer(serializers.ModelSerializer):
+    scenario_tracking_code = serializers.ReadOnlyField(source='scenario.tracking_code')
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
             'tracking_code',
+            'scenario_tracking_code'
             'generated'
         ]
