@@ -18,21 +18,37 @@ import {Card} from '../../../../layouts/card/card';
 export class Stat {
 
   data: any
+  resData: any
   protected readonly console = console;
 
   constructor(public master: Master, public changeDetectorRef: ChangeDetectorRef, public toastService: ToastService) {
   }
 
   ngOnInit() {
-
-
     this.master.scenarioList().subscribe({
       next: data => {
-        console.log(data);
-        this.data = data
+        this.data = data;
         this.changeDetectorRef.detectChanges();
+
+        this.master.feedbackList().subscribe({
+          next: feedbackData => {
+            // با توجه به پاسخ شما، اگر دیتا مستقیماً در بدنه است یا در feedbackData.body
+            this.resData = feedbackData.body || feedbackData;
+            this.changeDetectorRef.detectChanges();
+          }
+        });
       }
-    })
+    });
+  }
+
+
+  getFeedbackCode(scenarioCode: string): string | null {
+    if (!this.resData) return null;
+
+    // پیدا کردن فیدبکی که scenario_tracking_code آن با کد سناریو برابر است
+    const feedback = this.resData.find((f: any) => f.scenario_tracking_code === scenarioCode);
+    return feedback ? feedback.tracking_code : null;
+
   }
 
   createScenrio() {

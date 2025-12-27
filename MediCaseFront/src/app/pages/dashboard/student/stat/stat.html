@@ -41,9 +41,24 @@
             <td class="px-6 py-4">
               <div class="flex justify-center items-center">
                 @if (a.done) {
-                  <app-action class="w-fit" text="مشاهده گزارش"></app-action>
+                  @let feedbackCode = getFeedbackCode(a.tracking_code);
+
+                  @if (feedbackCode) {
+                    <app-action
+                      class="w-fit"
+                      text="مشاهده گزارش"
+                      [url]="'/report/' + feedbackCode">
+                    </app-action>
+                  } @else {
+                    <span class="text-xs text-gray-400 italic">در حال تولید گزارش...</span>
+                  }
+
                 } @else {
-                  <app-action class="w-fit" text="ویزیت بیمار" [url]="'/scenario/'+a.tracking_code"></app-action>
+                  <app-action
+                    class="w-fit"
+                    text="ویزیت بیمار"
+                    [url]="'/scenario/' + a.tracking_code">
+                  </app-action>
                 }
               </div>
             </td>

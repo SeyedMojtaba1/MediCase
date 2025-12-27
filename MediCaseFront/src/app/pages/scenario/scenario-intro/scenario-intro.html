@@ -1,74 +1,204 @@
-<div class="p-4 sm:p-8 bg-gray-50 min-h-screen text-gray-800" dir="rtl">
+<div *ngIf="feedback" class="p-4 sm:p-10 bg-gray-50 min-h-screen text-gray-800 dir-rtl" dir="rtl">
 
-  <h1 class="text-3xl font-extrabold mb-8 text-center text-blue-800">
-    گزارش ارزیابی سناریوی بالینی 📋
-  </h1>
+  <div
+    [style.background]="feedback.overall_result.is_passed ? 'linear-gradient(to left, #148691, #216067)' : 'linear-gradient(to left, #941c1c, #c62828)'"
+    class="max-w-6xl mx-auto rounded-[2.5rem] p-8 shadow-2xl mb-10 text-white relative overflow-hidden transition-all duration-500">
 
-  <div class="max-w-3xl mx-auto mb-8 bg-white rounded-xl shadow-lg p-6 space-y-4">
-    <h2 class="text-xl font-bold border-b pb-2 text-right text-gray-700">🗣️ بازخورد و تحلیل عملکرد</h2>
+    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <h1 class="text-3xl font-black">کارنامه ارزیابی هوشمند</h1>
+          <span class="bg-white/20 px-3 py-1 rounded-lg text-xs backdrop-blur-sm">نسخه تحلیلی v1.0</span>
+        </div>
+        <p class="opacity-80 flex items-center">
+          <span class="ml-2">🏥</span> سناریو: {{ feedback.meta.scenario }} | تشخیص نهایی: {{ feedback.meta.disease }}
+        </p>
+      </div>
 
-    <div class="bg-green-50 border-r-4 border-green-600 p-3 rounded-md">
-      <h3 class="font-bold text-green-800">✅ نقاط قوت (Strengths)</h3>
-      <p class="text-sm text-gray-700 mt-1">{{ feedback.feedback.total.strengths }}</p>
+      <div class="flex items-center gap-6 bg-white/10 p-4 rounded-3xl backdrop-blur-md border border-white/20">
+        <div class="text-center">
+          <p class="text-xs opacity-70 mb-1">امتیاز کسب شده</p>
+          <p class="text-4xl font-black">{{ feedback.score.obtained }} <span
+            class="text-sm opacity-50">/ {{ feedback.score.total }}</span></p>
+        </div>
+        <div class="w-[2px] h-12 bg-white/20"></div>
+        <div class="text-center">
+          <p class="text-xs opacity-70 mb-1">زمان ویزیت</p>
+          <p class="text-2xl font-bold font-mono">{{ feedback.time_management.duration_formatted }}</p>
+        </div>
+      </div>
+
+      <button (click)="shareResults()"
+              class="bg-white text-gray-800 p-4 rounded-2xl hover:bg-opacity-90 transition-all shadow-lg flex items-center gap-2 font-bold">
+        <span class="cursor-pointer">اشتراک‌گذاری</span>
+      </button>
     </div>
-
-    <div class="bg-yellow-50 border-r-4 border-yellow-600 p-3 rounded-md">
-      <h3 class="font-bold text-yellow-800">🔻 اقدامات از دست رفته (M)</h3>
-      <p class="text-sm text-gray-700 mt-1">{{ feedback.feedback.total.weaknesses.M.description }}</p>
-    </div>
-
-    <div class="bg-red-50 border-r-4 border-red-600 p-3 rounded-md">
-      <h3 class="font-bold text-red-800">❌ اقدامات غیرضروری (E)</h3>
-      <p class="text-sm text-gray-700 mt-1">{{ feedback.feedback.total.weaknesses.E.description }}</p>
-    </div>
-
-    <div class="bg-blue-50 border-r-4 border-blue-600 p-3 rounded-md">
-      <h3 class="font-bold text-blue-800">💡 توصیه‌های آموزشی</h3>
-      <p class="text-sm text-gray-700 mt-1 whitespace-pre-line">{{ feedback.feedback.educational_feedback }}</p>
-    </div>
-
   </div>
 
-  <div class="max-w-3xl mx-auto mb-8 bg-white rounded-xl shadow-lg overflow-hidden">
-    <h2 class="text-xl font-bold p-4 border-b text-right bg-gray-100 text-blue-800">
-      📊 خلاصه عملکرد در مراحل مختلف
-    </h2>
+  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-blue-50">
-      <tr>
-        <th class="px-3 py-3 text-right text-sm font-semibold text-gray-700">بخش</th>
-        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">درست (C)</th>
-        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">از دست رفته (M)</th>
-        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">امتیاز (A)</th>
-        <th class="px-3 py-3 text-center text-sm font-semibold text-gray-700">نرخ موفقیت</th>
-      </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-100">
+    <div class="lg:col-span-8 space-y-8">
+      <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 bg-gray-50/50 border-b border-gray-100 flex justify-between items-center">
+          <h3 class="font-bold text-gray-700">تحلیل رفتار بالینی</h3>
+          <span [style.background-color]="feedback.overall_result.color_code + '20'"
+                [style.border-color]="feedback.overall_result.color_code"
+                [style.color]="feedback.overall_result.color_code"
+                class="px-6 py-2 rounded-full text-sm font-black animate-pulse border">
+            {{ feedback.overall_result.title }}
+          </span>
+        </div>
 
-      </tbody>
-    </table>
-  </div>
+        <div class="divide-y divide-gray-100">
+          <div class="p-6 hover:bg-emerald-50/30 transition-colors">
+            <h4 class="text-emerald-600 font-bold mb-2 flex items-center">
+              <span class="ml-2 text-xl">✅</span> نقاط قوت
+            </h4>
+            <p class="text-gray-600 text-sm leading-relaxed">{{ feedback.ai_analysis.strengths }}</p>
+          </div>
+          <div class="p-6 hover:bg-red-50/30 transition-colors">
+            <h4 class="text-red-500 font-bold mb-2 flex items-center">
+              <span class="ml-2 text-xl">🚫</span> اقدامات غیرضروری (Noise)
+            </h4>
+            <p class="text-gray-600 text-sm leading-relaxed">{{ feedback.ai_analysis.inefficiencies }}</p>
+          </div>
+          <div class="p-6 hover:bg-amber-50/30 transition-colors">
+            <h4 class="text-amber-600 font-bold mb-2 flex items-center">
+              <span class="ml-2 text-xl">⚠️</span> موارد نادیده گرفته شده
+            </h4>
+            <p class="text-gray-600 text-sm leading-relaxed">{{ feedback.ai_analysis.missed_criticals }}</p>
+          </div>
+        </div>
+      </div>
 
-  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 space-y-4">
-    <h2 class="text-xl font-bold border-b pb-2 text-right text-gray-700">🛑 خطاهای ترتیب مراحل (Transition)</h2>
-
-    @for (key of ['transition_1_to_2', 'transition_2_to_3']; track key) {
-      @let transition = feedback.transition[key];
-
-      @if (transition.error) {
-        <div class="border-r-4 border-red-800 bg-red-100 p-3 rounded-md">
-          <h3 class="font-bold text-red-900">
-            {{ transition.message }}
+      <div
+        class="bg-gradient-to-l from-[#148691] to-[#216067] p-8 rounded-[2.5rem] shadow-2xl text-white relative overflow-hidden group">
+        <div class="relative z-10">
+          <h3 class="text-xl font-black mb-4 flex items-center gap-2">
+            <span class="p-2 bg-white/10 rounded-xl backdrop-blur-md">🤖</span>
+            جمع‌بندی هوش مصنوعی
           </h3>
-          <p class="text-xs text-gray-800 mt-1">
-            **آستانه مورد نیاز:** {{ transition.threshold_50_percent }} اقدام.
-            <span class="mr-3">**اقدامات انجام‌شده:** {{ transition.A1_at_transition || transition.A2_at_transition }}
-              مورد.</span>
+          <p class="leading-loose text-emerald-50 font-medium italic text-lg transition-all group-hover:tracking-wide">
+            " {{ feedback.ai_analysis.conclusion }} "
           </p>
         </div>
-      }
-    }
+        <div class="absolute -left-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-black/10 rounded-full blur-3xl"></div>
+      </div>
+
+
+    </div>
+
+    <div class="lg:col-span-4 space-y-8">
+      <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 flex flex-col items-center">
+        <h3 class="font-bold text-gray-700 mb-8 self-start flex items-center">
+          <span class="w-2 h-6 bg-[#148691] ml-3 rounded-full"></span>
+          آنالیز آماری اقدامات
+        </h3>
+
+        <div
+          [style.background]="'conic-gradient(#10b981 ' + (feedback.chart_data.signal_value/feedback.chart_data.total_actions*360) + 'deg, #f59e0b 0 ' + ((feedback.chart_data.signal_value + feedback.chart_data.missed_value)/feedback.chart_data.total_actions*360) + 'deg, #ef4444 0)'"
+          class="relative w-48 h-48 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-105 duration-300">
+          <div class="absolute inset-4 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
+            <span class="text-3xl font-black text-gray-700">{{ feedback.chart_data.total_actions }}</span>
+            <span class="text-[10px] text-gray-400 uppercase font-bold">کل اقدامات</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 w-full mt-8 gap-3">
+          <div class="flex justify-between items-center p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+            <span class="text-sm font-bold text-emerald-700">موثر (Signal)</span>
+            <span class="font-mono font-black text-emerald-800">{{ feedback.chart_data.signal_value }}</span>
+          </div>
+          <div class="flex justify-between items-center p-3 bg-amber-50 rounded-xl border border-amber-100">
+            <span class="text-sm font-bold text-amber-700">فراموش شده (Missed)</span>
+            <span class="font-mono font-black text-amber-800">{{ feedback.chart_data.missed_value }}</span>
+          </div>
+          <div class="flex justify-between items-center p-3 bg-red-50 rounded-xl border border-red-100">
+            <span class="text-sm font-bold text-red-700">اضافی (Noise)</span>
+            <span class="font-mono font-black text-red-800">{{ feedback.chart_data.noise_value }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-[2rem] text-white shadow-xl relative overflow-hidden group">
+        <h3 class="text-sm opacity-70 mb-4 italic uppercase tracking-widest">Efficiency Score</h3>
+        <div class="flex items-end gap-2 relative z-10">
+          <span
+            class="text-6xl font-black text-[#148691] group-hover:text-emerald-400 transition-colors">{{ feedback.score.efficiency_score }}</span>
+          <span class="text-2xl font-bold mb-1">%</span>
+        </div>
+        <p class="mt-4 text-xs leading-loose text-slate-400 relative z-10">
+          شاخص بهره‌وری بالینی: دقت شما در رسیدن به تشخیص بدون هدررفت منابع.
+        </p>
+        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-[#148691]/10 rounded-full blur-3xl"></div>
+      </div>
+    </div>
   </div>
 
+  <div class="max-w-6xl mx-auto mt-12 mb-20">
+    <h3 class="text-xl font-bold text-gray-400 mb-6 flex items-center gap-2">
+      <hr class="flex-grow border-gray-200">
+      <span>جزئیات دقیق عملکرد</span>
+      <hr class="flex-grow border-gray-200">
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div
+        class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm opacity-80 hover:opacity-100 transition-opacity">
+        <h4 class="font-bold text-amber-700 mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+          لیست موارد انجام نشده ({{ feedback.detailed_lists.missed_items.length }})
+        </h4>
+        <div class="max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+          <ul class="space-y-2">
+            <li *ngFor="let item of feedback.detailed_lists.missed_items"
+                class="text-[11px] text-gray-500 bg-gray-50 p-2 rounded-lg font-mono">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm opacity-80 hover:opacity-100 transition-opacity">
+        <h4 class="font-bold text-red-700 mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+          لیست اقدامات اضافی ({{ feedback.detailed_lists.noise_items.length }})
+        </h4>
+        <div class="max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+          <ul class="space-y-2">
+            <li *ngFor="let item of feedback.detailed_lists.noise_items"
+                class="text-[11px] text-gray-500 bg-gray-50 p-2 rounded-lg font-mono">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<style>
+  .dir-rtl {
+    direction: rtl;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+  }
+</style>

@@ -812,11 +812,15 @@ export class Scenario {
       this.activeSection = 5;
     }
 
-    // this.master.pulmonologyScenarioFeedbackCreate(this.trackingCode, this.log).subscribe({});
+    this.master.pulmonologyScenarioFeedbackCreate(this.trackingCode, this.log).subscribe({
+      next: (data) => {
+        console.log(data)
+      }
+    });
 
     this.showDifferentialDiagnosisModal = false;
     this.fireConfetti();
-    this.router.navigateByUrl('/scenarioinit');
+    this.router.navigateByUrl('/stat');
     this.playSuccess();
     this.changeDetectorRef.detectChanges();
   }

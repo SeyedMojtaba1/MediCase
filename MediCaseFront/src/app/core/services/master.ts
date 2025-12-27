@@ -410,6 +410,17 @@ export class Master {
     });
   }
 
+  feedbackList(): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    })
+    return this.http.get<any>(this.BASE_URL + '/pulmonologyscenario/feedbacklist/' + localStorage.getItem('personal_number') + '/', {
+      headers,
+      withCredentials: true
+    })
+  }
+
   // ***************************************************************************
 // ***************************************************************************
 //                              hospital
