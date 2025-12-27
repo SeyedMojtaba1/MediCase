@@ -29,7 +29,7 @@ export class TSideBar {
       name: 'حساب کاربری', image: 'images/svg/profile.svg', link: '/dashboard/t/profile', exact: false
     },
     {
-      name: 'تجزیه و تحلیل', image: 'images/svg/stat.svg', link: '/dashboard/t/stat', exact: false
+      name: 'گزارش عملکرد', image: 'images/svg/stat.svg', link: '/dashboard/t/stat', exact: false
     }
   ]
 }

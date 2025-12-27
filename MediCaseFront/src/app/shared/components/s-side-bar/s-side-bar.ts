@@ -30,7 +30,7 @@ export class SSideBar {
       name: 'حساب کاربری', image: 'images/svg/profile.svg', link: '/dashboard/s/profile', exact: false
     },
     {
-      name: 'تجزیه و تحلیل', image: 'images/svg/stat.svg', link: '/dashboard/s/stat', exact: false
+      name: 'گزارش عملکرد', image: 'images/svg/stat.svg', link: '/dashboard/s/stat', exact: false
     }
   ]
   protected readonly APP_CONFIG = APP_CONFIG;

@@ -1,8 +1,11 @@
 <div [routerLink]="url"
-     class="flex flex-row cursor-pointer justify-between w-full p-5 rounded-lg bg-gradient-to-l from-[#148691] to-[#216067]">
+     class="flex flex-row cursor-pointer gap-3 items-center justify-between w-full p-4 px-5 rounded-lg bg-gradient-to-l from-[#148691] to-[#216067]">
+  @if (icon) {
+    <img [src]="icon" class="cursor-pointer invert-100 h-6 w-6">
+  }
+
   <p class="text-white cursor-pointer">
     {{ text }}
   </p>
 
-  <img [src]="icon" class="cursor-pointer invert-100">
 </div>

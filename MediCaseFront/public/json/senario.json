@@ -116,33 +116,33 @@
             },
     "head_and_neck": {
       "head_and_face": {
-        "symmetry_and_lesions": "سر و صورت: تقارن و ضایعات",
-        "tenderness": "سر و صورت: حساسیت به لمس (Tenderness)"
+        "symmetry_and_lesions": "تقارن و ضایعات",
+        "tenderness": "حساسیت به لمس (Tenderness)"
       },
       "eyes": {
-        "sclera_and_conjunctiva": "چشم: صلبیه و ملتحمه",
-        "pupils_reaction": "چشم: واکنش های مردمک",
-        "extraocular_movements": "چشم: حرکات خارج چشمی (EOM)"
+        "sclera_and_conjunctiva": "صلبیه و ملتحمه",
+        "pupils_reaction": "واکنش های مردمک",
+        "extraocular_movements": "حرکات خارج چشمی (EOM)"
       },
       "ears": {
-        "external_and_tenderness": "گوش: حساسیت به لمس گوش خارجی",
-        "eardrum_appearance": "گوش: مشاهده پرده صماخ"
+        "external_and_tenderness": "حساسیت به لمس گوش خارجی",
+        "eardrum_appearance": "مشاهده پرده صماخ"
       },
       "nose_and_sinuses": {
-        "septum_and_discharge": "بینی و سینوس: سپتوم بینی و ترشحات",
-        "sinus_tenderness": "بینی و سینوس: حساسیت به لمس سینوس ها"
+        "septum_and_discharge": "سپتوم بینی و ترشحات",
+        "sinus_tenderness": "حساسیت به لمس سینوس ها"
       },
       "mouth_and_pharynx": {
-        "oral_mucosa_and_lesions": "دهان و حلق: مخاط دهان و ضایعات",
-        "pharynx_and_tonsils": "دهان و حلق: حلق و لوزه ها"
+        "oral_mucosa_and_lesions": "مخاط دهان و ضایعات",
+        "pharynx_and_tonsils": "حلق و لوزه ها"
       },
       "neck_and_lymphatics": {
-        "inspection": "گردن و غدد لنفاوی: مشاهده",
-        "tracheal_position": "گردن و غدد لنفاوی: موقعیت تراشه",
-        "thyroid_gland": "گردن و غدد لنفاوی: معاینه غده تیرویید",
-        "carotid_bruit": "گردن و غدد لنفاوی: برویی کاروتید",
-        "lymph_nodes_size_consistency": "گردن و غدد لنفاوی: سایز و قوام لنف نودها",
-        "lymph_nodes_mobility_tenderness": "گردن و غدد لنفاوی: تحرک و حساسیت به لمس لنف نودها"
+        "inspection": "مشاهده",
+        "tracheal_position": "موقعیت تراشه",
+        "thyroid_gland": "معاینه غده تیرویید",
+        "carotid_bruit": "برویی کاروتید",
+        "lymph_nodes_size_consistency": "سایز و قوام لنف نودها",
+        "lymph_nodes_mobility_tenderness": "تحرک و حساسیت به لمس لنف نودها"
 
     }},
     "respiratory_system": {
@@ -157,6 +157,7 @@
       "percussion": "دق",
       "auscultation": {
         "breath_sounds": "صداهای تنفسی",
+        "breath_sounds_intensity": "شدت صداهای تنفسی",
         "adventitious_sounds": "صداهای اضافی"
     }},
     "cardiovascular_system": {
@@ -193,7 +194,8 @@
         "deep_masses_and_organs": "ارگان ها و توده های عمقی",
               "peritoneal_signs": " علائم پریتونیت "
 
-      }
+      },
+      "peritoneal_signs":"علائم صفراوی"
     },
     "neurological": {
       "mental_status_and_LOC": "وضعیت ذهنی و سطح هوشیاری",
@@ -274,9 +276,11 @@
         "reversibility" : "Reversibillity"},
       "plethysmography": "plethysmography"
     },
+
+    
     "procedures": {
       "Bronchoscopy": "Bronchoscopy",
-      "torachonthesis": "Thorachocentesis"
+      "torachonthesis": "thoracentesis"
     }
   }
 }

@@ -41,7 +41,7 @@ export const routes: Routes = [
 
   // سناریو
   {
-    path: 'scenario',
+    path: 'scenario/:code',
     component: Scenario,
     canActivate: [AuthGuard, RoleGuard],
     data: {role: 'student'}

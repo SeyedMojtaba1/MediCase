@@ -3,11 +3,13 @@
   <!-- Right -->
   <div class="w-1/5 text-white p-6 flex flex-col">
 
-    <!-- Logo -->
-    <div class="flex flex-col items-center gap-3 mb-6">
+
+    <div class="flex flex-col items-center gap-3 mb-6 relative">
       <img [src]="logo" class="h-20"/>
       <img [src]="APP_CONFIG.olomURL" class="h-20">
+
     </div>
+
 
     <!-- Sections -->
     <div class="flex flex-col w-full gap-5">
@@ -123,32 +125,49 @@
             <span>Present Illness</span>
 
             <img
-              [src]="sectionOpenState['present_illness']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['present_illness']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['present_illness']) {
-            @for (q of questionsBySection['present_illness']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'present_illness', 'history_taking')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['present_illness'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of questionsBySection['present_illness']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+               cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'present_illness', 'history_taking')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- باز شدن نرم جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -164,32 +183,49 @@
             <span>Past Medical History</span>
 
             <img
-              [src]="sectionOpenState['past_medical_history']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['past_medical_history']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['past_medical_history']) {
-            @for (q of questionsBySection['past_medical_history']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'past_medical_history', 'history_taking')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['past_medical_history'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of questionsBySection['past_medical_history']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'past_medical_history', 'history_taking')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- باز شدن نرم جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -205,32 +241,49 @@
             <span>Drug History</span>
 
             <img
-              [src]="sectionOpenState['drug_history']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['drug_history']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['drug_history']) {
-            @for (q of questionsBySection['drug_history']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'drug_history', 'history_taking')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['drug_history'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of questionsBySection['drug_history']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'drug_history', 'history_taking')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- باز شدن نرم جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -246,32 +299,49 @@
             <span>Allergies</span>
 
             <img
-              [src]="sectionOpenState['allergies']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['allergies']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['allergies']) {
-            @for (q of questionsBySection['allergies']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'allergies', 'history_taking')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['allergies'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of questionsBySection['allergies']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'allergies', 'history_taking')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- باز شدن نرم جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -287,32 +357,49 @@
             <span>Family History</span>
 
             <img
-              [src]="sectionOpenState['family_history']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['family_history']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['family_history']) {
-            @for (q of questionsBySection['family_history']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'family_history', 'history_taking')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['family_history'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of questionsBySection['family_history']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'family_history', 'history_taking')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- باز شدن نرم جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -328,32 +415,49 @@
             <span>Social History</span>
 
             <img
-              [src]="sectionOpenState['social_history']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['social_history']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['social_history']) {
-            @for (q of questionsBySection['social_history']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'social_history', 'history_taking')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['social_history'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of questionsBySection['social_history']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'social_history', 'history_taking')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- باز شدن نرم جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -365,32 +469,51 @@
             class="w-full cursor-pointer select-none flex justify-between items-center text-xl font-bold mb-2"
           >
             <span>Review Of System</span>
+
             <img
-              [src]="sectionOpenState['ros']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['ros']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['ros']) {
-            @for (q of questionsBySection['ros']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'ros', 'history_taking')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['ros'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of questionsBySection['ros']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'ros', 'history_taking')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- باز شدن نرم جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -414,32 +537,49 @@
             <span>معاینه عمومی</span>
 
             <img
-              [src]="sectionOpenState['general_appearance']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['general_appearance']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['general_appearance']) {
-            @for (q of physicalExamBySection['general_appearance']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'general_appearance', 'physical_exam')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['general_appearance'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of physicalExamBySection['general_appearance']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+               cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'general_appearance', 'physical_exam')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- انیمیشن باز شدن متن -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -452,260 +592,504 @@
            flex justify-between items-center
            text-xl font-bold mb-2"
           >
+
             <span>علائم حیاتی</span>
 
             <img
-              [src]="sectionOpenState['vital_signs']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['vital_signs']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['vital_signs']) {
-            @for (q of physicalExamBySection['vital_signs']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'vital_signs', 'physical_exam')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- محتوای انیمیشنی -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['vital_signs'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of physicalExamBySection['vital_signs']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+               cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'vital_signs', 'physical_exam')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- انیمیشن باز شدن جواب -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
         <!--سر و گردن-->
         <div class="p-4 rounded-xl shadow-lg bg-white/10">
 
+          <!-- HEADER -->
           <button
             (click)="toggleSection('head_and_neck')"
-            class="w-full cursor-pointer select-none
-           flex justify-between items-center
-           text-xl font-bold mb-2"
+            class="w-full cursor-pointer select-none flex justify-between items-center text-xl font-bold mb-2"
           >
             <span>سر و گردن</span>
 
             <img
-              [src]="sectionOpenState['head_and_neck']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['head_and_neck']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['head_and_neck']) {
-            @for (q of physicalExamBySection['head_and_neck']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- MAIN WRAPPER WITH SMOOTH ANIMATION -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['head_and_neck'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
-                  </p>
+              <!-- سر و صورت -->
+              <div class="mb-4">
+                <h3 class="text-lg font-bold text-white/90 mb-2 border-b border-white/20 pb-1">سر و صورت</h3>
+
+                @for (q of physicalExamBySection['head_and_neck']; track q.id) {
+                  @if (q.id.includes('head_and_face')) {
+                    <div
+                      class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                      (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')"
+                    >
+                      <p class="font-semibold">{{ q.title }}</p>
+
+                      <div
+                        class="grid transition-[grid-template-rows] duration-200"
+                        [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                      >
+                        <div class="overflow-hidden">
+                          <p class="text-sm text-gray-200 mt-2">
+                            {{ q.answer }}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  }
                 }
               </div>
-            }
-          }
+
+              <!-- چشم -->
+              <div class="mb-4">
+                <h3 class="text-lg font-bold text-white/90 mb-2 border-b border-white/20 pb-1">چشم</h3>
+
+                @for (q of physicalExamBySection['head_and_neck']; track q.id) {
+                  @if (q.id.includes('eyes')) {
+                    <div
+                      class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                      (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')"
+                    >
+                      <p class="font-semibold">{{ q.title }}</p>
+
+                      <div
+                        class="grid transition-[grid-template-rows] duration-200"
+                        [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                      >
+                        <div class="overflow-hidden">
+                          <p class="text-sm text-gray-200 mt-2">
+                            {{ q.answer }}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  }
+                }
+              </div>
+
+              <!-- گوش -->
+              <div class="mb-4">
+                <h3 class="text-lg font-bold text-white/90 mb-2 border-b border-white/20 pb-1">گوش</h3>
+
+                @for (q of physicalExamBySection['head_and_neck']; track q.id) {
+                  @if (q.id.includes('ears')) {
+                    <div
+                      class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                      (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')"
+                    >
+                      <p class="font-semibold">{{ q.title }}</p>
+
+                      <div
+                        class="grid transition-[grid-template-rows] duration-200"
+                        [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                      >
+                        <div class="overflow-hidden">
+                          <p class="text-sm text-gray-200 mt-2">
+                            {{ q.answer }}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  }
+                }
+              </div>
+
+              <!-- بینی و سینوس -->
+              <div class="mb-4">
+                <h3 class="text-lg font-bold text-white/90 mb-2 border-b border-white/20 pb-1">بینی و سینوس‌ها</h3>
+
+                @for (q of physicalExamBySection['head_and_neck']; track q.id) {
+                  @if (q.id.includes('nose_and_sinuses')) {
+                    <div
+                      class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                      (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')"
+                    >
+                      <p class="font-semibold">{{ q.title }}</p>
+
+                      <div
+                        class="grid transition-[grid-template-rows] duration-200"
+                        [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                      >
+                        <div class="overflow-hidden">
+                          <p class="text-sm text-gray-200 mt-2">
+                            {{ q.answer }}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  }
+                }
+              </div>
+
+              <!-- دهان و حلق -->
+              <div class="mb-4">
+                <h3 class="text-lg font-bold text-white/90 mb-2 border-b border-white/20 pb-1">دهان و حلق</h3>
+
+                @for (q of physicalExamBySection['head_and_neck']; track q.id) {
+                  @if (q.id.includes('mouth_and_pharynx')) {
+                    <div
+                      class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                      (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')"
+                    >
+                      <p class="font-semibold">{{ q.title }}</p>
+
+                      <div
+                        class="grid transition-[grid-template-rows] duration-200"
+                        [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                      >
+                        <div class="overflow-hidden">
+                          <p class="text-sm text-gray-200 mt-2">
+                            {{ q.answer }}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  }
+                }
+              </div>
+
+              <!-- گردن و لنف -->
+              <div class="mb-4">
+                <h3 class="text-lg font-bold text-white/90 mb-2 border-b border-white/20 pb-1">گردن و غدد لنفاوی</h3>
+
+                @for (q of physicalExamBySection['head_and_neck']; track q.id) {
+                  @if (q.id.includes('neck_and_lymphatics')) {
+                    <div
+                      class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                      (click)="handleQuestionClick(q, 'head_and_neck', 'physical_exam')"
+                    >
+                      <p class="font-semibold">{{ q.title }}</p>
+
+                      <div
+                        class="grid transition-[grid-template-rows] duration-200"
+                        [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                      >
+                        <div class="overflow-hidden">
+                          <p class="text-sm text-gray-200 mt-2">
+                            {{ q.answer }}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  }
+                }
+              </div>
+
+            </div>
+          </div>
 
         </div>
-
         <!--        Respiratory System-->
         <div class="p-4 rounded-xl shadow-lg bg-white/10">
 
+          <!-- HEADER -->
           <button
             (click)="toggleSection('respiratory_system')"
-            class="w-full cursor-pointer select-none
-           flex justify-between items-center
-           text-xl font-bold mb-2"
+            class="w-full cursor-pointer select-none flex justify-between items-center text-xl font-bold mb-2"
           >
             <span>سیستم تنفسی</span>
 
             <img
-              [src]="sectionOpenState['respiratory_system']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['respiratory_system']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['respiratory_system']) {
-            @for (q of physicalExamBySection['respiratory_system']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'respiratory_system', 'physical_exam')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- WRAPPER WITH SMOOTH ANIMATION -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['respiratory_system'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of physicalExamBySection['respiratory_system']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'respiratory_system', 'physical_exam')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- INNER ACCORDION -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
         <!--        cardiovascular_system-->
         <div class="p-4 rounded-xl shadow-lg bg-white/10">
 
+          <!-- HEADER -->
           <button
             (click)="toggleSection('cardiovascular_system')"
-            class="w-full cursor-pointer select-none
-           flex justify-between items-center
-           text-xl font-bold mb-2"
+            class="w-full cursor-pointer select-none flex justify-between items-center text-xl font-bold mb-2"
           >
             <span>سیستم قلبی عروقی</span>
 
             <img
-              [src]="sectionOpenState['cardiovascular_system']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['cardiovascular_system']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['cardiovascular_system']) {
-            @for (q of physicalExamBySection['cardiovascular_system']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'cardiovascular_system', 'physical_exam')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- WRAPPER WITH SMOOTH ANIMATION -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['cardiovascular_system'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of physicalExamBySection['cardiovascular_system']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'cardiovascular_system', 'physical_exam')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <!-- INNER ACCORDION -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
         <!--        abdominal_system-->
         <div class="p-4 rounded-xl shadow-lg bg-white/10">
 
+          <!-- HEADER -->
           <button
             (click)="toggleSection('abdominal_system')"
-            class="w-full cursor-pointer select-none
-           flex justify-between items-center
-           text-xl font-bold mb-2"
+            class="w-full cursor-pointer select-none flex justify-between items-center text-xl font-bold mb-2"
           >
             <span>سیستم شکمی</span>
 
             <img
-              [src]="sectionOpenState['abdominal_system']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['abdominal_system']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['abdominal_system']) {
-            @for (q of physicalExamBySection['abdominal_system']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'abdominal_system', 'physical_exam')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- WRAPPER -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['abdominal_system'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
+              @for (q of physicalExamBySection['abdominal_system']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'abdominal_system', 'physical_exam')"
+                >
+                  <p class="font-semibold">
+                    {{ q.title }}
                   </p>
-                }
-              </div>
-            }
-          }
+
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
-        <!--        neurological-->
         <div class="p-4 rounded-xl shadow-lg bg-white/10">
-
           <button
             (click)="toggleSection('neurological')"
-            class="w-full cursor-pointer select-none
-           flex justify-between items-center
-           text-xl font-bold mb-2"
+            class="w-full cursor-pointer select-none flex justify-between items-center text-xl font-bold mb-2"
           >
             <span>سیستم عصبی</span>
-
             <img
-              [src]="sectionOpenState['neurological']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              [src]="'images/svg/arrow-down-wide-fill.svg'"
+              [class.rotate-180]="sectionOpenState['neurological']"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['neurological']) {
-            @for (q of physicalExamBySection['neurological']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'neurological', 'physical_exam')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['neurological'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
+              @for (q of physicalExamBySection['neurological']; track q.id) {
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'neurological', 'physical_exam')"
+                >
+                  <p class="font-semibold">{{ q.title }}</p>
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
-                  </p>
-                }
-              </div>
-            }
-          }
-
-        </div>
-
-        <!--        musculoskeletal_system-->
-        <div class="p-4 rounded-xl shadow-lg bg-white/10">
-          <h3 class="text-xl font-bold mb-4 border-b border-white/30 pb-2">سیستم عضلانی-اسکلتی</h3>
-          @for (q of physicalExamBySection['musculoskeletal_system']; track q.id) {
-            <div class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
-                 (click)="handleQuestionClick(q, 'musculoskeletal_system', 'physical_exam')">
-
-              <p class="font-semibold">{{ q.title }}</p>
-
-              @if (q.open) {
-                <p class="text-sm text-gray-200 mt-2">
-                  {{ q.answer }}
-                </p>
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               }
             </div>
-          }
+          </div>
         </div>
+
+        <div class="p-4 rounded-xl shadow-lg bg-white/10">
+          <button
+            (click)="toggleSection('musculoskeletal_system')"
+            class="w-full cursor-pointer select-none flex justify-between items-center text-xl font-bold mb-2"
+          >
+            <span>سیستم اسکلتی عضلانی</span>
+            <img
+              [src]="'images/svg/arrow-down-wide-fill.svg'"
+              [class.rotate-180]="sectionOpenState['musculoskeletal_system']"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              alt="toggle icon"
+            />
+          </button>
+
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['musculoskeletal_system'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
+              @for (q of physicalExamBySection['musculoskeletal_system']; track q.id) {
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'musculoskeletal_system', 'physical_exam')"
+                >
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
 
       </div>
 
@@ -728,65 +1112,81 @@
             <span>آزمایش‌های پایه خون</span>
 
             <img
-              [src]="sectionOpenState['basic_blood_tests']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['basic_blood_tests']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['basic_blood_tests']) {
-            @for (q of paraclinicBySection['basic_blood_tests']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'basic_blood_tests', 'paraclinic')"
-              >
+          <!-- WRAPPER WITH SMOOTH ANIMATION -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['basic_blood_tests'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                <p class="font-semibold">{{ q.title }}</p>
+              @for (q of paraclinicBySection['basic_blood_tests']; track q.id) {
 
-                @if (q.open) {
-                  @if (isAnswerArray(q.answer)) {
-                    <div class="mt-3 overflow-x-auto rounded-lg">
-                      <table class="min-w-full divide-y divide-white/20 bg-black/30">
-                        <thead class="bg-black/40">
-                        <tr>
-                          <th
-                            class="px-4 py-2 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
-                            آیتم
-                          </th>
-                          <th
-                            class="px-4 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
-                            نتیجه
-                          </th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/20">
-                          @for (item of q.answer; track item.title) {
-                            <tr class="hover:bg-black/20 transition-colors">
-                              <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-white">
-                                {{ item.title }}
-                              </td>
-                              <td class="px-4 py-2 whitespace-nowrap text-sm text-center font-bold text-yellow-300">
-                                {{ item.answer }}
-                              </td>
-                            </tr>
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'basic_blood_tests', 'paraclinic')"
+                >
+
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <!-- INNER SMOOTH ANSWER SECTION -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+
+                      @if (q.visible && q.answer) {
+                        <div class="mt-3 animate-fade-in">
+
+                          @if (isArray(q.answer)) {
+                            <div class="overflow-hidden rounded-xl border border-white/10 bg-black/10">
+                              <table class="w-full text-right border-collapse">
+                                <thead class="bg-white/5">
+                                <tr class="text-gray-400 text-[11px]">
+                                  <th class="p-3 border-b border-white/10">پارامتر</th>
+                                  <th class="p-3 border-b border-white/10">نتیجه</th>
+                                  <th class="p-3 border-b border-white/10 text-center">مقدار نرمال</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  @for (res of $any(q.answer); track res) {
+                                    <tr class="hover:bg-white/5 border-b border-white/5 last:border-0">
+                                      <td class="p-3 text-sm text-gray-300 font-medium">{{ res.title }}</td>
+                                      <td class="p-3 text-sm font-bold text-cyan-400">{{ res.answer }}</td>
+                                      <td class="p-3 text-xs text-gray-500 text-center" style="direction: ltr;">
+                                        {{ res.normalValue }}
+                                      </td>
+                                    </tr>
+                                  }
+                                </tbody>
+                              </table>
+                            </div>
+                          } @else {
+                            <div class="p-4 bg-white/5 rounded-xl border-r-4 border-cyan-500/50">
+                              <p class="text-gray-200 leading-relaxed text-sm text-justify whitespace-pre-line">
+                                {{ q.answer }}
+                              </p>
+                            </div>
                           }
-                        </tbody>
-                      </table>
+                        </div>
+                      }
                     </div>
-                  } @else {
-                    <p class="text-sm text-gray-200 mt-2">
-                      {{ q.answer }}
-                    </p>
-                  }
-                }
+                  </div>
 
-              </div>
-            }
-          }
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -802,32 +1202,48 @@
             <span>آزمایش‌های تخصصی ریه</span>
 
             <img
-              [src]="sectionOpenState['specialized_lung_tests']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['specialized_lung_tests']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['specialized_lung_tests']) {
-            @for (q of paraclinicBySection['specialized_lung_tests']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'specialized_lung_tests', 'paraclinic')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- Smooth Outer Animation -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['specialized_lung_tests'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
-                  </p>
-                }
-              </div>
-            }
-          }
+              @for (q of paraclinicBySection['specialized_lung_tests']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'specialized_lung_tests', 'paraclinic')"
+                >
+
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <!-- Inner Answer Smooth Toggle -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -843,32 +1259,48 @@
             <span>ایمنی و سرولوژی</span>
 
             <img
-              [src]="sectionOpenState['immunity_and_serology']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['immunity_and_serology']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['immunity_and_serology']) {
-            @for (q of paraclinicBySection['immunity_and_serology']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'immunity_and_serology', 'paraclinic')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- Smooth Section Animation -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['immunity_and_serology'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
-                  </p>
-                }
-              </div>
-            }
-          }
+              @for (q of paraclinicBySection['immunity_and_serology']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'immunity_and_serology', 'paraclinic')"
+                >
+
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <!-- Smooth inner collapse -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -887,78 +1319,90 @@
             <span>تست‌های عملکردی</span>
 
             <img
-              [src]="sectionOpenState['functional_tests']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['functional_tests']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['functional_tests']) {
-            @for (q of paraclinicBySection['functional_tests']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'functional_tests', 'paraclinic')"
-              >
+          <!-- Smooth Section Animation -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['functional_tests'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                <p class="font-semibold">{{ q.title }}</p>
+              @for (q of paraclinicBySection['functional_tests']; track q.id) {
 
-                @if (q.open) {
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'functional_tests', 'paraclinic')"
+                >
 
-                  @if (q.id === 'Spirometry') {
-                    <!-- نمایش خاص برای Spirometry -->
-                    <div class="mt-3 p-3 bg-black/30 rounded-lg">
-              <pre class="text-sm text-gray-200 whitespace-pre-wrap">
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <!-- Smooth inner collapse -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden mt-2">
+
+                      @if (q.id === 'Spirometry') {
+                        <!-- نمایش خاص برای Spirometry -->
+                        <pre class="text-sm text-gray-200 whitespace-pre-wrap bg-black/30 p-3 rounded-lg">
 {{ q.answer }}
-              </pre>
-                    </div>
+                </pre>
 
-                  } @else if (isAnswerArray(q.answer)) {
-                    <!-- نمایش جدولی -->
-                    <div class="mt-3 overflow-x-auto rounded-lg">
-                      <table class="min-w-full divide-y divide-white/20 bg-black/30">
-                        <thead class="bg-black/40">
-                        <tr>
-                          <th
-                            class="px-4 py-2 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
-                            آیتم
-                          </th>
-                          <th
-                            class="px-4 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
-                            نتیجه
-                          </th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/20">
-                          @for (item of q.answer; track item.title) {
-                            <tr class="hover:bg-black/20 transition-colors">
-                              <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-white">
-                                {{ item.title }}
-                              </td>
-                              <td class="px-4 py-2 whitespace-nowrap text-sm text-center font-bold text-yellow-300">
-                                {{ item.answer }}
-                              </td>
+                      } @else if (isAnswerArray(q.answer)) {
+                        <!-- نمایش جدولی -->
+                        <div class="overflow-x-auto rounded-lg mt-2">
+                          <table class="min-w-full divide-y divide-white/20 bg-black/30">
+                            <thead class="bg-black/40">
+                            <tr>
+                              <th
+                                class="px-4 py-2 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                آیتم
+                              </th>
+                              <th
+                                class="px-4 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                نتیجه
+                              </th>
                             </tr>
-                          }
-                        </tbody>
-                      </table>
+                            </thead>
+                            <tbody class="divide-y divide-white/20">
+                              @for (item of q.answer; track item.title) {
+                                <tr class="hover:bg-black/20 transition-colors">
+                                  <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-white">
+                                    {{ item.title }}
+                                  </td>
+                                  <td class="px-4 py-2 whitespace-nowrap text-sm text-center font-bold text-yellow-300">
+                                    {{ item.answer }}
+                                  </td>
+                                </tr>
+                              }
+                            </tbody>
+                          </table>
+                        </div>
+
+                      } @else {
+                        <!-- رشته ساده -->
+                        <p class="text-sm text-gray-200 mt-2 whitespace-pre-wrap">
+                          {{ q.answer }}
+                        </p>
+                      }
+
                     </div>
+                  </div>
 
-                  } @else {
-                    <!-- رشته ساده -->
-                    <p class="text-sm text-gray-200 mt-2 whitespace-pre-wrap">
-                      {{ q.answer }}
-                    </p>
-                  }
+                </div>
 
-                }
+              }
 
-              </div>
-            }
-          }
+            </div>
+          </div>
 
         </div>
 
@@ -974,32 +1418,47 @@
             <span>تصویر برداری عمومی</span>
 
             <img
-              [src]="sectionOpenState['simple_imaging']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['simple_imaging']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['simple_imaging']) {
-            @for (q of paraclinicBySection['simple_imaging']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'simple_imaging', 'paraclinic')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- Smooth Section Animation -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['simple_imaging'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
-                  </p>
-                }
-              </div>
-            }
-          }
+              @for (q of paraclinicBySection['simple_imaging']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'simple_imaging', 'paraclinic')"
+                >
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <!-- Smooth inner collapse -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden mt-2">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -1015,32 +1474,47 @@
             <span>تصویر برداری تخصصی</span>
 
             <img
-              [src]="sectionOpenState['advanced_imaging']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['advanced_imaging']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['advanced_imaging']) {
-            @for (q of paraclinicBySection['advanced_imaging']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'advanced_imaging', 'paraclinic')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- Smooth Section Animation -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['advanced_imaging'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
-                  </p>
-                }
-              </div>
-            }
-          }
+              @for (q of paraclinicBySection['advanced_imaging']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'advanced_imaging', 'paraclinic')"
+                >
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <!-- Smooth inner collapse -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden mt-2">
+                      <p class="text-sm text-gray-200 mt-2">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -1056,32 +1530,47 @@
             <span>پراسیجر ها</span>
 
             <img
-              [src]="sectionOpenState['procedures']
-        ? 'images/svg/arrow-up-wide-fill.svg'
-        : 'images/svg/arrow-down-wide-fill.svg'"
-              class="w-8 h-8 transition-transform duration-200 invert-100"
+              src="/images/svg/arrow-down-wide-fill.svg"
+              class="w-8 h-8 transition-transform duration-300 invert-100"
+              [class.rotate-180]="sectionOpenState['procedures']"
               alt="toggle icon"
             />
           </button>
 
-          <!-- محتوا -->
-          @if (sectionOpenState['procedures']) {
-            @for (q of paraclinicBySection['procedures']; track q.id) {
-              <div
-                class="bg-black/20 p-3 rounded-lg mb-2
-               cursor-pointer hover:bg-black/30 transition duration-150"
-                (click)="handleQuestionClick(q, 'procedures', 'paraclinic')"
-              >
-                <p class="font-semibold">{{ q.title }}</p>
+          <!-- Smooth Section Animation -->
+          <div
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            [style.grid-template-rows]="sectionOpenState['procedures'] ? '1fr' : '0fr'"
+          >
+            <div class="overflow-hidden">
 
-                @if (q.open) {
-                  <p class="text-sm text-gray-200 mt-2">
-                    {{ q.answer }}
-                  </p>
-                }
-              </div>
-            }
-          }
+              @for (q of paraclinicBySection['procedures']; track q.id) {
+
+                <div
+                  class="bg-black/20 p-3 rounded-lg mb-2
+                 cursor-pointer hover:bg-black/30 transition duration-150"
+                  (click)="handleQuestionClick(q, 'procedures', 'paraclinic')"
+                >
+                  <p class="font-semibold">{{ q.title }}</p>
+
+                  <!-- Smooth inner collapse -->
+                  <div
+                    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+                    [style.grid-template-rows]="q.open ? '1fr' : '0fr'"
+                  >
+                    <div class="overflow-hidden mt-2">
+                      <p class="text-sm text-gray-200 mt-2 whitespace-pre-line">
+                        {{ q.answer }}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+          </div>
 
         </div>
 
@@ -1153,7 +1642,8 @@
         autoplay
         class="w-full h-full object-cover"
         loop
-        muted>
+        [muted]="isMuted()"
+      >
         <source [src]="mediaUrl" type="video/mp4"/>
       </video>
     }
@@ -1173,22 +1663,38 @@
       class="absolute top-5 left-5 py-3 px-6 rounded-full flex items-center gap-5
       bg-gradient-to-l from-[#148691] to-[#216067] shadow-md"
     >
-      <img [routerLink]="'/dashboard/s/profile'" [src]="sessionStorage.getItem('avatar')"
+      <img [routerLink]="'/dashboard/s/profile'" [src]="this.avatar"
            class="rounded-full cursor-pointer object-cover w-10 h-10 border-2 border-white">
 
       <p [routerLink]="'/dashboard/s/profile'"
          class="text-white cursor-pointer">
-        {{ sessionStorage.getItem('first_name') + ' ' + sessionStorage.getItem('last_name') }}
+        {{ this.first_name() + ' ' + this.last_name() }}
       </p>
 
       <img class="w-6 h-auto cursor-pointer" src="images/svg/search.svg">
     </div>
 
     <!-- Timer left -->
-    <div
-      class="absolute bottom-5 left-5 py-3 w-40 justify-center text-white rounded-full flex-row flex items-center gap-5 bg-gradient-to-l from-[#148691] to-[#216067] shadow-md">
-      <p>زمان : </p>
-      <p>{{ timer() }}</p>
+    <div class="absolute bottom-5 left-5 flex flex-row gap-5">
+      <div
+        class="py-3 w-40 justify-center text-white rounded-full flex-row flex items-center gap-5 bg-gradient-to-l from-[#148691] to-[#216067] shadow-md">
+        <p>زمان : </p>
+        <p>{{ timer() }}</p>
+      </div>
+
+
+      <div
+        class="p-3 justify-center cursor-pointer text-white rounded-full flex-row flex items-center gap-5 bg-gradient-to-l from-[#148691] to-[#216067] shadow-md">
+
+        <button (click)="toggleMute()"
+                [title]="isMuted() ? 'فعال‌سازی صدا' : 'قطع صدا'"
+                class="mt-2 p-2 rounded-full  transition-all text-white  ">
+          <i
+            [class]="isMuted() ? 'pi pi-volume-off text-2xl text-white cursor-pointer' : 'pi pi-volume-up text-2xl text-white cursor-pointer'"></i>
+        </button>
+      </div>
+
+
     </div>
 
     <!-- Timer right with circular image -->
@@ -1208,51 +1714,6 @@
 
   </div>
 
-
-  <!--  <div-->
-  <!--    (click)="console.log(Log)"-->
-  <!--    [style.backgroundImage]="'url(' + imageUrl() + ')'"-->
-  <!--    class="w-1/2 h-full bg-cover bg-center relative flex flex-col overflow-visible"-->
-  <!--  >-->
-
-  <!--    &lt;!&ndash; Profile box &ndash;&gt;-->
-  <!--    <div-->
-  <!--      class="absolute top-5 left-5 py-3 px-6 rounded-full flex items-center gap-5-->
-  <!--      bg-gradient-to-l from-[#148691] to-[#216067] shadow-md"-->
-  <!--    >-->
-  <!--      <img [routerLink]="'/dashboard/s/profile'" [src]="sessionStorage.getItem('avatar')"-->
-  <!--           class="rounded-full cursor-pointer object-cover w-10 h-10 border-2 border-white">-->
-
-  <!--      <p [routerLink]="'/dashboard/s/profile'"-->
-  <!--         class="text-white cursor-pointer">-->
-  <!--        {{ sessionStorage.getItem('first_name') + ' ' + sessionStorage.getItem('last_name') }}-->
-  <!--      </p>-->
-
-  <!--      <img class="w-6 h-auto cursor-pointer" src="images/svg/search.svg">-->
-  <!--    </div>-->
-
-  <!--    &lt;!&ndash; Timer left &ndash;&gt;-->
-  <!--    <div-->
-  <!--      class="absolute bottom-5 left-5 py-3 w-40 justify-center text-white rounded-full flex-row flex items-center gap-5 bg-gradient-to-l from-[#148691] to-[#216067] shadow-md">-->
-  <!--      <p>زمان : </p>-->
-  <!--      <p>{{ timer() }}</p>-->
-  <!--    </div>-->
-
-  <!--    &lt;!&ndash; Timer right with circular image &ndash;&gt;-->
-  <!--    <div class="absolute bottom-5 right-5 justify-between  p-2 w-40 text-white rounded-full flex items-center gap-3-->
-  <!--      bg-gradient-to-l from-[#148691] to-[#216067] shadow-md overflow-visible">-->
-
-  <!--      <img-->
-  <!--        [src]="sessionStorage.getItem('avatar')"-->
-  <!--        class="w-12 h-12 rounded-full border-4 border-white shadow-lg z-10"-->
-  <!--      />-->
-
-  <!--      <p class="m-3">پزشکیار</p>-->
-
-  <!--      &lt;!&ndash; تصویر دایره‌ای &ndash;&gt;-->
-
-  <!--    </div>-->
-  <!--  </div>-->
 
 </div>
 

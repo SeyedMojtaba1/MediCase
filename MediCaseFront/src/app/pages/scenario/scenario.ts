@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, ElementRef, signal, ViewChild} from '@angu
 import {FormsModule} from '@angular/forms';
 import {APP_CONFIG} from '../../config/app.config';
 import {NgClass} from '@angular/common';
-import {Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Master} from '../../core/services/master';
 import Questions from '../../../../public/json/senario.json'
 import Log from '../../../../public/json/student_log.json'
@@ -22,13 +22,14 @@ interface Section {
 interface ParaclinicResult {
   title: string;
   answer: string;
+  normalValue?: string;
 }
 
 
 interface Question {
   id: string;
   title: string;
-  answer: string | ParaclinicResult[];
+  answer: any;
   open: boolean;
   visible: boolean;
   answer_time: string;
@@ -47,9 +48,9 @@ interface Question {
 })
 export class Scenario {
 
-
-  trackingCode = 'ARDP6ATQ9W'
-
+  first_name = signal('')
+  last_name = signal('')
+  avatar = 'images/jpg/avatar.jpg';
   diseaseCodeMap: Record<string, string> = {
     "Asthma": "disease1",
     "Pneumonia": "disease2",
@@ -60,11 +61,9 @@ export class Scenario {
     "Pleural_Effusion": "disease7",
     "ARDS": "disease8"
   };
-
   @ViewChild('videoPlayer') videoElementRef!: ElementRef<HTMLVideoElement>;
-
   imageUrl = signal('https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg')
-
+  isMuted = signal(false);
   timer = signal('15:00')
   logo = APP_CONFIG.logoURL;
   backgroundImage = 'assets/bg.jpg';
@@ -91,66 +90,85 @@ export class Scenario {
   differentialDiagnosisStage: number = 1;
   selectedDifferentialDiseases: Disease[] = [];
   finalDiagnosis: string | null = null;
-
-
+  scenarioData: any = Questions;
 // در کلاس Scenario
   sectionMedia: any = {
 
     patient_profile: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Realistic_Clinical_Video_Generation.mp4'
     },
 
     history_taking: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/سخنگو.mp4'
     },
     present_illness: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
     },
     past_medical_history: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
     },
 
     drug_history: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
     },
 
     allergies: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
     },
     family_history: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
     },
     social_history: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
     },
     ros: {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
 
     },
 
 
     'general_appearance': {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/video_2025-11-29_14-11-16.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
     },
 
     'vital_signs': {
       type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/doc_2025-12-05_06-53-26.mp4'
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Realistic_Clinical_Video_Generation2.mp4'
+    },
+    'vital_signs-PR': {
+      type: 'video',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Camera_angle_fixed_202512232146_6acpt.mp4'
+    },
+    'vital_signs-SpO2': {
+      type: 'video',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/video_1766436318100.mp4',
+    },
+    'vital_signs-T': {
+      type: 'video',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/video_1766436280215.mp4',
+    },
+    'vital_signs-BP': {
+      type: 'video',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/video_1766436259968.mp4',
     },
 
     'head_and_neck': {
       type: 'video',
       url: 'https://elmkhah.ir/wp-content/uploads/2025/12/تبدیل_عکس_به_ویدیو_با_صدا.mp4'
+    },
+    'head_and_neck-eyes': {
+      type: 'video',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Camera_angle_closeup_202512232155_m32tj.mp4'
     },
 
     'respiratory_system': {
@@ -233,11 +251,16 @@ export class Scenario {
       url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Camera_angle_topdown_202512022252_whtlj.mp4'
     },
 
-  };
+    'differential_diagnosis': {
+      type: 'video',
+      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Reference_image_usage_202512162300_seewl.mp4',
+    }
 
+  };
   mediaType: 'image' | 'video' = 'image';
   mediaUrl: string = "https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg";
-
+  public code: any;
+  public trackingCode: any;
   protected readonly APP_CONFIG = APP_CONFIG;
   protected readonly sessionStorage = sessionStorage;
   protected readonly Log = Log;
@@ -245,10 +268,16 @@ export class Scenario {
   private timeLeft = 15 * 60;
   private intervalId: any;
 
-  constructor(public router: Router, public changeDetectorRef: ChangeDetectorRef, public master: Master) {
+  constructor(public router: Router, public changeDetectorRef: ChangeDetectorRef, public master: Master, public route: ActivatedRoute) {
   }
 
+
   ngOnInit() {
+
+    this.code = this.route.snapshot.paramMap.get('code')!;
+    this.trackingCode = this.code
+    this.loadProfile();
+
     this.loadDiseases();
     this.loadSections();
     this.startTimer();
@@ -258,6 +287,7 @@ export class Scenario {
     document.addEventListener('click', () => {
       if (this.bgsound.paused) {
         this.bgsound.loop = true;
+        this.bgsound.muted = this.isMuted();
         this.bgsound.volume = 0.6;
         this.bgsound.play().catch(err => console.log(err));
       }
@@ -290,6 +320,38 @@ export class Scenario {
     this.clickSound.currentTime = 0;
     this.clickSound.volume = 0.3
     this.clickSound.play();
+  }
+
+  isArray(obj: any): boolean {
+    return Array.isArray(obj);
+  }
+
+// در فایل scenario.ts متد setQuestion را پیدا و به این صورت اصلاح کنید:
+
+  setQuestion(q: any) {
+    this.playClick();
+    q.visible = true;
+    q.answer_time = new Date().toLocaleTimeString('fa-IR');
+
+    const paraclinics = this.scenarioData.patient_info.paraclinic; // نام فیلد را طبق سناریو چک کنید
+    const textL2 = this.scenarioData.text_l2.paraclinics;
+
+    // ۱. فیلتر تست‌های خون
+    if (q.id === 'crp' || q.id === 'esr' || q.id.includes('blood')) {
+      q.answer = this.processBasicBloodTests(q.answer, textL2, q.id);
+    }
+    // ۲. مدیریت Thorachocentesis و سایر پروسیجرها که آبجکت هستند
+    else if (q.id === 'thorachocentesis' || typeof q.answer === 'object') {
+      const data = paraclinics[q.id];
+      if (data && typeof data === 'object' && !Array.isArray(data)) {
+        // استفاده از متد بازگشتی برای تبدیل آبجکت به متن خوانا
+        q.answer = this.processFlattenedObject(data, textL2[q.id]);
+      } else {
+        q.answer = data;
+      }
+    } else {
+      q.answer = paraclinics[q.id];
+    }
   }
 
   playSuccess() {
@@ -333,6 +395,7 @@ export class Scenario {
 
   toggleSection(sectionKey: string) {
     this.sectionOpenState[sectionKey] = !this.sectionOpenState[sectionKey];
+    this.playSuccess()
   }
 
   loadDiseases() {
@@ -360,6 +423,20 @@ export class Scenario {
   }
 
 
+  toggleMute() {
+    this.isMuted.set(!this.isMuted());
+
+    // اعمال روی تمام صداها
+    this.bgsound.muted = this.isMuted();
+    // this.clickSound.muted = this.isMuted();
+    // this.successSound.muted = this.isMuted();
+
+    // اعمال روی ویدیو (در صورت وجود)
+    if (this.videoElementRef?.nativeElement) {
+      this.videoElementRef.nativeElement.muted = this.isMuted();
+    }
+  }
+
 // ...
 // در کلاس Scenario
   selectSection(section: Section) {
@@ -374,6 +451,13 @@ export class Scenario {
 
     // نمایش مدیا بر اساس بخش انتخاب شده
     this.setSectionMedia(section);
+
+    // اضافه کردن این بخش برای کنترل صدای ویدیوهای جدید
+    setTimeout(() => {
+      if (this.videoElementRef && this.videoElementRef.nativeElement) {
+        this.videoElementRef.nativeElement.muted = this.isMuted();
+      }
+    }, 100);
   }
 
 // متد جدید برای تنظیم مدیا بر اساس بخش
@@ -715,7 +799,6 @@ export class Scenario {
 
     const finalCode = this.diseaseCodeMap[this.finalDiagnosis];
 
-// خروجی نهایی:  { "disease4": "12:20" }
     if (finalCode) {
       this.log.final_diagnosis[finalCode] = currentTime;
     }
@@ -771,38 +854,42 @@ export class Scenario {
           textL2 = categoryText[testKey];
         }
 
-        let finalAnswer: string | ParaclinicResult[] = '';
+        let finalAnswer: any = '';
         let finalTitle = '';
 
         // --- ۱. استخراج عنوان دکمه ---
         if (typeof textL2 === 'object' && textL2 !== null && !Array.isArray(textL2)) {
-          // اگر textL2 یک شیء است (مثل BMP, CBC, Spirometry)
           finalTitle = testKey.replace('_', ' ');
         } else if (typeof textL2 === 'string') {
-          // اگر textL2 یک رشته است (مثل CRP, dlco)
           finalTitle = textL2;
         } else {
           finalTitle = testKey.replace('_', ' ');
         }
 
         // --- ۲. منطق ساختاردهی پاسخ ---
-        if (typeof answerL2 === 'object' && answerL2 !== null && !Array.isArray(answerL2)) {
-          // پاسخ یک شیء تودرتو است
 
-          // حالت خاص برای Spirometry در functional_tests
+        // حالت خاص برای آزمایش‌های خون (چه آبجکت چه رشته ساده مثل CRP)
+        if (categoryName === 'basic_blood_tests') {
+          // لیست تست‌هایی که می‌خواهیم حتماً خروجی جدولی داشته باشند
+          const bloodTableTests = ['BMP', 'CBC', 'VBG', 'LFTs', 'CRP', 'ESR', 'FBS', 'crp', 'esr'];
+
+          if (bloodTableTests.includes(testKey) || (typeof answerL2 === 'object' && !Array.isArray(answerL2))) {
+            // ارسال ۳ آرگومان برای رفع خطای TS2554
+            finalAnswer = this.processBasicBloodTests(answerL2, textL2, testKey);
+          } else {
+            finalAnswer = Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2;
+          }
+        }
+        // سایر بخش‌ها (Spirometry و غیره)
+        else if (typeof answerL2 === 'object' && answerL2 !== null && !Array.isArray(answerL2)) {
           if (categoryName === 'functional_tests' && testKey === 'Spirometry') {
             finalAnswer = this.processSpirometryData(answerL2, textL2);
-          }
-          // حالت خاص برای بخش‌های خاص basic_blood_tests
-          else if (categoryName === 'basic_blood_tests' &&
-            ['BMP', 'CBC', 'VBG', 'LFTs'].includes(testKey)) {
-            finalAnswer = this.processBasicBloodTests(answerL2, textL2);
           } else {
-            // حالت رشته‌ای Flattened برای سایر بخش‌ها
             finalAnswer = this.processFlattenedObject(answerL2, textL2);
           }
-        } else {
-          // پاسخ یک رشته ساده است
+        }
+        // پاسخ‌های رشته‌ای معمولی
+        else {
           finalAnswer = Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2;
         }
 
@@ -818,9 +905,6 @@ export class Scenario {
       }
     }
 
-    // برای دیباگ
-    console.log('paraclinicBySection:', this.paraclinicBySection);
-    console.log('Spirometry data:', this.paraclinicBySection['functional_tests']?.find(q => q.id === 'Spirometry'));
   }
 
   fireConfetti() {
@@ -830,6 +914,31 @@ export class Scenario {
       origin: {y: 0.6}
     });
   }
+
+  loadProfile() {
+    this.master.profile().subscribe({
+      next: data => {
+        const user = data.body;
+        if (user) {
+          sessionStorage.setItem('first_name', user.first_name || '');
+          sessionStorage.setItem('last_name', user.last_name || '');
+          sessionStorage.setItem('personal_number', user.personal_number || '');
+          localStorage.setItem('personal_number', user.personal_number || '');
+          sessionStorage.setItem('avatar', user.profile_image ?? '');
+
+          this.first_name.set(user.first_name || '');
+          this.last_name.set(user.last_name || '');
+          this.avatar = user.profile_image
+            ? user.profile_image
+            : 'images/jpg/avatar.jpg';
+        }
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
 
 // متد کمکی برای پردازش داده‌های Spirometry
   private processSpirometryData(spirometryData: any, textL2: any): string | ParaclinicResult[] {
@@ -860,22 +969,48 @@ export class Scenario {
   }
 
 // متد کمکی برای پردازش داده‌های basic_blood_tests
-  private processBasicBloodTests(data: any, textL2: any): ParaclinicResult[] {
+  private processBasicBloodTests(data: any, textL2: any, qId: string): ParaclinicResult[] {
     const results: ParaclinicResult[] = [];
+    const normalRanges: { [key: string]: string } = {
+      'WBC': '4.0 - 11.0 x10³/µL',
+      'RBC': '4.5 - 5.5 (M) / 4.0 - 5.0 (F)',
+      'Hb': '13 - 17 (M) / 12 - 15 (F)',
+      'HCT': '40% - 50% (M) / 36% - 46% (F)',
+      'MCV': '80 - 100 fL',
+      'MCH': '27 - 32 pg',
+      'Plt': '150,000 - 450,000',
+      'FBS': '70 - 100 mg/dL',
+      'BUN': '7 - 20 mg/dL',
+      'Cr': '0.6 - 1.3 mg/dL',
+      'Na': '135 - 145 mEq/L',
+      'Potassium': '3.5 - 5.0 mEq/L',
+      'ESR': '0 - 20 mm/hr',
+      'CRP': 'Below 3.0 mg/L',
+      'esr': '0 - 20 mm/hr', // برای اطمینان از حروف کوچک
+      'crp': 'Below 3.0 mg/L',
+      'ALT': '7-56 U/L',
+      'AST': '10-40 U/L',
+      'ph': '7.31-7.41',
+      'HCO3': '22-28 mEq/L',
+      'PCO2': '40-50 mmHg'
+    };
 
-    for (const itemKey in data) {
-      let titleL3 = itemKey;
-
-      // سعی کن عنوان فارسی را از textL2 پیدا کنی
-      if (textL2 && typeof textL2 === 'object' && textL2[itemKey]) {
-        titleL3 = textL2[itemKey];
+    if (typeof data === 'object' && !Array.isArray(data)) {
+      for (const itemKey in data) {
+        let title = (textL2 && textL2[itemKey]) ? textL2[itemKey] : itemKey;
+        results.push({
+          title: title,
+          answer: Array.isArray(data[itemKey]) ? data[itemKey].join(' | ') : data[itemKey],
+          normalValue: normalRanges[itemKey] || '-'
+        });
       }
-
-      const answerL3 = data[itemKey];
-
+    } else if (typeof data === 'string' || typeof data === 'number') {
+      // حالا qId از ورودی تابع گرفته می‌شود
+      const title = (textL2 && textL2[qId]) ? textL2[qId] : qId;
       results.push({
-        title: titleL3,
-        answer: Array.isArray(answerL3) ? answerL3.join(' | ') : answerL3
+        title: title,
+        answer: data.toString(),
+        normalValue: normalRanges[qId] || '-'
       });
     }
 
@@ -887,23 +1022,19 @@ export class Scenario {
     let flattenedString = '';
 
     for (const itemKey in data) {
-      let titleL3 = itemKey;
+      // پیدا کردن عنوان فارسی از فایل ترجمه (textL2)
+      let title = (textL2 && textL2[itemKey]) ? textL2[itemKey] : itemKey;
+      let value = data[itemKey];
 
-      // سعی کن عنوان فارسی را از textL2 پیدا کنی
-      if (textL2 && typeof textL2 === 'object' && textL2[itemKey]) {
-        titleL3 = textL2[itemKey];
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        // اگر مقدار خودش آبجکت بود، دوباره همین تابع را صدا بزن
+        flattenedString += `${title}:\n${this.processFlattenedObject(value, textL2[itemKey])}\n`;
+      } else {
+        // اگر مقدار نهایی بود (رشته یا عدد)
+        flattenedString += `${title}: ${value}\n`;
       }
-
-      const answerL3 = data[itemKey];
-      const answerStr = Array.isArray(answerL3) ? answerL3.join(' | ') : answerL3;
-
-      if (titleL3.includes('|')) {
-        titleL3 = titleL3.split('|')[0].trim();
-      }
-
-      flattenedString += `${titleL3}: ${answerStr}\n`;
     }
 
-    return flattenedString.trim();
+    return flattenedString;
   }
 }

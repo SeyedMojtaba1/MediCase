@@ -1,0 +1,8 @@
+/* اگر از تلوند استفاده نمی‌کنی این را در فایل css بگذار */
+.grid-rows-0 {
+  grid-template-rows: 0fr;
+}
+
+.grid-rows-1 {
+  grid-template-rows: 1fr;
+}

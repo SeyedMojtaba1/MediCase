@@ -1,69 +1,53 @@
-<div class="w-full items-center justify-center pt-10 pb-5 flex">
-  <div class="video-bg">
-    <video
-      autoplay
-      id="myVideo"
-      loop
-      muted
-      playsinline
-      src="https://elmkhah.ir/wp-content/uploads/2025/12/Premium_Logo_Animation_Generation_Request.mp4">
-      مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
-    </video>
+<div class="relative w-full h-screen overflow-hidden bg-black">
+
+  <video
+    #bgVideo
+    [loop]="true"
+    [muted]="false"
+    [src]="'https://elmkhah.ir/wp-content/uploads/2025/12/Premium_Logo_Animation_Generation_Request.mp4'"
+    class="absolute top-0 left-0 w-full h-full object-cover z-0"
+    id="bgVideo"
+    playsinline>
+  </video>
+
+  <div class="absolute top-0 left-0 w-full h-full bg-black/70 z-10"></div>
+
+  <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-white p-10 text-center">
+
+    @if (value() < 100) {
+      <div class="flex flex-col items-center animate-pulse">
+        <h2 class="text-2xl font-bold mb-6 text-blue-400">در حال آماده‌سازی محیط ویزیت...</h2>
+
+        <div class="w-64 h-2 bg-gray-700 rounded-full mb-4 overflow-hidden">
+          <div class="h-full bg-blue-500 transition-all duration-100" [style.width.%]="value()"></div>
+        </div>
+        <span class="mb-8 text-sm text-gray-400">{{ value() }}%</span>
+
+        <p
+          class="text-lg max-w-2xl leading-loose italic text-gray-200 bg-white/5 p-6 rounded-xl border border-white/10">
+          " {{ randomText() }} "
+        </p>
+      </div>
+    } @else {
+      <div class="animate-fadeIn">
+        <h1 class="text-4xl font-bold mb-4 drop-shadow-lg text-white">
+          بیمار آماده ویزیت است
+        </h1>
+        <p class="text-lg mb-8 text-gray-300">آماده شروع هستید؟</p>
+
+        <div class="flex gap-4 justify-center">
+          <app-action
+            class="bg-green-600 hover:bg-green-700 rounded-lg shadow-xl transition-transform hover:scale-105"
+            text="ورود بیمار به اتاق" [url]="'/scenario/'+ this.tracking_code()+'/'">
+          </app-action>
+
+          <button class="px-6 py-2 border border-white/30 rounded-lg hover:bg-white/10 cursor-pointer transition"
+                  routerLink="/">
+            انصراف
+          </button>
+        </div>
+      </div>
+    }
+
   </div>
-</div>
-
-<!--<p class="w-full text-gray-500 items-center text-center pt-10">-->
-<!--  آیا می دانید؟-->
-<!--</p>-->
-<div class="a">
-  <p class="w-full text-sm text-gray-700 items-center text-center mb-5 pt-15">
-    {{ randomText() }}
-  </p>
-
-  <div class="flex justify-center">
-    <p-progress-bar
-      [style]="{
-      '--p-progressbar-background': '#fff',
-      '--p-progressbar-value-background': '#148591',
-      '--p-progressbar-height': '40px',
-      '--p-progressbar-label-color': '#fff',
-      '--p-progressbar-label-font-size': '1rem',
-      '--p-progressbar-border-radius': '5px'
-    }"
-      [value]="value()"
-      style="width: 100%; max-width: 600px;"
-    ></p-progress-bar>
-  </div>
-
-
-  @if (value() == 100) {
-    <div class="flex w-full p-5 justify-center items-center">
-
-
-      <button
-        routerLink="/scenario"
-        [ngClass]="{
-            'bg-[#148591]': true,
-            'hover:bg-[#0f747c] active:translate-y-1 active:shadow-[0_2px_0_#0f6c74]': true,
-        }"
-        class="flex flex-row gap-3 items-center
-               text-white
-               font-semibold
-               px-6
-               cursor-pointer
-               py-3
-               rounded-2xl
-               shadow-[0_4px_0_#0f6c74]
-               transition-all
-               duration-150"
-      >
-        <i class="pi pi-user"></i>
-        <p>ویزیت بیمار</p>
-      </button>
-
-    </div>
-
-
-  }
-
 </div>

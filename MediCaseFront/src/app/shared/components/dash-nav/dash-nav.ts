@@ -66,6 +66,8 @@ export class DashNav {
         if (user) {
           sessionStorage.setItem('first_name', user.first_name || '');
           sessionStorage.setItem('last_name', user.last_name || '');
+          sessionStorage.setItem('personal_number', user.personal_number || '');
+          localStorage.setItem('personal_number', user.personal_number || '');
           sessionStorage.setItem('avatar', user.profile_image ?? '');
 
           this.first_name.set(user.first_name || '');

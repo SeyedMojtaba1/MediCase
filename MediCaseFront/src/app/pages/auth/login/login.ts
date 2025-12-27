@@ -63,6 +63,7 @@ export class Login {
           sessionStorage.setItem('role', res.body.user.main_role);
           sessionStorage.setItem('username', res.body.user.username);
           sessionStorage.setItem('phone_number', res.body.user.phone_number);
+          localStorage.setItem('personal_number', res.body.user.personal_number);
           sessionStorage.setItem('university', res.body.user.university);
           sessionStorage.setItem('faculty', res.body.user.faculty);
           sessionStorage.setItem('department', res.body.user.department);
