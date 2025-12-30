@@ -3,14 +3,14 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
-from feedback_utils.asthma import *
-from feedback_utils.pte import *
-from feedback_utils.ph import *
-from feedback_utils.copd import *
-from feedback_utils.ipf import *
-from feedback_utils.pneumenia import *
+from .feedback_utils.asthma import *
+from .feedback_utils.pte import *
+from .feedback_utils.ph import *
+from .feedback_utils.copd import *
+from .feedback_utils.ipf import *
+from .feedback_utils.pneumenia import *
 
-from feedback_utils.feedback import ClinicalEvaluator
+from .feedback_utils.feedback import ClinicalEvaluator
 import statistics
 from .models import PulmonologyFeedback
 
