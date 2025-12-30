@@ -1,6 +1,6 @@
 from celery import shared_task
 from .scenario_creator import scenario_creator
-from .feedback_utils.generate_feedback import generate_feedback
+from .generate_feedback import generate_feedback
 from .models import PulmonologyScenario, PulmonologyDisease, PulmonologyFeedback, StudentLog
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response

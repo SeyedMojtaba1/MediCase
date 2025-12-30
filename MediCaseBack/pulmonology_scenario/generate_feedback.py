@@ -3,14 +3,16 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
-from .asthma import *
-from .pte import *
-from .ph import *
-from .copd import *
-from .ipf import *
-from .pneumenia import *
+from feedback_utils.asthma import *
+from feedback_utils.pte import *
+from feedback_utils.ph import *
+from feedback_utils.copd import *
+from feedback_utils.ipf import *
+from feedback_utils.pneumenia import *
 
-from .feedback import ClinicalEvaluator
+from feedback_utils.feedback import ClinicalEvaluator
+import statistics
+from .models import PulmonologyFeedback
 
 SCENARIO_MAP = {
     "Asthma": {
@@ -319,6 +321,104 @@ FULL_SCENARIO = {
   }
 }
 
+STUDENT_LOG = {
+  "history_taking": {
+    "present_illness": {
+      "question1": "14:55",
+      "question2": "14:50",
+      "question3": "14:45",
+      "question4": "14:40",
+      "question5": "14:35",
+      "question6": "14:30",
+      "question7": "14:25",
+      "question8": "14:20" 
+    },
+    "past_medical_history": {
+      "question1": { "question1a": "14:10", "question1b": "14:05" },
+      "question2": { "question2a": "14:00" },
+      "question3": "13:50"
+    },
+    "drug_history": {
+      "question1": {
+        "question1a": "13:40",
+        "question1b": "13:35"
+      }
+    },
+    "allergies": { "question1": { "question1a": "13:30" } },
+    "family_history": {
+      "question1": { "question1a": "13:20" }
+    },
+    "social_history": {
+      "question1": { "question1a": "13:10" },
+      "question2": "13:00" 
+    },
+    "ros": {
+      "question1": "12:50", 
+      "question6": "12:40",
+      "question7": "12:30"
+    }
+  },
+  "physical_exam": {
+    "vital_signs": {
+      "BP": "11:00",
+      "T": "10:50",
+      "PR": "10:45",
+      "RR": "10:40",
+      "SpO2": "10:35"
+    },
+    "general_appearance": {
+      "mood_and_behavior": "10:20",
+      "overall_appearance": "10:15",
+      "cardiopulmonary_and_circulatory_clues": { 
+        "dyspnea": "10:10", 
+        "cyanosis": "10:05" 
+      }
+    },
+    "head_and_neck": {
+      "neck_and_lymphatics": {
+        "inspection": "09:45"
+      }
+    },
+    "respiratory_system": {
+      "inspection": { "chest_shape_and_symmetry": "09:30" },
+      "palpation": { "chest_expansion": "09:20" }, 
+      "percussion": "09:10",
+      "auscultation": { 
+        "breath_sounds_intensity": "09:00", 
+        "adventitious_sounds": "08:50" 
+      }
+    },
+    "cardiovascular_system": {
+      "auscultation": { "heart_sounds_s1_s2": "08:30" }
+    },
+    "abdominal_system": {
+      "inspection": "08:00",
+      "palpation": { "superficial_tenderness": "07:50" } 
+    }
+  },
+  "paraclinic": {
+    "basic_blood_tests": {
+      "BMP": { "Na": "06:30", "BUN": "06:30", "Cr": "06:30" },
+      "CBC": { "Hb": "06:15", "WBC": "06:15", "Plt": "06:15" },
+      "ESR": "06:00",
+      "VBG": { "pH": "05:45" }
+    },
+    "specialized_lung_tests": {
+      "D_dimer": "05:30",
+      "BNP_NT_proBNP": "05:15" 
+    },
+    "simple_imaging": {
+      "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "04:30" }
+    },
+    "advanced_imaging": {
+      "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "04:15" } 
+    },
+    "functional_tests": {
+      "peak_flow": "04:00"
+    }
+  }
+}
+
 def flatten_dict(d, parent_key='', sep='.'):
     """تبدیل دیکشنری تودرتو به دیکشنری تخت برای مقایسه آسان."""
     items = []
@@ -457,6 +557,161 @@ def generate_ai_analysis(metrics_data, full_scenario_ref):
             "conclusion": "خطا در پردازش هوش مصنوعی."
         }
 
+def calculate_matrix_position(score_percent, duration_seconds, total_time=900):
+    """
+    تعیین موقعیت دانشجو در ماتریس سرعت-دقت بر اساس تعاریف PRD.
+    
+    Thresholds:
+    - Score Pass: 60% (طبق بخش 2 PRD)
+    - Time Optimal: 85% (طبق بخش 8.1 PRD - مرز بین Optimal و Acceptable)
+    """
+    # تعریف آستانه‌ها
+    SCORE_THRESHOLD = 60.0 
+    TIME_THRESHOLD_SECONDS = total_time * 0.85 
+    
+    is_accurate = score_percent >= SCORE_THRESHOLD
+    is_fast = duration_seconds <= TIME_THRESHOLD_SECONDS
+    
+    result = {
+        "quadrant_code": "",
+        "label_fa": "",
+        "label_en": "",
+        "description": "",
+        "color": ""
+    }
+    
+    if is_accurate and is_fast:
+        # Q1: مسلط
+        result.update({
+            "quadrant_code": "Q1_MASTER",
+            "label_fa": "مسلط / استادانه",
+            "label_en": "Master / Efficient",
+            "description": "عالی. تعادل ایده‌آل بین سرعت عمل و دقت علمی.",
+            "color": "#2E7D32"
+        })
+        
+    elif is_accurate and not is_fast:
+        # Q2: محتاط
+        result.update({
+            "quadrant_code": "Q2_CAUTIOUS",
+            "label_fa": "محتاط / دقیق",
+            "label_en": "Cautious",
+            "description": "تشخیص صحیح با سرعت پایین. نیاز به تمرین برای افزایش سرعت تصمیم‌گیری.",
+            "color": "#FBC02D"
+        })
+        
+    elif not is_accurate and is_fast:
+        # Q3: عجول (خطرناک‌ترین حالت)
+        result.update({
+            "quadrant_code": "Q3_RASH",
+            "label_fa": "عجول / شتاب‌زده",
+            "label_en": "Rash / Impulsive",
+            "description": "هشدار: سرعت بالا بدون دقت علمی. این الگو در بالین خطرناک است.",
+            "color": "#C62828"
+        })
+        
+    else: # not is_accurate and not is_fast
+        # Q4: مبتدی
+        result.update({
+            "quadrant_code": "Q4_NOVICE",
+            "label_fa": "نیازمند آموزش پایه",
+            "label_en": "Novice",
+            "description": "نیاز به مطالعه بیشتر و تمرین سناریوها برای بهبود دقت و سرعت.",
+            "color": "#757575",
+        })
+
+    # اضافه کردن مختصات برای رسم نمودار (Scatter Plot) در فرانت‌اند
+    result["coordinates"] = {
+        "x": duration_seconds,       # محور افقی: زمان
+        "y": score_percent,          # محور عمودی: امتیاز
+        "x_threshold": TIME_THRESHOLD_SECONDS,
+        "y_threshold": SCORE_THRESHOLD
+    }
+
+    return result
+
+def analyze_peer_comparison(current_score, disease_name):
+    """
+    محاسبه جایگاه دانشجو نسبت به سایرین در همان سناریو.
+    """
+    output = {
+        "is_active": False,
+        "user_score": current_score,
+        "class_mean": 0,
+        "class_std_dev": 0,
+        "percentile": 0,
+        "message": "داده‌های کافی برای مقایسه موجود نیست.",
+        "total_participants": 0
+    }
+
+    try:
+        # 1. Fetch scores for this specific scenario from DB
+        # فرض: ما تمام فیدبک‌های مربوط به این بیماری و سناریوی خاص را می‌گیریم.
+        # نکته: در مدل‌ها فیلد مستقیمی برای scenario_key نداریم، فرض بر این است که
+        # یا در JSON سناریو ذخیره شده یا باید فیلتر پیچیده‌تری زد.
+        # در اینجا برای سادگی فرض می‌کنیم فیلتر بر اساس نام بیماری و تحلیل JSON انجام می‌شود
+        # یا اینکه در آینده فیلد scenario_key به مدل PulmonologyScenario اضافه می‌شود.
+        
+        # Querying logic (Simulated):
+        # We need feedbacks where generated=True and associated scenario matches current logic
+        related_feedbacks = PulmonologyFeedback.objects.filter(
+            generated=True,
+            scenario__disease__english_name=disease_name
+            # در واقعیت باید روی کلید سناریو هم فیلتر کنید:
+            # scenario__scenario__contains=scenario_key 
+        ).values_list('feedback', flat=True)
+
+        scores = []
+        for fb in related_feedbacks:
+            # استخراج نمره از JSON ذخیره شده در دیتابیس
+            if isinstance(fb, dict) and 'score' in fb and 'obtained' in fb['score']:
+                scores.append(fb['score']['obtained'])
+            elif isinstance(fb, str):
+                # اگر جیسون به صورت استرینگ ذخیره شده باشد
+                try:
+                    data = json.loads(fb)
+                    scores.append(data['score']['obtained'])
+                except:
+                    pass
+        
+        # اضافه کردن نمره خود دانشجو به لیست (اگر هنوز در دیتابیس نیست)
+        scores.append(current_score)
+        
+        # 2. Check Data Sufficiency (Minimum 5 participants for statistical validity)
+        if len(scores) < 5:
+            return output
+
+        # 3. Calculate Statistics
+        mean = statistics.mean(scores)
+        stdev = statistics.stdev(scores) if len(scores) > 1 else 0
+        output["total_participants"] = len(scores)
+        output["class_mean"] = round(mean, 1)
+        output["class_std_dev"] = round(stdev, 1)
+        output["is_active"] = True
+
+        # 4. Calculate Percentile
+        # فرمول ساده محاسبه صدک
+        scores_lower = len([s for s in scores if s < current_score])
+        percentile = (scores_lower / len(scores)) * 100
+        output["percentile"] = int(percentile)
+
+        # 5. Generate Message based on PRD
+        if percentile >= 90:
+            output["message"] = "تبریک! عملکرد شما جزو ۱۰٪ برتر شرکت‌کنندگان بود."
+        elif percentile >= 70:
+            output["message"] = "عملکرد شما بالاتر از میانگین کلاس است."
+        elif percentile >= 30:
+            output["message"] = "عملکرد شما در محدوده میانگین کلاس قرار دارد."
+        else:
+            output["message"] = "نمره شما در یک‌سوم پایین کلاس است. جای پیشرفت دارید."
+
+    except Exception as e:
+        # در صورت بروز خطا (مثلاً عدم دسترسی به دیتابیس در محیط تست)
+        print(f"Peer comparison error: {e}")
+        # بازگرداندن خروجی پیش‌فرض (غیرفعال)
+        return output
+
+    return output
 
 def generate_feedback(disease_category, specific_scenario_key, student_log):
     try:
@@ -473,7 +728,14 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
 
     metrics = calculate_metrics(optimal_scenario, student_log)
     ai_analysis = generate_ai_analysis(metrics, FULL_SCENARIO)
+    
+    matrix_data = calculate_matrix_position(final_score_percent, duration_seconds, evaluator.total_time_seconds)
 
+    peer_data = analyze_peer_comparison(
+        current_score=final_score_percent,
+        disease_name=disease_category,
+    )
+    
     output = {
         "meta": {
             "disease": disease_category,
@@ -501,12 +763,35 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
             "missed_value": metrics["counts"]["missed"],
             "total_actions": metrics["counts"]["total_performed"]
         },
+        "performance_matrix": {
+            "title": "تحلیل سرعت در برابر دقت",
+            "status": matrix_data["label_fa"],
+            "status_en": matrix_data["label_en"],
+            "description": matrix_data["description"],
+            "color_code": matrix_data["color"],
+            "quadrant": matrix_data["quadrant_code"],
+            "chart_coordinates": matrix_data["coordinates"]
+        },
         "detailed_lists": {
             "missed_items": metrics["details"]["missed"],
             "noise_items": metrics["details"]["noise"],
             "correct_items": metrics["details"]["correct"]
         },
+        "peer_comparison": peer_data,
         "ai_analysis": ai_analysis
     }
     
     return output
+
+if __name__ == "__main__":
+    import sys
+    
+    # تنظیم انکدینگ برای نمایش صحیح فارسی در کنسول ویندوز (اختیاری)
+    if sys.platform == "win32":
+        sys.stdout.reconfigure(encoding='utf-8')
+
+
+
+    result = generate_feedback("Asthma", "exercise_induced", STUDENT_LOG)
+    print(json.dumps(result, ensure_ascii=False))    
+        
