@@ -131,7 +131,7 @@ class StudentRankingPagination(PageNumberPagination):
     page_size_query_param = 'page_size'  # کلاینت می‌تواند با این پارامتر تعداد را تغییر دهد
     max_page_size = 100
 
-class StudentRankingAPIView(generics.ListAPIView):
+class StudentRankingListView(generics.ListAPIView):
     serializer_class = StudentScenarioRankSerializer
     pagination_class = StudentRankingPagination  # <--- این خط اضافه شد
     
