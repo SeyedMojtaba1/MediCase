@@ -7,7 +7,7 @@ from django.db import migrations, models
 from decimal import Decimal
 
 def create_initial_records_semester(apps, schema_editor): 
-    Category = apps.get_model('class', 'Semester') 
+    Category = apps.get_model('classroom', 'Semester') 
     Category.objects.get_or_create(code='4041', name='404-پاییز')
     Category.objects.get_or_create(code='4042', name='404-زمستان/بهار')
     Category.objects.get_or_create(code='4043', name='404-تابستان')
@@ -19,7 +19,7 @@ def create_initial_records_semester(apps, schema_editor):
     Category.objects.get_or_create(code='4063', name='406-تابستان')
     
 def create_initial_records_subject(apps, schema_editor): 
-    Category = apps.get_model('class', 'Subject') 
+    Category = apps.get_model('classroom', 'Subject') 
     Category.objects.get_or_create(english_name='Neurology', persian_name='بیماری‌های مغز و اعصاب', unit=Decimal('0.5'), subject_status='Inactive', subject_image='subject/neurology-subject.jpg', description="نورولوژی شاخه‌ای از پزشکی است که به بررسی و درمان بیماری‌های سیستم عصبی می‌پردازد؛ سیستمی پیچیده شامل مغز، نخاع و اعصاب محیطی که کنترل حرکات، احساسات و عملکردهای حیاتی را بر عهده دارد. واحد اصلی آن نورون است که پیام‌های عصبی را از طریق ناقل‌های شیمیایی منتقل می‌کند و سلول‌های گلیال با حمایت و میلینه‌سازی به عملکرد آن کمک می‌کنند. سیستم عصبی محیطی شامل شاخه‌های سوماتیک و خودکار است؛ شاخه خودکار با بخش‌های سمپاتیک و پاراسمپاتیک، تعادل بدن را حفظ می‌کند. سد خونی–مغزی از مغز در برابر مواد سمی محافظت می‌نماید. بیماری‌های نورولوژیک شامل اختلالات مغزی (مانند سکته و صرع)، نخاعی، اعصاب محیطی و عضلات هستند. از نظر علت می‌توانند عروقی، دمیلینه‌کننده، دژنراتیو یا عفونی باشند. تشخیص بر پایه معاینه، تصویربرداری و تست‌های الکتروفیزیولوژیک است و درمان شامل دارو، توانبخشی یا جراحی می‌باشد.")
     Category.objects.get_or_create(english_name='Nephrology', persian_name='بیماری‌های کلیه', unit=Decimal('1.5'), subject_status='Inactive', subject_image='subject/nephrology-subject.jpg', description="نفرولوژی شاخه‌ای از پزشکی است که به مطالعه و درمان بیماری‌های کلیه می‌پردازد؛ اندامی حیاتی که با فیلتر کردن خون، تعادل آب، الکترولیت‌ها و اسید–باز بدن را حفظ می‌کند و در تنظیم فشارخون و تولید هورمون‌هایی مانند اریتروپویتین نقش دارد. هر کلیه از میلیون‌ها نفرون تشکیل شده است که شامل گلومرول و توبول‌های مختلف برای تصفیه و بازجذب مواد هستند. بیماری‌های کلیه به دو دستهٔ اصلی تقسیم می‌شوند: حاد (Acute Kidney Injury) که با کاهش ناگهانی عملکرد کلیه همراه است، و مزمن (Chronic Kidney Disease) که به تدریج موجب کاهش برگشت‌ناپذیر عملکرد کلیه می‌شود. علل شایع شامل دیابت، فشارخون بالا، گلومرولونفریت‌ها و بیماری‌های پلی‌کیستیک است. تظاهرات بالینی می‌تواند شامل خستگی، ادم، افزایش اوره و کراتینین خون و اختلالات الکترولیتی باشد. تشخیص بر اساس آزمایش ادرار، کراتینین سرم، سونوگرافی و گاهی بیوپسی کلیه انجام می‌شود. درمان شامل کنترل علت زمینه‌ای، تنظیم فشارخون و در مراحل پیشرفته، دیالیز یا پیوند کلیه است.")
     Category.objects.get_or_create(english_name='Gastroenterology', persian_name='بیماری‌های گوارش و کبد', unit=Decimal('2.1'), subject_status='Inactive', subject_image='subject/gastroenterology-subject.jpg', description="گاستروانترولوژی شاخه‌ای از پزشکی است که به بررسی، تشخیص و درمان بیماری‌های دستگاه گوارش و کبد می‌پردازد؛ دستگاهی که از دهان تا مقعد امتداد دارد و مسئول هضم، جذب و دفع مواد غذایی است. معده با ترشح اسید و آنزیم‌ها در هضم نقش دارد و در برابر این اسید، لایهٔ موکوسی محافظ وجود دارد. زمانی که این تعادل با مصرف NSAIDها یا عفونت H. pylori برهم می‌خورد، گاستریت و زخم پپتیک ایجاد می‌شود. در مری، ضعف اسفنکتر تحتانی باعث بازگشت اسید و بروز بیماری ریفلاکس (GERD) می‌گردد. در رودهٔ باریک، بیماری سلیاک با واکنش ایمنی علیه گلوتن موجب تخریب پرزها و سوء‌جذب می‌شود. التهاب مزمن روده در قالب دو بیماری اصلی دیده می‌شود: کولیت اولسراتیو (درگیری پیوستهٔ کولون) و کرون (التهاب قطعه‌قطعه و عمقی). اختلالات عملکردی مانند سندروم روده تحریک‌پذیر (IBS) بدون آسیب بافتی ولی با درد و نفخ بروز می‌کنند. در کبد، هپاتیت‌های ویروسی، الکلی و متابولیک از علل شایع التهاب هستند و در موارد مزمن می‌توانند به سیروز، نارسایی کبد یا کارسینوم منجر شوند.")
@@ -32,7 +32,7 @@ def create_initial_records_subject(apps, schema_editor):
     Category.objects.get_or_create(english_name='Pediatrics', persian_name='بیماری‌های کودکان', unit=Decimal('1'), subject_status='Inactive', subject_image='subject/pediatrics-subject.jpg', description="پزشکی اطفال شاخه‌ای از پزشکی است که به مراقبت، پیشگیری، تشخیص و درمان بیماری‌های نوزادان، کودکان و نوجوانان می‌پردازد. کودکان دارای ویژگی‌های فیزیولوژیک، متابولیک و ایمنی متفاوتی نسبت به بزرگسالان هستند که در تشخیص و درمان بیماری‌ها اهمیت دارد. بیماری‌های شایع شامل عفونت‌های تنفسی و گوارشی، بیماری‌های متابولیک و غددی، اختلالات رشد و کم‌خونی‌هاست. نوزادان و کودکان همچنین در معرض بیماری‌های ژنتیکی و مادرزادی قرار دارند که می‌تواند بر اندام‌ها و عملکرد سیستمیک تأثیر بگذارد. علائم بالینی ممکن است شامل تب، استفراغ، اسهال، اختلال رشد، بی‌حالی و تغییر در الگوی تغذیه و خواب باشد. تشخیص بر اساس معاینه دقیق بالینی، آزمایش‌های خون و ادرار، تصویربرداری و در صورت نیاز تست‌های ژنتیکی انجام می‌شود. درمان شامل دارودرمانی، حمایت تغذیه‌ای، واکسیناسیون، توانبخشی و مراقبت‌های ویژه در نوزادان و کودکان است. پیشگیری، آموزش والدین و پیگیری رشد و نمو کودک از ارکان اصلی پزشکی اطفال محسوب می‌شوند.")
 
 def create_initial_records_hospital(apps, schema_editor): 
-    Category = apps.get_model('class', 'Hospital') 
+    Category = apps.get_model('classroom', 'Hospital') 
     Category.objects.get_or_create(
         english_name="alzahra",
         persian_name="مرکز آموزشی درمانی الزهرا(س)",
@@ -217,11 +217,11 @@ def create_initial_records_hospital(apps, schema_editor):
     )
 
 def create_initial_records_hospitalsubject(apps, schema_editor): 
-    Category = apps.get_model('class', 'HospitalSubject')
-    Subject = apps.get_model('class', 'Subject')
+    Category = apps.get_model('classroom', 'HospitalSubject')
+    Subject = apps.get_model('classroom', 'Subject')
     subject_name = "Pulmonology"
     subject_record = Subject.objects.get(english_name=subject_name)
-    Hospital = apps.get_model('class', 'Hospital')
+    Hospital = apps.get_model('classroom', 'Hospital')
     hospital_name = "alzahra"
     hospital_record = Hospital.objects.get(english_name=hospital_name) 
     Category.objects.get_or_create(hospital=hospital_record, subject=subject_record, access_status=True)

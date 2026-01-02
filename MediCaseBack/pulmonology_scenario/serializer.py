@@ -71,3 +71,11 @@ class StudentScenarioRankSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'completed_scenarios_count']
+        
+class SectionLeaderboardSerializer(serializers.ModelSerializer):
+    # نمره استخراج شده از ساختار JSON فیدبک
+    top_score = serializers.FloatField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'top_score']

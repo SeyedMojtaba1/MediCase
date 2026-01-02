@@ -12,12 +12,17 @@ from .serializer import (
     ScenarioListSerializer,
     FeedbackListSerializer,
     StudentScenarioRankSerializer,
+    SectionLeaderboardSerializer,
 )
 from .models import PulmonologyScenario, PulmonologyFeedback
 from django.contrib.auth import get_user_model
 from .utils import senario_creator_celery, feedback_creator_celery
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Count, Q
+from rest_framework.views import APIView
+from django.db.models import Max, F, FloatField
+from django.db.models.functions import Cast
+from classroom.models import StudentSection
 import secrets
 import string
 
@@ -143,3 +148,54 @@ class StudentRankingListView(generics.ListAPIView):
             )
         ).order_by('-completed_scenarios_count')
         
+class SectionLeaderboardView(generics.ListAPIView):
+    serializer_class = SectionLeaderboardSerializer
+
+    def get_queryset(self):
+        section_id = self.kwargs.get('section_id')
+        
+        # ۱. استخراج ID دانشجویان فعال در این سکشن
+        active_students = StudentSection.objects.filter(
+            section_id=section_id,
+            student_status='Active'
+        ).values_list('student_id', flat=True)
+
+        # ۲. محاسبه بالاترین نمره برای هر دانشجو و مرتب‌سازی
+        return User.objects.filter(id__in=active_students).annotate(
+            top_score=Max(
+                Cast(
+                    F('userPulmonologyScenario__pulmonologyfeedback__feedback__score__obtained'),
+                    FloatField()
+                ),
+                filter=F('userPulmonologyScenario__pulmonologyfeedback__generated') == True
+            )
+        ).exclude(top_score=None).order_by('-top_score')
+        
+class StudentRankInSectionView(APIView):
+    def get(self, request, section_id, username):
+        leaderboard = User.objects.filter(
+            studentsections__section_id=section_id,
+            studentsections__student_status='Active'
+        ).annotate(
+            score=Max(Cast(F('userPulmonologyScenario__pulmonologyfeedback__feedback__score__obtained'), FloatField()))
+        ).exclude(score=None).order_by('-score')
+
+        # پیدا کردن رتبه بر اساس Username
+        rank = None
+        student_score = 0
+        
+        for index, user in enumerate(leaderboard):
+            if user.username == username:
+                rank = index + 1
+                student_score = user.score
+                break
+        
+        if rank is None:
+            return Response({"error": "Student not found in this section or has no score"}, status=404)
+
+        return Response({
+            "username": username,
+            "rank": rank,
+            "total_students": leaderboard.count(),
+            "best_score": student_score
+        })

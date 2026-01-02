@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'registery',
     'university',
-    'class',
+    'classroom',
     'pulmonology_scenario',
     'tutorial',
     'drf_spectacular',
