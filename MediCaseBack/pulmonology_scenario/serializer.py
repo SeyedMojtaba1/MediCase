@@ -64,3 +64,12 @@ class FeedbackListSerializer(serializers.ModelSerializer):
             'scenario_tracking_code',
             'generated'
         ]
+
+class StudentScenarioRankSerializer(serializers.ModelSerializer):
+    # این فیلد را در View محاسبه و اضافه می‌کنیم
+    completed_scenarios_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = User
+        # اطلاعاتی که می‌خواهید از دانشجو نمایش داده شود
+        fields = ['id', 'username', 'first_name', 'last_name', 'completed_scenarios_count']

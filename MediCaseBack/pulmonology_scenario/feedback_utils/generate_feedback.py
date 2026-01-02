@@ -3,16 +3,18 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
-from .feedback_utils.asthma import *
-from .feedback_utils.pte import *
-from .feedback_utils.ph import *
-from .feedback_utils.copd import *
-from .feedback_utils.ipf import *
-from .feedback_utils.pneumenia import *
+from asthma import *
+from pte import *
+from ph import *
+from copd import *
+from ipf import *
+from pneumenia import *
 
-from .feedback_utils.feedback import ClinicalEvaluator
+from feedback import ClinicalEvaluator
+import math
 import statistics
-from .models import PulmonologyFeedback
+from django.db.models import Avg, StdDev
+from models import PulmonologyFeedback, PulmonologyScenario
 
 SCENARIO_MAP = {
     "Asthma": {
@@ -630,89 +632,6 @@ def calculate_matrix_position(score_percent, duration_seconds, total_time=900):
 
     return result
 
-def analyze_peer_comparison(current_score, disease_name):
-    """
-    محاسبه جایگاه دانشجو نسبت به سایرین در همان سناریو.
-    """
-    output = {
-        "is_active": False,
-        "user_score": current_score,
-        "class_mean": 0,
-        "class_std_dev": 0,
-        "percentile": 0,
-        "message": "داده‌های کافی برای مقایسه موجود نیست.",
-        "total_participants": 0
-    }
-
-    try:
-        # 1. Fetch scores for this specific scenario from DB
-        # فرض: ما تمام فیدبک‌های مربوط به این بیماری و سناریوی خاص را می‌گیریم.
-        # نکته: در مدل‌ها فیلد مستقیمی برای scenario_key نداریم، فرض بر این است که
-        # یا در JSON سناریو ذخیره شده یا باید فیلتر پیچیده‌تری زد.
-        # در اینجا برای سادگی فرض می‌کنیم فیلتر بر اساس نام بیماری و تحلیل JSON انجام می‌شود
-        # یا اینکه در آینده فیلد scenario_key به مدل PulmonologyScenario اضافه می‌شود.
-        
-        # Querying logic (Simulated):
-        # We need feedbacks where generated=True and associated scenario matches current logic
-        related_feedbacks = PulmonologyFeedback.objects.filter(
-            generated=True,
-            scenario__disease__english_name=disease_name
-            # در واقعیت باید روی کلید سناریو هم فیلتر کنید:
-            # scenario__scenario__contains=scenario_key 
-        ).values_list('feedback', flat=True)
-
-        scores = []
-        for fb in related_feedbacks:
-            # استخراج نمره از JSON ذخیره شده در دیتابیس
-            if isinstance(fb, dict) and 'score' in fb and 'obtained' in fb['score']:
-                scores.append(fb['score']['obtained'])
-            elif isinstance(fb, str):
-                # اگر جیسون به صورت استرینگ ذخیره شده باشد
-                try:
-                    data = json.loads(fb)
-                    scores.append(data['score']['obtained'])
-                except:
-                    pass
-        
-        # اضافه کردن نمره خود دانشجو به لیست (اگر هنوز در دیتابیس نیست)
-        scores.append(current_score)
-        
-        # 2. Check Data Sufficiency (Minimum 5 participants for statistical validity)
-        if len(scores) < 5:
-            return output
-
-        # 3. Calculate Statistics
-        mean = statistics.mean(scores)
-        stdev = statistics.stdev(scores) if len(scores) > 1 else 0
-        output["total_participants"] = len(scores)
-        output["class_mean"] = round(mean, 1)
-        output["class_std_dev"] = round(stdev, 1)
-        output["is_active"] = True
-
-        # 4. Calculate Percentile
-        # فرمول ساده محاسبه صدک
-        scores_lower = len([s for s in scores if s < current_score])
-        percentile = (scores_lower / len(scores)) * 100
-        output["percentile"] = int(percentile)
-
-        # 5. Generate Message based on PRD
-        if percentile >= 90:
-            output["message"] = "تبریک! عملکرد شما جزو ۱۰٪ برتر شرکت‌کنندگان بود."
-        elif percentile >= 70:
-            output["message"] = "عملکرد شما بالاتر از میانگین کلاس است."
-        elif percentile >= 30:
-            output["message"] = "عملکرد شما در محدوده میانگین کلاس قرار دارد."
-        else:
-            output["message"] = "نمره شما در یک‌سوم پایین کلاس است. جای پیشرفت دارید."
-
-    except Exception as e:
-        # در صورت بروز خطا (مثلاً عدم دسترسی به دیتابیس در محیط تست)
-        print(f"Peer comparison error: {e}")
-        # بازگرداندن خروجی پیش‌فرض (غیرفعال)
-        return output
-
-    return output
-
 def generate_feedback(disease_category, specific_scenario_key, student_log):
     try:
         optimal_scenario = SCENARIO_MAP[disease_category][specific_scenario_key]
@@ -731,11 +650,6 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
     
     matrix_data = calculate_matrix_position(final_score_percent, duration_seconds, evaluator.total_time_seconds)
 
-    peer_data = analyze_peer_comparison(
-        current_score=final_score_percent,
-        disease_name=disease_category,
-    )
-    
     output = {
         "meta": {
             "disease": disease_category,
@@ -777,21 +691,8 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
             "noise_items": metrics["details"]["noise"],
             "correct_items": metrics["details"]["correct"]
         },
-        "peer_comparison": peer_data,
         "ai_analysis": ai_analysis
     }
     
     return output
 
-if __name__ == "__main__":
-    import sys
-    
-    # تنظیم انکدینگ برای نمایش صحیح فارسی در کنسول ویندوز (اختیاری)
-    if sys.platform == "win32":
-        sys.stdout.reconfigure(encoding='utf-8')
-
-
-
-    result = generate_feedback("Asthma", "exercise_induced", STUDENT_LOG)
-    print(json.dumps(result, ensure_ascii=False))    
-        

@@ -11,10 +11,13 @@ from .serializer import (
     FeedbackRetrieveSerializer,
     ScenarioListSerializer,
     FeedbackListSerializer,
+    StudentScenarioRankSerializer,
 )
 from .models import PulmonologyScenario, PulmonologyFeedback
 from django.contrib.auth import get_user_model
 from .utils import senario_creator_celery, feedback_creator_celery
+from rest_framework.pagination import PageNumberPagination
+from django.db.models import Count, Q
 import secrets
 import string
 
@@ -122,3 +125,21 @@ class FeedbackListView(generics.ListAPIView):
         personal_num = self.kwargs.get('personal_number')
         
         return PulmonologyFeedback.objects.filter(scenario__user__personal_number=personal_num)
+
+class StudentRankingPagination(PageNumberPagination):
+    page_size = 10  # تعداد دانشجو در هر صفحه
+    page_size_query_param = 'page_size'  # کلاینت می‌تواند با این پارامتر تعداد را تغییر دهد
+    max_page_size = 100
+
+class StudentRankingAPIView(generics.ListAPIView):
+    serializer_class = StudentScenarioRankSerializer
+    pagination_class = StudentRankingPagination  # <--- این خط اضافه شد
+    
+    def get_queryset(self):
+        return User.objects.annotate(
+            completed_scenarios_count=Count(
+                'userPulmonologyScenario', 
+                filter=Q(userPulmonologyScenario__done=True)
+            )
+        ).order_by('-completed_scenarios_count')
+        
