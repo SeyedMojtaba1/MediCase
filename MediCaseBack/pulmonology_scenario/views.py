@@ -16,7 +16,7 @@ from .serializer import (
 )
 from .models import PulmonologyScenario, PulmonologyFeedback
 from django.contrib.auth import get_user_model
-from .utils import senario_creator_celery, feedback_creator_celery
+from .utils import senario_creator_celery, feedback_creator_celery, decode_short_uuid
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Count, Q
 from rest_framework.views import APIView
@@ -152,11 +152,17 @@ class SectionLeaderboardView(generics.ListAPIView):
     serializer_class = SectionLeaderboardSerializer
 
     def get_queryset(self):
-        section_id = self.kwargs.get('section_id')
-        
+        short_id = self.kwargs.get('section_id')
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )        
         # ۱. استخراج ID دانشجویان فعال در این سکشن
         active_students = StudentSection.objects.filter(
-            section_id=section_id,
+            section_id=section_uuid,
             student_status='Active'
         ).values_list('student_id', flat=True)
 
@@ -172,9 +178,18 @@ class SectionLeaderboardView(generics.ListAPIView):
         ).exclude(top_score=None).order_by('-top_score')
         
 class StudentRankInSectionView(APIView):
-    def get(self, request, section_id, username):
+    def get(self, request, section_id, personal_number):
+        short_id = self.kwargs.get(section_id)
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
         leaderboard = User.objects.filter(
-            studentsections__section_id=section_id,
+            studentsections__section_id=section_uuid,
             studentsections__student_status='Active'
         ).annotate(
             score=Max(Cast(F('userPulmonologyScenario__pulmonologyfeedback__feedback__score__obtained'), FloatField()))
@@ -185,7 +200,7 @@ class StudentRankInSectionView(APIView):
         student_score = 0
         
         for index, user in enumerate(leaderboard):
-            if user.username == username:
+            if user.personal_number == personal_number:
                 rank = index + 1
                 student_score = user.score
                 break
@@ -194,7 +209,7 @@ class StudentRankInSectionView(APIView):
             return Response({"error": "Student not found in this section or has no score"}, status=404)
 
         return Response({
-            "username": username,
+            "personal_number": personal_number,
             "rank": rank,
             "total_students": leaderboard.count(),
             "best_score": student_score

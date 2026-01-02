@@ -6,11 +6,16 @@ from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from django.db import transaction
 from django.db.models import F
+import uuid, base64
 import logging
 
 logger = logging.getLogger(__name__)
 
 User = get_user_model()
+
+def decode_short_uuid(short_id: str) -> uuid.UUID:
+    padding = '=' * (-len(short_id) % 4)
+    return uuid.UUID(bytes=base64.urlsafe_b64decode(short_id + padding))
 
 @shared_task
 def senario_creator_celery(personal_number, tracking_code):

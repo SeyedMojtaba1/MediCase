@@ -9,4 +9,6 @@ urlpatterns = [
    path('feedbackretrieve/<str:tracking_code>/', views.FeedbackRetrieveView.as_view(), name='feedbackretrieve'),
    path('feedbacklist/<str:personal_number>/', views.FeedbackListView.as_view(), name='feedbacklist'),
    path('studentranking/', views.StudentRankingListView.as_view(), name='studentranking'),
+   path('sectionleaderboard/<str:section_id>/', views.SectionLeaderboardView.as_view()),
+   path('studentrankinsection/<str:section_id>/rank/<str:personal_number>/', views.StudentRankInSectionView.as_view()),
 ]
