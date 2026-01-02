@@ -9,12 +9,12 @@ from langchain_core.output_parsers import JsonOutputParser
 # ==========================================
 # فرض بر این است که فایل‌های زیر در کنار همین اسکریپت قرار دارند
 try:
-    from asthma import *
-    from pte import *
-    from ph import *
-    from copd import *
-    from ipf import *
-    from pneumenia import *
+    from .asthma import *
+    from .pte import *
+    from .ph import *
+    from .copd import *
+    from .ipf import *
+    from .pneumenia import *
 except ImportError as e:
     print(f"Error importing disease files: {e}")
     print("Please ensure asthma.py, pte.py, etc. are in the same directory.")

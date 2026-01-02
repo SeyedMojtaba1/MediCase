@@ -3,18 +3,14 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
-from asthma import *
-from pte import *
-from ph import *
-from copd import *
-from ipf import *
-from pneumenia import *
+from .asthma import *
+from .pte import *
+from .ph import *
+from .copd import *
+from .ipf import *
+from .pneumenia import *
 
-from feedback import ClinicalEvaluator
-import math
-import statistics
-from django.db.models import Avg, StdDev
-from models import PulmonologyFeedback, PulmonologyScenario
+from .feedback import ClinicalEvaluator
 
 SCENARIO_MAP = {
     "Asthma": {
