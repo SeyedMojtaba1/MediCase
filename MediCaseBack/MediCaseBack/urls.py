@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from registery.views import SignupViewSet, RoleViewSet
 from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.conf import settings
@@ -31,7 +30,7 @@ urlpatterns = [
     path("university/", include(router.urls)),
     path("university/", include("university.urls")),
     path("class/", include(router.urls)),
-    path("class/", include("class.urls")),
+    path("class/", include("classroom.urls")),
     path("pulmonologyscenario/", include("pulmonology_scenario.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/docs/", SpectacularSwaggerView.as_view(url_name="schema")),
