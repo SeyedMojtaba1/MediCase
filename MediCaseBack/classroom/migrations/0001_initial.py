@@ -296,8 +296,8 @@ class Migration(migrations.Migration):
                 ('section_image', models.ImageField(blank=True, null=True, upload_to='section/')),
                 ('description', models.TextField(max_length=1000)),
                 ('teacher', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='users', to=settings.AUTH_USER_MODEL)),
-                ('semester', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='semesters', to='class.semester')),
-                ('subject', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subjects', to='class.subject')),
+                ('semester', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='semesters', to='classroom.semester')),
+                ('subject', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subjects', to='classroom.subject')),
             ],
         ),
         migrations.CreateModel(
@@ -305,7 +305,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('student_status', models.CharField(choices=[('Active', 'A'), ('Blocked', 'B')], max_length=10)),
-                ('section', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='sectionstudents', to='class.section')),
+                ('section', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='sectionstudents', to='classroom.section')),
                 ('student', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='studentsections', to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -315,7 +315,7 @@ class Migration(migrations.Migration):
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('access_status', models.BooleanField(default=False)),
                 ('student', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='studentsubjects', to=settings.AUTH_USER_MODEL)),
-                ('subject', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subjectstudents', to='class.subject')),
+                ('subject', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subjectstudents', to='classroom.subject')),
             ],
         ),
         migrations.CreateModel(
@@ -323,8 +323,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('access_status', models.BooleanField(default=False)),
-                ('hospital', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='hospitalsubjects', to='class.hospital')),
-                ('subject', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subjecthospitals', to='class.subject')),
+                ('hospital', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='hospitalsubjects', to='classroom.hospital')),
+                ('subject', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subjecthospitals', to='classroom.subject')),
             ],
         ),
         migrations.RunPython(create_initial_records_subject),
