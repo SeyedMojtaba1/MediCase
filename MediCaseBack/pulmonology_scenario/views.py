@@ -226,3 +226,110 @@ class StudentRankInSectionView(APIView):
             "total_students": leaderboard.count(),
             "best_score": student_score
         })
+        
+class FeedbackRankInSectionView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "tracking_code"
+    
+    def get(self, request):
+        tracking_code = self.kwargs.get('tracking_code')
+        # ۱. پیدا کردن فیدبک و بررسی مالکیت آن
+        try:
+            # استفاده از select_related برای واکشی بهینه اطلاعات سناریو و کاربر
+            target_feedback = PulmonologyFeedback.objects.select_related(
+                'scenario__user'
+            ).get(tracking_code=tracking_code)
+        except PulmonologyFeedback.DoesNotExist:
+            return Response({"error": "فیدبک یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        # ۲. چک کردن اینکه درخواست‌دهنده همان مالک فیدبک باشد
+        # در مدل کاربر شما کلید اصلی user_id است
+        if target_feedback.scenario.user.user_id != request.user.user_id:
+            return Response(
+                {"error": "شما اجازه دسترسی به رتبه این فیدبک را ندارید."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        student = target_feedback.scenario.user
+        
+        # ۳. پیدا کردن کلاس (Section) فعال دانشجو
+        student_section = StudentSection.objects.filter(
+            student=student, 
+            student_status='Active'
+        ).first()
+
+        if not student_section:
+            return Response({"error": "کلاس فعالی برای شما یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        section_uuid = student_section.section_id
+
+        # ۴. ایجاد لیدربورد کلاس بر اساس بالاترین نمره دانشجویان
+        leaderboard = User.objects.filter(
+            studentsections__section_id=section_uuid,
+            studentsections__student_status='Active'
+        ).annotate(
+            best_score=Max(
+                Cast(
+                    F('userPulmonologyScenario__feedbackpulmonologyscenario__feedback__score__obtained'), 
+                    FloatField()
+                ),
+                filter=Q(userPulmonologyScenario__feedbackpulmonologyscenario__generated=True)
+            )
+        ).exclude(best_score=None).order_by('-best_score')
+
+        # ۵. پیدا کردن رتبه دانشجو در لیدربورد
+        rank = None
+        for index, user in enumerate(leaderboard):
+            if user.personal_number == student.personal_number:
+                rank = index + 1
+                break
+
+        return Response({
+            "tracking_code": tracking_code,
+            "rank_in_section": rank,
+            "total_students": leaderboard.count(),
+            "your_obtained_score": target_feedback.feedback.get('score', {}).get('obtained'),
+            "section_name": student_section.section.name
+        })
+
+class SectionLeaderboardBySectionIdView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SectionLeaderboardSerializer
+
+    def get_queryset(self):
+        # دریافت شناسه کلاس از URL
+        short_id = self.kwargs.get('section_id')
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            return User.objects.none()
+
+        # بررسی امنیتی: آیا کاربر درخواست‌دهنده عضو فعال این کلاس هست؟
+        is_member = StudentSection.objects.filter(
+            section_id=section_uuid,
+            student=self.request.user,
+            student_status='Active'
+        ).exists()
+
+        if not is_member:
+            # اگر کاربر عضو کلاس نباشد، لیست خالی برمی‌گردد (عدم دسترسی)
+            return User.objects.none()
+
+        # ۱. استخراج لیست شماره پرسنلی تمام دانشجویان فعال در این کلاس
+        active_student_numbers = StudentSection.objects.filter(
+            section_id=section_uuid,
+            student_status='Active'
+        ).values_list('student__personal_number', flat=True)
+
+        # ۲. رتبه‌بندی تمام دانشجویان کلاس بر اساس بالاترین امتیاز کسب شده
+        return User.objects.filter(personal_number__in=active_student_numbers).annotate(
+            top_score=Max(
+                Cast(
+                    F('userPulmonologyScenario__feedbackpulmonologyscenario__feedback__score__obtained'),
+                    FloatField()
+                ),
+                filter=Q(userPulmonologyScenario__feedbackpulmonologyscenario__generated=True)
+            )
+        ).exclude(top_score=None).order_by('-top_score')

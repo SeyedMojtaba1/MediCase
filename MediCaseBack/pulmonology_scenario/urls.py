@@ -11,4 +11,6 @@ urlpatterns = [
    path('studentranking/', views.StudentRankingListView.as_view(), name='studentranking'),
    path('sectionleaderboard/<str:section_id>/', views.SectionLeaderboardView.as_view()),
    path('studentrankinsection/<str:section_id>/', views.StudentRankInSectionView.as_view()),
+   path('feedbackrankinsection/<str:tracking_code>/', views.FeedbackRankInSectionView.as_view()),
+   path('sectionleaderboard/<str:tracking_code>/', views.SectionLeaderboardBySectionIdView.as_view()),
 ]
