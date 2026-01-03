@@ -155,6 +155,7 @@ class SectionLeaderboardView(generics.ListAPIView):
     lookup_field = "section_id"
 
     def get_queryset(self):
+        
         short_id = self.kwargs.get('section_id')
         try:
             section_uuid = decode_short_uuid(short_id)
@@ -164,13 +165,13 @@ class SectionLeaderboardView(generics.ListAPIView):
                 status=status.HTTP_400_BAD_REQUEST
             )        
         # ۱. استخراج ID دانشجویان فعال در این سکشن
-        active_students = StudentSection.objects.filter(
+        active_student_numbers = StudentSection.objects.filter(
             section_id=section_uuid,
             student_status='Active'
-        ).values_list('student_id', flat=True)
+        ).values_list('student__personal_number', flat=True)
 
         # ۲. محاسبه بالاترین نمره برای هر دانشجو و مرتب‌سازی
-        return User.objects.filter(user_id__in=active_students).annotate(
+        return User.objects.filter(personal_number__in=active_student_numbers).annotate(
             top_score=Max(
                 Cast(
                     # مسیر درست: کاربر -> سناریوها -> فیدبک‌ها -> فیلد جیسون
@@ -185,27 +186,31 @@ class SectionLeaderboardView(generics.ListAPIView):
 class StudentRankInSectionView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = "section_id"
     
-    def get(self, request):
+    def get(self, request, section_id): # پارامترها را از URL دریافت می‌کند
         student = self.request.user
-        short_id = self.kwargs.get("section_id")
         try:
-            section_uuid = decode_short_uuid(short_id)
+            section_uuid = decode_short_uuid(section_id)
         except ValueError:
             return Response(
                 {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
             
+        # ۱. ایجاد لیدربورد کلاس بر اساس شماره پرسنلی دانشجویان فعال
         leaderboard = User.objects.filter(
             studentsections__section_id=section_uuid,
             studentsections__student_status='Active'
         ).annotate(
-            score=Max(Cast(F('userPulmonologyScenario__pulmonologyfeedback__feedback__score__obtained'), FloatField()))
+            score=Max(
+                Cast(
+                    F('userPulmonologyScenario__feedbackpulmonologyscenario__feedback__score__obtained'), 
+                    FloatField()
+                )
+            )
         ).exclude(score=None).order_by('-score')
 
-        # پیدا کردن رتبه بر اساس Username
+        # ۲. پیدا کردن رتبه دانشجو با مقایسه personal_number
         rank = None
         student_score = 0
         
@@ -216,7 +221,7 @@ class StudentRankInSectionView(APIView):
                 break
         
         if rank is None:
-            return Response({"error": "Student not found in this section or has no score"}, status=404)
+            return Response({"error": "امتیازی برای شما در این کلاس یافت نشد."}, status=404)
 
         return Response({
             "personal_number": student.personal_number,
