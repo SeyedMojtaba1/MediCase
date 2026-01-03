@@ -149,7 +149,10 @@ class StudentRankingListView(generics.ListAPIView):
         ).order_by('-completed_scenarios_count')
         
 class SectionLeaderboardView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = SectionLeaderboardSerializer
+    lookup_field = "section_id"
 
     def get_queryset(self):
         short_id = self.kwargs.get('section_id')
@@ -178,8 +181,13 @@ class SectionLeaderboardView(generics.ListAPIView):
         ).exclude(top_score=None).order_by('-top_score')
         
 class StudentRankInSectionView(APIView):
-    def get(self, request, section_id, personal_number):
-        short_id = self.kwargs.get(section_id)
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = "section_id"
+    
+    def get(self, request):
+        student = self.request.user
+        short_id = self.kwargs.get("section_id")
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
@@ -200,7 +208,7 @@ class StudentRankInSectionView(APIView):
         student_score = 0
         
         for index, user in enumerate(leaderboard):
-            if user.personal_number == personal_number:
+            if user.personal_number == student.personal_number:
                 rank = index + 1
                 student_score = user.score
                 break
@@ -209,7 +217,7 @@ class StudentRankInSectionView(APIView):
             return Response({"error": "Student not found in this section or has no score"}, status=404)
 
         return Response({
-            "personal_number": personal_number,
+            "personal_number": student.personal_number,
             "rank": rank,
             "total_students": leaderboard.count(),
             "best_score": student_score
