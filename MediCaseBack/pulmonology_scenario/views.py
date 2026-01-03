@@ -170,7 +170,7 @@ class SectionLeaderboardView(generics.ListAPIView):
         ).values_list('student_id', flat=True)
 
         # ۲. محاسبه بالاترین نمره برای هر دانشجو و مرتب‌سازی
-        return User.objects.filter(id__in=active_students).annotate(
+        return User.objects.filter(user_id__in=active_students).annotate(
             top_score=Max(
                 Cast(
                     # مسیر درست: کاربر -> سناریوها -> فیدبک‌ها -> فیلد جیسون
