@@ -155,31 +155,28 @@ class SectionLeaderboardView(generics.ListAPIView):
     lookup_field = "section_id"
 
     def get_queryset(self):
-        
         short_id = self.kwargs.get('section_id')
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
-            return Response(
-                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )        
-        # ۱. استخراج ID دانشجویان فعال در این سکشن
+            return User.objects.none()
+
+        # 1. استخراج شماره پرسنلی دانشجویان فعال در کلاس (استفاده از مدل StudentSection اپلیکیشن classroom)
         active_student_numbers = StudentSection.objects.filter(
             section_id=section_uuid,
             student_status='Active'
         ).values_list('student__personal_number', flat=True)
 
-        # ۲. محاسبه بالاترین نمره برای هر دانشجو و مرتب‌سازی
+        # 2. اصلاح مسیر Join در متد Max با استفاده از related_name صحیح
         return User.objects.filter(personal_number__in=active_student_numbers).annotate(
             top_score=Max(
                 Cast(
-                    # مسیر درست: کاربر -> سناریوها -> فیدبک‌ها -> فیلد جیسون
-                    F('userPulmonologyScenario__pulmonologyfeedback__feedback__score__obtained'),
+                    # مسیر صحیح: کاربر -> سناریوها -> فیدبک‌ها (با related_name درست) -> فیلد JSON
+                    F('userPulmonologyScenario__feedbackpulmonologyscenario__feedback__score__obtained'),
                     FloatField()
                 ),
-                # فیلتر برای اینکه فقط سناریوهای تمام شده و فیدبک‌های جنریت شده لحاظ شوند
-                filter=Q(userPulmonologyScenario__pulmonologyfeedback__generated=True)
+                # فیلتر برای اطمینان از اینکه فقط فیدبک‌های نهایی شده محاسبه شوند
+                filter=Q(userPulmonologyScenario__feedbackpulmonologyscenario__generated=True)
             )
         ).exclude(top_score=None).order_by('-top_score')
         
