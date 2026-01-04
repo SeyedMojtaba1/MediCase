@@ -56,50 +56,6 @@ class SignupViewSet(viewsets.GenericViewSet):
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
-# class LoginView(generics.CreateAPIView):
-#     serializer_class = EmailLoginSerializer
-#     permission_classes = [permissions.AllowAny]
-#     queryset = User.objects.all()
-    
-#     def post(self, request):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-        
-#         email = serializer.validated_data['email']
-#         password = serializer.validated_data['password']  
-
-#         user = authenticate(email=email, password=password)
-
-#         if not user:
-#             return Response({"detail": "email or password is incorrect."}, status=status.HTTP_400_BAD_REQUEST)
-        
-#         refresh = RefreshToken.for_user(user)
-#         access_token = str(refresh.access_token)
-        
-#         output_serializer = LoginSerializer(
-#             user,
-#             context={'request': request}
-#         )
-        
-#         response = Response(
-#             {
-#                 "user": output_serializer.data,
-#                 "access_token": access_token,
-#             },
-#             status=status.HTTP_200_OK
-#         )
-
-#         response.set_cookie(
-#             key="refresh_token",
-#             value=str(refresh),
-#             httponly=True,
-#             secure=False,
-#             samesite="Lax",
-#             max_age = 7 * 24 * 60 * 60,
-#         )
-
-#         return response
-
 class LoginView(generics.CreateAPIView):
     serializer_class = EmailLoginSerializer
     permission_classes = [permissions.AllowAny]
@@ -129,7 +85,6 @@ class LoginView(generics.CreateAPIView):
             {
                 "user": output_serializer.data,
                 "access_token": access_token,
-                "refresh_token": str(refresh),
             },
             status=status.HTTP_200_OK
         )
@@ -144,6 +99,51 @@ class LoginView(generics.CreateAPIView):
         )
 
         return response
+
+# class LoginView(generics.CreateAPIView):
+#     serializer_class = EmailLoginSerializer
+#     permission_classes = [permissions.AllowAny]
+#     queryset = User.objects.all()
+    
+#     def post(self, request):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+        
+#         email = serializer.validated_data['email']
+#         password = serializer.validated_data['password']  
+
+#         user = authenticate(email=email, password=password)
+
+#         if not user:
+#             return Response({"detail": "email or password is incorrect."}, status=status.HTTP_400_BAD_REQUEST)
+        
+#         refresh = RefreshToken.for_user(user)
+#         access_token = str(refresh.access_token)
+        
+#         output_serializer = LoginSerializer(
+#             user,
+#             context={'request': request}
+#         )
+        
+#         response = Response(
+#             {
+#                 "user": output_serializer.data,
+#                 "access_token": access_token,
+#                 "refresh_token": str(refresh),
+#             },
+#             status=status.HTTP_200_OK
+#         )
+
+#         response.set_cookie(
+#             key="refresh_token",
+#             value=str(refresh),
+#             httponly=True,
+#             secure=False,
+#             samesite="Lax",
+#             max_age = 7 * 24 * 60 * 60,
+#         )
+
+#         return response
 
 class SetProfileImageView(generics.UpdateAPIView):
     serializer_class = SetProfileImageSerializer
@@ -241,35 +241,12 @@ class RoleViewSet(viewsets.ModelViewSet):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
-# class LogoutView(generics.GenericAPIView):
-#     authentication_classes = [JWTAuthentication]
-#     permission_classes = [permissions.IsAuthenticated]
-    
-#     def get(self, request):
-#         refresh = request.COOKIES.get('refresh_token')
-#         if not refresh:
-#             return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
-
-#         try:
-#             token = RefreshToken(refresh)
-#             token.blacklist()
-#         except Exception:
-#             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
-        
-#         response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
-#         response.delete_cookie('refresh_token')
-
-#         return response
-
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = LogoutSerializer
     
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        refresh = serializer.data['refresh']
+    def get(self, request):
+        refresh = request.COOKIES.get('refresh_token')
         if not refresh:
             return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -284,28 +261,32 @@ class LogoutView(generics.GenericAPIView):
 
         return response
 
-# class CookieTokenRefreshView(TokenRefreshView):
-#     def get(self, request):
-#         refresh = request.COOKIES.get('refresh_token')
-
-#         if refresh is None:
-#             return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
-
-#         serializer = TokenRefreshSerializer(data={'refresh': refresh})
+# class LogoutView(generics.GenericAPIView):
+#     authentication_classes = [JWTAuthentication]
+#     permission_classes = [permissions.IsAuthenticated]
+#     serializer_class = LogoutSerializer
+    
+#     def post(self, request):
+#         serializer = self.get_serializer(data=request.data)
 #         serializer.is_valid(raise_exception=True)
+#         refresh = serializer.data['refresh']
+#         if not refresh:
+#             return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
-#         access = serializer.validated_data['access']
+#         try:
+#             token = RefreshToken(refresh)
+#             token.blacklist()
+#         except Exception:
+#             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
+        
+#         response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+#         response.delete_cookie('refresh_token')
 
-#         response = Response({'access': access}, status=status.HTTP_200_OK)
 #         return response
-    
+
 class CookieTokenRefreshView(TokenRefreshView):
-    serializer_class = LogoutSerializer
-    
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        refresh = serializer.data['refresh']
+    def get(self, request):
+        refresh = request.COOKIES.get('refresh_token')
 
         if refresh is None:
             return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -315,13 +296,32 @@ class CookieTokenRefreshView(TokenRefreshView):
 
         access = serializer.validated_data['access']
 
-        response = Response({'access': access, "refresh": str(refresh)}, status=status.HTTP_200_OK)
-        response.set_cookie(
-            key="refresh_token",
-            value=str(refresh),
-            httponly=True,
-            secure=False,
-            samesite="Lax",
-            max_age = 7 * 24 * 60 * 60,
-        )
+        response = Response({'access': access}, status=status.HTTP_200_OK)
         return response
+    
+# class CookieTokenRefreshView(TokenRefreshView):
+#     serializer_class = LogoutSerializer
+    
+#     def post(self, request):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         refresh = serializer.data['refresh']
+
+#         if refresh is None:
+#             return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         serializer = TokenRefreshSerializer(data={'refresh': refresh})
+#         serializer.is_valid(raise_exception=True)
+
+#         access = serializer.validated_data['access']
+
+#         response = Response({'access': access, "refresh": str(refresh)}, status=status.HTTP_200_OK)
+#         response.set_cookie(
+#             key="refresh_token",
+#             value=str(refresh),
+#             httponly=True,
+#             secure=False,
+#             samesite="Lax",
+#             max_age = 7 * 24 * 60 * 60,
+#         )
+#         return response
