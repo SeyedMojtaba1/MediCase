@@ -202,6 +202,17 @@ PNEUMENIA_ATYPICAL_WALKING = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "true",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "false",
+      "disease5": "false",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "Pneumonia"
     }
   }
 
@@ -410,6 +421,17 @@ PNEUMENIA_COMPLICATED_EFFUSION = {
           "Fluid": { "Protein": "true", "LDH": "true", "Albumin": "true" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "true",
+      "disease5": "false",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "Pneumonia"
     }
   }
 
@@ -618,5 +640,16 @@ PNEUMENIA_TYPICAL_LOBAR = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "true",
+      "disease5": "false",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "Pneumonia"
     }
   }

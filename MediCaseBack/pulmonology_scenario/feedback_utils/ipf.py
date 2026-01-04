@@ -202,6 +202,17 @@ IPF_ACUTE_IPF_EXACERBATION = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "true",
+      "disease5": "true",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "IPF"
     }
   }
 
@@ -410,6 +421,17 @@ IPF_RHEUMATOID_ILD = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "false",
+      "disease5": "true",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "IPF"
     }
   }
 
@@ -618,5 +640,16 @@ IPF_STABLE_IPF = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "false",
+      "disease5": "true",
+      "disease6": "true"
+    },
+    "final_diagnosis": {
+      "disease": "IPF"
     }
   }

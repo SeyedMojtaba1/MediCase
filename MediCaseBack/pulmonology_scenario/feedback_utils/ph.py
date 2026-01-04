@@ -207,6 +207,17 @@ PH_IDIOPATHIC_PAH = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "false",
+      "disease3": "true",
+      "disease4": "true",
+      "disease5": "false",
+      "disease6": "true"
+    },
+    "final_diagnosis": {
+      "disease": "PH"
     }
   }
 
@@ -415,6 +426,17 @@ PH_LEFT_HEART = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "false",
+      "disease5": "true",
+      "disease6": "true"
+    },
+    "final_diagnosis": {
+      "disease": "PH"
     }
   }
 
@@ -623,5 +645,16 @@ PH_LUNG_DISEASE = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "false",
+      "disease3": "true",
+      "disease4": "false",
+      "disease5": "true",
+      "disease6": "true"
+    },
+    "final_diagnosis": {
+      "disease": "PH"
     }
   }

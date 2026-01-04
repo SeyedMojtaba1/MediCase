@@ -61,6 +61,35 @@ class ClinicalEvaluator:
         # هندل کردن حالتی که زمان‌ها معکوس باشند (بسته به منطق سیستم شما که زمان باقی‌مانده است یا زمان گذشته)
         return max(0, duration), start_time_seconds
 
+    def evaluate_diagnosis_accuracy(self):
+        # ۱. استخراج تشخیص‌های افتراقی صحیح از فایل سناریو
+        optimal_diff = self.optimal.get("differential_diagnosis", {})
+        correct_differentials = [d for d, val in optimal_diff.items() if val == "true"]
+        
+        # ۲. استخراج تشخیص نهایی صحیح
+        correct_final = self.optimal.get("final_diagnosis", {}).get("disease", "")
+        
+        # ۳. دریافت آنچه دانشجو در لاگ ثبت کرده است
+        # فرض بر این است که در student_log کلیدهای متناظر وجود دارد
+        student_diff = self.student.get("student_selected_differentials", [])
+        student_final = self.student.get("student_final_diagnosis", "")
+
+        # ۴. بررسی صحت
+        is_final_correct = (student_final.lower() == correct_final.lower())
+        
+        # پیدا کردن موارد فراموش شده و موارد اضافی
+        missed_diffs = [d for d in correct_differentials if d not in student_diff]
+        extra_diffs = [d for d in student_diff if d not in correct_differentials]
+
+        return {
+            "is_final_correct": is_final_correct,
+            "correct_final_answer": correct_final,
+            "student_final_answer": student_final,
+            "correct_differentials": correct_differentials,
+            "missed_differentials": missed_diffs,
+            "extra_differentials": extra_diffs
+        }
+        
     # --- متد اصلی: ارزیابی جامع (Comprehensive Evaluation) ---
     def evaluate_performance(self):
         """

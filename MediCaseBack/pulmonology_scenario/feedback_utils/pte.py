@@ -202,6 +202,17 @@ PTE_MASSIVE_PTE = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "true",
+      "disease5": "false",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "PTE"
     }
   }
 
@@ -410,6 +421,17 @@ PTE_PERIPHERAL_INFARCT = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "false",
+      "disease4": "true",
+      "disease5": "false",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "PTE"
     }
   }
 
@@ -618,5 +640,16 @@ PTE_SUBMASSIVE_PTE = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "true",
+      "disease3": "true",
+      "disease4": "true",
+      "disease5": "false",
+      "disease6": "true"
+    },
+    "final_diagnosis": {
+      "disease": "PTE"
     }
   }

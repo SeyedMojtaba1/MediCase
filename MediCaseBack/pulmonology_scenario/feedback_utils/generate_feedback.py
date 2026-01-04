@@ -646,6 +646,8 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
     
     matrix_data = calculate_matrix_position(final_score_percent, duration_seconds, evaluator.total_time_seconds)
 
+    diagnosis_results = evaluator.evaluate_diagnosis_accuracy()
+    
     output = {
         "meta": {
             "disease": disease_category,
@@ -681,6 +683,16 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
             "color_code": matrix_data["color"],
             "quadrant": matrix_data["quadrant_code"],
             "chart_coordinates": matrix_data["coordinates"]
+        },
+        "diagnosis_section": {
+            "user_final_diagnosis": diagnosis_results["student_final_answer"],
+            "correct_final_diagnosis": diagnosis_results["correct_final_answer"],
+            "is_correct": diagnosis_results["is_final_correct"],
+            "differential_analysis": {
+                "correct_items": diagnosis_results["correct_differentials"],
+                "missed_items": diagnosis_results["missed_differentials"]
+            },
+            "feedback_message": f"تشخیص نهایی شما {'صحیح بود' if diagnosis_results['is_final_correct'] else 'نادرست بود'}."
         },
         "detailed_lists": {
             "missed_items": metrics["details"]["missed"],

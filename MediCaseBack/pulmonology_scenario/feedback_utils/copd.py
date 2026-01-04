@@ -202,6 +202,17 @@ COPD_CHRONIC_BRONCHITIS = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "true",
+      "disease2": "true",
+      "disease3": "true",
+      "disease4": "false",
+      "disease5": "false",
+      "disease6": "false"
+    },
+    "final_diagnosis": {
+      "disease": "COPD"
     }
   }
 
@@ -410,6 +421,17 @@ COPD_COR_PULMONALE = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "false",
+      "disease2": "false",
+      "disease3": "true",
+      "disease4": "true",
+      "disease5": "false",
+      "disease6": "true"
+    },
+    "final_diagnosis": {
+      "disease": "COPD"
     }
   }
 
@@ -618,5 +640,16 @@ COPD_EMPHYSEMA = {
           "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
         }
       }
+    },
+    "differential_diagnosis": {
+      "disease1": "true",
+      "disease2": "false",
+      "disease3": "true",
+      "disease4": "false",
+      "disease5": "true",
+      "disease6": "true"
+    },
+    "final_diagnosis": {
+      "disease": "COPD"
     }
   }
