@@ -489,12 +489,10 @@ class HospitalSubjectCreateView(generics.GenericAPIView):
 class HospitalSubjectListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = HospitalSubjectListSerializer # سریالایزر دست‌نخورده ماند
+    serializer_class = HospitalSubjectListSerializer
     
-    # 1. اضافه کردن قابلیت‌های جستجو و فیلتر
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     
-    # جستجو روی نام درس و نام بیمارستان
     search_fields = [
         'subject__english_name', 
         'subject__persian_name',
@@ -502,26 +500,27 @@ class HospitalSubjectListView(generics.ListAPIView):
         'hospital__persian_name'
     ]
     
-    # قابلیت فیلتر دقیق (مثلاً ?subject=anatomy)
-    filterset_fields = ['subject__english_name', 'hospital__english_name']
-    
-    # قابلیت مرتب‌سازی
     ordering_fields = ['hospital__english_name', 'subject__english_name']
 
     def get_queryset(self):
         queryset = HospitalSubject.objects.select_related('subject', 'hospital').all()
         
+        subject_name = self.request.query_params.get('subject')
+        hospital_name = self.request.query_params.get('hospital')
+
+        if subject_name:
+            queryset = queryset.filter(subject__english_name=subject_name)
+            
+        if hospital_name:
+            queryset = queryset.filter(hospital__english_name=hospital_name)
+        
         return queryset.order_by('subject__english_name')
     
 class HospitalSubjectRetrieveView(generics.ListAPIView):
-    """
-    لیست بیمارستان‌هایی که یک درس خاص را ارائه می‌دهند.
-    """
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = HospitalSubjectRetrieveSerializer
     
-    # این فیلد مشخص می‌کند که نام درس در URL با چه متغیری دریافت می‌شود
     lookup_field = 'subject'
 
     def get_queryset(self):
