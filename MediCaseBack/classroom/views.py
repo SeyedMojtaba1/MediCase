@@ -1,4 +1,4 @@
-from rest_framework import viewsets, generics, permissions, status
+from rest_framework import viewsets, generics, permissions, status, filters
 from rest_framework.response import Response
 from .serializer import (
     SectionListSerializer,
@@ -23,11 +23,8 @@ from .serializer import (
 )
 from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.exceptions import PermissionDenied, NotFound
-from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_headers
-from django.utils.decorators import method_decorator
-from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
 from django.contrib.auth import get_user_model
 from .utils import decode_short_uuid
 
@@ -100,12 +97,13 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SectionUpdateSerializer
-    queryset = Section.objects.all()
+    queryset = Section.objects.all() 
     lookup_field = 'section_id'
-    lookup_value_regex = '[^/]+'
     
     def put(self, request, *args, **kwargs):
+        user = request.user
         short_id = self.kwargs.get(self.lookup_field)
+
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
@@ -113,14 +111,33 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
                 {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
+
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
-            return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
-        
+            return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_404_NOT_FOUND)
+
+        if not user.main_role:
+             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
+
+        role = user.main_role.name.lower()
+
+        if role == "student":
+            return Response(
+                {"message": "شما اجازه ویرایش این کلاس را ندارید."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        elif role == "teacher":
+            if section.teacher != user:
+                return Response(
+                    {"message": "شما فقط می‌توانید کلاس‌های خودتان را ویرایش کنید."}, 
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
         serializer = self.get_serializer(instance=section, data=request.data)
         serializer.is_valid(raise_exception=True)
-        section = serializer.save()
+        serializer.save()
         
         return Response({"message": "کلاس با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
@@ -130,7 +147,20 @@ class SectionCreateView(generics.GenericAPIView):
     serializer_class = SectionCreateSerializer
     queryset = Section.objects.all()
     
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        
+        if not user.main_role:
+             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
+
+        role = user.main_role.name.lower()
+        
+        if role not in ["teacher", "superadmin"]:
+            return Response(
+                {"message": "شما دسترسی لازم برای ایجاد کلاس را ندارید."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         section = serializer.save()
@@ -144,10 +174,11 @@ class SetSectionImageViewSet(viewsets.ModelViewSet):
     serializer_class = SetSectionImageSerializer
     queryset = Section.objects.all()
     lookup_field = 'section_id'
-    lookup_value_regex = '[^/]+'
     
-    def put(self, request):
+    def put(self, request, *args, **kwargs):
         short_id = self.kwargs.get(self.lookup_field)
+        user = request.user
+
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
@@ -155,17 +186,33 @@ class SetSectionImageViewSet(viewsets.ModelViewSet):
                 {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
+        
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
-            return Response({"message": "کلاسی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)    
+            return Response({"message": "کلاسی با این مشخصات وجود ندارد."}, status=status.HTTP_404_NOT_FOUND)    
         
-        if section.teacher != self.request.user:
-            raise PermissionDenied("You do not have permission to edit this object.")
+        if not user.main_role:
+             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
+
+        role = user.main_role.name.lower()
+
+        if role == "student":
+            return Response(
+                {"message": "شما اجازه تغییر تصویر کلاس را ندارید."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        elif role == "teacher":
+            if section.teacher != user:
+                return Response(
+                    {"message": "شما اجازه ویرایش تصویر این کلاس را ندارید."}, 
+                    status=status.HTTP_403_FORBIDDEN
+                )
         
         serializer = self.get_serializer(instance=section, data=request.data)
         serializer.is_valid(raise_exception=True)
-        section = serializer.save()
+        serializer.save()
         
         return Response({"message": "تصویر با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
@@ -176,17 +223,17 @@ class StudentSectionCreateView(generics.GenericAPIView):
     queryset = StudentSection.objects.all()
     
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         student_section = serializer.save()
         
         data = {
             "data": {
-                "section": student_section.section.section_id,
+                "section": base64.urlsafe_b64encode(student_section.section.section_id.bytes).rstrip(b'=').decode('ascii'),
                 "student": student_section.student.personal_number,
                 "student_status": student_section.student_status,
             },
-            "message": "ثبت اطلاعات با موفقیت انجام شد."
+            "message": "ثبت نام دانشجو با موفقیت انجام شد."
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
@@ -194,150 +241,123 @@ class StudentSectionListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StudentSectionListSerializer
-    queryset = StudentSection.objects.all()
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset().filter(student=self.request.user)
-        if not queryset.exists():
-            return Response(
-                {"message": "کاربری با این مشخصات وجود ندارد."}, 
-                status=status.HTTP_404_NOT_FOUND
-            )
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+    
+    def get_queryset(self):
+        user = self.request.user
+        
+        if not user.main_role or user.main_role.name.lower() != 'student':
+            return StudentSection.objects.none()
+            
+        return StudentSection.objects.filter(student=user)
 
 class StudentSectionRetrieveView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StudentSectionRetrieveSerializer
-    queryset = StudentSection.objects.all()
     lookup_field = 'section_id'
-    lookup_url_kwarg = 'section_id'
-    lookup_value_regex = '[^/]+'
-
-    def retrieve(self, request, *args, **kwargs):
+    
+    def get_object(self):
+        """
+        این متد مسئول پیدا کردن آبجکت دقیق است.
+        """
         short_id = self.kwargs.get(self.lookup_field)
+        user = self.request.user
+        
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
-            return Response(
-                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-            
-        queryset = self.get_queryset()
+            raise ValidationError({"detail": "شناسه کلاس نامعتبر است."})
+
+        if not user.main_role or user.main_role.name.lower() != 'student':
+             self.permission_denied(self.request, message="Only students can access this info.")
+
+        queryset = StudentSection.objects.filter(
+            section__section_id=section_uuid, 
+            student=user
+        )
         
-        try:
-            section = Section.objects.get(section_id=section_uuid)
-        except Section.DoesNotExist:
-            return Response({"message": "Section is not exist."})
-                
-        queryset = self.get_queryset().filter(student=self.request.user, section=section.section_id).first()
-        if not queryset.exists():
-            return Response(
-                {"message": "ارتباط بین دانشجو و کلاس وجود ندارد."}, 
-                status=status.HTTP_404_NOT_FOUND
-            )
-        serializer = StudentSectionListSerializer(queryset)
+        obj = get_object_or_404(queryset)
         
-        return Response(serializer.data)
+        self.check_object_permissions(self.request, obj)
+        return obj
     
 class StudentSectionRemoveView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StudentSectionRemoveSerializer
-    queryset = StudentSection.objects.all()
     
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        # ارسال context برای دسترسی به user در سریالایزر
+        serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         
-        short_id = serializer.data['section']
-        try:
-            section_uuid = decode_short_uuid(short_id)
-        except ValueError:
-            return Response(
-                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        # عملیات حذف در متد save سریالایزر انجام می‌شود
+        serializer.save()
         
-        try:
-            section = Section.objects.get(section_id=section_uuid)
-        except Section.DoesNotExist:
-            return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)   
-        
-        try:
-            student = User.objects.get(personal_number=serializer.data['student'])
-        except User.DoesNotExist:
-            return Response({"message": "کاربری با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)   
-        
-        student_section = self.get_queryset().filter(section=section, student=student)
-        if not student_section.exists():
-            return Response(
-                {"message": "ارتباط بین دانشجو و کلاس وجود ندارد."}, 
-                status=status.HTTP_404_NOT_FOUND
-            )
-        
-        student_section.delete()
-        
-        return Response({"message": "دانشجو از کلاس حذف شد."}, status=status.HTTP_200_OK)
+        return Response({"message": "دانشجو با موفقیت از کلاس حذف شد."}, status=status.HTTP_200_OK)
 
 class MembersSectionListView(generics.ListAPIView):
-    http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = MembersSectionSerializer
-    queryset = StudentSection.objects.all()
-    lookup_field = 'section_id'
-    lookup_value_regex = '[^/]+'
     
-    def list(self, request, *args, **kwargs):
-        short_id = self.kwargs.get(self.lookup_field)
+    def get_queryset(self):
+        short_id = self.kwargs.get('section_id')
+        user = self.request.user
+        
+        # 1. دیکود کردن ID
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
-            return Response(
-                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        try:
-            section = Section.objects.get(section_id=section_uuid)
-        except Section.DoesNotExist:
-            return Response({"message": "کلاسی با این مشخصات وجود ندارد."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        if section.teacher.user_id != self.request.user.user_id and not StudentSection.objects.filter(section=section, student=self.request.user).exists():
-            return Response(
-                {"message": "شما در این کلاس عضویت ندارید."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        queryset = self.get_queryset().filter(section=section)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+            raise ValidationError({"detail": "شناسه کلاس نامعتبر است."})
 
-class SemesterViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get']
+        # 2. پیدا کردن کلاس
+        # از get_object_or_404 استفاده می‌کنیم تا اگر نبود خودکار 404 بدهد
+        section = get_object_or_404(Section, section_id=section_uuid)
+        
+        # 3. بررسی دسترسی (Security Logic)
+        # الف) اگر کاربر سوپر ادمین است -> دسترسی دارد
+        # ب) اگر کاربر معلمِ همین کلاس است -> دسترسی دارد
+        # ج) اگر کاربر دانشجوی عضو همین کلاس است -> دسترسی دارد
+        
+        is_teacher = (user == section.teacher)
+        is_student = StudentSection.objects.filter(section=section, student=user).exists()
+        is_admin = (user.main_role and user.main_role.name.lower() == 'superadmin')
+
+        if not (is_teacher or is_student or is_admin):
+             raise PermissionDenied("شما عضو این کلاس نیستید و اجازه دیدن اعضا را ندارید.")
+
+        # 4. کوئری اصلی (بهینه شده)
+        # نکته کلیدی: استفاده از select_related برای جلوگیری از N+1 Query
+        return StudentSection.objects.filter(section=section).select_related('student')
+
+class SemesterViewSet(viewsets.ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SemesterSerializer
-    queryset = Semester.objects.all()
+    
+    queryset = Semester.objects.all().order_by('-code')
+    
     lookup_field = 'code'
     lookup_value_regex = '[^/]+'
     
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'code']
+    ordering_fields = ['code', 'start_date']
 
-class SubjectViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get']
+class SubjectViewSet(viewsets.ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SubjectSerializer
-    queryset = Subject.objects.all()
+    
+    queryset = Subject.objects.all().order_by('persian_name')
+    
     lookup_field = 'english_name'
     lookup_value_regex = '[^/]+'
     
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['english_name', 'persian_name', 'description']
+    ordering_fields = ['unit', 'persian_name']
 
 class StudentSubjectCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
@@ -345,7 +365,15 @@ class StudentSubjectCreateView(generics.GenericAPIView):
     serializer_class = StudentSubjectSerializer
     queryset = StudentSubject.objects.all()
     
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        
+        if not user.main_role or user.main_role.name.lower() != "superadmin":
+             return Response(
+                 {"message": "شما اجازه دسترسی به این بخش را ندارید."}, 
+                 status=status.HTTP_403_FORBIDDEN
+             )
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         student_subject = serializer.save()
@@ -356,55 +384,64 @@ class StudentSubjectCreateView(generics.GenericAPIView):
                 "student": student_subject.student.personal_number,
                 "access_status": student_subject.access_status
             },
-            "message": "ثبت اطلاعات با موفقیت انجام شد."
+            "message": "دسترسی درس با موفقیت برای دانشجو ایجاد شد."
         }
         return Response(data, status=status.HTTP_201_CREATED)
-    
+
 class StudentSubjectListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StudentSubjectListSerializer
-    queryset = StudentSubject.objects.all()
+    
+    def get_queryset(self):
+        user = self.request.user
+        
+        if not user.main_role or user.main_role.name.lower() != 'student':
+            return StudentSubject.objects.none()
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset().filter(student=self.request.user)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return StudentSubject.objects.filter(student=user).select_related('subject')
     
 class StudentSubjectRetrieveView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StudentSubjectRetrieveSerializer
-    queryset = StudentSubject.objects.all()
-    lookup_field = 'subject'
-    lookup_url_kwarg = 'subject'
-    lookup_value_regex = '[^/]+'
-
-    def retrieve(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        lookup_value = self.kwargs.get(self.lookup_field)
-        
-        try:
-            subject = Subject.objects.get(english_name=lookup_value)
-        except Subject.DoesNotExist:
-            return Response({"message": "Subject is not exist."})
-                
-        queryset = self.get_queryset().filter(student=self.request.user, subject=subject.subject_id).first()
-        serializer = StudentSubjectListSerializer(queryset)
-        
-        return Response(serializer.data)
+    lookup_url_kwarg = 'english_name' 
     
-class HospitalViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get']
+    def get_object(self):
+        subject_name = self.kwargs.get(self.lookup_url_kwarg)
+        user = self.request.user
+        
+        queryset = StudentSubject.objects.filter(
+            student=user,
+            subject__english_name=subject_name
+        ).select_related('subject')
+        
+        obj = get_object_or_404(queryset)
+        
+        self.check_object_permissions(self.request, obj)
+        return obj
+    
+class HospitalViewSet(viewsets.ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = HospitalSerializer
-    queryset = Hospital.objects.all()
+    
+    queryset = Hospital.objects.all().order_by('persian_name')
+    
     lookup_field = 'english_name'
     lookup_value_regex = '[^/]+'
     
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    
+    search_fields = [
+        'english_name', 
+        'persian_name', 
+        'city', 
+        'province', 
+        'description'
+    ]
+    
+    ordering_fields = ['capacity', 'city', 'province']
 
 class HospitalSubjectCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
@@ -413,9 +450,31 @@ class HospitalSubjectCreateView(generics.GenericAPIView):
     queryset = HospitalSubject.objects.all()
     
     def post(self, request):
+        user = request.user
+        
+        # 1. بررسی سطح دسترسی (فقط سوپر ادمین)
+        # اتصال بیمارستان به درس یک تنظیمات سیستمی است و نباید توسط همه انجام شود.
+        if not user.main_role or user.main_role.name.lower() != "superadmin":
+             return Response(
+                 {"message": "شما اجازه دسترسی به این بخش را ندارید."}, 
+                 status=status.HTTP_403_FORBIDDEN
+             )
+
+        # 2. اعتبارسنجی اولیه
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        hospital_subject = serializer.save()
+        
+        # 3. ذخیره‌سازی و مدیریت باگ سریالایزر
+        # چون سریالایزر ممکن است به جای آبجکت، یک رشته (String) برگرداند،
+        # باید اینجا چک کنیم تا برنامه کرش نکند.
+        result = serializer.save()
+        
+        if isinstance(result, str):
+            # اگر خروجی متن بود، یعنی ارور "یافت نشد" در سریالایزر رخ داده
+            return Response({"message": result}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # اگر خروجی آبجکت بود، یعنی همه چیز درست است
+        hospital_subject = result
         
         data = {
             "data": {
@@ -430,32 +489,48 @@ class HospitalSubjectCreateView(generics.GenericAPIView):
 class HospitalSubjectListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = HospitalSubjectListSerializer
-    queryset = HospitalSubject.objects.all()
+    serializer_class = HospitalSubjectListSerializer # سریالایزر دست‌نخورده ماند
+    
+    # 1. اضافه کردن قابلیت‌های جستجو و فیلتر
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    
+    # جستجو روی نام درس و نام بیمارستان
+    search_fields = [
+        'subject__english_name', 
+        'subject__persian_name',
+        'hospital__english_name', 
+        'hospital__persian_name'
+    ]
+    
+    # قابلیت فیلتر دقیق (مثلاً ?subject=anatomy)
+    filterset_fields = ['subject__english_name', 'hospital__english_name']
+    
+    # قابلیت مرتب‌سازی
+    ordering_fields = ['hospital__english_name', 'subject__english_name']
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        queryset = HospitalSubject.objects.select_related('subject', 'hospital').all()
+        
+        return queryset.order_by('subject__english_name')
     
 class HospitalSubjectRetrieveView(generics.ListAPIView):
+    """
+    لیست بیمارستان‌هایی که یک درس خاص را ارائه می‌دهند.
+    """
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = HospitalSubjectRetrieveSerializer
-    queryset = HospitalSubject.objects.all()
+    
+    # این فیلد مشخص می‌کند که نام درس در URL با چه متغیری دریافت می‌شود
     lookup_field = 'subject'
-    lookup_value_regex = '[^/]+'
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        lookup_value = self.kwargs.get(self.lookup_field)
+    def get_queryset(self):
+        subject_name = self.kwargs.get(self.lookup_field)
         
-        try:
-            subject = Subject.objects.get(english_name=lookup_value)
-        except Subject.DoesNotExist:
-            return Response({"message": "Subject is not exist."})
-                
-        queryset = self.get_queryset().filter(subject=subject.subject_id)
-        serializer = HospitalSubjectListSerializer(queryset, many=True)
-        
-        return Response(serializer.data)
+        if not Subject.objects.filter(english_name=subject_name).exists():
+            raise NotFound({"message": "Subject does not exist."})
+
+        return HospitalSubject.objects.filter(
+            subject__english_name=subject_name
+        ).select_related('subject', 'hospital')
+

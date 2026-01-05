@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.db import transaction
 import base64
 from .utils import decode_short_uuid, encode_short_uuid, update_section_statuses
 from datetime import date
@@ -135,8 +136,8 @@ class SectionUpdateSerializer(serializers.ModelSerializer):
 class SectionCreateSerializer(serializers.ModelSerializer):
     section_id = serializers.SerializerMethodField()
     teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
-    semester_code = serializers.CharField()
-    subject_name = serializers.CharField()
+    semester_code = serializers.CharField(write_only=True)
+    subject_name = serializers.CharField(write_only=True)
     
     class Meta:
         model = Section
@@ -152,78 +153,77 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             'last_update',
             'description',
         ]
+        read_only_fields = ['created_date', 'last_update', 'section_id']
 
     def get_section_id(self, obj):
         return base64.urlsafe_b64encode(obj.section_id.bytes).rstrip(b'=').decode('ascii')
     
-    def create(self, validated_data):
+    def validate(self, attrs):
+        """
+        تمام اعتبارسنجی‌ها اینجا انجام می‌شود.
+        """
         request = self.context.get('request')
-        teacher = request.user
+        user = request.user
         
-        semester_code=validated_data["semester_code"]
-        subject_name=validated_data["subject_name"]
+        start_date = attrs.get("start_date")
+        end_date = attrs.get("end_date")
         
-        try:
-            teacher = User.objects.get(personal_number=teacher.personal_number)
-        except User.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "Teacher is not exist."}
-            )
+        if end_date < start_date:
+            raise serializers.ValidationError({"end_date": "تاریخ پایان نمی‌تواند قبل از تاریخ شروع باشد."})
 
-        if not teacher.main_role or teacher.main_role.name.lower() != "teacher":
-            raise serializers.ValidationError(
-                {"detail": "This user is not assigned as a teacher."}
-            )
-        
+        semester_code = attrs.pop("semester_code")
         try:
             semester = Semester.objects.get(code=semester_code)
+            attrs['semester'] = semester
         except Semester.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "Semester is not exist."}
-            )
-        
-        if Section.objects.filter(name=validated_data["name"], teacher=teacher, semester=semester).exists():
-            raise serializers.ValidationError(
-                {"detail": "This section is already registered."}
-            )
-        
+            raise serializers.ValidationError({"semester_code": "ترمی با این کد یافت نشد."})
+
+        subject_name = attrs.pop("subject_name")
         try:
             subject = Subject.objects.get(english_name=subject_name)
+            attrs['subject'] = subject
         except Subject.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "Subject is not exist."}
-            )
+            raise serializers.ValidationError({"subject_name": "درسی با این نام یافت نشد."})
+
+        if Section.objects.filter(
+            name=attrs.get("name"), 
+            teacher=user, 
+            semester=semester
+        ).exists():
+            raise serializers.ValidationError({"detail": "این کلاس قبلاً برای شما ثبت شده است."})
         
+        attrs['teacher'] = user
+        
+        return attrs
+
+    def create(self, validated_data):
+        """
+        داده‌های validated_data الان شامل آبجکت‌های Semester و Subject و Teacher است.
+        """
         start_date = validated_data["start_date"]
         end_date = validated_data["end_date"]
         today = date.today()
+        subject = validated_data["subject"]
 
-        if end_date < start_date:
-            raise serializers.ValidationError(
-                {"detail": "The end date cannot be before the start date."}
-            )
-        
         if today < start_date:
-            status = "Created"
+            status_val = "Created"
         elif start_date <= today <= end_date:
-            status = "Active"
+            status_val = "Active"
         else:
-            status = "Finished"
+            status_val = "Finished"
         
         section = Section.objects.create(
             name=validated_data["name"],
-            teacher=teacher,
-            semester=semester,
+            teacher=validated_data["teacher"],
+            semester=validated_data["semester"],
             subject=subject,
             student_count=0,
-            status=status,
+            status=status_val,
             section_image=subject.subject_image,
-            start_date=validated_data["start_date"],
-            end_date=validated_data["end_date"],
+            start_date=start_date,
+            end_date=end_date,
             description=validated_data.get("description", ""),
         )
-        
-        section.save()
         
         return section
 
@@ -231,91 +231,83 @@ class SetSectionImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Section
         fields = ['section_image']
-    
-    def update(self, instance, validated_data):
-        request = self.context.get('request')
-        teacher = request.user
-        
-        try:
-            teacher = User.objects.get(personal_number=teacher.personal_number)
-        except User.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "Teacher is not exist."}
-            )
-
-        if not teacher.main_role or teacher.main_role.name.lower() != "teacher":
-            raise serializers.ValidationError(
-                {"detail": "This user is not assigned as a teacher."}
-            )
-        
-        section_image=validated_data['section_image']
-        
-        instance.section_image = section_image
-        
-        instance.save()
-        return instance
 
 class StudentSectionSerializer(serializers.ModelSerializer):
-    section = serializers.CharField()
+    section = serializers.CharField() 
     student = serializers.CharField()
     
     class Meta:
         model = StudentSection
-        fields = [
-            'section',
-            'student',
-        ]
-           
-    def create(self, validated_data):
-        student=validated_data['student']
-        short_id=validated_data['section']
+        fields = ['section', 'student']
+            
+    def validate(self, attrs):
+        """
+        تمام بررسی‌های امنیتی و اعتبارسنجی اینجا انجام می‌شود.
+        """
+        request = self.context.get('request')
+        user = request.user
+        
+        short_id = attrs.get('section')
         try:
             section_uuid = decode_short_uuid(short_id)
-        except ValueError:
-            raise serializers.ValidationError(
-                {"detail": "شناسه کلاس (section ID) نامعتبر است."}
-            )
-        
-        try:
             section = Section.objects.get(section_id=section_uuid)
-        except Section.DoesNotExist:
+        except (ValueError, Section.DoesNotExist):
+            raise serializers.ValidationError({"section": "کلاس مورد نظر یافت نشد."})
+
+        student_number = attrs.get('student')
+        try:
+            student_obj = User.objects.get(personal_number=student_number)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"student": "دانشجویی با این شماره یافت نشد."})
+
+        if not user.main_role:
+             raise serializers.ValidationError({"detail": "نقش کاربر مشخص نیست."})
+
+        role = user.main_role.name.lower()
+
+        if role == 'teacher':
+            if section.teacher != user:
+                raise serializers.ValidationError(
+                    {"detail": "شما اجازه افزودن دانشجو به کلاس سایر اساتید را ندارید."}
+                )
+        
+        elif role == 'student':
+            if student_obj != user:
+                raise serializers.ValidationError(
+                    {"detail": "شما فقط می‌توانید خودتان را در کلاس ثبت نام کنید."}
+                )
+
+        if StudentSection.objects.filter(section=section, student=student_obj).exists():
             raise serializers.ValidationError(
-                {"detail": "Section is not exist."}
+                {"detail": "این دانشجو قبلاً در این کلاس ثبت شده است."}
+            )
+
+        attrs['section'] = section
+        attrs['student'] = student_obj
+        
+        return attrs
+
+    def create(self, validated_data):
+        section = validated_data['section']
+        student = validated_data['student']
+        
+        with transaction.atomic():
+            student_section = StudentSection.objects.create(
+                section=section,
+                student=student,
+                student_status="Active",
             )
             
-        try:
-            student = User.objects.get(personal_number=student)
-        except User.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "Student is not exist."}
-            )
-        if StudentSection.objects.filter(section=section, student=student).exists():
-            raise serializers.ValidationError(
-                {"detail": "This student is already registered for this section."}
-            )
-        
-        student_section = StudentSection.objects.create(
-            section=section,
-            student=student,
-            student_status="Active",
-        )
-        
-        try:
-            subject = Subject.objects.get(subject_id=section.subject.subject_id)
-        except Subject.DoesNotExist:
-            return "Subject is not exist."
-        
-        student_subject = StudentSubject.objects.create(
-            subject=subject,
-            student=student,
-            access_status=True
-        )
-        
-        section.student_count=section.student_count+1
-        section.save()
-        student_section.save()
-        student_subject.save()
-        
+            if not StudentSubject.objects.filter(student=student, subject=section.subject).exists():
+                StudentSubject.objects.create(
+                    subject=section.subject,
+                    student=student,
+                    access_status=True
+                )
+            
+            section.student_count += 1
+            section.save()
+            
         return student_section
 
 class StudentSectionListSerializer(serializers.ModelSerializer):
@@ -351,10 +343,77 @@ class StudentSectionRemoveSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = StudentSection
-        fields = [
-            "section",
-            "student",
-        ]
+        fields = ["section", "student"]
+            
+    def validate(self, attrs):
+        request = self.context.get('request')
+        user = request.user
+        
+        short_id = attrs.get('section')
+        try:
+            section_uuid = decode_short_uuid(short_id)
+            section = Section.objects.get(section_id=section_uuid)
+        except (ValueError, Section.DoesNotExist):
+            raise serializers.ValidationError({"section": "کلاس مورد نظر یافت نشد."})
+
+        target_student_number = attrs.get('student')
+        try:
+            target_student = User.objects.get(personal_number=target_student_number)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"student": "دانشجویی با این شماره یافت نشد."})
+
+        if not user.main_role:
+             raise serializers.ValidationError({"detail": "نقش کاربر مشخص نیست."})
+
+        role = user.main_role.name.lower()
+
+        if role == 'teacher':
+            if section.teacher != user:
+                raise serializers.ValidationError(
+                    {"detail": "شما اجازه حذف دانشجو از کلاس سایر اساتید را ندارید."}
+                )
+        
+        elif role == 'student':
+            if target_student != user:
+                raise serializers.ValidationError(
+                    {"detail": "شما اجازه حذف سایر دانشجویان را ندارید."}
+                )
+
+        try:
+            student_section = StudentSection.objects.get(section=section, student=target_student)
+        except StudentSection.DoesNotExist:
+            raise serializers.ValidationError(
+                {"detail": "این دانشجو در این کلاس ثبت‌نام نکرده است."}
+            )
+
+        attrs['student_section_instance'] = student_section
+        attrs['section_instance'] = section
+        attrs['student_instance'] = target_student
+        
+        return attrs
+
+    def save(self, **kwargs):
+        student_section = self.validated_data['student_section_instance']
+        section = self.validated_data['section_instance']
+        student = self.validated_data['student_instance']
+        
+        with transaction.atomic():
+            student_section.delete()
+            
+            if section.student_count > 0:
+                section.student_count -= 1
+                section.save()
+            
+            has_other_sections = StudentSection.objects.filter(
+                student=student, 
+                section__subject=section.subject
+            ).exclude(id=student_section.id).exists()
+            
+            if not has_other_sections:
+                StudentSubject.objects.filter(
+                    student=student, 
+                    subject=section.subject
+                ).delete()
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -365,13 +424,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         }
 
 class MembersSectionSerializer(serializers.ModelSerializer):
+    # استفاده از source بسیار عالی است
     first_name = serializers.CharField(source='student.first_name', read_only=True)
     last_name = serializers.CharField(source='student.last_name', read_only=True)
     personal_number = serializers.CharField(source='student.personal_number', read_only=True)
     username = serializers.CharField(source='student.username', read_only=True)
     done_scenarios = serializers.CharField(source='student.done_scenarios', read_only=True)
     profile_image = serializers.CharField(source='student.profile_image', read_only=True)
-    main_role = serializers.CharField(source='student.main_role', read_only=True)
+    main_role = serializers.CharField(source='student.main_role.name', read_only=True)
     
     class Meta:
         model = StudentSection
@@ -411,6 +471,7 @@ class SubjectSerializer(serializers.ModelSerializer):
         }
 
 class StudentSubjectSerializer(serializers.ModelSerializer):
+    # ورودی‌ها به صورت رشته هستند (نام درس و شماره دانشجویی)
     subject = serializers.CharField()
     student = serializers.CharField()
     
@@ -421,47 +482,61 @@ class StudentSubjectSerializer(serializers.ModelSerializer):
             'student',
             'access_status',
         ]
-           
-    def create(self, validated_data):
-        subject=validated_data['subject']
-        student=validated_data['student']
-        try:
-            subject = Subject.objects.get(english_name=subject)
-        except Subject.DoesNotExist:
-            return "Subject is not exist."
             
+    def validate(self, attrs):
+        """
+        تبدیل ورودی‌های متنی به آبجکت و اعتبارسنجی آن‌ها
+        """
+        # 1. اعتبارسنجی درس (Subject)
+        subject_name = attrs.get('subject')
         try:
-            student = User.objects.get(personal_number=student)
+            subject_obj = Subject.objects.get(english_name=subject_name)
+        except Subject.DoesNotExist:
+            raise serializers.ValidationError({"subject": "درس مورد نظر یافت نشد."})
+            
+        # 2. اعتبارسنجی دانشجو (Student)
+        student_number = attrs.get('student')
+        try:
+            student_obj = User.objects.get(personal_number=student_number)
         except User.DoesNotExist:
-            return "Student is not exist."
+            raise serializers.ValidationError({"student": "دانشجو مورد نظر یافت نشد."})
         
-        if StudentSubject.objects.filter(subject=subject, student=student).exists():
+        # 3. بررسی تکراری نبودن
+        if StudentSubject.objects.filter(subject=subject_obj, student=student_obj).exists():
             raise serializers.ValidationError(
-                {"detail": "This student is already registered for this subject."}
+                {"detail": "این دانشجو قبلاً به این درس دسترسی داشته است."}
             )
         
+        # جایگزینی مقادیر String با آبجکت‌های واقعی در دیکشنری attrs
+        attrs['subject'] = subject_obj
+        attrs['student'] = student_obj
+        
+        return attrs
+
+    def create(self, validated_data):
+        # اینجا داده‌ها تمیز و آماده هستند
         student_subject = StudentSubject.objects.create(
-            subject=subject,
-            student=student,
-            access_status=validated_data['access_status'],
+            subject=validated_data['subject'],
+            student=validated_data['student'],
+            access_status=validated_data.get('access_status', True),
         )
-        
-        student_subject.save()
-        
         return student_subject
 
 class StudentSubjectListSerializer(serializers.ModelSerializer):
-    subject = serializers.CharField(source='subject.english_name', read_only=True)
+    # دریافت اطلاعات کامل‌تر از درس برای نمایش در داشبورد دانشجو
+    english_name = serializers.CharField(source='subject.english_name', read_only=True)
+    persian_name = serializers.CharField(source='subject.persian_name', read_only=True)
     student = serializers.CharField(source='student.personal_number', read_only=True)
     
     class Meta:
         model = StudentSubject
         fields = [
-            'subject',
+            'english_name',
+            'persian_name',
             'student',
             'access_status',
         ]
-
+        
 class StudentSubjectRetrieveSerializer(serializers.ModelSerializer):
     subject = serializers.CharField(source='subject.english_name', read_only=True)
     student = serializers.CharField(source='student.personal_number', read_only=True)
