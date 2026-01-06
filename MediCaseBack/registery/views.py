@@ -16,15 +16,17 @@ from .serializer import (
 )
 import pandas as pd
 from rest_framework.response import Response
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions, parsers
 from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework.viewsets import ReadOnlyModelViewSet
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
@@ -286,47 +288,61 @@ class ProfileView(generics.RetrieveAPIView):
         )
         return get_object_or_404(queryset, pk=self.request.user.pk)
 
-class UserViewSet(viewsets.ModelViewSet):
-    http_method_names = ["get"]
+class UserViewSet(ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
-    queryset = User.objects.all()
     lookup_field = 'personal_number'
     lookup_value_regex = '[^/]+'
-    
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username', 'first_name', 'last_name', 'personal_number']
 
-class RoleViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get']
+    def get_queryset(self):
+        queryset = User.objects.select_related(
+            'main_role', 
+            'university', 
+            'faculty', 
+            'department'
+        ).all()
+        
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(is_active=True)
+            
+        return queryset
+
+class RoleViewSet(ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
     lookup_field = 'name'
     lookup_value_regex = '[^/]+'
-    @method_decorator(cache_page(20 * 60, cache="api_cache"))
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+
+    @method_decorator(cache_page(20 * 60, key_prefix="role_api"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    
-    def get(self, request):
-        refresh = request.COOKIES.get('refresh_token')
-        if not refresh:
-            return Response({"detail": "Refresh token not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            token = RefreshToken(refresh)
-            token.blacklist()
-        except Exception:
-            return Response({"detail": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        refresh_token = request.COOKIES.get('refresh_token')
         
-        response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
-        response.delete_cookie('refresh_token')
+        if refresh_token:
+            try:
+                token = RefreshToken(refresh_token)
+                token.blacklist()
+            except (TokenError, Exception):
+                pass
+        
+        response = Response({"detail": "با موفقیت خارج شدید."}, status=status.HTTP_200_OK)
+        
+        response.delete_cookie(
+            key="refresh_token",
+            path="/",
+            samesite="Lax" 
+        )
 
         return response
 
@@ -354,18 +370,43 @@ class LogoutView(generics.GenericAPIView):
 #         return response
 
 class CookieTokenRefreshView(TokenRefreshView):
-    def get(self, request):
-        refresh = request.COOKIES.get('refresh_token')
+    def post(self, request, *args, **kwargs):
+        refresh_token = request.COOKIES.get('refresh_token')
 
-        if refresh is None:
-            return Response({'detail': 'No refresh token cookie found'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not refresh_token:
+            return Response(
+                {'detail': 'رفرش توکن یافت نشد. لطفاً مجدد وارد شوید.'}, 
+                status=status.HTTP_401_UNAUTHORIZED
+            )
 
-        serializer = TokenRefreshSerializer(data={'refresh': refresh})
-        serializer.is_valid(raise_exception=True)
+        serializer = self.get_serializer(data={'refresh': refresh_token})
 
-        access = serializer.validated_data['access']
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception:
+            response = Response({'detail': 'توکن نامعتبر است.'}, status=status.HTTP_401_UNAUTHORIZED)
+            response.delete_cookie('refresh_token')
+            return response
 
-        response = Response({'access': access}, status=status.HTTP_200_OK)
+        validated_data = serializer.validated_data
+        access_token = validated_data['access']
+
+        response = Response({'access': access_token}, status=status.HTTP_200_OK)
+
+        if 'refresh' in validated_data:
+            new_refresh_token = validated_data['refresh']
+            
+            is_production = not settings.DEBUG
+            response.set_cookie(
+                key="refresh_token",
+                value=new_refresh_token,
+                httponly=True,
+                secure=is_production,
+                samesite="Lax",
+                max_age=7 * 24 * 60 * 60,
+                path="/"
+            )
+
         return response
     
 # class CookieTokenRefreshView(TokenRefreshView):
