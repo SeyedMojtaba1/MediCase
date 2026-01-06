@@ -215,7 +215,7 @@ class LoginView(generics.GenericAPIView):
 class SetProfileImageView(generics.UpdateAPIView):
     serializer_class = SetProfileImageSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permission.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
 
     def get_object(self):
@@ -275,7 +275,7 @@ def chenge_pass(request):
 
 class ProfileView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permission.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ProfileSerializer
     
     def get(self, request, *args, **kwargs):
@@ -287,7 +287,7 @@ class ProfileView(generics.RetrieveAPIView):
 class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permission.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = 'personal_number'
@@ -299,7 +299,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class RoleViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permission.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
     lookup_field = 'name'
