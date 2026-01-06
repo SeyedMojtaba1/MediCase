@@ -14,72 +14,136 @@ from .serializer import (
     RoleSerializer,
     LogoutSerializer,
 )
-
+import pandas as pd
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, parsers
 from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_headers
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
+from rest_framework.throttling import ScopedRateThrottle
+from django.conf import settings
+import permission
 
 class SignupViewSet(viewsets.GenericViewSet):
-    serializer_class = RegisterSerializer
     queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [permission.IsAdminOrSuperAdmin]
     
+    parser_classes = [parsers.MultiPartParser, parsers.FormParser, parsers.JSONParser]
+
     def create(self, request):
-        serializer = self.get_serializer(data=request.data)
+        if 'file' in request.FILES:
+            return self._bulk_create(request)
+            
+        return self._single_create(request)
+
+    def _single_create(self, request):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         
-        try:
-            role = Role.objects.get(name=serializer.data['main_role'])
-        except Role.DoesNotExist:
-            return Response({"detail": "Role is not exist."}, status=status.HTTP_400_BAD_REQUEST)
-        
         data = {
             "user": {
-                "email": user.email,
                 "username": user.username,
+                "email": user.email,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "main_role": role.name,
+                "role": user.main_role.name if user.main_role else None,
             },
-            "message": "ثبت نام با موفقیت انجام شد."
+            "message": "ثبت نام تکی با موفقیت انجام شد."
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
-class LoginView(generics.CreateAPIView):
+    def _bulk_create(self, request):
+        file = request.FILES['file']
+        
+        if not file.name.endswith('.xlsx'):
+            return Response({"error": "فرمت فایل باید xlsx باشد."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            df = pd.read_excel(file)
+            df.dropna(how='all', inplace=True)
+        except Exception as e:
+            return Response({"error": f"مشکل در خواندن فایل: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
+
+        created_users = []
+        errors = []
+
+        for index, row in df.iterrows():
+            row_data = row.to_dict()
+            
+            # پاکسازی داده‌ها
+            clean_data = {
+                'email': row_data.get('email'),
+                'username': row_data.get('username'),
+                'password': str(row_data.get('password')),
+                'first_name': row_data.get('first_name'),
+                'last_name': row_data.get('last_name'),
+                'phone_number': str(row_data.get('phone_number', '')).replace('.0', ''),
+                'personal_number': str(row_data.get('personal_number', '')).replace('.0', ''),
+                'main_role': row_data.get('main_role'),
+                'major': row_data.get('major'),
+            }
+
+            serializer = RegisterSerializer(data=clean_data, context={'request': request})
+
+            if serializer.is_valid():
+                try:
+                    user = serializer.save()
+                    created_users.append({
+                        "row": index + 2,
+                        "username": user.username,
+                        "status": "Success"
+                    })
+                except Exception as e:
+                    errors.append({"row": index + 2, "username": clean_data.get('username'), "error": str(e)})
+            else:
+                errors.append({"row": index + 2, "username": clean_data.get('username'), "error": serializer.errors})
+
+        response_data = {
+            "mode": "bulk",
+            "summary": {
+                "total": len(df),
+                "success": len(created_users),
+                "failed": len(errors),
+            },
+            "successful": created_users,
+            "failed": errors
+        }
+        
+        status_code = status.HTTP_201_CREATED if len(errors) == 0 else status.HTTP_207_MULTI_STATUS
+        return Response(response_data, status=status_code)
+
+class LoginView(generics.GenericAPIView):
     serializer_class = EmailLoginSerializer
     permission_classes = [permissions.AllowAny]
-    queryset = User.objects.all()
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'login' 
     
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
         email = serializer.validated_data['email']
-        password = serializer.validated_data['password']  
+        password = serializer.validated_data['password']
 
-        user = authenticate(email=email, password=password)
+        user = authenticate(request=request, email=email, password=password)
 
         if not user:
-            return Response({"detail": "email or password is incorrect."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "ایمیل یا رمز عبور اشتباه است."}, status=status.HTTP_401_UNAUTHORIZED)
         
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
         
-        output_serializer = LoginSerializer(
-            user,
-            context={'request': request}
-        )
+        output_serializer = LoginSerializer(user, context={'request': request})
         
         response = Response(
             {
@@ -89,13 +153,16 @@ class LoginView(generics.CreateAPIView):
             status=status.HTTP_200_OK
         )
 
+        is_production = not settings.DEBUG 
+        
         response.set_cookie(
             key="refresh_token",
             value=str(refresh),
             httponly=True,
-            secure=False,
-            samesite="Lax",
-            max_age = 7 * 24 * 60 * 60,
+            secure=is_production,
+            samesite="Lax" if not is_production else "Strict",
+            max_age=7 * 24 * 60 * 60,
+            path="/"
         )
 
         return response
@@ -148,7 +215,7 @@ class LoginView(generics.CreateAPIView):
 class SetProfileImageView(generics.UpdateAPIView):
     serializer_class = SetProfileImageSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permission.IsAuthenticated]
     queryset = User.objects.all()
 
     def get_object(self):
@@ -198,7 +265,7 @@ def reset_pass(request):
     request=ChengePassSerializer
 )
 @authentication_classes([JWTAuthentication])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permission.IsAuthenticated])
 @api_view(["POST"])
 def chenge_pass(request):
     serializer = ChengePassSerializer(data=request.data)
@@ -208,7 +275,7 @@ def chenge_pass(request):
 
 class ProfileView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permission.IsAuthenticated]
     serializer_class = ProfileSerializer
     
     def get(self, request, *args, **kwargs):
@@ -220,7 +287,7 @@ class ProfileView(generics.RetrieveAPIView):
 class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permission.IsAuthenticated]
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = 'personal_number'
@@ -232,7 +299,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class RoleViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permission.IsAuthenticated]
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
     lookup_field = 'name'
@@ -243,7 +310,7 @@ class RoleViewSet(viewsets.ModelViewSet):
 
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permission.IsAuthenticated]
     
     def get(self, request):
         refresh = request.COOKIES.get('refresh_token')

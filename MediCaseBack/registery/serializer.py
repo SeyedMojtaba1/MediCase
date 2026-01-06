@@ -1,13 +1,10 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from random import randint
 from django.utils import timezone
 from datetime import timedelta
-from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
 from .models import Role
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.core.mail import EmailMultiAlternatives
+from django.db import transaction
 import environ
 from .utils import send_reset_otp_task
 
@@ -18,57 +15,46 @@ User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
-    main_role = serializers.CharField()
-    
+    main_role = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = [
-            'email', 
-            'username', 
-            'first_name', 
-            'last_name', 
-            'password', 
-            'phone_number', 
-            'personal_number', 
-            'main_role',
-            'major',
+            'email', 'username', 'first_name', 'last_name', 
+            'password', 'phone_number', 'personal_number', 
+            'main_role', 'major',
         ]
-    
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            email=validated_data['email'],
-            password=validated_data['password'],
-            username=validated_data['username'],
-            scenario_credit=100,
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            personal_number=validated_data['personal_number'],
-            phone_number=validated_data.get('phone_number', ''),
-            major=validated_data['major'],
-        )
+
+    def validate_main_role(self, value):
+        user = self.context['request'].user
+        requester_role = user.main_role.name
         
         try:
-            role = Role.objects.get(name=validated_data['main_role'])
+            role_instance = Role.objects.get(name=value)
         except Role.DoesNotExist:
-            return "Role is not exist."
-        
-        user.main_role = role
-        
-        # def random_with_N_digits(n):
-        #     range_start = 10**(n-1)
-        #     range_end = (10**n)-1
-        #     return randint(range_start, range_end)
+            raise serializers.ValidationError("نقش وارد شده وجود ندارد.")
 
-        # otp = random_with_N_digits(6)
-        # user.otp = otp
-        user.save()
+        if requester_role == 'admin':
+            if value in ['superadmin', 'admin']:
+                raise serializers.ValidationError("ادمین‌ها فقط می‌توانند دانشجو یا استاد تعریف کنند.")
+        
+        
+        return role_instance
 
-        # subject = 'Please Confirm Your Account'
-        # message = 'Your 6 Digit Verification Pin: {}'.format(otp)
-        # email_from = '*****'
-        # recipient_list = [str(user.email), ]
-        # send_mail(subject, message, email_from, recipient_list)
-        return user
+    def create(self, validated_data):
+        with transaction.atomic():
+            role = validated_data.pop('main_role')
+            password = validated_data.pop('password')
+            
+            user = User.objects.create_user(
+                password=password,
+                scenario_credit=100,
+                **validated_data
+            )
+            
+            user.main_role = role
+            user.save()
+            return user
     
 class EmailLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
