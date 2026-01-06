@@ -10,40 +10,58 @@ class PulmonologyDisease(models.Model):
     persian_name = models.CharField(max_length=50, default=None)
     type_disease = models.CharField(max_length=50, default=None)
 
+    def __str__(self):
+        return self.english_name
 
-class OptimalCostPulmonologyParaclinic(models.Model):
+class ParaclinicTest(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    english_name = models.CharField(max_length=50, default=None, unique=True)
-    persian_name = models.CharField(max_length=50, default=None, unique=True)
-    optimal_cost = models.IntegerField()
+    name = models.CharField(max_length=255, unique=True)
+    persian_name = models.CharField(max_length=255, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    optimal_cost = models.IntegerField(help_text="هزینه ایده‌آل برای امتیازدهی")
+    min_cost = models.IntegerField(default=0)
+    max_cost = models.IntegerField(default=0)
 
-class CostPulmonologyParaclinic(models.Model):
-    pulmonologyparaclinic_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    slug_name = models.CharField(max_length=50, default=None, unique=True)
-    name = models.CharField(max_length=50, default=None, unique=True)
-    min_cost = models.IntegerField()
-    max_cost = models.IntegerField()
+    def __str__(self):
+        return self.name
     
-class PulmonologyScenario(models.Model):
-    scenario_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
-    scenario = models.JSONField()
-    tracking_code = models.CharField(blank=True, max_length=10)
-    done = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="userPulmonologyScenario")
-    disease = models.ForeignKey(PulmonologyDisease, on_delete=models.SET_NULL, null=True, related_name="pulmonologydiseasescenario")
+class ScenarioTemplate(models.Model):
+    template_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=255)
+    content = models.JSONField(verbose_name="Scenario Logic JSON") 
+    tracking_code = models.CharField(max_length=50, unique=True, db_index=True)
+    disease = models.ForeignKey(
+        PulmonologyDisease, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        related_name="scenarios"
+    )
     created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.tracking_code})"
+
+class UserScenarioAttempt(models.Model):
+    attempt_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="attempts")
+    scenario_template = models.ForeignKey(ScenarioTemplate, on_delete=models.CASCADE, related_name="attempts")
+    is_done = models.BooleanField(default=False)
+    score = models.IntegerField(null=True, blank=True)
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-start_time']
 
 class StudentLog(models.Model):
-    log_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
-    student_log = models.JSONField()
-    scenario = models.ForeignKey(PulmonologyScenario, on_delete=models.SET_NULL, null=True, related_name="studentlog")
-    created_date = models.DateTimeField(auto_now_add=True)
+    log_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    attempt = models.ForeignKey(UserScenarioAttempt, on_delete=models.CASCADE, related_name="logs")    
+    action_log = models.JSONField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 class PulmonologyFeedback(models.Model):
-    feedback_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
-    feedback = models.JSONField()
-    tracking_code = models.CharField(blank=True, max_length=10)
+    feedback_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    attempt = models.ForeignKey(UserScenarioAttempt, on_delete=models.CASCADE, related_name="feedbacks")
+    feedback_content = models.JSONField()
     generated = models.BooleanField(default=False)
-    scenario = models.ForeignKey(PulmonologyScenario, on_delete=models.SET_NULL, null=True, related_name="feedbackpulmonologyscenario")
     created_date = models.DateTimeField(auto_now_add=True)
-    

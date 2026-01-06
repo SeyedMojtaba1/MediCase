@@ -14,7 +14,7 @@ class ClinicalEvaluator:
         self.weights = {
             "default": 1,
             "history_taking": 0,
-            "physical_exam": 2,
+            "physical_exam": 0,
             "paraclinic": 3,
             "diagnosis": 15,
             "noise_penalty": 0.5
