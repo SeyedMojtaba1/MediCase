@@ -13,11 +13,11 @@ class ClinicalEvaluator:
         
         self.weights = {
             "default": 1,
-            "history_taking": 1,
+            "history_taking": 0,
             "physical_exam": 2,
             "paraclinic": 3,
             "diagnosis": 15,
-            "noise_penalty": 0 # می‌توانید اینجا جریمه نمره منفی برای نویز تعیین کنید
+            "noise_penalty": 0.5
         }
 
     def _parse_time_to_seconds(self, time_str):
@@ -47,37 +47,27 @@ class ClinicalEvaluator:
         if not self.timestamps:
             return 0, self.total_time_seconds
         
-        # پیدا کردن آخرین زمانی که دانشجو فعالیت کرده (شروع سناریو)
         start_time_seconds = max(self.timestamps)
         
-        # پیدا کردن زمان تشخیص نهایی (پایان سناریو)
         end_time_seconds = self.final_diag_timestamp
         
-        # اگر تشخیص نهایی نداده، کمترین زمان ثبت شده را به عنوان پایان در نظر می‌گیریم
         if end_time_seconds is None:
             end_time_seconds = min(self.timestamps) if self.timestamps else 0
             
         duration = start_time_seconds - end_time_seconds
-        # هندل کردن حالتی که زمان‌ها معکوس باشند (بسته به منطق سیستم شما که زمان باقی‌مانده است یا زمان گذشته)
         return max(0, duration), start_time_seconds
 
     def evaluate_diagnosis_accuracy(self):
-        # ۱. استخراج تشخیص‌های افتراقی صحیح از فایل سناریو
         optimal_diff = self.optimal.get("differential_diagnosis", {})
         correct_differentials = [d for d, val in optimal_diff.items() if val == "true"]
         
-        # ۲. استخراج تشخیص نهایی صحیح
         correct_final = self.optimal.get("final_diagnosis", {}).get("disease", "")
         
-        # ۳. دریافت آنچه دانشجو در لاگ ثبت کرده است
-        # فرض بر این است که در student_log کلیدهای متناظر وجود دارد
         student_diff = self.student.get("student_selected_differentials", [])
         student_final = self.student.get("student_final_diagnosis", "")
 
-        # ۴. بررسی صحت
         is_final_correct = (student_final.lower() == correct_final.lower())
         
-        # پیدا کردن موارد فراموش شده و موارد اضافی
         missed_diffs = [d for d in correct_differentials if d not in student_diff]
         extra_diffs = [d for d in student_diff if d not in correct_differentials]
 
@@ -90,73 +80,50 @@ class ClinicalEvaluator:
             "extra_differentials": extra_diffs
         }
         
-    # --- متد اصلی: ارزیابی جامع (Comprehensive Evaluation) ---
     def evaluate_performance(self):
-        """
-        این متد تمام کلیدها را بررسی می‌کند و در یکی از سه دسته قرار می‌دهد:
-        1. Correct: لازم بود و انجام شد.
-        2. Missed: لازم بود و انجام نشد.
-        3. Noise: لازم نبود (False یا نبود در لیست) ولی انجام شد.
-        """
         flat_optimal = self._flatten_dict(self.optimal)
         flat_student = self._flatten_dict(self.student)
         
-        # گام ۱: ایجاد لیستی از تمام اقدامات ممکن (اجتماع کلیدهای بهینه و دانشجو)
         all_actions = set(flat_optimal.keys()).union(set(flat_student.keys()))
         
         for action in all_actions:
-            # تعیین وضعیت در سناریوی بهینه (آیا لازم است؟)
             opt_val = flat_optimal.get(action)
             is_required = str(opt_val).lower() == "true"
             
-            # تعیین وزن بر اساس نوع اقدام
             weight = self.weights['default']
             if 'diagnosis' in action: weight = self.weights['diagnosis']
             elif 'physical_exam' in action: weight = self.weights['physical_exam']
             elif 'paraclinic' in action: weight = self.weights['paraclinic']
 
-            # اگر اکشن واجب باشد، به نمره کل ممکن اضافه می‌شود
             if is_required:
                 self.max_possible_score += weight
 
-            # تعیین وضعیت در لاگ دانشجو (آیا انجام شده؟)
             stud_val = flat_student.get(action)
             is_performed = False
             
-            # بررسی اینکه مقدار معتبر است و "False" نیست
             if stud_val and str(stud_val).lower() not in ["false", "none", ""]:
                 is_performed = True
-                # ثبت زمان
                 ts = self._parse_time_to_seconds(stud_val)
                 if ts is not None:
                     self.timestamps.append(ts)
                     if "final_diagnosis" in action:
                         self.final_diag_timestamp = ts
 
-            # --- منطق دسته‌بندی ---
-            
-            # حالت ۱: درست (Correct)
             if is_required and is_performed:
                 self.score += weight
                 self.actions_report.append({"action": action, "status": "correct"})
             
-            # حالت ۲: جاافتاده (Missed)
             elif is_required and not is_performed:
                 self.actions_report.append({"action": action, "status": "missed"})
             
-            # حالت ۳: نویز / غیرضروری (Noise)
             elif not is_required and is_performed:
-                # اینجا می‌توانید امتیاز کسر کنید
                 self.score -= self.weights.get('noise_penalty', 0)
                 self.actions_report.append({"action": action, "status": "noise"})
             
-            # حالت ۴: (Irrelevant) نه لازم بود و نه انجام شد -> کاری نداریم (نادیده گرفته می‌شود)
 
-        # محاسبه درصد نهایی
         final_percentage = (self.score / self.max_possible_score * 100) if self.max_possible_score > 0 else 0
         return min(100, max(0, final_percentage))
 
-    # ... (متدهای get_category, format_time, analyze_time_performance ثابت می‌مانند) ...
     def get_category(self, percentage):
         if percentage >= 95: return {"label": "ممتاز / استادانه", "color": "#6A1B9A", "eng": "Mastery"}
         if percentage >= 85: return {"label": "بسیار خوب", "color": "#2E7D32", "eng": "Proficient"}
@@ -173,14 +140,10 @@ class ClinicalEvaluator:
     def analyze_time_performance(self, duration_seconds, total_seconds):
         if total_seconds == 0: return {}
         usage_ratio = duration_seconds / total_seconds
-        # ... (همان منطق قبلی) ...
         if usage_ratio > 1.0: return {"level": "اتمام وقت", "color": "#D32F2F", "message": "زمان تمام شد."}
         elif usage_ratio >= 0.60: return {"level": "مطلوب", "color": "#43A047", "message": "زمان‌بندی عالی."}
         else: return {"level": "سریع", "color": "#1E88E5", "message": "بسیار سریع."}
 
-# ==========================================
-# اجرای کد
-# ==========================================
 
 # فرض کنید متغیرهای OPTIMAL_SCENARIO_COPD و STUDENT_LOG وجود دارند
 # evaluator = ClinicalEvaluator(OPTIMAL_SCENARIO, STUDENT_LOG)

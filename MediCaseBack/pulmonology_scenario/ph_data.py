@@ -661,7 +661,7 @@ class PHDataGenerator:
         # idiopathic_pah (5%), ph_left_heart (75%), ph_lung_disease (20%)
         self.scenario = self.random.choices(
             ["idiopathic_pah", "ph_left_heart", "ph_lung_disease"], 
-            weights=[5, 75, 20], k=1
+            weights=[20, 0, 80], k=1
         )[0]
 
     # --- Helper to extract data from DATA_SOURCE ---
