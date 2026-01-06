@@ -30,12 +30,12 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
 from rest_framework.throttling import ScopedRateThrottle
 from django.conf import settings
-import permission
+from .permission import IsAdminOrSuperAdmin
 
 class SignupViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
-    permission_classes = [permission.IsAdminOrSuperAdmin]
+    permission_classes = [IsAdminOrSuperAdmin]
     
     parser_classes = [parsers.MultiPartParser, parsers.FormParser, parsers.JSONParser]
 
