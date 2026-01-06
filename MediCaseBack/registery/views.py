@@ -265,7 +265,7 @@ def reset_pass(request):
     request=ChengePassSerializer
 )
 @authentication_classes([JWTAuthentication])
-@permission_classes([permission.IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated])
 @api_view(["POST"])
 def chenge_pass(request):
     serializer = ChengePassSerializer(data=request.data)
@@ -310,7 +310,7 @@ class RoleViewSet(viewsets.ModelViewSet):
 
 class LogoutView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [permission.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     
     def get(self, request):
         refresh = request.COOKIES.get('refresh_token')
