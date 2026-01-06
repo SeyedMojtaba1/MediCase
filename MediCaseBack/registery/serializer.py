@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import check_password
 from .models import Role
 from django.db import transaction
 import environ
+import os
 from .utils import send_reset_otp_task
 
 env = environ.Env()
@@ -96,14 +97,22 @@ class SetProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['profile_image']
-    
+
+    def validate_profile_image(self, value):
+        limit_mb = 2
+        if value.size > limit_mb * 1024 * 1024:
+            raise serializers.ValidationError(f"حجم فایل نباید بیشتر از {limit_mb} مگابایت باشد.")
+
+        return value
+
     def update(self, instance, validated_data):
-        profile_image=validated_data['profile_image']
+        new_image = validated_data.get('profile_image')
         
-        instance.profile_image = profile_image
+        if new_image and instance.profile_image:
+            if os.path.isfile(instance.profile_image.path):
+                os.remove(instance.profile_image.path)
         
-        instance.save()
-        return instance
+        return super().update(instance, validated_data)
         
 class SendResetOTPSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -199,7 +208,7 @@ class ChengePassSerializer(serializers.Serializer):
         return "Your password Changed successfuly."
 
 class ProfileSerializer(serializers.ModelSerializer):
-    main_role = main_role = serializers.CharField(source='main_role.name', read_only=True)
+    main_role = serializers.CharField(source='main_role.name', read_only=True)
     university = serializers.CharField(source='university.english_name', read_only=True)
     faculty = serializers.CharField(source='faculty.name', read_only=True)
     department = serializers.CharField(source='department.name', read_only=True)

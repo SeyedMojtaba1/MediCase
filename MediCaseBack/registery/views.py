@@ -214,20 +214,17 @@ class LoginView(generics.GenericAPIView):
 
 class SetProfileImageView(generics.UpdateAPIView):
     serializer_class = SetProfileImageSerializer
-    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    queryset = User.objects.all()
+    parser_classes = [parsers.MultiPartParser, parsers.FormParser]
 
     def get_object(self):
-        return get_object_or_404(User, personal_number=self.request.user.personal_number)
+        return self.request.user
 
     def update(self, request, *args, **kwargs):
-        user = self.get_object()
-        serializer = self.get_serializer(instance=user, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        response = super().update(request, *args, **kwargs)
+        
         return Response(
-            {"message": "تصویر با موفقیت ویرایش شد."},
+            {"message": "تصویر پروفایل با موفقیت به‌روزرسانی شد.", "url": response.data.get('profile_image')},
             status=status.HTTP_200_OK
         )
 
@@ -274,15 +271,20 @@ def chenge_pass(request):
     return Response({"message": message}, status=status.HTTP_200_OK)
 
 class ProfileView(generics.RetrieveAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ProfileSerializer
-    
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    permission_classes = [permissions.IsAuthenticated]
+    # نیازی به authentication_classes نیست اگر در settings.py تنظیم شده باشد
+    # اما بودنش هم ضرری ندارد.
     
     def get_object(self):
-        return self.request.user
+        # این کوئری تمام 5 درخواست را تبدیل به 1 درخواست می‌کند (Join SQL)
+        queryset = User.objects.select_related(
+            'main_role', 
+            'university', 
+            'faculty', 
+            'department'
+        )
+        return get_object_or_404(queryset, pk=self.request.user.pk)
 
 class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
