@@ -55,13 +55,13 @@ class UserScenarioAttempt(models.Model):
 
 class StudentLog(models.Model):
     log_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    attempt = models.ForeignKey(UserScenarioAttempt, on_delete=models.CASCADE, related_name="logs")    
-    action_log = models.JSONField()
+    attempt = models.ForeignKey(UserScenarioAttempt, on_delete=models.CASCADE, null=True, related_name="logs")    
+    action_log = models.JSONField(default=dict)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class PulmonologyFeedback(models.Model):
     feedback_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    attempt = models.ForeignKey(UserScenarioAttempt, on_delete=models.CASCADE, related_name="feedbacks")
-    feedback_content = models.JSONField()
+    attempt = models.ForeignKey(UserScenarioAttempt, on_delete=models.CASCADE, null=True, related_name="feedbacks")
+    feedback_content = models.JSONField(default=dict)
     generated = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)

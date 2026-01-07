@@ -1,7 +1,7 @@
 from celery import shared_task
 from .scenario_creator import scenario_creator
 from .feedback_utils.generate_feedback import generate_feedback
-from .models import PulmonologyScenario, PulmonologyDisease, PulmonologyFeedback, StudentLog
+from .models import PulmonologyDisease, PulmonologyFeedback, UserScenarioAttempt, ScenarioTemplate
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from django.db import transaction
@@ -19,96 +19,118 @@ def decode_short_uuid(short_id: str) -> uuid.UUID:
 
 @shared_task
 def senario_creator_celery(personal_number, tracking_code):
-    scenario_data, target_disease, type_disease = scenario_creator()
-    
-    if isinstance(scenario_data, dict) and "error" in scenario_data:
-        return {"detail": scenario_data["error"]}
-        
+    """
+    وظیفه: تولید محتوای سناریو توسط هوش مصنوعی و ذخیره آن به عنوان یک Template.
+    نکته: کسر اعتبار کاربر قبلاً در API انجام شده است.
+    """
+    logger.info(f"Starting scenario generation for tracking_code: {tracking_code}")
+
+    # 1. فراخوانی هوش مصنوعی
     try:
-        # استفاده از transaction.atomic برای امنیت داده‌ها
+        # خروجی فرضی: دیکشنری سناریو، نام انگلیسی بیماری، نوع بیماری
+        scenario_data, target_disease_name, type_disease = scenario_creator()
+        
+        if isinstance(scenario_data, dict) and "error" in scenario_data:
+            logger.error(f"AI Error: {scenario_data['error']}")
+            return {"detail": scenario_data["error"]}
+            
+    except Exception as e:
+        logger.error(f"AI Generation Failed: {str(e)}")
+        return {"detail": "Error in AI generation."}
+
+    try:
         with transaction.atomic():
-            # ۱. پیدا کردن کاربر و قفل کردن ردیف برای جلوگیری از Race Condition
-            try:
-                user_obj = User.objects.select_for_update().get(personal_number=personal_number)
-            except User.DoesNotExist:
-                return {"detail": "User does not exist."}
-            
-            # ۲. پیدا کردن بیماری
-            try:
-                disease = PulmonologyDisease.objects.get(
-                    english_name=target_disease, 
-                    type_disease=type_disease
-                )
-            except PulmonologyDisease.DoesNotExist:
-                return {"detail": "Disease does not exist."}
-            
-            # ۳. ایجاد سناریو (فقط با کد رهگیری چک می‌کنیم که تکراری نباشد)
-            scenario_obj, created = PulmonologyScenario.objects.get_or_create(
+            # 2. پیدا کردن یا ساختن بیماری (برای اطمینان از وجود آن)
+            # استفاده از get_or_create برای جلوگیری از خطا اگر بیماری جدید بود
+            disease, _ = PulmonologyDisease.objects.get_or_create(
+                english_name=target_disease_name,
+                defaults={
+                    'type_disease': type_disease,
+                    # 'persian_name': ... (اگر هوش مصنوعی برمی‌گرداند)
+                }
+            )
+
+            # 3. ذخیره سناریو در جدول ScenarioTemplate
+            # نکته: اینجا user دخالتی ندارد، چون این یک الگو است
+            template, created = ScenarioTemplate.objects.get_or_create(
                 tracking_code=tracking_code,
                 defaults={
-                    'scenario': scenario_data,
-                    'user': user_obj,
+                    'title': f"Scenario for {target_disease_name}", # یا عنوانی که AI می‌دهد
+                    'content': scenario_data,
                     'disease': disease
                 }
             )
-            
+
             if created:
-                # ۴. بروزرسانی اعتبار با استفاده از F() برای جلوگیری از تداخل
-                user_obj.scenario_credit = F('scenario_credit') - 1
-                user_obj.done_scenarios = F('done_scenarios') + 1
-                user_obj.save()
-                
+                logger.info(f"ScenarioTemplate {tracking_code} created successfully.")
                 return {"detail": "Scenario created successfully."}
             else:
+                logger.warning(f"ScenarioTemplate {tracking_code} already exists.")
                 return {"detail": "Scenario with this tracking code already exists."}
 
     except Exception as e:
-        logger.error(f"Error in scenario creation: {str(e)}")
+        logger.error(f"Database error in senario_creator_celery: {str(e)}")
         return {"detail": "An internal error occurred."}
-    
+
+
 @shared_task
-def feedback_creator_celery(feedback_tracking_code, scenario_tracking_code, disease, type_disease, student_log):
-    logger.info(f"Starting feedback creation for scenario: {scenario_tracking_code}")
+def feedback_creator_celery(feedback_tracking_code, attempt_id, disease_name, type_disease, student_log_data):
+    """
+    وظیفه: تولید فیدبک بر اساس لاگ دانشجو و اتصال آن به تلاش (Attempt) کاربر.
+    ورودی: attempt_id جایگزین scenario_tracking_code شده است.
+    """
+    logger.info(f"Starting feedback creation for attempt_id: {attempt_id}")
     
-    # 1. تولید فیدبک از طریق هوش مصنوعی یا متد مربوطه
+    # 1. تولید فیدبک توسط هوش مصنوعی
     try:
-        feedback = generate_feedback(disease, type_disease, student_log)
+        # فرض: هوش مصنوعی نمره (score) را هم برمی‌گرداند
+        ai_response = generate_feedback(disease_name, type_disease, student_log_data)
+        
+        # مدیریت اینکه خروجی فقط متن است یا دیکشنری شامل نمره
+        if isinstance(ai_response, dict):
+            feedback_content = ai_response.get('content')
+            score = ai_response.get('score') # ممکن است None باشد
+        else:
+            feedback_content = ai_response
+            score = None
+
     except Exception as e:
-        logger.error(f"Error in feedback_generator: {str(e)}")
+        logger.error(f"Error in feedback_generator AI: {str(e)}")
         return {"detail": "Error generating feedback content."}
 
     try:
         with transaction.atomic():
-            # 2. پیدا کردن سناریو
+            # 2. پیدا کردن تلاش کاربر (Attempt)
+            # از select_for_update استفاده می‌کنیم چون می‌خواهیم وضعیت آن را آپدیت کنیم
             try:
-                scenario = PulmonologyScenario.objects.select_for_update().get(tracking_code=scenario_tracking_code)
-            except PulmonologyScenario.DoesNotExist:
-                logger.warning(f"Scenario {scenario_tracking_code} not found.")
-                return {"detail": "Scenario does not exist."}
+                attempt = UserScenarioAttempt.objects.select_for_update().get(attempt_id=attempt_id)
+            except UserScenarioAttempt.DoesNotExist:
+                logger.error(f"Attempt {attempt_id} not found.")
+                return {"detail": "User attempt record not found."}
 
-            # 3. ثبت لاگ دانشجو (استفاده از defaults برای جلوگیری از جستجوی متنی سنگین)
-            final_student_log_obj, created_log = StudentLog.objects.get_or_create(
-                scenario=scenario,
-                defaults={'student_log': student_log}
+            # نکته: لاگ دانشجو (StudentLog) قبلاً در API ذخیره شده است، اینجا دوباره ذخیره نمی‌کنیم.
+
+            # 3. ذخیره فیدبک در جدول PulmonologyFeedback
+            # در مدل جدید، ما فیلد tracking_code برای فیدبک نداشتیم (طبق مدل پیشنهادی قبل).
+            # اگر می‌خواهید آن را ذخیره کنید، باید به مدل اضافه شود. 
+            # فرض می‌کنیم اینجا فقط کانتنت ذخیره می‌شود.
+            feedback_obj = PulmonologyFeedback.objects.create(
+                attempt=attempt,
+                feedback_content=feedback_content,
+                generated=True
             )
 
-            # 4. ثبت فیدبک
-            final_feedback_obj, created_feedback = PulmonologyFeedback.objects.get_or_create(
-                tracking_code=feedback_tracking_code,
-                generated = True,
-                defaults={
-                    'feedback': feedback,
-                    'scenario': scenario
-                }
-            )
+            # 4. بروزرسانی نمره و وضعیت تلاش کاربر (اگر هوش مصنوعی نمره داد)
+            if score is not None:
+                attempt.score = score
+            
+            # اطمینان از اینکه وضعیت Done ثبت شده باشد (هرچند در API هم ست شد)
+            if not attempt.is_done:
+                attempt.is_done = True
+            
+            attempt.save()
 
-            # 5. بروزرسانی وضعیت سناریو
-            if not scenario.done:
-                scenario.done = True
-                scenario.save()
-                logger.info(f"Scenario {scenario_tracking_code} marked as done.")
-
-            logger.info(f"Feedback successfully created for code: {feedback_tracking_code}")
+            logger.info(f"Feedback created successfully for attempt: {attempt_id}")
             return {"detail": "Feedback created successfully."}
 
     except Exception as e:

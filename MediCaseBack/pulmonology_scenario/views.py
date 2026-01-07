@@ -33,7 +33,7 @@ ALPHABET = string.ascii_uppercase + string.digits
 def generate_tracking_code(length: int = 10) -> str:
     return ''.join(secrets.choice(ALPHABET) for _ in range(length))
 
-@decorators.extend_schema(
+@extend_schema(
     responses={200: "Tracking Code JSON"}
 )
 @api_view(['GET'])
@@ -84,7 +84,7 @@ class ScenarioListView(generics.ListAPIView):
             user=self.request.user
         ).select_related('scenario_template')
 
-@decorators.extend_schema(
+@extend_schema(
     request=StudentLogSerializer,
     responses={200: "Tracking Code JSON"}
 )
