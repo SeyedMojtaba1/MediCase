@@ -1,11 +1,12 @@
-from .models import UserScenarioAttempt, PulmonologyFeedback
+from .models import (
+    UserScenarioAttempt, 
+    PulmonologyFeedback, 
+    ScenarioTemplate, 
+    User
+)
 from rest_framework import serializers
-from rest_framework.response import Response
-from django.contrib.auth import get_user_model
 import secrets
 import string
-
-User = get_user_model()
 
 ALPHABET = string.ascii_uppercase + string.digits
 
@@ -16,10 +17,12 @@ class ScenarioCreateSerializer(serializers.Serializer):
     tracking_code = serializers.CharField()
     
 class ScenarioRetrieveSerializer(serializers.ModelSerializer):
-    scenario = serializers.JSONField()
+    # در مدل ScenarioTemplate نام فیلد content است
+    scenario = serializers.JSONField(source='content') 
     
     class Meta:
-        model = UserScenarioAttempt
+        # تغییر مهم: این ویو اطلاعات تمپلیت را نشان می‌دهد نه تلاش کاربر را
+        model = ScenarioTemplate
         fields = [
             'scenario'
         ]
@@ -28,13 +31,17 @@ class ScenarioRetrieveSerializer(serializers.ModelSerializer):
         }
 
 class UserScenarioAttemptListSerializer(serializers.ModelSerializer):
+    # مسیر درست: تلاش -> تمپلیت -> کد پیگیری
     tracking_code = serializers.CharField(source='scenario_template.tracking_code', read_only=True)
     disease_name = serializers.CharField(source='scenario_template.disease.english_name', read_only=True)
+    title = serializers.CharField(source='scenario_template.title', read_only=True)
 
     class Meta:
         model = UserScenarioAttempt
         fields = [
+            'attempt_id',
             'tracking_code',
+            'title',
             'disease_name',
             'is_done',
             'score',
@@ -48,25 +55,30 @@ class StudentLogSerializer(serializers.Serializer):
     student_log = serializers.JSONField()
     
 class FeedbackRetrieveSerializer(serializers.ModelSerializer):
-    feedback = serializers.JSONField()
+    # در مدل جدید نام فیلد feedback_content است
+    feedback = serializers.JSONField(source='feedback_content')
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
+            'feedback_id',
             'feedback',
         ]
-        extra_kwargs = {
-            "url": {'lookup_field': 'tracking_code'}
-        }
+        # چون فیدبک دیگر ترکینگ کد ندارد، معمولا با ID گرفته می‌شود
+        # مگر اینکه در مدل فیدبک فیلد tracking_code را نگه داشته باشید.
         
 class FeedbackListSerializer(serializers.ModelSerializer):
-    scenario_tracking_code = serializers.ReadOnlyField(source='scenario.tracking_code')
+    # مسیر بسیار مهم: فیدبک -> تلاش -> تمپلیت -> کد پیگیری
+    scenario_tracking_code = serializers.CharField(
+        source='attempt.scenario_template.tracking_code', 
+        read_only=True
+    )
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
-            'tracking_code',
-            'scenario_tracking_code',
+            'feedback_id',          # شناسه خود فیدبک
+            'scenario_tracking_code', # کد سناریوی مربوطه
             'generated'
         ]
 
@@ -78,7 +90,6 @@ class StudentScenarioRankSerializer(serializers.ModelSerializer):
         fields = ['username', 'completed_scenarios_count']
         
 class SectionLeaderboardSerializer(serializers.ModelSerializer):
-    # نمره استخراج شده از ساختار JSON فیدبک
     top_score = serializers.FloatField()
 
     class Meta:
