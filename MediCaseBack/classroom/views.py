@@ -1,3 +1,5 @@
+import logging
+import base64
 from rest_framework import viewsets, generics, permissions, status, filters
 from rest_framework.response import Response
 from .serializer import (
@@ -28,6 +30,8 @@ from rest_framework.exceptions import ValidationError, PermissionDenied, NotFoun
 from django.contrib.auth import get_user_model
 from .utils import decode_short_uuid
 
+logger = logging.getLogger('classroom')
+
 User = get_user_model()
 
 class SectionListView(generics.ListAPIView):
@@ -38,20 +42,23 @@ class SectionListView(generics.ListAPIView):
     
     def list(self, request, *args, **kwargs):
         user = self.request.user
+        
+        # لاگ درخواست لیست
+        logger.debug(f"User {user.id} ({user.email}) requested Section List.")
 
         if not user.main_role:
+            logger.warning(f"User {user.id} has no main_role. Returning empty list.")
             queryset = self.get_queryset().none()
-
-        role = user.main_role.name.lower()
-
-        if role == "superadmin":
-            queryset = self.get_queryset()
-        elif role == "teacher":
-            queryset = self.get_queryset().filter(teacher=user)
-        elif role == "student":
-            queryset = self.get_queryset().filter(sectionstudents__student=user)
         else:
-            queryset = self.get_queryset().none()
+            role = user.main_role.name.lower()
+            if role == "superadmin":
+                queryset = self.get_queryset()
+            elif role == "teacher":
+                queryset = self.get_queryset().filter(teacher=user)
+            elif role == "student":
+                queryset = self.get_queryset().filter(sectionstudents__student=user)
+            else:
+                queryset = self.get_queryset().none()
         
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -67,9 +74,11 @@ class SectionRetrieveView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         user = self.request.user
         short_id = self.kwargs.get(self.lookup_field)
+        
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
+            logger.warning(f"Invalid section_id format received: {short_id} from user {user.id}")
             return Response(
                 {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
                 status=status.HTTP_400_BAD_REQUEST
@@ -79,6 +88,7 @@ class SectionRetrieveView(generics.RetrieveAPIView):
             return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
 
         role = user.main_role.name.lower()
+        queryset = None
 
         if role == "superadmin":
             queryset = self.get_queryset(section_id=section_uuid).first()
@@ -86,9 +96,12 @@ class SectionRetrieveView(generics.RetrieveAPIView):
             queryset = self.get_queryset().filter(teacher=user, section_id=section_uuid).first()
         elif role == "student":
             queryset = self.get_queryset().filter(sectionstudents__student=user, section_id=section_uuid).first()
-        else:
+        
+        if not queryset:
+            logger.warning(f"User {user.id} attempted to access section {section_uuid} but was denied or not found.")
             return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
         
+        logger.info(f"User {user.id} successfully retrieved section {section_uuid}.")
         serializer = self.get_serializer(queryset)
         return Response(serializer.data)
 
@@ -115,6 +128,7 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
+            logger.error(f"Section Update Failed: Section {section_uuid} not found for user {user.id}.")
             return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_404_NOT_FOUND)
 
         if not user.main_role:
@@ -123,6 +137,7 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
         role = user.main_role.name.lower()
 
         if role == "student":
+            logger.warning(f"Unauthorized Update Attempt: Student {user.id} tried to update section {section_uuid}.")
             return Response(
                 {"message": "شما اجازه ویرایش این کلاس را ندارید."}, 
                 status=status.HTTP_403_FORBIDDEN
@@ -130,14 +145,16 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
 
         elif role == "teacher":
             if section.teacher != user:
+                logger.warning(f"Unauthorized Update Attempt: Teacher {user.id} tried to update section {section_uuid} belonging to another.")
                 return Response(
                     {"message": "شما فقط می‌توانید کلاس‌های خودتان را ویرایش کنید."}, 
                     status=status.HTTP_403_FORBIDDEN
                 )
 
         serializer = self.get_serializer(instance=section, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            logger.info(f"Section {section_uuid} updated successfully by User {user.id}.")
         
         return Response({"message": "کلاس با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
@@ -156,6 +173,7 @@ class SectionCreateView(generics.GenericAPIView):
         role = user.main_role.name.lower()
         
         if role not in ["teacher", "superadmin"]:
+            logger.warning(f"Unauthorized Create Attempt: User {user.id} with role {role} tried to create a section.")
             return Response(
                 {"message": "شما دسترسی لازم برای ایجاد کلاس را ندارید."}, 
                 status=status.HTTP_403_FORBIDDEN
@@ -164,6 +182,8 @@ class SectionCreateView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         section = serializer.save()
+        
+        logger.info(f"Section created successfully: ID {section.section_id} by User {user.id}.")
         
         return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
 
@@ -214,6 +234,8 @@ class SetSectionImageViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         
+        logger.info(f"Section Image Updated: Section {section_uuid} by User {user.id}.")
+        
         return Response({"message": "تصویر با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
 class StudentSectionCreateView(generics.GenericAPIView):
@@ -224,18 +246,23 @@ class StudentSectionCreateView(generics.GenericAPIView):
     
     def post(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        student_section = serializer.save()
-        
-        data = {
-            "data": {
-                "section": base64.urlsafe_b64encode(student_section.section.section_id.bytes).rstrip(b'=').decode('ascii'),
-                "student": student_section.student.personal_number,
-                "student_status": student_section.student_status,
-            },
-            "message": "ثبت نام دانشجو با موفقیت انجام شد."
-        }
-        return Response(data, status=status.HTTP_201_CREATED)
+        try:
+            serializer.is_valid(raise_exception=True)
+            student_section = serializer.save()
+            logger.info(f"Student enrolled in section: Student {student_section.student.id} -> Section {student_section.section.section_id}")
+            
+            data = {
+                "data": {
+                    "section": base64.urlsafe_b64encode(student_section.section.section_id.bytes).rstrip(b'=').decode('ascii'),
+                    "student": student_section.student.personal_number,
+                    "student_status": student_section.student_status,
+                },
+                "message": "ثبت نام دانشجو با موفقیت انجام شد."
+            }
+            return Response(data, status=status.HTTP_201_CREATED)
+        except ValidationError as e:
+            logger.warning(f"StudentSection creation validation error: {e}")
+            raise e
 
 class StudentSectionListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
@@ -257,9 +284,6 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
     lookup_field = 'section_id'
     
     def get_object(self):
-        """
-        این متد مسئول پیدا کردن آبجکت دقیق است.
-        """
         short_id = self.kwargs.get(self.lookup_field)
         user = self.request.user
         
@@ -269,6 +293,7 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
             raise ValidationError({"detail": "شناسه کلاس نامعتبر است."})
 
         if not user.main_role or user.main_role.name.lower() != 'student':
+             logger.warning(f"Access Denied: Non-student {user.id} tried to retrieve student section info.")
              self.permission_denied(self.request, message="Only students can access this info.")
 
         queryset = StudentSection.objects.filter(
@@ -277,7 +302,6 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
         )
         
         obj = get_object_or_404(queryset)
-        
         self.check_object_permissions(self.request, obj)
         return obj
     
@@ -287,12 +311,11 @@ class StudentSectionRemoveView(generics.GenericAPIView):
     serializer_class = StudentSectionRemoveSerializer
     
     def post(self, request, *args, **kwargs):
-        # ارسال context برای دسترسی به user در سریالایزر
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        
-        # عملیات حذف در متد save سریالایزر انجام می‌شود
         serializer.save()
+        
+        logger.info(f"Student removed from section successfully by User {request.user.id}.")
         
         return Response({"message": "دانشجو با موفقیت از کلاس حذف شد."}, status=status.HTTP_200_OK)
 
@@ -305,30 +328,22 @@ class MembersSectionListView(generics.ListAPIView):
         short_id = self.kwargs.get('section_id')
         user = self.request.user
         
-        # 1. دیکود کردن ID
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
             raise ValidationError({"detail": "شناسه کلاس نامعتبر است."})
 
-        # 2. پیدا کردن کلاس
-        # از get_object_or_404 استفاده می‌کنیم تا اگر نبود خودکار 404 بدهد
         section = get_object_or_404(Section, section_id=section_uuid)
-        
-        # 3. بررسی دسترسی (Security Logic)
-        # الف) اگر کاربر سوپر ادمین است -> دسترسی دارد
-        # ب) اگر کاربر معلمِ همین کلاس است -> دسترسی دارد
-        # ج) اگر کاربر دانشجوی عضو همین کلاس است -> دسترسی دارد
         
         is_teacher = (user == section.teacher)
         is_student = StudentSection.objects.filter(section=section, student=user).exists()
         is_admin = (user.main_role and user.main_role.name.lower() == 'superadmin')
 
         if not (is_teacher or is_student or is_admin):
+             logger.warning(f"Access Denied: User {user.id} tried to view members of section {section_uuid}.")
              raise PermissionDenied("شما عضو این کلاس نیستید و اجازه دیدن اعضا را ندارید.")
 
-        # 4. کوئری اصلی (بهینه شده)
-        # نکته کلیدی: استفاده از select_related برای جلوگیری از N+1 Query
+        logger.info(f"User {user.id} retrieved members list for section {section_uuid}.")
         return StudentSection.objects.filter(section=section).select_related('student')
 
 class SemesterViewSet(viewsets.ReadOnlyModelViewSet):
@@ -369,6 +384,7 @@ class StudentSubjectCreateView(generics.GenericAPIView):
         user = request.user
         
         if not user.main_role or user.main_role.name.lower() != "superadmin":
+             logger.warning(f"Access Denied: User {user.id} tried to create StudentSubject.")
              return Response(
                  {"message": "شما اجازه دسترسی به این بخش را ندارید."}, 
                  status=status.HTTP_403_FORBIDDEN
@@ -377,6 +393,8 @@ class StudentSubjectCreateView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         student_subject = serializer.save()
+        
+        logger.info(f"StudentSubject created: Student {student_subject.student.id} -> Subject {student_subject.subject.english_name} by Admin {user.id}")
         
         data = {
             "data": {
@@ -452,29 +470,24 @@ class HospitalSubjectCreateView(generics.GenericAPIView):
     def post(self, request):
         user = request.user
         
-        # 1. بررسی سطح دسترسی (فقط سوپر ادمین)
-        # اتصال بیمارستان به درس یک تنظیمات سیستمی است و نباید توسط همه انجام شود.
         if not user.main_role or user.main_role.name.lower() != "superadmin":
+             logger.warning(f"Access Denied: User {user.id} tried to link Hospital-Subject.")
              return Response(
                  {"message": "شما اجازه دسترسی به این بخش را ندارید."}, 
                  status=status.HTTP_403_FORBIDDEN
              )
 
-        # 2. اعتبارسنجی اولیه
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
-        # 3. ذخیره‌سازی و مدیریت باگ سریالایزر
-        # چون سریالایزر ممکن است به جای آبجکت، یک رشته (String) برگرداند،
-        # باید اینجا چک کنیم تا برنامه کرش نکند.
         result = serializer.save()
         
         if isinstance(result, str):
-            # اگر خروجی متن بود، یعنی ارور "یافت نشد" در سریالایزر رخ داده
+            logger.error(f"HospitalSubject Creation Failed: {result}")
             return Response({"message": result}, status=status.HTTP_400_BAD_REQUEST)
         
-        # اگر خروجی آبجکت بود، یعنی همه چیز درست است
         hospital_subject = result
+        logger.info(f"HospitalSubject linked: {hospital_subject.hospital.english_name} <-> {hospital_subject.subject.english_name} by Admin {user.id}")
         
         data = {
             "data": {
@@ -527,9 +540,9 @@ class HospitalSubjectRetrieveView(generics.ListAPIView):
         subject_name = self.kwargs.get(self.lookup_field)
         
         if not Subject.objects.filter(english_name=subject_name).exists():
+            logger.warning(f"HospitalSubject Retrieve: Subject {subject_name} does not exist.")
             raise NotFound({"message": "Subject does not exist."})
 
         return HospitalSubject.objects.filter(
             subject__english_name=subject_name
         ).select_related('subject', 'hospital')
-

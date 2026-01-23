@@ -5,20 +5,28 @@ from random import randint
 from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.conf import settings
+import logging
 
 User = get_user_model()
 
+logger = logging.getLogger('registery')
+
 @shared_task
 def send_reset_otp_task(email):
+    logger.debug(f"OTP task started for email: {email}")
+    
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
+        logger.warning(f"OTP Request Failed: User with email {email} does not exist.")
         return "User does not exist."
 
     otp = randint(100000, 999999)
     user.otp = otp
     user.otp_expiry = timezone.now() + timedelta(minutes=5)
     user.save()
+    
+    logger.info(f"OTP generated for user {user.id} ({email}): expires in 5 minutes.")
 
     subject = '🔐 حسابت رو احراز هویت کن.'
     from_email = settings.EMAIL_HOST_USER
@@ -65,8 +73,14 @@ def send_reset_otp_task(email):
     </html>
     """
 
-    email_message = EmailMultiAlternatives(subject, text_content, from_email, to)
-    email_message.attach_alternative(html_content, "text/html")
-    email_message.send()
-
-    return f"OTP sent to {email}"
+    try:
+        email_message = EmailMultiAlternatives(subject, text_content, from_email, to)
+        email_message.attach_alternative(html_content, "text/html")
+        email_message.send()
+        
+        logger.info(f"OTP email sent successfully to {email} for user {user.id}.")
+        return f"OTP sent to {email}"
+        
+    except Exception as e:
+        logger.error(f"Failed to send OTP email to {email} for user {user.id}. Error: {str(e)}")
+        return f"Failed to send email: {str(e)}"

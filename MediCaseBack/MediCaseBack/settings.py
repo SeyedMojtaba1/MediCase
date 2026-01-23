@@ -161,6 +161,60 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MediCaseBack.wsgi.application'
 
+MY_APPS = [
+    'registery',
+    'university',
+    'classroom',
+    'pulmonology_scenario',
+    'tutorial'
+]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        # این هندلر برای لاگ‌های کلی جنگو است (اختیاری)
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
+# حلقه پویا برای ساختن هندلر و لاگر اختصاصی برای هر اپلیکیشن
+for app in MY_APPS:
+    # 1. تعریف Handler: مشخص می‌کند فایل کجا ذخیره شود
+    LOGGING['handlers'][f'{app}_file'] = {
+        'level': 'DEBUG',  # سطح لاگ (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+        'class': 'logging.FileHandler',
+        'filename': os.path.join(BASE_DIR, f'{app}.log'), # مسیر فایل: root/app_name.log
+        'formatter': 'verbose',
+    }
+
+    # 2. تعریف Logger: مشخص می‌کند کدها چطور به این فایل دسترسی داشته باشند
+    LOGGING['loggers'][app] = {
+        'handlers': [f'{app}_file'],
+        'level': 'DEBUG',
+        'propagate': False, # جلوگیری از تکرار لاگ در کنسول اصلی
+    }
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

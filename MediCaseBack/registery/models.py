@@ -1,37 +1,63 @@
+import logging
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from university.models import University, Faculty, Department
 import uuid
-    
+
+logger = logging.getLogger('registery')
+
 class Role(models.Model):
     role_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=20, unique=True)
-    
+
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        try:
+            is_new = self._state.adding
+            super().save(*args, **kwargs)
+            if is_new:
+                logger.info(f"Role created: {self.name} (ID: {self.role_id})")
+            else:
+                logger.info(f"Role updated: {self.name} (ID: {self.role_id})")
+        except Exception as e:
+            logger.error(f"Error saving Role {self.name}: {e}", exc_info=True)
+            raise
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError("ایمیل مورد نیاز است!")
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save()
-        return user
+        try:
+            if not email:
+                raise ValueError("ایمیل مورد نیاز است!")
+            email = self.normalize_email(email)
+            user = self.model(email=email, **extra_fields)
+            user.set_password(password)
+            user.save()
+            logger.info(f"New user created via UserManager: {email}")
+            return user
+        except Exception as e:
+            logger.error(f"Error creating user {email}: {e}", exc_info=True)
+            raise
 
     def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("is_active", True)
+        try:
+            extra_fields.setdefault("is_staff", True)
+            extra_fields.setdefault("is_superuser", True)
+            extra_fields.setdefault("is_active", True)
 
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError("سوپر یوزر باید is_staff=True داشته باشد.")
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError("سوپر یوزر باید is_superuser=True داشته باشد.")
+            if extra_fields.get("is_staff") is not True:
+                raise ValueError("سوپر یوزر باید is_staff=True داشته باشد.")
+            if extra_fields.get("is_superuser") is not True:
+                raise ValueError("سوپر یوزر باید is_superuser=True داشته باشد.")
 
-        return self.create_user(email, password, **extra_fields)
+            user = self.create_user(email, password, **extra_fields)
+            logger.warning(f"Superuser created: {email} (ID: {user.user_id})")
+            return user
+        except Exception as e:
+            logger.error(f"Error creating superuser {email}: {e}", exc_info=True)
+            raise
 
 class User(AbstractBaseUser):
     MAJOR_TYPES=[
@@ -89,9 +115,32 @@ class User(AbstractBaseUser):
     
     def __str__(self):
         return self.email
+
+    def save(self, *args, **kwargs):
+        try:
+            is_new = self._state.adding
+            super().save(*args, **kwargs)
+            if is_new:
+                logger.info(f"User registered: {self.email} (ID: {self.user_id})")
+            else:
+                logger.info(f"User profile updated: {self.email} (ID: {self.user_id})")
+        except Exception as e:
+            logger.error(f"Error saving User {self.email}: {e}", exc_info=True)
+            raise
     
 class UserRole(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    
+
+    def save(self, *args, **kwargs):
+        try:
+            is_new = self._state.adding
+            super().save(*args, **kwargs)
+            if is_new:
+                logger.info(f"Role '{self.role.name}' assigned to User '{self.user.email}'")
+            else:
+                logger.info(f"UserRole updated for User '{self.user.email}' - Role: '{self.role.name}'")
+        except Exception as e:
+            logger.error(f"Error saving UserRole: {e}", exc_info=True)
+            raise

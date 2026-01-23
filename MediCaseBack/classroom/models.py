@@ -1,11 +1,29 @@
+import logging
 from django.db import models
 from registery.models import User
-import uuid, base64
+import uuid
+
+logger = logging.getLogger('classroom')
 
 class Semester(models.Model):
     semester_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     code = models.CharField(max_length=8)
     name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return f"{self.name} ({self.code})"
+
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        try:
+            super().save(*args, **kwargs)
+            if is_new:
+                logger.info(f"New Semester created: {self.name} [{self.code}]")
+            else:
+                logger.info(f"Semester updated: {self.semester_id}")
+        except Exception as e:
+            logger.error(f"Error saving Semester {self.code}: {e}", exc_info=True)
+            raise e
 
 class Subject(models.Model):
     SUBJECT_STATUS = [
@@ -25,6 +43,21 @@ class Subject(models.Model):
         default='defaults/default_subject.jpg',
     )
     subject_status = models.CharField(choices=SUBJECT_STATUS, max_length=10)
+
+    def __str__(self):
+        return self.english_name
+
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        try:
+            super().save(*args, **kwargs)
+            if is_new:
+                logger.info(f"New Subject added: {self.english_name} ({self.unit} units)")
+            else:
+                logger.info(f"Subject updated: {self.english_name}")
+        except Exception as e:
+            logger.error(f"Error saving Subject {self.english_name}: {e}", exc_info=True)
+            raise e
 
 class Section(models.Model):
     CLASS_STATUS = [
@@ -51,6 +84,22 @@ class Section(models.Model):
         null=True,
     )
     description = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        try:
+            super().save(*args, **kwargs)
+            teacher_id = self.teacher.id if self.teacher else "No Teacher"
+            if is_new:
+                logger.info(f"New Section created: '{self.name}' for Subject: {self.subject} by Teacher ID: {teacher_id}")
+            else:
+                logger.info(f"Section '{self.name}' updated. Status: {self.status}")
+        except Exception as e:
+            logger.error(f"Error saving Section {self.name}: {e}", exc_info=True)
+            raise e
     
 class StudentSection(models.Model):
     STUDENT_STATUS = [
@@ -62,6 +111,14 @@ class StudentSection(models.Model):
     section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, related_name='sectionstudents')
     student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='studentsections')
     student_status = models.CharField(max_length=10, choices=STUDENT_STATUS)
+
+    def save(self, *args, **kwargs):
+        try:
+            super().save(*args, **kwargs)
+            logger.info(f"Student {self.student} assigned to Section {self.section} with status {self.student_status}")
+        except Exception as e:
+            logger.error(f"Error assigning Student to Section: {e}", exc_info=True)
+            raise e
     
 class StudentSubject(models.Model):
     STUDENT_STATUS = [
@@ -73,6 +130,14 @@ class StudentSubject(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, related_name='subjectstudents')
     student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='studentsubjects')
     access_status = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        try:
+            super().save(*args, **kwargs)
+            logger.info(f"StudentSubject relation updated: Student {self.student} - Subject {self.subject} - Access: {self.access_status}")
+        except Exception as e:
+            logger.error(f"Error saving StudentSubject: {e}", exc_info=True)
+            raise e
 
 class Hospital(models.Model):
     HOSPITAL_TYPE=[
@@ -101,9 +166,28 @@ class Hospital(models.Model):
     def __str__(self):
         return self.english_name
 
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        try:
+            super().save(*args, **kwargs)
+            if is_new:
+                logger.info(f"New Hospital registered: {self.english_name} ({self.city})")
+            else:
+                logger.info(f"Hospital info updated: {self.english_name}")
+        except Exception as e:
+            logger.error(f"Error saving Hospital {self.english_name}: {e}", exc_info=True)
+            raise e
+
 class HospitalSubject(models.Model):
-    
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, related_name='subjecthospitals')
     hospital = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, related_name='hospitalsubjects')
     access_status = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        try:
+            super().save(*args, **kwargs)
+            logger.info(f"Subject {self.subject} linked to Hospital {self.hospital}. Access: {self.access_status}")
+        except Exception as e:
+            logger.error(f"Error linking Subject to Hospital: {e}", exc_info=True)
+            raise e

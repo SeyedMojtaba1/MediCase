@@ -1,12 +1,26 @@
+import logging
 from django.urls import path, include
 from . import views
 from rest_framework.routers import DefaultRouter
 
+# ==============================================================================
+# Logger Setup
+# ==============================================================================
+logger = logging.getLogger('classroom')
+
+logger.info("Loading URL configuration for 'university' app...")
+
 router = DefaultRouter()
-router.register(r'semesters', views.SemesterViewSet, basename='semester')
-router.register(r'subjects', views.SubjectViewSet, basename='subject')
-router.register(r"setsectionimage", views.SetSectionImageViewSet, basename="setsectionimage")
-router.register(r'hospitals', views.HospitalViewSet, basename='hospital')
+
+try:
+    # ثبت ViewSet ها در روتر
+    router.register(r'semesters', views.SemesterViewSet, basename='semester')
+    router.register(r'subjects', views.SubjectViewSet, basename='subject')
+    router.register(r"setsectionimage", views.SetSectionImageViewSet, basename="setsectionimage")
+    router.register(r'hospitals', views.HospitalViewSet, basename='hospital')
+except Exception as e:
+    logger.error(f"Failed to register ViewSets in router: {e}", exc_info=True)
+    raise e
 
 urlpatterns = [
    path('', include(router.urls)),
@@ -26,3 +40,5 @@ urlpatterns = [
    path('hospitalsubjectlist/', views.HospitalSubjectListView.as_view(), name='hospitalsubjectlist'),
    path('hospitalsubjectretrieve/<str:subject>/', views.HospitalSubjectRetrieveView.as_view(), name='hospitalsubjectretrieve'),
 ]
+
+logger.info("URL patterns for 'university' app loaded successfully.")
