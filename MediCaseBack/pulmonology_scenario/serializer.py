@@ -1,9 +1,4 @@
-from .models import (
-    UserScenarioAttempt, 
-    PulmonologyFeedback, 
-    ScenarioTemplate, 
-    User
-)
+from .models import ScenarioTemplate, UserScenarioAttempt, StudentLog, PulmonologyFeedback, PulmonologyDisease
 from rest_framework import serializers
 import secrets
 import string
