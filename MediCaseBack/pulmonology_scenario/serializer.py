@@ -1,9 +1,12 @@
-from .models import UserScenarioAttempt, PulmonologyFeedback
+from .models import ScenarioTemplate, UserScenarioAttempt, StudentLog, PulmonologyFeedback, PulmonologyDisease
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 import secrets
 import string
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 User = get_user_model()
 
@@ -16,10 +19,10 @@ class ScenarioCreateSerializer(serializers.Serializer):
     tracking_code = serializers.CharField()
     
 class ScenarioRetrieveSerializer(serializers.ModelSerializer):
-    scenario = serializers.JSONField()
+    scenario = serializers.JSONField(source='content') 
     
     class Meta:
-        model = UserScenarioAttempt
+        model = ScenarioTemplate
         fields = [
             'scenario'
         ]
@@ -48,24 +51,24 @@ class StudentLogSerializer(serializers.Serializer):
     student_log = serializers.JSONField()
     
 class FeedbackRetrieveSerializer(serializers.ModelSerializer):
-    feedback = serializers.JSONField()
+    feedback = serializers.JSONField(source='feedback_content')
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
             'feedback',
         ]
-        extra_kwargs = {
-            "url": {'lookup_field': 'tracking_code'}
-        }
         
 class FeedbackListSerializer(serializers.ModelSerializer):
-    scenario_tracking_code = serializers.ReadOnlyField(source='scenario.tracking_code')
+    scenario_tracking_code = serializers.CharField(
+        source='attempt.scenario_template.tracking_code', 
+        read_only=True
+    )
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
-            'tracking_code',
+            'feedback_id',
             'scenario_tracking_code',
             'generated'
         ]
@@ -78,7 +81,6 @@ class StudentScenarioRankSerializer(serializers.ModelSerializer):
         fields = ['username', 'completed_scenarios_count']
         
 class SectionLeaderboardSerializer(serializers.ModelSerializer):
-    # نمره استخراج شده از ساختار JSON فیدبک
     top_score = serializers.FloatField()
 
     class Meta:
