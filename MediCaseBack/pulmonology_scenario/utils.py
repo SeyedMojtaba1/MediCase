@@ -40,10 +40,17 @@ def senario_creator_celery(personal_number, tracking_code):
 
     try:
         with transaction.atomic():
-            disease = PulmonologyDisease.objects.filter(name=target_disease_name, type_disease=type_disease).first()
+            disease = PulmonologyDisease.objects.filter(
+                english_name=target_disease_name, 
+                type_disease=type_disease
+            ).first()
 
+            # اگر بیماری پیدا نشد، یکی جدید می‌سازیم
             if not disease:
-                disease = PulmonologyDisease.objects.create(name=target_disease_name, type_disease=type_disease)
+                disease = PulmonologyDisease.objects.create(
+                    english_name=target_disease_name, 
+                    type_disease=type_disease
+                )
             # 3. ذخیره سناریو در جدول ScenarioTemplate
             # نکته: اینجا user دخالتی ندارد، چون این یک الگو است
             template, created = ScenarioTemplate.objects.get_or_create(
