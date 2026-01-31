@@ -1,0 +1,4 @@
+/venv
+MediCaseBack/secrets
+/data/*
+MediCaseBack/media/*
