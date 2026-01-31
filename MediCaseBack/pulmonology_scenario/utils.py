@@ -69,8 +69,11 @@ def senario_creator_celery(personal_number, tracking_code):
                 return {"detail": "Scenario with this tracking code already exists."}
 
     except Exception as e:
-        logger.error(f"Database error in senario_creator_celery: {str(e)}")
-        return {"detail": "An internal error occurred."}
+        print(f"❌ CRITICAL WORKER ERROR: {str(e)}") 
+        import traceback
+        traceback.print_exc()
+        
+        return {"detail": f"An internal error occurred: {str(e)}"}
 
 
 @shared_task
