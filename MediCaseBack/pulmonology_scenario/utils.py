@@ -40,16 +40,10 @@ def senario_creator_celery(personal_number, tracking_code):
 
     try:
         with transaction.atomic():
-            # 2. پیدا کردن یا ساختن بیماری (برای اطمینان از وجود آن)
-            # استفاده از get_or_create برای جلوگیری از خطا اگر بیماری جدید بود
-            disease, _ = PulmonologyDisease.objects.get_or_create(
-                english_name=target_disease_name,
-                defaults={
-                    'type_disease': type_disease,
-                    # 'persian_name': ... (اگر هوش مصنوعی برمی‌گرداند)
-                }
-            )
+            disease = PulmonologyDisease.objects.filter(name=target_disease_name, type_disease=type_disease).first()
 
+            if not disease:
+                disease = PulmonologyDisease.objects.create(name=target_disease_name, type_disease=type_disease)
             # 3. ذخیره سناریو در جدول ScenarioTemplate
             # نکته: اینجا user دخالتی ندارد، چون این یک الگو است
             template, created = ScenarioTemplate.objects.get_or_create(
