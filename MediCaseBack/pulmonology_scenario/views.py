@@ -170,8 +170,8 @@ class StudentRankingListView(generics.ListAPIView):
     def get_queryset(self):
         return User.objects.annotate(
             completed_scenarios_count=Count(
-                'userPulmonologyScenario', 
-                filter=Q(userPulmonologyScenario__done=True)
+                'attempts', 
+                filter=Q(attempts__is_done=True)
             )
         ).order_by('-completed_scenarios_count')
         
@@ -193,14 +193,9 @@ class SectionLeaderboardView(generics.ListAPIView):
             student_status='Active'
         ).values_list('student__personal_number', flat=True)
 
+        # اصلاح کوئری: استفاده از attempts__score به جای مسیر پیچیده JSON
         return User.objects.filter(personal_number__in=active_student_numbers).annotate(
-            top_score=Max(
-                Cast(
-                    F('userPulmonologyScenario__feedbackpulmonologyscenario__feedback__score__obtained'),
-                    FloatField()
-                ),
-                filter=Q(userPulmonologyScenario__feedbackpulmonologyscenario__generated=True)
-            )
+            top_score=Max('attempts__score', filter=Q(attempts__is_done=True))
         ).exclude(top_score=None).order_by('-top_score')
         
 class StudentRankInSectionView(APIView):
@@ -212,21 +207,14 @@ class StudentRankInSectionView(APIView):
         try:
             section_uuid = decode_short_uuid(section_id)
         except ValueError:
-            return Response(
-                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"message": "Invalid section ID"}, status=400)
             
+        # اصلاح کوئری لیدربرد
         leaderboard = User.objects.filter(
             studentsections__section_id=section_uuid,
             studentsections__student_status='Active'
         ).annotate(
-            score=Max(
-                Cast(
-                    F('userPulmonologyScenario__feedbackpulmonologyscenario__feedback__score__obtained'), 
-                    FloatField()
-                )
-            )
+            score=Max('attempts__score', filter=Q(attempts__is_done=True))
         ).exclude(score=None).order_by('-score')
 
         rank = None
@@ -256,19 +244,18 @@ class FeedbackRankInSectionView(APIView):
     def get(self, request):
         tracking_code = self.kwargs.get('tracking_code')
         try:
+            # اینجا مسیر scenario__user تغییر کرده است
+            # فیدبک -> attempt -> user
             target_feedback = PulmonologyFeedback.objects.select_related(
-                'scenario__user'
+                'attempt__user'
             ).get(tracking_code=tracking_code)
         except PulmonologyFeedback.DoesNotExist:
-            return Response({"error": "فیدبک یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "فیدبک یافت نشد."}, status=404)
 
-        if target_feedback.scenario.user.user_id != request.user.user_id:
-            return Response(
-                {"error": "شما اجازه دسترسی به رتبه این فیدبک را ندارید."}, 
-                status=status.HTTP_403_FORBIDDEN
-            )
+        if target_feedback.attempt.user.user_id != request.user.user_id:
+            return Response({"error": "Forbidden"}, status=403)
 
-        student = target_feedback.scenario.user
+        student = target_feedback.attempt.user
         student_section = StudentSection.objects.filter(
             student=student, 
             student_status='Active'
@@ -283,13 +270,7 @@ class FeedbackRankInSectionView(APIView):
             studentsections__section_id=section_uuid,
             studentsections__student_status='Active'
         ).annotate(
-            best_score=Max(
-                Cast(
-                    F('userPulmonologyScenario__feedbackpulmonologyscenario__feedback__score__obtained'), 
-                    FloatField()
-                ),
-                filter=Q(userPulmonologyScenario__feedbackpulmonologyscenario__generated=True)
-            )
+            best_score=Max('attempts__score', filter=Q(attempts__is_done=True))
         ).exclude(best_score=None).order_by('-best_score')
 
         rank = None
@@ -302,7 +283,7 @@ class FeedbackRankInSectionView(APIView):
             "tracking_code": tracking_code,
             "rank_in_section": rank,
             "total_students": leaderboard.count(),
-            "your_obtained_score": target_feedback.feedback.get('score', {}).get('obtained'),
+            "your_obtained_score": target_feedback.attempt.score, 
             "section_name": student_section.section.name
         })
 

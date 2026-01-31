@@ -100,31 +100,22 @@ def feedback_creator_celery(feedback_tracking_code, attempt_id, disease_name, ty
 
     try:
         with transaction.atomic():
-            # 2. پیدا کردن تلاش کاربر (Attempt)
-            # از select_for_update استفاده می‌کنیم چون می‌خواهیم وضعیت آن را آپدیت کنیم
             try:
                 attempt = UserScenarioAttempt.objects.select_for_update().get(attempt_id=attempt_id)
             except UserScenarioAttempt.DoesNotExist:
-                logger.error(f"Attempt {attempt_id} not found.")
                 return {"detail": "User attempt record not found."}
 
-            # نکته: لاگ دانشجو (StudentLog) قبلاً در API ذخیره شده است، اینجا دوباره ذخیره نمی‌کنیم.
-
-            # 3. ذخیره فیدبک در جدول PulmonologyFeedback
-            # در مدل جدید، ما فیلد tracking_code برای فیدبک نداشتیم (طبق مدل پیشنهادی قبل).
-            # اگر می‌خواهید آن را ذخیره کنید، باید به مدل اضافه شود. 
-            # فرض می‌کنیم اینجا فقط کانتنت ذخیره می‌شود.
+            # ذخیره فیدبک: اضافه کردن tracking_code که در ورودی تابع آمده است
             feedback_obj = PulmonologyFeedback.objects.create(
                 attempt=attempt,
                 feedback_content=feedback_content,
-                generated=True
+                generated=True,
+                tracking_code=feedback_tracking_code  # <--- این خط باید اضافه شود
             )
 
-            # 4. بروزرسانی نمره و وضعیت تلاش کاربر (اگر هوش مصنوعی نمره داد)
             if score is not None:
                 attempt.score = score
             
-            # اطمینان از اینکه وضعیت Done ثبت شده باشد (هرچند در API هم ست شد)
             if not attempt.is_done:
                 attempt.is_done = True
             
