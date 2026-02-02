@@ -316,6 +316,11 @@ FULL_SCENARIO = {
     "disease6": "PH",
     "disease7": "Pleural Effusion",
     "disease8": "ARDS"
+  },
+  "pleural_effusion_assessment": {
+    "has_effusion": "آیا بیمار افیوژن دارد؟ (بله/خیر)",
+    "need_aspiration": "آیا نیاز به کشیدن مایع (توراسنتز) هست؟ (بله/خیر)",
+    "effusion_type": "نوع مایع چیست؟ (اگزودا/ترانسودا)"
   }
 }
 
@@ -550,6 +555,8 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
 
     diagnosis_results = evaluator.evaluate_diagnosis_accuracy()
     
+    pleural_results = evaluator.evaluate_pleural_effusion()
+    
     output = {
         "meta": {
             "disease": disease_category,
@@ -595,6 +602,13 @@ def generate_feedback(disease_category, specific_scenario_key, student_log):
                 "missed_items": diagnosis_results["missed_differentials"]
             },
             "feedback_message": f"تشخیص نهایی شما {'صحیح بود' if diagnosis_results['is_final_correct'] else 'نادرست بود'}."
+        },
+        "pleural_effusion_section": {
+          "title": "ارزیابی پلورال افیوژن",
+          "is_correct": pleural_results["is_correct"],
+          "user_assessment": pleural_results["student"],
+          "correct_assessment": pleural_results["optimal"],
+          "feedback_message": "تشخیص وضعیت مایع پلور صحیح بود." if pleural_results["is_correct"] else "در تشخیص وضعیت مایع پلور اشتباه داشتید."
         },
         "detailed_lists": {
             "missed_items": metrics["details"]["missed"],

@@ -213,7 +213,12 @@ PTE_MASSIVE_PTE = {
     },
     "final_diagnosis": {
       "disease": "PTE"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "true",
+    "need_aspiration": "false",
+    "effusion_type": "exudative"
+}
   }
 
 
@@ -432,7 +437,12 @@ PTE_PERIPHERAL_INFARCT = {
     },
     "final_diagnosis": {
       "disease": "PTE"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "true",
+    "need_aspiration": "false",
+    "effusion_type": "exudative"
+}
   }
 
 
@@ -651,5 +661,10 @@ PTE_SUBMASSIVE_PTE = {
     },
     "final_diagnosis": {
       "disease": "PTE"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "true",
+    "need_aspiration": "false",
+    "effusion_type": "exudative"
+}
   }

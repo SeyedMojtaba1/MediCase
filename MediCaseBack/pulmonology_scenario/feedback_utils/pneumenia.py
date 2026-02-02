@@ -213,7 +213,12 @@ PNEUMENIA_ATYPICAL_WALKING = {
     },
     "final_diagnosis": {
       "disease": "Pneumonia"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }
 
 
@@ -432,7 +437,12 @@ PNEUMENIA_COMPLICATED_EFFUSION = {
     },
     "final_diagnosis": {
       "disease": "Pneumonia"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "true",
+    "need_aspiration": "true",
+    "effusion_type": "exudative"
+}
   }
 
 
@@ -651,5 +661,10 @@ PNEUMENIA_TYPICAL_LOBAR = {
     },
     "final_diagnosis": {
       "disease": "Pneumonia"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "true",
+    "need_aspiration": "true",
+    "effusion_type": "exudative"
+}
   }

@@ -17,6 +17,7 @@ class ClinicalEvaluator:
             "physical_exam": 0,
             "paraclinic": 3,
             "diagnosis": 15,
+            "pleural_assessment": 10,
             "noise_penalty": 0.5
         }
 
@@ -124,6 +125,23 @@ class ClinicalEvaluator:
         final_percentage = (self.score / self.max_possible_score * 100) if self.max_possible_score > 0 else 0
         return min(100, max(0, final_percentage))
 
+    def evaluate_pleural_effusion(self):
+        optimal_pleural = self.optimal.get("pleural_effusion_assessment", {})
+        # استخراج پاسخ‌های دانشجو از لاگ (فرض بر این است که فرانت‌ اند این فیلدها را می‌فرستد)
+        student_pleural = self.student.get("student_pleural_assessment", {})
+
+        is_correct = (
+            student_pleural.get("has_effusion") == optimal_pleural.get("has_effusion") and
+            student_pleural.get("need_aspiration") == optimal_pleural.get("need_aspiration") and
+            student_pleural.get("effusion_type") == optimal_pleural.get("effusion_type")
+        )
+        
+        return {
+            "is_correct": is_correct,
+            "optimal": optimal_pleural,
+            "student": student_pleural
+        }
+    
     def get_category(self, percentage):
         if percentage >= 95: return {"label": "ممتاز / استادانه", "color": "#6A1B9A", "eng": "Mastery"}
         if percentage >= 85: return {"label": "بسیار خوب", "color": "#2E7D32", "eng": "Proficient"}

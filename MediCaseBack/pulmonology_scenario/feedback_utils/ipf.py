@@ -213,7 +213,12 @@ IPF_ACUTE_IPF_EXACERBATION = {
     },
     "final_diagnosis": {
       "disease": "IPF"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }
 
 
@@ -432,7 +437,12 @@ IPF_RHEUMATOID_ILD = {
     },
     "final_diagnosis": {
       "disease": "IPF"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }
 
 
@@ -651,5 +661,10 @@ IPF_STABLE_IPF = {
     },
     "final_diagnosis": {
       "disease": "IPF"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }

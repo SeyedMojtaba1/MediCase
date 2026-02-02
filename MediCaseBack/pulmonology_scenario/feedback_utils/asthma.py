@@ -218,7 +218,12 @@ ASTHMA_EXERCISE_INDUCED = {
     },
     "final_diagnosis": {
       "disease": "Asthma"
-    }
+    },
+      "pleural_effusion_assessment": {
+      "has_effusion": "false",
+      "need_aspiration": "false",
+      "effusion_type": "none"
+  }
   }
 
 
@@ -437,7 +442,12 @@ ASTHMA_MILD_ALLERGIC = {
     },
     "final_diagnosis": {
       "disease": "Asthma"
-    }
+    },
+      "pleural_effusion_assessment": {
+      "has_effusion": "false",
+      "need_aspiration": "false",
+      "effusion_type": "none"
+  }
   }
 
 
@@ -562,5 +572,10 @@ ASTHMA_SEVERE_UNCONTROLLED = {
     },
     "final_diagnosis": {
       "disease": "Asthma"
-    }
+    },
+      "pleural_effusion_assessment": {
+      "has_effusion": "false",
+      "need_aspiration": "false",
+      "effusion_type": "none"
+  }
   }

@@ -213,7 +213,12 @@ COPD_CHRONIC_BRONCHITIS = {
     },
     "final_diagnosis": {
       "disease": "COPD"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }
 
 
@@ -432,7 +437,12 @@ COPD_COR_PULMONALE = {
     },
     "final_diagnosis": {
       "disease": "COPD"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "true",
+    "need_aspiration": "false",
+    "effusion_type": "transudative"
+}
   }
 
 
@@ -651,5 +661,10 @@ COPD_EMPHYSEMA = {
     },
     "final_diagnosis": {
       "disease": "COPD"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }

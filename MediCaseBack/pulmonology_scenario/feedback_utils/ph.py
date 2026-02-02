@@ -218,7 +218,12 @@ PH_IDIOPATHIC_PAH = {
     },
     "final_diagnosis": {
       "disease": "PH"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }
 
 
@@ -437,7 +442,12 @@ PH_LEFT_HEART = {
     },
     "final_diagnosis": {
       "disease": "PH"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "true",
+    "need_aspiration": "false",
+    "effusion_type": "transudative"
+}
   }
 
 
@@ -656,5 +666,10 @@ PH_LUNG_DISEASE = {
     },
     "final_diagnosis": {
       "disease": "PH"
-    }
+    },
+    "pleural_effusion_assessment": {
+    "has_effusion": "false",
+    "need_aspiration": "false",
+    "effusion_type": "none"
+}
   }
