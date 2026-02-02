@@ -13,7 +13,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.mail import EmailMultiAlternatives
 import environ
 from .utils import send_reset_otp_task
+import logging
+import random
 
+logger = logging.getLogger('registery')
 env = environ.Env()
 environ.Env.read_env(env_file='./secrets/secrets.env')
 
