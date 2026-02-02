@@ -183,7 +183,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        # این هندلر برای لاگ‌های کلی جنگو است (اختیاری)
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -199,22 +198,21 @@ LOGGING = {
     },
 }
 
-# حلقه پویا برای ساختن هندلر و لاگر اختصاصی برای هر اپلیکیشن
 for app in MY_APPS:
-    # 1. تعریف Handler: مشخص می‌کند فایل کجا ذخیره شود
     LOGGING['handlers'][f'{app}_file'] = {
-        'level': 'DEBUG',  # سطح لاگ (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+        'level': 'DEBUG',  
         'class': 'logging.FileHandler',
-        'filename': os.path.join(BASE_DIR, f'{app}.log'), # مسیر فایل: root/app_name.log
+        'filename': os.path.join(BASE_DIR, f'{app}.log'), 
         'formatter': 'verbose',
     }
 
-    # 2. تعریف Logger: مشخص می‌کند کدها چطور به این فایل دسترسی داشته باشند
     LOGGING['loggers'][app] = {
         'handlers': [f'{app}_file'],
         'level': 'DEBUG',
-        'propagate': False, # جلوگیری از تکرار لاگ در کنسول اصلی
+        'propagate': False,
     }
+
+KAVENEGAR_API_KEY = "6E65674C75394F51336A6C527A6538444464727074595A765A4E394B4F51412B432B747564654C486A71383D"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

@@ -12,7 +12,8 @@ from .serializer import (
     ProfileSerializer,
     UserSerializer,
     RoleSerializer,
-    LogoutSerializer,
+    SendMobileOTPSerializer, 
+    VerifyMobileOTPSerializer,
 )
 import pandas as pd
 from rest_framework.response import Response
@@ -337,3 +338,27 @@ class CookieTokenRefreshView(TokenRefreshView):
             )
 
         return response
+
+@extend_schema(
+    request=SendMobileOTPSerializer,
+    responses={200: "Message JSON"}
+)
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny]) # دسترسی عمومی برای لاگین
+def send_mobile_otp(request):
+    serializer = SendMobileOTPSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    message = serializer.send_otp()
+    return Response({"message": message}, status=status.HTTP_200_OK)
+
+@extend_schema(
+    request=VerifyMobileOTPSerializer,
+    responses={200: "Token JSON"}
+)
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def verify_mobile_otp(request):
+    serializer = VerifyMobileOTPSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    result = serializer.verify()
+    return Response(result, status=status.HTTP_200_OK)

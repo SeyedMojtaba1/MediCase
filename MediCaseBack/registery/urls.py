@@ -19,4 +19,6 @@ urlpatterns = [
    path('logout/', views.LogoutView.as_view(), name='logout'),
    path('token/refresh/', views.CookieTokenRefreshView.as_view(), name='token_refresh'),
    path('', include(router.urls)),
+   path('sendmobileotp/', views.send_mobile_otp, name='send_mobile_otp'),
+   path('verifymobileotp/', views.verify_mobile_otp, name='verify_mobile_otp'),
 ]

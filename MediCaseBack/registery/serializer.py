@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.conf import settings
+from kavenegar import *
 from django.contrib.auth import get_user_model
 from random import randint
 from django.utils import timezone
@@ -281,3 +283,73 @@ class RoleSerializer(serializers.ModelSerializer):
 
 class LogoutSerializer(serializers.Serializer):
     refresh=serializers.CharField()
+
+class SendMobileOTPSerializer(serializers.Serializer):
+    phone_number = serializers.CharField(max_length=15, required=True)
+
+    def validate_phone_number(self, value):
+        # اعتبارسنجی اولیه شماره موبایل (می‌توانید regex دقیق‌تر اضافه کنید)
+        if not value.isdigit() or len(value) < 10:
+            raise serializers.ValidationError("شماره موبایل معتبر نیست.")
+        return value
+
+    def send_otp(self):
+        phone = self.validated_data['phone_number']
+        
+        # یافتن کاربر با این شماره
+        # نکته: اگر هدف ثبت‌نام است، باید اینجا یوزر جدید بسازید یا منطق را تغییر دهید.
+        # فرض بر این است که یوزر از قبل وجود دارد (مثل لاگین).
+        user = User.objects.filter(phone_number=phone).first()
+        if not user:
+            raise serializers.ValidationError("کاربری با این شماره موبایل یافت نشد.")
+
+        otp_code = random.randint(100000, 999999)
+        
+        user.otp = otp_code
+        user.otp_expiry = timezone.now() + datetime.timedelta(minutes=2)
+        user.save()
+
+        try:
+            api = KavenegarAPI(settings.KAVENEGAR_API_KEY)
+            params = {
+                'receptor': phone,
+                'token': str(otp_code),
+                'type': 'sms',
+            }
+            response = api.verify_lookup(params)
+            return "کد تایید با موفقیت ارسال شد."
+        except APIException as e:
+            raise serializers.ValidationError(f"خطای API کاوه نگار: {e}")
+        except HTTPException as e:
+            raise serializers.ValidationError(f"خطای شبکه کاوه نگار: {e}")
+
+class VerifyMobileOTPSerializer(serializers.Serializer):
+    phone_number = serializers.CharField(max_length=15, required=True)
+    otp = serializers.IntegerField(required=True)
+
+    def verify(self):
+        phone = self.validated_data['phone_number']
+        received_otp = self.validated_data['otp']
+
+        user = User.objects.filter(phone_number=phone).first()
+        if not user:
+            raise serializers.ValidationError("کاربر یافت نشد.")
+
+        if user.otp is None or user.otp != received_otp:
+            raise serializers.ValidationError("کد تایید اشتباه است.")
+
+        if user.otp_expiry and timezone.now() > user.otp_expiry:
+            raise serializers.ValidationError("کد تایید منقضی شده است.")
+
+        user.otp_verified = True
+        user.otp = None
+        user.save()
+
+        refresh = RefreshToken.for_user(user)
+        
+        return {
+            "message": "احراز هویت موفقیت‌آمیز بود.",
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+            "user_id": user.pk
+        }
