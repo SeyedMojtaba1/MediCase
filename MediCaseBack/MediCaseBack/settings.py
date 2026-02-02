@@ -44,12 +44,14 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ALLOWED_HOSTS = [
-    '89.42.211.35',
-    'medicase.local',
-    'localhost',
-    '127.0.0.1',
-    'zizmart.ir',
-]
+    'medicase-isfahan.com', 
+    'www.medicase-isfahan.com', 
+    'medicase-isfahan.ir', 
+    'www.medicase-isfahan.ir',
+    '62.3.42.36', 
+    '89.42.211.35', 
+    'localhost', 
+    '127.0.0.1']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
