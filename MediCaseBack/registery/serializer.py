@@ -1,3 +1,4 @@
+from asyncio.log import logger
 from rest_framework import serializers
 from django.conf import settings
 from kavenegar import *
@@ -288,19 +289,17 @@ class SendMobileOTPSerializer(serializers.Serializer):
     phone_number = serializers.CharField(max_length=15, required=True)
 
     def validate_phone_number(self, value):
-        # اعتبارسنجی اولیه شماره موبایل (می‌توانید regex دقیق‌تر اضافه کنید)
         if not value.isdigit() or len(value) < 10:
             raise serializers.ValidationError("شماره موبایل معتبر نیست.")
         return value
 
     def send_otp(self):
         phone = self.validated_data['phone_number']
+        logger.info(f"OTP Request initiated for phone number: {phone}")
         
-        # یافتن کاربر با این شماره
-        # نکته: اگر هدف ثبت‌نام است، باید اینجا یوزر جدید بسازید یا منطق را تغییر دهید.
-        # فرض بر این است که یوزر از قبل وجود دارد (مثل لاگین).
         user = User.objects.filter(phone_number=phone).first()
         if not user:
+            logger.warning(f"OTP Request failed: User not found for phone {phone}")
             raise serializers.ValidationError("کاربری با این شماره موبایل یافت نشد.")
 
         otp_code = random.randint(100000, 999999)
@@ -308,19 +307,25 @@ class SendMobileOTPSerializer(serializers.Serializer):
         user.otp = otp_code
         user.otp_expiry = timezone.now() + datetime.timedelta(minutes=2)
         user.save()
+        logger.info(f"OTP generated for user {user.email} (Phone: {phone})")
 
         try:
             api = KavenegarAPI(settings.KAVENEGAR_API_KEY)
             params = {
                 'receptor': phone,
+                'template': 'verify',
                 'token': str(otp_code),
                 'type': 'sms',
             }
             response = api.verify_lookup(params)
+            logger.info(f"OTP SMS sent successfully via Kavenegar to {phone}")
             return "کد تایید با موفقیت ارسال شد."
+            
         except APIException as e:
+            logger.error(f"Kavenegar APIException for {phone}: {e}", exc_info=True)
             raise serializers.ValidationError(f"خطای API کاوه نگار: {e}")
         except HTTPException as e:
+            logger.error(f"Kavenegar HTTPException for {phone}: {e}", exc_info=True)
             raise serializers.ValidationError(f"خطای شبکه کاوه نگار: {e}")
 
 class VerifyMobileOTPSerializer(serializers.Serializer):
@@ -330,20 +335,27 @@ class VerifyMobileOTPSerializer(serializers.Serializer):
     def verify(self):
         phone = self.validated_data['phone_number']
         received_otp = self.validated_data['otp']
+        
+        logger.info(f"OTP Verification attempt for phone: {phone}")
 
         user = User.objects.filter(phone_number=phone).first()
         if not user:
+            logger.warning(f"OTP Verify failed: User not found for phone {phone}")
             raise serializers.ValidationError("کاربر یافت نشد.")
 
         if user.otp is None or user.otp != received_otp:
+            logger.warning(f"OTP Verify failed: Invalid code for user {user.email}")
             raise serializers.ValidationError("کد تایید اشتباه است.")
 
         if user.otp_expiry and timezone.now() > user.otp_expiry:
+            logger.warning(f"OTP Verify failed: Expired code for user {user.email}")
             raise serializers.ValidationError("کد تایید منقضی شده است.")
 
         user.otp_verified = True
         user.otp = None
         user.save()
+        
+        logger.info(f"OTP Verified successfully for user {user.email} (ID: {user.pk})")
 
         refresh = RefreshToken.for_user(user)
         

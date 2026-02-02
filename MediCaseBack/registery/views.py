@@ -344,8 +344,9 @@ class CookieTokenRefreshView(TokenRefreshView):
     responses={200: "Message JSON"}
 )
 @api_view(['POST'])
-@permission_classes([permissions.AllowAny]) # دسترسی عمومی برای لاگین
+@permission_classes([permissions.AllowAny])
 def send_mobile_otp(request):
+    
     serializer = SendMobileOTPSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     message = serializer.send_otp()
