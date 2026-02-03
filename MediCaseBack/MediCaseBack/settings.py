@@ -214,7 +214,7 @@ for app in MY_APPS:
         'propagate': False,
     }
 
-KAVENEGAR_API_KEY = "6E65674C75394F51336A6C527A6538444464727074595A765A4E394B4F51412B432B747564654C486A71383D"
+KAVENEGAR_API_KEY = env('KAVENEGAR_API_KEY')
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

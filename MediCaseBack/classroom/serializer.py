@@ -34,10 +34,13 @@ class SectionListSerializer(serializers.ModelSerializer):
         extra_kwargs = {'url': {'lookup_field': 'section_id'}}
         
     def get_section_id(self, obj):
+        if not obj.section_id:
+            return None
         try:
-            return base64.urlsafe_b64encode(obj.section_id.bytes).rstrip(b'=').decode('ascii')
+            # استفاده از متد کمکی موجود در پروژه برای یکپارچگی
+            return encode_short_uuid(obj.section_id)
         except Exception as e:
-            logger.error(f"Error encoding section_id for list view: {e}")
+            logger.error(f"Error encoding section_id: {e}")
             return None
 
 class SectionRetrieveSerializer(serializers.ModelSerializer):

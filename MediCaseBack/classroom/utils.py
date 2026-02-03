@@ -7,24 +7,21 @@ from .models import Section
 
 logger = logging.getLogger('classroom')
 
-def decode_short_uuid(short_id: str) -> uuid.UUID:
-    """
-    Decodes a URL-safe base64 string back to a UUID.
-    """
+def decode_short_uuid(short_id):
+    if not short_id or not isinstance(short_id, str):
+        logger.error(f"Failed to decode short UUID: input is {type(short_id)}")
+        raise ValueError("شناسه کلاس نمی‌تواند خالی باشد.")
+
     try:
         padding = '=' * (-len(short_id) % 4)
-        result = uuid.UUID(bytes=base64.urlsafe_b64decode(short_id + padding))
-        # لاگ سطح دیباگ چون ممکن است تعداد فراخوانی بالا باشد و لاگ اصلی را شلوغ کند
-        logger.debug(f"Decoded short UUID '{short_id}' to '{result}'")
-        return result
+        decoded_bytes = base64.urlsafe_b64decode(short_id + padding)
+        
+        return uuid.UUID(bytes=decoded_bytes)
     except Exception as e:
-        logger.error(f"Failed to decode short UUID '{short_id}': {e}", exc_info=True)
-        raise e
+        logger.error(f"Failed to decode short UUID '{short_id}': {e}")
+        raise ValueError("فرمت شناسه کلاس نامعتبر است.")
 
 def encode_short_uuid(u):
-    """
-    Encodes a UUID to a shorter URL-safe base64 string.
-    """
     try:
         original_u = u
         if isinstance(u, str):

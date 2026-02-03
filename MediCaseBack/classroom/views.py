@@ -84,14 +84,16 @@ class SectionRetrieveView(generics.RetrieveAPIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        if not user.main_role:
-            return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
+        role_obj = getattr(user, 'main_role', None)
+        if not role_obj:
+            logger.warning(f"User {user.id} has no main_role.")
+            return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
 
-        role = user.main_role.name.lower()
+        role = role_obj.name.lower()
         queryset = None
 
         if role == "superadmin":
-            queryset = self.get_queryset(section_id=section_uuid).first()
+            queryset = self.get_queryset().filter(section_id=section_uuid).first()
         elif role == "teacher":
             queryset = self.get_queryset().filter(teacher=user, section_id=section_uuid).first()
         elif role == "student":
@@ -285,12 +287,17 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
     
     def get_object(self):
         short_id = self.kwargs.get(self.lookup_field)
-        user = self.request.user
         
+        # اضافه کردن چک امنیتی
+        if not short_id:
+            raise ValidationError({"detail": "شناسه کلاس ارسال نشده است."})
+
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
             raise ValidationError({"detail": "شناسه کلاس نامعتبر است."})
+
+        user = self.request.user
 
         if not user.main_role or user.main_role.name.lower() != 'student':
              logger.warning(f"Access Denied: Non-student {user.id} tried to retrieve student section info.")
@@ -325,16 +332,23 @@ class MembersSectionListView(generics.ListAPIView):
     serializer_class = MembersSectionSerializer
     
     def get_queryset(self):
-        short_id = self.kwargs.get('section_id')
-        user = self.request.user
+        short_id = self.kwargs.get('section_id') # مطابق نام پارامتر در urls.py
         
+        # ۱. چک امنیتی قبل از ارسال به دکودر
+        if not short_id:
+            logger.error("MembersSectionList: section_id is missing in URL.")
+            raise ValidationError({"detail": "شناسه کلاس ارسال نشده است."})
+
+        # ۲. تلاش برای دکود کردن
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
             raise ValidationError({"detail": "شناسه کلاس نامعتبر است."})
 
+        # ۳. ادامه منطق فیلتر کردن (کدهای قبلی شما)
         section = get_object_or_404(Section, section_id=section_uuid)
-        
+        user = self.request.user
+                
         is_teacher = (user == section.teacher)
         is_student = StudentSection.objects.filter(section=section, student=user).exists()
         is_admin = (user.main_role and user.main_role.name.lower() == 'superadmin')
@@ -539,10 +553,17 @@ class HospitalSubjectRetrieveView(generics.ListAPIView):
     def get_queryset(self):
         subject_name = self.kwargs.get(self.lookup_field)
         
+        # ۱. بررسی اینکه آیا مقداری در URL فرستاده شده است یا خیر
+        if subject_name is None:
+            logger.warning("HospitalSubject Retrieve: No subject provided in URL.")
+            return HospitalSubject.objects.none()
+
+        # ۲. بررسی وجود درس در دیتابیس برای جلوگیری از خطای ۴۰۴ نامناسب
         if not Subject.objects.filter(english_name=subject_name).exists():
             logger.warning(f"HospitalSubject Retrieve: Subject {subject_name} does not exist.")
             raise NotFound({"message": "Subject does not exist."})
 
+        # ۳. بازگرداندن لیست بیمارستان‌های مرتبط با آن درس
         return HospitalSubject.objects.filter(
             subject__english_name=subject_name
         ).select_related('subject', 'hospital')
