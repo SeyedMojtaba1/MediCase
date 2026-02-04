@@ -2,6 +2,7 @@ import logging
 import base64
 from rest_framework import viewsets, generics, permissions, status, filters
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from .serializer import (
     SectionListSerializer,
     SectionRetrieveSerializer, 
