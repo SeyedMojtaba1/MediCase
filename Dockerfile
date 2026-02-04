@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN python -m venv /venv && /venv/bin/pip install --upgrade pip
 RUN . /venv/bin/activate
-RUN pip install -i https://pypi.jamko.ir/simple -r requirements.txt
+RUN pip install -i https://pypi.jamko.ir -r requirements.txt
 
 COPY MediCaseBack/ .
 
