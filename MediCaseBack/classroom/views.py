@@ -9,6 +9,7 @@ from .serializer import (
     SectionCreateSerializer,
     SetSectionImageSerializer,
     StudentSectionSerializer,
+    StudentSectionListSerializer,
     StudentSectionRetrieveSerializer,
     StudentSectionRemoveSerializer,
     MembersSectionSerializer,

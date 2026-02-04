@@ -311,6 +311,13 @@ class StudentSectionSerializer(serializers.ModelSerializer):
             logger.error(f"Error adding student to section: {e}", exc_info=True)
             raise e
 
+class StudentSectionListSerializer(serializers.ModelSerializer):
+    section = serializers.CharField(source='section.section_id', read_only=True)
+    student = serializers.CharField(source='student.personal_number', read_only=True)
+    class Meta:
+        model = StudentSection
+        fields = ['section', 'student', 'student_status']
+
 class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
     section = serializers.CharField(source='section.section_id', read_only=True)
     student = serializers.CharField(source='student.personal_number', read_only=True)
