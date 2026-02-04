@@ -191,3 +191,17 @@ class HospitalSubject(models.Model):
         except Exception as e:
             logger.error(f"Error linking Subject to Hospital: {e}", exc_info=True)
             raise e
+
+class StudentCredit(models.Model):
+    credit_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subject_credits')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='student_credits')
+    balance = models.IntegerField(default=0)
+    last_update = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        # هر دانشجو برای هر درس فقط یک رکورد کردیت داشته باشد
+        unique_together = ('user', 'subject')
+
+    def __str__(self):
+        return f"{self.user} - {self.subject.english_name}: {self.balance}"

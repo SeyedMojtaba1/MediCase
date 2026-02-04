@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from classroom.models import Subject
 
 User = get_user_model()
 
@@ -31,6 +32,7 @@ class ScenarioTemplate(models.Model):
     title = models.CharField(max_length=255)
     content = models.JSONField(verbose_name="Scenario Logic JSON") 
     tracking_code = models.CharField(max_length=50, unique=True, db_index=True)
+    related_subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, related_name="scenarios")
     disease = models.ForeignKey(
         PulmonologyDisease, 
         on_delete=models.SET_NULL, 

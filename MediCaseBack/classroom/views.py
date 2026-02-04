@@ -11,7 +11,6 @@ from .serializer import (
     StudentSectionSerializer,
     StudentSectionRetrieveSerializer,
     StudentSectionRemoveSerializer,
-    StudentSectionListSerializer,
     MembersSectionSerializer,
     SemesterSerializer, 
     SubjectSerializer, 
@@ -23,12 +22,13 @@ from .serializer import (
     HospitalSubjectListSerializer,
     HospitalSubjectRetrieveSerializer,
 )
-from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject
+from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject, StudentCredit
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
 from django.contrib.auth import get_user_model
 from .utils import decode_short_uuid
+from registery.permission import IsAdminOrSuperAdmin
 
 logger = logging.getLogger('classroom')
 
@@ -588,3 +588,58 @@ class HospitalSubjectRetrieveView(generics.ListAPIView):
         return HospitalSubject.objects.filter(
             subject__english_name=subject_name
         ).select_related('subject', 'hospital')
+    
+class BulkCreditUpdateView(APIView):
+    # استفاده از الگوی استاندارد پروژه (مثل SignupViewSet)
+    permission_classes = [IsAdminOrSuperAdmin]
+
+    def post(self, request, section_id):
+        """
+        این متد اعتبار (Credit) دانشجویان یک کلاس را برای درس مربوطه شارژ می‌کند.
+        دسترسی: فقط ادمین‌ها و سوپرادمین‌ها (طبق منطق IsAdminOrSuperAdmin)
+        """
+        amount = request.data.get('amount')
+        mode = request.data.get('mode', 'add')
+
+        if amount is None:
+            return Response({"error": "مقدار amount الزامی است."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 1. پیدا کردن کلاس و درس مربوطه
+        section = get_object_or_404(Section, section_id=section_id)
+        target_subject = section.subject 
+        
+        if not target_subject:
+             return Response({"error": "این کلاس به هیچ درسی (Subject) متصل نیست."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 2. پیدا کردن دانشجویان فعال کلاس
+        student_ids = StudentSection.objects.filter(
+            section=section, 
+            student_status='Active'
+        ).values_list('student_id', flat=True)
+
+        if not student_ids:
+            return Response({"message": "دانشجویی در این کلاس یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        # 3. ایجاد یا آپدیت کردیت مخصوص آن درس
+        count = 0
+        for s_id in student_ids:
+            credit_obj, created = StudentCredit.objects.get_or_create(
+                user_id=s_id, 
+                subject=target_subject,
+                defaults={'balance': 0}
+            )
+            
+            if mode == 'add':
+                credit_obj.balance += int(amount)
+            else:
+                credit_obj.balance = int(amount)
+            
+            credit_obj.save()
+            count += 1
+
+        return Response({
+            "message": f"اعتبار درس '{target_subject.persian_name}' برای {count} دانشجو با موفقیت بروز شد.",
+            "subject": target_subject.english_name,
+            "new_balance_mode": mode
+        }, status=status.HTTP_200_OK)
+
