@@ -1,6 +1,6 @@
 import logging
 from rest_framework import serializers
-from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject
+from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject, StudentCredit
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db import transaction
@@ -544,3 +544,11 @@ class HospitalSubjectRetrieveSerializer(serializers.ModelSerializer):
         model = HospitalSubject
         fields = ['subject', 'hospital', 'access_status']
         extra_kwargs = {'url': {'lookup_field': 'subject'}}
+
+class StudentCreditSerializer(serializers.ModelSerializer):
+    subject_name = serializers.ReadOnlyField(source='subject.english_name')
+    subject_name_fa = serializers.ReadOnlyField(source='subject.persian_name')
+
+    class Meta:
+        model = StudentCredit
+        fields = ['subject_name', 'subject_name_fa', 'balance']

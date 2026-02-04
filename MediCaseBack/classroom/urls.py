@@ -39,6 +39,7 @@ urlpatterns = [
    path('hospitalsubjectcreate/', views.HospitalSubjectCreateView.as_view(), name='hospitalsubjectcreate'),
    path('hospitalsubjectlist/', views.HospitalSubjectListView.as_view(), name='hospitalsubjectlist'),
    path('hospitalsubjectretrieve/<str:subject>/', views.HospitalSubjectRetrieveView.as_view(), name='hospitalsubjectretrieve'),
+   path('bulkcredit/<str:section_id>/', views.BulkCreditUpdateView.as_view(), name='bulk-credit-update'),
 ]
 
 logger.info("URL patterns for 'university' app loaded successfully.")

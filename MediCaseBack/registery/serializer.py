@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
 from .models import Role
 from rest_framework_simplejwt.tokens import RefreshToken
+from classroom.serializer import StudentCreditSerializer
 from django.core.mail import EmailMultiAlternatives
 import environ
 from .utils import send_reset_otp_task
@@ -258,6 +259,7 @@ class UserSerializer(serializers.ModelSerializer):
     university = serializers.CharField(source='university.english_name', read_only=True)
     faculty = serializers.CharField(source='faculty.name', read_only=True)
     department = serializers.CharField(source='department.name', read_only=True)
+    credits = StudentCreditSerializer(source='subject_credits', many=True, read_only=True)
     
     class Meta:
         model = User
@@ -273,6 +275,7 @@ class UserSerializer(serializers.ModelSerializer):
             "faculty",
             "department",
             "major",
+            "credits",
         ]
         extra_kwargs = {
             'url': {'lookup_field': 'personal_number'}
