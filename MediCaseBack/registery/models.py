@@ -86,6 +86,7 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     scenario_credit = models.IntegerField(default=0)
+    personal_credit = models.IntegerField(default=0)
     done_scenarios = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
     is_ban = models.BooleanField(default=False)

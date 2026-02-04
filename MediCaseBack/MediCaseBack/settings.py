@@ -51,7 +51,13 @@ ALLOWED_HOSTS = [
     '62.3.42.36', 
     '89.42.211.35', 
     'localhost', 
-    '127.0.0.1']
+    '127.0.0.1'
+    ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = False
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

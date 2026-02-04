@@ -293,7 +293,8 @@ class SectionLeaderboardBySectionIdView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SectionLeaderboardSerializer
-
+    lookup_field = "section_id"
+    
     def get_queryset(self):
         short_id = self.kwargs.get('section_id')
         try:
