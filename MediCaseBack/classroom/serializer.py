@@ -19,10 +19,11 @@ User = get_user_model()
 
 class SectionListSerializer(serializers.ModelSerializer):
     section_id = serializers.SerializerMethodField(read_only=True)
-    teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
-    semester_code = serializers.CharField(source='semester.code', read_only=True)
-    semester_name = serializers.CharField(source='semester.name', read_only=True)
-    subject = serializers.CharField(source='subject.english_name', read_only=True)
+    # فیلدهای زیر را به SerializerMethodField تغییر دهید
+    teacher = serializers.SerializerMethodField(read_only=True)
+    semester_code = serializers.SerializerMethodField(read_only=True)
+    semester_name = serializers.SerializerMethodField(read_only=True)
+    subject = serializers.SerializerMethodField(read_only=True)
     
     class Meta:
         model = Section
@@ -37,11 +38,31 @@ class SectionListSerializer(serializers.ModelSerializer):
         if not obj.section_id:
             return None
         try:
-            # استفاده از متد کمکی موجود در پروژه برای یکپارچگی
             return encode_short_uuid(obj.section_id)
         except Exception as e:
             logger.error(f"Error encoding section_id: {e}")
             return None
+
+    # متدهای جدید برای هندل کردن مقادیر Null
+    def get_teacher(self, obj):
+        if obj.teacher:
+            return obj.teacher.personal_number
+        return None
+
+    def get_semester_code(self, obj):
+        if obj.semester:
+            return obj.semester.code
+        return None
+
+    def get_semester_name(self, obj):
+        if obj.semester:
+            return obj.semester.name
+        return None
+
+    def get_subject(self, obj):
+        if obj.subject:
+            return obj.subject.english_name
+        return None
 
 class SectionRetrieveSerializer(serializers.ModelSerializer):
     section_id = serializers.SerializerMethodField()
@@ -289,13 +310,6 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         except Exception as e:
             logger.error(f"Error adding student to section: {e}", exc_info=True)
             raise e
-
-class StudentSectionListSerializer(serializers.ModelSerializer):
-    section = serializers.CharField(source='section.section_id', read_only=True)
-    student = serializers.CharField(source='student.personal_number', read_only=True)
-    class Meta:
-        model = StudentSection
-        fields = ['section', 'student', 'student_status']
 
 class StudentSectionRetrieveSerializer(serializers.ModelSerializer):
     section = serializers.CharField(source='section.section_id', read_only=True)

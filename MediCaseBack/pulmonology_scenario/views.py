@@ -13,7 +13,8 @@ from .serializer import (
     StudentScenarioRankSerializer,
     SectionLeaderboardSerializer,
 )
-from .models import ScenarioTemplate, StudentLog, PulmonologyFeedback, UserScenarioAttempt, PulmonologyFeedback
+from django.utils import timezone
+from .models import ScenarioTemplate, StudentLog, PulmonologyFeedback, UserScenarioAttempt, PulmonologyFeedback, DailyScenario
 from django.contrib.auth import get_user_model
 from .utils import senario_creator_celery, feedback_creator_celery, decode_short_uuid
 from rest_framework.pagination import PageNumberPagination
@@ -24,6 +25,7 @@ from django.db.models.functions import Cast
 from classroom.models import StudentSection
 from django.db import transaction
 import secrets
+import random
 import string
 
 User = get_user_model()
@@ -322,3 +324,93 @@ class SectionLeaderboardBySectionIdView(generics.ListAPIView):
                 filter=Q(userPulmonologyScenario__feedbackpulmonologyscenario__generated=True)
             )
         ).exclude(top_score=None).order_by('-top_score')
+
+class GetDailyScenarioView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        today = timezone.now().date()
+
+        # 1. گرفتن لیست ID تمام سناریوهای تولید شده برای امروز
+        # (Referring to DailyScenario model structure in models.py)
+        today_daily_ids = DailyScenario.objects.filter(date=today).values_list('scenario_template_id', flat=True)
+        
+        if not today_daily_ids:
+            return Response(
+                {"detail": "سناریوهای روزانه برای امروز هنوز تولید نشده‌اند."}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # 2. بررسی اینکه آیا کاربر قبلاً در این روز تلاشی برای سناریوهای روزانه داشته است؟
+        # ما چک می‌کنیم آیا کاربر برای هیچ‌یک از IDهای سناریوهای امروز، رکوردی در UserScenarioAttempt دارد یا خیر.
+        # (Referring to UserScenarioAttempt model structure in models.py)
+        has_attempted_today = UserScenarioAttempt.objects.filter(
+            user=user,
+            scenario_template__template_id__in=today_daily_ids
+        ).exists()
+
+        if has_attempted_today:
+            return Response(
+                {"detail": "شما سهمیه سناریوی روزانه امروز خود را استفاده کرده‌اید."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # 3. انتخاب تصادفی یک سناریو از لیست امروز
+        selected_template_id = random.choice(list(today_daily_ids))
+        selected_template = ScenarioTemplate.objects.get(template_id=selected_template_id)
+
+        # 4. ثبت شروع سناریو (ایجاد Attempt)
+        # به محض اینکه کاربر درخواست داد، این رکورد ساخته می‌شود تا کاربر نتواند دوباره درخواست دهد (حتی اگر سناریو را تمام نکند)
+        attempt = UserScenarioAttempt.objects.create(
+            user=user,
+            scenario_template=selected_template,
+            is_done=False
+        )
+
+        # 5. بازگرداندن اطلاعات سناریو
+        response_data = {
+            "attempt_id": attempt.attempt_id,
+            "title": selected_template.title,
+            "scenario_data": selected_template.content, # (ScenarioTemplate content field)
+            "tracking_code": selected_template.tracking_code,
+            "message": "سناریوی روزانه شما با موفقیت ایجاد شد."
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+class DailyScenarioRankingView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        today = timezone.now().date()
+
+        # دریافت تلاش‌های موفق سناریوهای امروز
+        attempts = UserScenarioAttempt.objects.filter(
+            scenario_template__daily_instances__date=today,
+            is_done=True,
+            score__isnull=False
+        ).select_related('user', 'scenario_template').order_by('-score', 'end_time')
+
+        ranking_data = []
+        
+        for rank, attempt in enumerate(attempts, start=1):
+            user = attempt.user
+            
+            # ساخت آدرس عکس پروفایل
+            profile_image_url = None
+            if user.profile_image:
+                try:
+                    profile_image_url = request.build_absolute_uri(user.profile_image.url)
+                except:
+                    profile_image_url = None
+
+            ranking_data.append({
+                "rank": rank,
+                "username": user.username,  # فیلد درخواستی شما
+                "profile_image": profile_image_url,
+                "score": attempt.score,
+                "finished_at": attempt.end_time
+            })
+
+        return Response(ranking_data, status=status.HTTP_200_OK)

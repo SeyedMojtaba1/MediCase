@@ -43,11 +43,12 @@ class SectionListView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         user = self.request.user
         
-        # لاگ درخواست لیست
-        logger.debug(f"User {user.id} ({user.email}) requested Section List.")
+        # اصلاح: user.id -> user.user_id
+        logger.debug(f"User {user.user_id} ({user.email}) requested Section List.")
 
         if not user.main_role:
-            logger.warning(f"User {user.id} has no main_role. Returning empty list.")
+            # اصلاح: user.id -> user.user_id
+            logger.warning(f"User {user.user_id} has no main_role. Returning empty list.")
             queryset = self.get_queryset().none()
         else:
             role = user.main_role.name.lower()
@@ -78,7 +79,8 @@ class SectionRetrieveView(generics.RetrieveAPIView):
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
-            logger.warning(f"Invalid section_id format received: {short_id} from user {user.id}")
+            # اصلاح: user.id -> user.user_id
+            logger.warning(f"Invalid section_id format received: {short_id} from user {user.user_id}")
             return Response(
                 {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
                 status=status.HTTP_400_BAD_REQUEST
@@ -86,7 +88,8 @@ class SectionRetrieveView(generics.RetrieveAPIView):
         
         role_obj = getattr(user, 'main_role', None)
         if not role_obj:
-            logger.warning(f"User {user.id} has no main_role.")
+            # اصلاح: user.id -> user.user_id
+            logger.warning(f"User {user.user_id} has no main_role.")
             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
 
         role = role_obj.name.lower()
@@ -100,10 +103,12 @@ class SectionRetrieveView(generics.RetrieveAPIView):
             queryset = self.get_queryset().filter(sectionstudents__student=user, section_id=section_uuid).first()
         
         if not queryset:
-            logger.warning(f"User {user.id} attempted to access section {section_uuid} but was denied or not found.")
+            # اصلاح: user.id -> user.user_id
+            logger.warning(f"User {user.user_id} attempted to access section {section_uuid} but was denied or not found.")
             return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
         
-        logger.info(f"User {user.id} successfully retrieved section {section_uuid}.")
+        # اصلاح: user.id -> user.user_id
+        logger.info(f"User {user.user_id} successfully retrieved section {section_uuid}.")
         serializer = self.get_serializer(queryset)
         return Response(serializer.data)
 
@@ -130,7 +135,8 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
-            logger.error(f"Section Update Failed: Section {section_uuid} not found for user {user.id}.")
+            # اصلاح: user.id -> user.user_id
+            logger.error(f"Section Update Failed: Section {section_uuid} not found for user {user.user_id}.")
             return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_404_NOT_FOUND)
 
         if not user.main_role:
@@ -139,7 +145,8 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
         role = user.main_role.name.lower()
 
         if role == "student":
-            logger.warning(f"Unauthorized Update Attempt: Student {user.id} tried to update section {section_uuid}.")
+            # اصلاح: user.id -> user.user_id
+            logger.warning(f"Unauthorized Update Attempt: Student {user.user_id} tried to update section {section_uuid}.")
             return Response(
                 {"message": "شما اجازه ویرایش این کلاس را ندارید."}, 
                 status=status.HTTP_403_FORBIDDEN
@@ -147,7 +154,8 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
 
         elif role == "teacher":
             if section.teacher != user:
-                logger.warning(f"Unauthorized Update Attempt: Teacher {user.id} tried to update section {section_uuid} belonging to another.")
+                # اصلاح: user.id -> user.user_id
+                logger.warning(f"Unauthorized Update Attempt: Teacher {user.user_id} tried to update section {section_uuid} belonging to another.")
                 return Response(
                     {"message": "شما فقط می‌توانید کلاس‌های خودتان را ویرایش کنید."}, 
                     status=status.HTTP_403_FORBIDDEN
@@ -156,7 +164,8 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance=section, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            logger.info(f"Section {section_uuid} updated successfully by User {user.id}.")
+            # اصلاح: user.id -> user.user_id
+            logger.info(f"Section {section_uuid} updated successfully by User {user.user_id}.")
         
         return Response({"message": "کلاس با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
@@ -175,7 +184,8 @@ class SectionCreateView(generics.GenericAPIView):
         role = user.main_role.name.lower()
         
         if role not in ["teacher", "superadmin"]:
-            logger.warning(f"Unauthorized Create Attempt: User {user.id} with role {role} tried to create a section.")
+            # اصلاح: user.id -> user.user_id
+            logger.warning(f"Unauthorized Create Attempt: User {user.user_id} with role {role} tried to create a section.")
             return Response(
                 {"message": "شما دسترسی لازم برای ایجاد کلاس را ندارید."}, 
                 status=status.HTTP_403_FORBIDDEN
@@ -185,7 +195,8 @@ class SectionCreateView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         section = serializer.save()
         
-        logger.info(f"Section created successfully: ID {section.section_id} by User {user.id}.")
+        # اصلاح: user.id -> user.user_id
+        logger.info(f"Section created successfully: ID {section.section_id} by User {user.user_id}.")
         
         return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
 
@@ -236,7 +247,8 @@ class SetSectionImageViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         
-        logger.info(f"Section Image Updated: Section {section_uuid} by User {user.id}.")
+        # اصلاح: user.id -> user.user_id
+        logger.info(f"Section Image Updated: Section {section_uuid} by User {user.user_id}.")
         
         return Response({"message": "تصویر با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
 
@@ -251,7 +263,8 @@ class StudentSectionCreateView(generics.GenericAPIView):
         try:
             serializer.is_valid(raise_exception=True)
             student_section = serializer.save()
-            logger.info(f"Student enrolled in section: Student {student_section.student.id} -> Section {student_section.section.section_id}")
+            # اصلاح: student.id -> student.user_id
+            logger.info(f"Student enrolled in section: Student {student_section.student.user_id} -> Section {student_section.section.section_id}")
             
             data = {
                 "data": {
@@ -300,7 +313,8 @@ class StudentSectionRetrieveView(generics.RetrieveAPIView):
         user = self.request.user
 
         if not user.main_role or user.main_role.name.lower() != 'student':
-             logger.warning(f"Access Denied: Non-student {user.id} tried to retrieve student section info.")
+             # اصلاح: user.id -> user.user_id
+             logger.warning(f"Access Denied: Non-student {user.user_id} tried to retrieve student section info.")
              self.permission_denied(self.request, message="Only students can access this info.")
 
         queryset = StudentSection.objects.filter(
@@ -322,7 +336,8 @@ class StudentSectionRemoveView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         
-        logger.info(f"Student removed from section successfully by User {request.user.id}.")
+        # اصلاح: request.user.id -> request.user.user_id
+        logger.info(f"Student removed from section successfully by User {request.user.user_id}.")
         
         return Response({"message": "دانشجو با موفقیت از کلاس حذف شد."}, status=status.HTTP_200_OK)
 
@@ -354,10 +369,12 @@ class MembersSectionListView(generics.ListAPIView):
         is_admin = (user.main_role and user.main_role.name.lower() == 'superadmin')
 
         if not (is_teacher or is_student or is_admin):
-             logger.warning(f"Access Denied: User {user.id} tried to view members of section {section_uuid}.")
+             # اصلاح: user.id -> user.user_id
+             logger.warning(f"Access Denied: User {user.user_id} tried to view members of section {section_uuid}.")
              raise PermissionDenied("شما عضو این کلاس نیستید و اجازه دیدن اعضا را ندارید.")
 
-        logger.info(f"User {user.id} retrieved members list for section {section_uuid}.")
+        # اصلاح: user.id -> user.user_id
+        logger.info(f"User {user.user_id} retrieved members list for section {section_uuid}.")
         return StudentSection.objects.filter(section=section).select_related('student')
 
 class SemesterViewSet(viewsets.ReadOnlyModelViewSet):
@@ -398,7 +415,8 @@ class StudentSubjectCreateView(generics.GenericAPIView):
         user = request.user
         
         if not user.main_role or user.main_role.name.lower() != "superadmin":
-             logger.warning(f"Access Denied: User {user.id} tried to create StudentSubject.")
+             # اصلاح: user.id -> user.user_id
+             logger.warning(f"Access Denied: User {user.user_id} tried to create StudentSubject.")
              return Response(
                  {"message": "شما اجازه دسترسی به این بخش را ندارید."}, 
                  status=status.HTTP_403_FORBIDDEN
@@ -408,7 +426,8 @@ class StudentSubjectCreateView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         student_subject = serializer.save()
         
-        logger.info(f"StudentSubject created: Student {student_subject.student.id} -> Subject {student_subject.subject.english_name} by Admin {user.id}")
+        # اصلاح: student.id -> student.user_id و user.id -> user.user_id
+        logger.info(f"StudentSubject created: Student {student_subject.student.user_id} -> Subject {student_subject.subject.english_name} by Admin {user.user_id}")
         
         data = {
             "data": {
@@ -485,7 +504,8 @@ class HospitalSubjectCreateView(generics.GenericAPIView):
         user = request.user
         
         if not user.main_role or user.main_role.name.lower() != "superadmin":
-             logger.warning(f"Access Denied: User {user.id} tried to link Hospital-Subject.")
+             # اصلاح: user.id -> user.user_id
+             logger.warning(f"Access Denied: User {user.user_id} tried to link Hospital-Subject.")
              return Response(
                  {"message": "شما اجازه دسترسی به این بخش را ندارید."}, 
                  status=status.HTTP_403_FORBIDDEN
@@ -501,7 +521,8 @@ class HospitalSubjectCreateView(generics.GenericAPIView):
             return Response({"message": result}, status=status.HTTP_400_BAD_REQUEST)
         
         hospital_subject = result
-        logger.info(f"HospitalSubject linked: {hospital_subject.hospital.english_name} <-> {hospital_subject.subject.english_name} by Admin {user.id}")
+        # اصلاح: user.id -> user.user_id
+        logger.info(f"HospitalSubject linked: {hospital_subject.hospital.english_name} <-> {hospital_subject.subject.english_name} by Admin {user.user_id}")
         
         data = {
             "data": {

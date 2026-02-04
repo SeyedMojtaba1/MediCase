@@ -16,6 +16,9 @@ def decode_short_uuid(short_id):
         padding = '=' * (-len(short_id) % 4)
         decoded_bytes = base64.urlsafe_b64decode(short_id + padding)
         
+        if len(decoded_bytes) != 16: # چک کردن طول بایت‌ها قبل از تبدیل به UUID
+            raise ValueError("طول شناسه برای تبدیل به UUID نامعتبر است.")
+            
         return uuid.UUID(bytes=decoded_bytes)
     except Exception as e:
         logger.error(f"Failed to decode short UUID '{short_id}': {e}")

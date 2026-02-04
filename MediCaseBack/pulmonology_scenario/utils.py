@@ -1,7 +1,8 @@
 from celery import shared_task
 from .scenario_creator import scenario_creator
 from .feedback_utils.generate_feedback import generate_feedback
-from .models import PulmonologyDisease, PulmonologyFeedback, UserScenarioAttempt, ScenarioTemplate
+from .models import PulmonologyDisease, PulmonologyFeedback, UserScenarioAttempt, ScenarioTemplate, DailyScenario
+from django.utils import timezone
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from django.db import transaction
@@ -109,12 +110,11 @@ def feedback_creator_celery(feedback_tracking_code, attempt_id, disease_name, ty
             except UserScenarioAttempt.DoesNotExist:
                 return {"detail": "User attempt record not found."}
 
-            # ذخیره فیدبک: اضافه کردن tracking_code که در ورودی تابع آمده است
             feedback_obj = PulmonologyFeedback.objects.create(
                 attempt=attempt,
                 feedback_content=feedback_content,
                 generated=True,
-                tracking_code=feedback_tracking_code  # <--- این خط باید اضافه شود
+                tracking_code=feedback_tracking_code
             )
 
             if score is not None:
@@ -131,3 +131,47 @@ def feedback_creator_celery(feedback_tracking_code, attempt_id, disease_name, ty
     except Exception as e:
         logger.error(f"Database error in feedback_creator_celery: {str(e)}")
         return {"detail": f"An error occurred: {str(e)}"}
+
+@shared_task
+def generate_daily_scenarios_task():
+    today = timezone.now().date()
+    
+    # بررسی می‌کنیم اگر برای امروز قبلا تولید شده، دوباره تولید نکند
+    if DailyScenario.objects.filter(date=today).exists():
+        return f"Daily scenarios for {today} already exist."
+
+    generated_count = 0
+    REQUIRED_COUNT = 20
+
+    for _ in range(REQUIRED_COUNT):
+        # 1. تولید دیتای سناریو
+        case_data, disease_name_eng, type_disease = scenario_creator()
+        
+        # 2. پیدا کردن یا ساختن آبجکت بیماری (برای کلید خارجی)
+        # فرض بر این است که نام بیماری در دیتابیس موجود است، اگر نباشد باید هندل شود
+        disease_obj = PulmonologyDisease.objects.filter(english_name__iexact=disease_name_eng).first()
+        
+        if not disease_obj:
+            # اگر بیماری پیدا نشد، لاگ می‌اندازیم و ادامه می‌دهیم (یا یک بیماری پیش‌فرض می‌سازیم)
+            continue
+
+        # 3. ساختن عنوان و ترکینگ کد
+        tracking_code = str(uuid.uuid4())[:8].upper()
+        title = f"سناریوی روزانه - {disease_obj.persian_name or disease_name_eng}"
+
+        # 4. ذخیره در ScenarioTemplate
+        template = ScenarioTemplate.objects.create(
+            title=title,
+            content=case_data,  # دیکشنری به صورت خودکار به JSON فیلد تبدیل می‌شود
+            tracking_code=tracking_code,
+            disease=disease_obj
+        )
+
+        # 5. لینک کردن به مدل DailyScenario برای امروز
+        DailyScenario.objects.create(
+            scenario_template=template,
+            date=today
+        )
+        generated_count += 1
+
+    return f"Successfully generated {generated_count} scenarios for {today}"

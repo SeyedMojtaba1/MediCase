@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -40,6 +41,21 @@ class ScenarioTemplate(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.tracking_code})"
+
+class DailyScenario(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    scenario_template = models.ForeignKey(ScenarioTemplate, on_delete=models.CASCADE, related_name="daily_instances")
+    date = models.DateField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('scenario_template', 'date')
+        indexes = [
+            models.Index(fields=['date']),
+        ]
+
+    def __str__(self):
+        return f"Daily Scenario for {self.date} - {self.scenario_template.title}"
 
 class UserScenarioAttempt(models.Model):
     attempt_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
