@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN python -m venv /venv && /venv/bin/pip install --upgrade pip
 RUN . /venv/bin/activate
-RUN pip  install -r requirements.txt
+RUN pip install -i https://mirrors.kubarcloud.com/pypi -r requirements.txt
 
 COPY MediCaseBack/ .
 
