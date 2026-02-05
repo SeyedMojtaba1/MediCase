@@ -235,8 +235,8 @@ class SetSectionImageSerializer(serializers.ModelSerializer):
         fields = ['section_image']
 
 class StudentSectionSerializer(serializers.ModelSerializer):
-    section = serializers.CharField() 
-    student = serializers.CharField()
+    section = serializers.CharField(help_text="Short UUID of the section") 
+    student = serializers.CharField(help_text="Personal Number of the student")
     
     class Meta:
         model = StudentSection
@@ -246,39 +246,60 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         user = request.user
         
+        # 1. Validation of Section ID
         short_id = attrs.get('section')
         try:
             section_uuid = decode_short_uuid(short_id)
-            section = Section.objects.get(section_id=section_uuid)
+            section = Section.objects.select_related('teacher', 'subject').get(section_id=section_uuid)
         except (ValueError, Section.DoesNotExist):
             logger.warning(f"Add Student: Section {short_id} not found.")
             raise serializers.ValidationError({"section": "کلاس مورد نظر یافت نشد."})
 
+        # 2. Validation of Student Personal Number
         student_number = attrs.get('student')
         try:
             student_obj = User.objects.get(personal_number=student_number)
         except User.DoesNotExist:
             logger.warning(f"Add Student: User {student_number} not found.")
-            raise serializers.ValidationError({"student": "دانشجویی با این شماره یافت نشد."})
+            raise serializers.ValidationError({"student": "دانشجویی با این شماره دانشجویی یافت نشد."})
 
+        # 3. Role-Based Access Control (RBAC)
         if not user.main_role:
              raise serializers.ValidationError({"detail": "نقش کاربر مشخص نیست."})
 
         role = user.main_role.name.lower()
 
+        # --- Logic for Teacher ---
         if role == 'teacher':
+            # استاد فقط می‌تواند به کلاس خودش دانشجو اضافه کند
             if section.teacher != user:
-                logger.warning(f"Unauthorized add student attempt by teacher {user.username} on other's section.")
+                logger.warning(f"Unauthorized: Teacher {user.email} tried to add student to section {section.name} (Owner: {section.teacher})")
                 raise serializers.ValidationError({"detail": "شما اجازه افزودن دانشجو به کلاس سایر اساتید را ندارید."})
-        
-        elif role == 'student':
-            if student_obj != user:
-                logger.warning(f"Unauthorized add student attempt by student {user.username} for another student.")
-                raise serializers.ValidationError({"detail": "شما فقط می‌توانید خودتان را در کلاس ثبت نام کنید."})
 
+        # --- Logic for University Admin ---
+        elif role == 'admin':
+            # 1. کلاس باید متعلق به دانشگاه ادمین باشد (از طریق استاد کلاس)
+            if section.teacher.university != user.university:
+                raise serializers.ValidationError({"detail": "شما دسترسی به کلاس‌های دانشگاه‌های دیگر را ندارید."})
+            
+            # 2. دانشجو باید متعلق به دانشگاه ادمین باشد
+            if student_obj.university != user.university:
+                 raise serializers.ValidationError({"detail": "شما فقط می‌توانید دانشجویان دانشگاه خودتان را اضافه کنید."})
+
+        # --- Logic for SuperAdmin ---
+        elif role == 'superadmin':
+            pass # سوپر ادمین دسترسی کامل دارد
+
+        # --- Forbidden Roles (Student, etc.) ---
+        else:
+            logger.warning(f"Unauthorized: Role {role} tried to enroll a student.")
+            raise serializers.ValidationError({"detail": "شما مجوز ثبت‌نام دانشجو در کلاس را ندارید."})
+
+        # 4. Check for Duplicate Enrollment
         if StudentSection.objects.filter(section=section, student=student_obj).exists():
             raise serializers.ValidationError({"detail": "این دانشجو قبلاً در این کلاس ثبت شده است."})
 
+        # 5. Replace simple inputs with Model Objects for create()
         attrs['section'] = section
         attrs['student'] = student_obj
         return attrs
@@ -289,27 +310,39 @@ class StudentSectionSerializer(serializers.ModelSerializer):
         
         try:
             with transaction.atomic():
+                # الف) ایجاد رکورد ثبت نام در کلاس
                 student_section = StudentSection.objects.create(
                     section=section,
                     student=student,
                     student_status="Active",
                 )
                 
-                if not StudentSubject.objects.filter(student=student, subject=section.subject).exists():
-                    StudentSubject.objects.create(
-                        subject=section.subject,
-                        student=student,
-                        access_status=True
-                    )
+                # ب) ایجاد دسترسی به درس (StudentSubject) اگر وجود نداشته باشد
+                # نکته: اگر دانشجو قبلاً این درس را با استاد دیگری داشته، رکورد وجود دارد
+                # اما اگر اولین بار است این درس را می‌گیرد، باید ایجاد شود.
+                StudentSubject.objects.get_or_create(
+                    student=student,
+                    subject=section.subject,
+                    defaults={'access_status': True}
+                )
                 
+                # ج) افزایش شمارنده دانشجویان کلاس
                 section.student_count += 1
-                section.save()
+                section.save(update_fields=['student_count'])
+
+                # د) (اختیاری) ایجاد رکورد کردیت اولیه برای درس اگر نیاز است
+                StudentCredit.objects.get_or_create(
+                     user=student,
+                     subject=section.subject,
+                     defaults={'balance': 0}
+                )
                 
-            logger.info(f"Student {student.username} added to Section {section.name}")
+            logger.info(f"Student {student.personal_number} added to Section {section.name} by {self.context['request'].user.email}")
             return student_section
+            
         except Exception as e:
             logger.error(f"Error adding student to section: {e}", exc_info=True)
-            raise e
+            raise serializers.ValidationError({"detail": "خطایی در ثبت اطلاعات رخ داده است."})
 
 class StudentSectionListSerializer(serializers.ModelSerializer):
     section = serializers.CharField(source='section.section_id', read_only=True)

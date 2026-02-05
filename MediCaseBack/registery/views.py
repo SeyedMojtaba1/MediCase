@@ -51,7 +51,11 @@ class SignupViewSet(viewsets.GenericViewSet):
     def _single_create(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        
+        if request.user.main_role.name.lower() == 'admin':
+            user = serializer.save(university=request.user.university)
+        else:
+            user = serializer.save()
         
         data = {
             "user": {
@@ -80,10 +84,18 @@ class SignupViewSet(viewsets.GenericViewSet):
         created_users = []
         errors = []
 
+        current_user_role = request.user.main_role.name.lower() if request.user.main_role else ""
+        admin_university = request.user.university
+
+        if current_user_role not in ['admin', 'superadmin']:
+             return Response({"detail": "شما دسترسی لازم برای انجام این کار را ندارید."}, status=status.HTTP_403_FORBIDDEN)
+
+        if current_user_role == 'admin' and not admin_university:
+             return Response({"detail": "حساب کاربری شما به هیچ دانشگاهی متصل نیست."}, status=status.HTTP_403_FORBIDDEN)
+
         for index, row in df.iterrows():
             row_data = row.to_dict()
             
-            # پاکسازی داده‌ها
             clean_data = {
                 'email': row_data.get('email'),
                 'username': row_data.get('username'),
@@ -95,12 +107,24 @@ class SignupViewSet(viewsets.GenericViewSet):
                 'main_role': row_data.get('main_role'),
                 'major': row_data.get('major'),
             }
+            
+            if current_user_role == 'superadmin':
+                if 'university' in row_data:
+                    clean_data['university'] = row_data.get('university')
+            
+            elif current_user_role == 'admin':
+                pass 
 
             serializer = RegisterSerializer(data=clean_data, context={'request': request})
 
             if serializer.is_valid():
                 try:
-                    user = serializer.save()
+                    if current_user_role == 'admin':
+                        user = serializer.save(university=admin_university)
+                    
+                    elif current_user_role == 'superadmin':
+                        user = serializer.save()
+                        
                     created_users.append({
                         "row": index + 2,
                         "username": user.username,
@@ -258,9 +282,30 @@ class UserViewSet(ReadOnlyModelViewSet):
             'department'
         ).all()
         
-        if not self.request.user.is_staff:
+        user = self.request.user
+        
+        if not user.is_authenticated or not user.main_role:
+            return queryset.none()
+
+        role_name = user.main_role.name.lower()
+
+        if role_name == 'superadmin':
+            return queryset
+
+        if not user.university:
+            return queryset.none()
+
+        queryset = queryset.filter(university=user.university)
+
+        if role_name == 'student':
             queryset = queryset.filter(is_active=True)
             
+        elif role_name == 'teacher':
+            queryset = queryset.filter(is_active=True)
+
+        elif role_name == 'admin':
+            pass 
+
         return queryset
 
 class RoleViewSet(ReadOnlyModelViewSet):

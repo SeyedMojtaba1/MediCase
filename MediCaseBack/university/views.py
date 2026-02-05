@@ -11,9 +11,7 @@ from django.utils.decorators import method_decorator
 class BaseCatalogViewSet(ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    
     filter_backends = [filters.SearchFilter]
-    
     lookup_value_regex = '[^/]+'
 
     @method_decorator(cache_page(300, key_prefix="catalog_api", cache="api_cache"))
@@ -27,14 +25,65 @@ class UniversityViewSet(BaseCatalogViewSet):
     lookup_field = 'english_name'
     search_fields = ['english_name', 'persian_name']
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+
+        if not user.main_role:
+             return queryset.none()
+             
+        role = user.main_role.name.lower()
+
+        if role == 'superadmin':
+            return queryset
+        
+        if user.university:
+            return queryset.filter(pk=user.university.pk)
+            
+        return queryset.none()
+
 class FacultyViewSet(BaseCatalogViewSet):
     queryset = Faculty.objects.all()
     serializer_class = FacultySerializer
     lookup_field = 'name'
     search_fields = ['name']
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        
+        if not user.main_role:
+             return queryset.none()
+
+        role = user.main_role.name.lower()
+
+        if role == 'superadmin':
+            return queryset
+
+        if user.university:
+            return queryset.filter(university=user.university)
+        
+        return queryset.none()
+
 class DepartmentViewSet(BaseCatalogViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
     lookup_field = 'name'
     search_fields = ['name']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        
+        if not user.main_role:
+             return queryset.none()
+
+        role = user.main_role.name.lower()
+
+        if role == 'superadmin':
+            return queryset
+
+        if user.university:
+            return queryset.filter(faculty__university=user.university)
+        
+        return queryset.none()

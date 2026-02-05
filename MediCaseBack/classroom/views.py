@@ -30,6 +30,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
 from django.contrib.auth import get_user_model
 from .utils import decode_short_uuid
+from django.db import transaction
 from registery.permission import IsAdminOrSuperAdmin
 
 logger = logging.getLogger('classroom')
@@ -56,6 +57,8 @@ class SectionListView(generics.ListAPIView):
             role = user.main_role.name.lower()
             if role == "superadmin":
                 queryset = self.get_queryset()
+            elif role == "admin": 
+                queryset = self.get_queryset().filter(teacher__university=user.university)
             elif role == "teacher":
                 queryset = self.get_queryset().filter(teacher=user)
             elif role == "student":
@@ -185,8 +188,7 @@ class SectionCreateView(generics.GenericAPIView):
 
         role = user.main_role.name.lower()
         
-        if role not in ["teacher", "superadmin"]:
-            # اصلاح: user.id -> user.user_id
+        if role not in ["teacher", "superadmin", "admin"]:
             logger.warning(f"Unauthorized Create Attempt: User {user.user_id} with role {role} tried to create a section.")
             return Response(
                 {"message": "شما دسترسی لازم برای ایجاد کلاس را ندارید."}, 
@@ -195,12 +197,29 @@ class SectionCreateView(generics.GenericAPIView):
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        section = serializer.save()
         
-        # اصلاح: user.id -> user.user_id
-        logger.info(f"Section created successfully: ID {section.section_id} by User {user.user_id}.")
-        
-        return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
+        try:
+            if role == "teacher":
+                section = serializer.save(teacher=user)
+                
+            elif role == "admin":
+                teacher_id = request.data.get('teacher')
+                if teacher_id:
+                    target_teacher = User.objects.get(pk=teacher_id)
+                    if target_teacher.university != user.university:
+                        return Response({"message": "شما نمی‌توانید برای استاد دانشگاه دیگر کلاس بسازید."}, status=status.HTTP_403_FORBIDDEN)
+                
+                section = serializer.save()
+                
+            else:
+                section = serializer.save()
+
+            logger.info(f"Section created successfully: ID {section.section_id} by User {user.user_id}.")
+            return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
+            
+        except Exception as e:
+             logger.error(f"Error creating section: {e}")
+             return Response({"message": "خطا در ایجاد کلاس."}, status=status.HTTP_400_BAD_REQUEST)
 
 class SetSectionImageViewSet(viewsets.ModelViewSet):
     http_method_names = ['put']
@@ -262,24 +281,20 @@ class StudentSectionCreateView(generics.GenericAPIView):
     
     def post(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
-        try:
-            serializer.is_valid(raise_exception=True)
-            student_section = serializer.save()
-            # اصلاح: student.id -> student.user_id
-            logger.info(f"Student enrolled in section: Student {student_section.student.user_id} -> Section {student_section.section.section_id}")
+        serializer.is_valid(raise_exception=True)
+        
+        student_section = serializer.save()
             
-            data = {
-                "data": {
-                    "section": base64.urlsafe_b64encode(student_section.section.section_id.bytes).rstrip(b'=').decode('ascii'),
-                    "student": student_section.student.personal_number,
-                    "student_status": student_section.student_status,
-                },
-                "message": "ثبت نام دانشجو با موفقیت انجام شد."
-            }
-            return Response(data, status=status.HTTP_201_CREATED)
-        except ValidationError as e:
-            logger.warning(f"StudentSection creation validation error: {e}")
-            raise e
+        data = {
+            "data": {
+                "section": base64.urlsafe_b64encode(student_section.section.section_id.bytes).rstrip(b'=').decode('ascii'),
+                "student": student_section.student.personal_number,
+                "student_name": f"{student_section.student.first_name} {student_section.student.last_name}",
+                "student_status": student_section.student_status,
+            },
+            "message": "ثبت نام دانشجو با موفقیت انجام شد."
+        }
+        return Response(data, status=status.HTTP_201_CREATED)
 
 class StudentSectionListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
@@ -576,44 +591,62 @@ class HospitalSubjectRetrieveView(generics.ListAPIView):
     def get_queryset(self):
         subject_name = self.kwargs.get(self.lookup_field)
         
-        # ۱. بررسی اینکه آیا مقداری در URL فرستاده شده است یا خیر
         if subject_name is None:
             logger.warning("HospitalSubject Retrieve: No subject provided in URL.")
             return HospitalSubject.objects.none()
 
-        # ۲. بررسی وجود درس در دیتابیس برای جلوگیری از خطای ۴۰۴ نامناسب
         if not Subject.objects.filter(english_name=subject_name).exists():
             logger.warning(f"HospitalSubject Retrieve: Subject {subject_name} does not exist.")
             raise NotFound({"message": "Subject does not exist."})
 
-        # ۳. بازگرداندن لیست بیمارستان‌های مرتبط با آن درس
         return HospitalSubject.objects.filter(
             subject__english_name=subject_name
         ).select_related('subject', 'hospital')
     
 class BulkCreditUpdateView(APIView):
-    # استفاده از الگوی استاندارد پروژه (مثل SignupViewSet)
-    permission_classes = [IsAdminOrSuperAdmin]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, section_id):
-        """
-        این متد اعتبار (Credit) دانشجویان یک کلاس را برای درس مربوطه شارژ می‌کند.
-        دسترسی: فقط ادمین‌ها و سوپرادمین‌ها (طبق منطق IsAdminOrSuperAdmin)
-        """
         amount = request.data.get('amount')
         mode = request.data.get('mode', 'add')
+        user = request.user
 
         if amount is None:
             return Response({"error": "مقدار amount الزامی است."}, status=status.HTTP_400_BAD_REQUEST)
-
-        # 1. پیدا کردن کلاس و درس مربوطه
-        section = get_object_or_404(Section, section_id=section_id)
-        target_subject = section.subject 
         
-        if not target_subject:
-             return Response({"error": "این کلاس به هیچ درسی (Subject) متصل نیست."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            amount = int(amount)
+        except ValueError:
+            return Response({"error": "مقدار amount باید عدد باشد."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # 2. پیدا کردن دانشجویان فعال کلاس
+        if not user.main_role:
+             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
+        
+        role = user.main_role.name.lower()
+        if role not in ['admin', 'superadmin']:
+            logger.warning(f"Unauthorized Credit Update: User {user.id} tried to update credits.")
+            return Response({"message": "شما اجازه تغییر اعتبار دانشجویان را ندارید."}, status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            from .utils import decode_short_uuid
+            try:
+                section_uuid = decode_short_uuid(section_id)
+            except ValueError:
+                section_uuid = section_id 
+
+            section = Section.objects.select_related('subject', 'teacher').get(section_id=section_uuid)
+        except Section.DoesNotExist:
+            return Response({"message": "کلاس مورد نظر یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+        
+        if role == 'admin':
+            if section.teacher.university != user.university:
+                return Response({"message": "شما دسترسی به این کلاس را ندارید."}, status=status.HTTP_403_FORBIDDEN)
+
+        target_subject = section.subject 
+        if not target_subject:
+             return Response({"error": "این کلاس به هیچ درسی متصل نیست."}, status=status.HTTP_400_BAD_REQUEST)
+
         student_ids = StudentSection.objects.filter(
             section=section, 
             student_status='Active'
@@ -622,26 +655,46 @@ class BulkCreditUpdateView(APIView):
         if not student_ids:
             return Response({"message": "دانشجویی در این کلاس یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
-        # 3. ایجاد یا آپدیت کردیت مخصوص آن درس
-        count = 0
-        for s_id in student_ids:
-            credit_obj, created = StudentCredit.objects.get_or_create(
-                user_id=s_id, 
-                subject=target_subject,
-                defaults={'balance': 0}
-            )
+        updated_count = 0
+        try:
+            with transaction.atomic():
+                for s_id in student_ids:
+                    credit_obj, created = StudentCredit.objects.select_for_update().get_or_create(
+                        user_id=s_id, 
+                        subject=target_subject,
+                        defaults={'balance': 0}
+                    )
+                    
+                    old_balance = credit_obj.balance
+                    delta = 0
+
+                    if mode == 'add':
+                        credit_obj.balance += amount
+                        delta = amount
+                    elif mode == 'set':
+                        credit_obj.balance = amount
+                        delta = amount - old_balance
+                    
+                    credit_obj.save()
+                    
+                    if delta != 0:
+                        student_user = User.objects.select_for_update().get(pk=s_id)
+                        current_global_credit = student_user.scenario_credit if student_user.scenario_credit else 0
+                        student_user.scenario_credit = current_global_credit + delta
+                        student_user.save(update_fields=['scenario_credit'])
+                    
+                    updated_count += 1
             
-            if mode == 'add':
-                credit_obj.balance += int(amount)
-            else:
-                credit_obj.balance = int(amount)
-            
-            credit_obj.save()
-            count += 1
+            logger.info(f"Credits Updated: Section {section.section_id}, Subject {target_subject.english_name}, Users Updated: {updated_count}, Mode: {mode}, Amount: {amount}")
+
+        except Exception as e:
+            logger.error(f"Error in BulkCreditUpdate: {e}")
+            return Response({"message": "خطا در بروزرسانی اعتبار."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response({
-            "message": f"اعتبار درس '{target_subject.persian_name}' برای {count} دانشجو با موفقیت بروز شد.",
+            "message": f"اعتبار درس '{target_subject.persian_name}' و کیف پول اصلی {updated_count} دانشجو بروز شد.",
             "subject": target_subject.english_name,
-            "new_balance_mode": mode
+            "mode": mode,
+            "amount": amount
         }, status=status.HTTP_200_OK)
 
