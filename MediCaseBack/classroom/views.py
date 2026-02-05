@@ -24,7 +24,17 @@ from .serializer import (
     HospitalSubjectListSerializer,
     HospitalSubjectRetrieveSerializer,
 )
-from .models import Section, StudentSection, Semester, Subject, StudentSubject, Hospital, HospitalSubject, StudentCredit
+from .models import (
+    Section, 
+    StudentSection, 
+    Semester, 
+    Subject, 
+    StudentSubject, 
+    Hospital, 
+    HospitalSubject, 
+    StudentCredit, 
+    CreditTransaction,
+)
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
@@ -666,22 +676,30 @@ class BulkCreditUpdateView(APIView):
                     )
                     
                     old_balance = credit_obj.balance
-                    delta = 0
-
                     if mode == 'add':
                         credit_obj.balance += amount
-                        delta = amount
+                        change_amount = amount
                     elif mode == 'set':
+                        change_amount = amount - old_balance
                         credit_obj.balance = amount
-                        delta = amount - old_balance
                     
                     credit_obj.save()
                     
-                    if delta != 0:
-                        student_user = User.objects.select_for_update().get(pk=s_id)
-                        current_global_credit = student_user.scenario_credit if student_user.scenario_credit else 0
-                        student_user.scenario_credit = current_global_credit + delta
-                        student_user.save(update_fields=['scenario_credit'])
+                    student_user = User.objects.select_for_update().get(pk=s_id)
+                    if student_user.scenario_credit is None:
+                        student_user.scenario_credit = 0
+                    student_user.scenario_credit += change_amount
+                    student_user.save()
+
+                    CreditTransaction.objects.create(
+                        actor=user,
+                        student=student_user,
+                        section=section,     
+                        amount=change_amount,
+                        balance_after=credit_obj.balance,
+                        action_type='ALLOCATE',
+                        description=f"شارژ گروهی کلاس {section.name}"
+                    )
                     
                     updated_count += 1
             

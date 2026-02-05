@@ -200,8 +200,29 @@ class StudentCredit(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     class Meta:
-        # هر دانشجو برای هر درس فقط یک رکورد کردیت داشته باشد
         unique_together = ('user', 'subject')
 
     def __str__(self):
         return f"{self.user} - {self.subject.english_name}: {self.balance}"
+
+class CreditTransaction(models.Model):
+    ACTION_TYPES = [
+        ('ALLOCATE', 'تخصیص توسط ادمین'),
+        ('SPEND', 'هزینه سناریو'),
+        ('REFUND', 'بازگشت وجه'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    actor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='initiated_transactions') 
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions') 
+    section = models.ForeignKey('Section', on_delete=models.SET_NULL, null=True, blank=True) 
+    
+    amount = models.IntegerField()
+    balance_after = models.IntegerField() 
+    
+    action_type = models.CharField(max_length=20, choices=ACTION_TYPES)
+    description = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student} - {self.amount} ({self.action_type})"

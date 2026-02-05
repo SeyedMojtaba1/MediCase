@@ -7,6 +7,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from django.utils.decorators import method_decorator
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from registery.models import User
+from classroom.models import Section
 
 class BaseCatalogViewSet(ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
@@ -87,3 +91,26 @@ class DepartmentViewSet(BaseCatalogViewSet):
             return queryset.filter(faculty__university=user.university)
         
         return queryset.none()
+
+class UniversityDashboardStats(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        if user.main_role.name.lower() != 'admin' or not user.university:
+            return Response(status=403)
+
+        uni = user.university
+        
+        active_students = User.objects.filter(university=uni, main_role__name='Student', is_active=True).count()
+        active_teachers = User.objects.filter(university=uni, main_role__name='Teacher', is_active=True).count()
+        active_sections = Section.objects.filter(teacher__university=uni, status='Active').count()
+        
+        return Response({
+            "university": uni.persian_name,
+            "stats": {
+                "students": active_students,
+                "teachers": active_teachers,
+                "active_classes": active_sections,
+            }
+        })
