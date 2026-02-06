@@ -41,8 +41,11 @@ services:
     build: .
     container_name: django_medicase
     command: >
-      sh -c "python manage.py migrate &&
-             gunicorn --chdir MediCaseBack/ MediCaseBack.wsgi:application --bind 0.0.0.0:8000"
+      sh -c "if [ -f /app/MediCaseBack/manage.py ]; then cd /app/MediCaseBack; fi &&
+      if [ -f /app/manage.py ]; then echo 'Found manage.py in root'; else echo 'ERROR: manage.py not found in /app or /app/MediCaseBack' && ls -R /app; fi &&
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      gunicorn MediCaseBack.wsgi:application --bind 0.0.0.0:8000"
     ports:
       - '8000:8000'
     volumes:
