@@ -61,6 +61,8 @@ CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     'https://medicase-isfahan.com',
     'https://www.medicase-isfahan.com',
+    'https://medicase-isfahan.ir',
+    'https://www.medicase-isfahan.ir',
 ]
 
 STATIC_URL = 'static/'
