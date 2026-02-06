@@ -50,6 +50,7 @@ ALLOWED_HOSTS = [
     'www.medicase-isfahan.ir',
     '62.3.42.36', 
     '89.42.211.35', 
+    'django_medicase',
     'localhost', 
     '127.0.0.1'
     ]
