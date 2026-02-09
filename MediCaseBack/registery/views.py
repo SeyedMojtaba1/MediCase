@@ -106,6 +106,7 @@ class SignupViewSet(viewsets.GenericViewSet):
                 'personal_number': str(row_data.get('personal_number', '')).replace('.0', ''),
                 'main_role': row_data.get('main_role'),
                 'major': row_data.get('major'),
+                'subject_name': row_data.get('subject_name'),
             }
             
             if current_user_role == 'superadmin':

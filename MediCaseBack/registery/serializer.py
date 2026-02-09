@@ -27,6 +27,8 @@ User = get_user_model()
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     main_role = serializers.CharField()
+    # فیلد ورودی برای نام درس (فقط نوشتن)
+    subject_name = serializers.CharField(write_only=True, required=False, allow_null=True)
     
     class Meta:
         model = User
@@ -40,14 +42,18 @@ class RegisterSerializer(serializers.ModelSerializer):
             'personal_number', 
             'main_role',
             'major',
+            'subject_name', # اضافه شده
         ]
     
     def create(self, validated_data):
+        # جدا کردن نام درس از داده‌ها
+        subject_name = validated_data.pop('subject_name', None)
+
         user = User.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
             username=validated_data['username'],
-            scenario_credit=100,
+            scenario_credit=0, # مقدار اولیه صفر است تا با کردیت درس جمع شود
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             personal_number=validated_data['personal_number'],
@@ -57,25 +63,33 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         try:
             role = Role.objects.get(name=validated_data['main_role'])
+            user.main_role = role
         except Role.DoesNotExist:
-            return "Role is not exist."
+            # در صورت نبود نقش، می‌توان خطا داد یا نقش پیش‌فرض گذاشت
+            pass
         
-        user.main_role = role
-        
-        # def random_with_N_digits(n):
-        #     range_start = 10**(n-1)
-        #     range_end = (10**n)-1
-        #     return randint(range_start, range_end)
-
-        # otp = random_with_N_digits(6)
-        # user.otp = otp
         user.save()
 
-        # subject = 'Please Confirm Your Account'
-        # message = 'Your 6 Digit Verification Pin: {}'.format(otp)
-        # email_from = '*****'
-        # recipient_list = [str(user.email), ]
-        # send_mail(subject, message, email_from, recipient_list)
+        # منطق اختصاص کردیت به درس و آپدیت کردیت کلی
+        if subject_name:
+            subject = Subject.objects.filter(english_name=subject_name).first()
+            if subject:
+                credit_amount = 100
+                
+                # 1. ایجاد کردیت اختصاصی برای درس
+                StudentCredit.objects.create(
+                    user=user,
+                    subject=subject,
+                    balance=credit_amount
+                )
+                
+                # 2. اضافه کردن به کردیت کلی کاربر (مجموع همه درس‌ها)
+                user.scenario_credit += credit_amount
+                user.save() # ذخیره تغییرات در مدل User
+                
+            else:
+                logger.warning(f"Subject '{subject_name}' not found for user {user.username}")
+
         return user
     
 class EmailLoginSerializer(serializers.Serializer):
