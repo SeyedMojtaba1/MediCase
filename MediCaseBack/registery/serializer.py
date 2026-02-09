@@ -255,7 +255,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         }
 
 class UserSerializer(serializers.ModelSerializer):
-    main_role = main_role = serializers.CharField(source='main_role.name', read_only=True)
+    main_role = serializers.CharField(source='main_role.name', read_only=True)
     university = serializers.CharField(source='university.english_name', read_only=True)
     faculty = serializers.CharField(source='faculty.name', read_only=True)
     department = serializers.CharField(source='department.name', read_only=True)
