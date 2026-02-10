@@ -38,7 +38,7 @@ from .permission import IsAdminOrSuperAdmin
 class SignupViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAdminOrSuperAdmin]
     
     parser_classes = [parsers.MultiPartParser, parsers.FormParser, parsers.JSONParser]
 
@@ -51,17 +51,11 @@ class SignupViewSet(viewsets.GenericViewSet):
     def _single_create(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        role_name = None
-        if user.main_role:
-            try:
-                role_name = user.main_role.name
-            except:
-                role_name = str(user.main_role)
-        # if request.user.main_role.name.lower() == 'admin':
-        #     user = serializer.save(university=request.user.university)
-        # else:
-        #     user = serializer.save()
+        
+        if request.user.main_role.name.lower() == 'admin':
+            user = serializer.save(university=request.user.university)
+        else:
+            user = serializer.save()
         
         data = {
             "user": {
@@ -69,7 +63,7 @@ class SignupViewSet(viewsets.GenericViewSet):
                 "email": user.email,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "role": role_name,
+                "role": user.main_role.name if user.main_role else None,
             },
             "message": "ثبت نام تکی با موفقیت انجام شد."
         }
