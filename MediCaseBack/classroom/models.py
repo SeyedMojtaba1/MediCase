@@ -92,7 +92,7 @@ class Section(models.Model):
         is_new = self._state.adding
         try:
             super().save(*args, **kwargs)
-            teacher_id = self.teacher.id if self.teacher else "No Teacher"
+            teacher_id = self.teacher.user_id if self.teacher else "No Teacher"
             if is_new:
                 logger.info(f"New Section created: '{self.name}' for Subject: {self.subject} by Teacher ID: {teacher_id}")
             else:

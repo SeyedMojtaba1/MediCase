@@ -150,7 +150,6 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
         try:
             section = Section.objects.get(section_id=section_uuid)
         except Section.DoesNotExist:
-            # اصلاح: user.id -> user.user_id
             logger.error(f"Section Update Failed: Section {section_uuid} not found for user {user.user_id}.")
             return Response({"message": "کلاسی با این نام وجود ندارد."}, status=status.HTTP_404_NOT_FOUND)
 
