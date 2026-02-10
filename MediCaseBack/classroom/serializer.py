@@ -148,14 +148,20 @@ class SectionUpdateSerializer(serializers.ModelSerializer):
 
 class SectionCreateSerializer(serializers.ModelSerializer):
     section_id = serializers.SerializerMethodField()
+    # این فیلد فقط برای نمایش نام استاد در خروجی است
     teacher = serializers.CharField(source='teacher.personal_number', read_only=True)
+    
+    # فیلد‌های ورودی
     semester_code = serializers.CharField(write_only=True)
     subject_name = serializers.CharField(write_only=True)
+    
+    # فیلد جدید برای گرفتن شماره پرسنلی (اختیاری، چون برای Teacher لازم نیست)
+    teacher_number = serializers.CharField(write_only=True, required=False)
     
     class Meta:
         model = Section
         fields = [
-            'section_id', 'name', 'teacher', 'subject_name', 'semester_code', 
+            'section_id', 'name', 'teacher', 'teacher_number', 'subject_name', 'semester_code', 
             'start_date', 'end_date', 'created_date', 'last_update', 'description',
         ]
         read_only_fields = ['created_date', 'last_update', 'section_id']
@@ -166,11 +172,47 @@ class SectionCreateSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         request = self.context.get('request')
         user = request.user
-        logger.debug(f"Validating Section Create for user: {user.username}")
         
+        # 1. تعیین نقش کاربر
+        if not user.main_role:
+             raise serializers.ValidationError({"detail": "نقش کاربر مشخص نیست."})
+        role = user.main_role.name.lower()
+
+        # 2. منطق تعیین استاد کلاس
+        target_teacher = None
+        
+        if role == 'teacher':
+            # اگر کاربر استاد است، خودش استاد کلاس می‌شود
+            target_teacher = user
+        
+        elif role in ['admin', 'superadmin']:
+            # اگر ادمین است، باید شماره پرسنلی استاد را بفرستد
+            t_number = attrs.get('teacher_number')
+            if not t_number:
+                raise serializers.ValidationError({"teacher_number": "برای ادمین، وارد کردن شماره پرسنلی استاد الزامی است."})
+            
+            try:
+                target_teacher = User.objects.get(personal_number=t_number)
+            except User.DoesNotExist:
+                raise serializers.ValidationError({"teacher_number": "استادی با این شماره پرسنلی یافت نشد."})
+            
+            # چک کردن اینکه استاد واقعاً نقش استاد داشته باشد
+            if not target_teacher.main_role or target_teacher.main_role.name.lower() != 'teacher':
+                 raise serializers.ValidationError({"teacher_number": "کاربر انتخاب شده نقش استاد ندارد."})
+
+            # محدودیت ادمین: فقط اساتید دانشگاه خودش
+            if role == 'admin':
+                if target_teacher.university != user.university:
+                    raise serializers.ValidationError({"teacher_number": "شما مجاز به تعریف کلاس برای اساتید سایر دانشگاه‌ها نیستید."})
+        else:
+            raise serializers.ValidationError({"detail": "شما دسترسی ایجاد کلاس ندارید."})
+
+        # ذخیره استاد پیدا شده در attrs برای استفاده در متد create
+        attrs['teacher'] = target_teacher
+
+        # 3. اعتبارسنجی تاریخ‌ها
         start_date = attrs.get("start_date")
         end_date = attrs.get("end_date")
-        
         if end_date < start_date:
             raise serializers.ValidationError({"end_date": "تاریخ پایان نمی‌تواند قبل از تاریخ شروع باشد."})
 
@@ -179,7 +221,6 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             semester = Semester.objects.get(code=semester_code)
             attrs['semester'] = semester
         except Semester.DoesNotExist:
-            logger.warning(f"Section Create Failed: Semester {semester_code} not found.")
             raise serializers.ValidationError({"semester_code": "ترمی با این کد یافت نشد."})
 
         subject_name = attrs.pop("subject_name")
@@ -187,17 +228,16 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             subject = Subject.objects.get(english_name=subject_name)
             attrs['subject'] = subject
         except Subject.DoesNotExist:
-            logger.warning(f"Section Create Failed: Subject {subject_name} not found.")
             raise serializers.ValidationError({"subject_name": "درسی با این نام یافت نشد."})
 
-        if Section.objects.filter(name=attrs.get("name"), teacher=user, semester=semester).exists():
-            logger.warning(f"Duplicate Section attempt: {attrs.get('name')} for user {user.username}")
-            raise serializers.ValidationError({"detail": "این کلاس قبلاً برای شما ثبت شده است."})
+        if Section.objects.filter(name=attrs.get("name"), teacher=target_teacher, semester=semester).exists():
+            raise serializers.ValidationError({"detail": "این کلاس قبلاً برای این استاد ثبت شده است."})
         
-        attrs['teacher'] = user
         return attrs
 
     def create(self, validated_data):
+        validated_data.pop('teacher_number', None)
+        
         try:
             start_date = validated_data["start_date"]
             end_date = validated_data["end_date"]
@@ -213,7 +253,7 @@ class SectionCreateSerializer(serializers.ModelSerializer):
             
             section = Section.objects.create(
                 name=validated_data["name"],
-                teacher=validated_data["teacher"],
+                teacher=validated_data["teacher"], # این مقدار در متد validate ست شده است
                 semester=validated_data["semester"],
                 subject=subject,
                 student_count=0,
@@ -223,7 +263,7 @@ class SectionCreateSerializer(serializers.ModelSerializer):
                 end_date=end_date,
                 description=validated_data.get("description", ""),
             )
-            logger.info(f"Section '{section.name}' created successfully by {validated_data['teacher'].username}")
+            logger.info(f"Section '{section.name}' created successfully for Teacher {validated_data['teacher'].personal_number}")
             return section
         except Exception as e:
             logger.error(f"Error creating section: {e}", exc_info=True)

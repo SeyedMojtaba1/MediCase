@@ -94,7 +94,6 @@ class SectionRetrieveView(generics.RetrieveAPIView):
         try:
             section_uuid = decode_short_uuid(short_id)
         except ValueError:
-            # اصلاح: user.id -> user.user_id
             logger.warning(f"Invalid section_id format received: {short_id} from user {user.user_id}")
             return Response(
                 {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
@@ -103,7 +102,6 @@ class SectionRetrieveView(generics.RetrieveAPIView):
         
         role_obj = getattr(user, 'main_role', None)
         if not role_obj:
-            # اصلاح: user.id -> user.user_id
             logger.warning(f"User {user.user_id} has no main_role.")
             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
 
@@ -112,17 +110,24 @@ class SectionRetrieveView(generics.RetrieveAPIView):
 
         if role == "superadmin":
             queryset = self.get_queryset().filter(section_id=section_uuid).first()
+            
+        elif role == "admin":
+            queryset = self.get_queryset().filter(
+                section_id=section_uuid, 
+                teacher__university=user.university
+            ).first()
+
         elif role == "teacher":
             queryset = self.get_queryset().filter(teacher=user, section_id=section_uuid).first()
+            
         elif role == "student":
             queryset = self.get_queryset().filter(sectionstudents__student=user, section_id=section_uuid).first()
         
+
         if not queryset:
-            # اصلاح: user.id -> user.user_id
-            logger.warning(f"User {user.user_id} attempted to access section {section_uuid} but was denied or not found.")
-            return Response({"message": "Section is not exist."}, status=status.HTTP_400_BAD_REQUEST)
+            logger.warning(f"User {user.user_id} with role {role} attempted to access section {section_uuid} but was denied or not found.")
+            return Response({"message": "Section does not exist or you don't have access."}, status=status.HTTP_400_BAD_REQUEST)
         
-        # اصلاح: user.id -> user.user_id
         logger.info(f"User {user.user_id} successfully retrieved section {section_uuid}.")
         serializer = self.get_serializer(queryset)
         return Response(serializer.data)
@@ -135,7 +140,8 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
     queryset = Section.objects.all() 
     lookup_field = 'section_id'
     
-    def put(self, request, *args, **kwargs):
+    # توجه: نام متد را از put به update تغییر دادم تا با استاندارد ViewSet همخوانی داشته باشد
+    def update(self, request, *args, **kwargs):
         user = request.user
         short_id = self.kwargs.get(self.lookup_field)
 
@@ -158,31 +164,51 @@ class SectionUpdateViewSet(viewsets.ModelViewSet):
 
         role = user.main_role.name.lower()
 
+        # --- سطح دسترسی دانشجو ---
         if role == "student":
-            # اصلاح: user.id -> user.user_id
             logger.warning(f"Unauthorized Update Attempt: Student {user.user_id} tried to update section {section_uuid}.")
             return Response(
                 {"message": "شما اجازه ویرایش این کلاس را ندارید."}, 
                 status=status.HTTP_403_FORBIDDEN
             )
 
+        # --- سطح دسترسی استاد ---
         elif role == "teacher":
             if section.teacher != user:
-                # اصلاح: user.id -> user.user_id
                 logger.warning(f"Unauthorized Update Attempt: Teacher {user.user_id} tried to update section {section_uuid} belonging to another.")
                 return Response(
                     {"message": "شما فقط می‌توانید کلاس‌های خودتان را ویرایش کنید."}, 
                     status=status.HTTP_403_FORBIDDEN
                 )
 
+        # --- سطح دسترسی ادمین دانشگاه ---
+        elif role == "admin":
+            # چک می‌کنیم که استادِ کلاس، هم‌دانشگاهیِ ادمین باشد
+            # همچنین چک می‌کنیم که کلاس استاد داشته باشد (برای جلوگیری از ارور در کلاس‌های بدون استاد)
+            if not section.teacher or section.teacher.university != user.university:
+                logger.warning(f"Unauthorized Update Attempt: Admin {user.user_id} tried to update section {section_uuid} from another university.")
+                return Response(
+                    {"message": "شما فقط مجاز به ویرایش کلاس‌های دانشگاه خود هستید."}, 
+                    status=status.HTTP_403_FORBIDDEN
+                )
+        
+        # --- سطح دسترسی سوپر ادمین ---
+        elif role == "superadmin":
+            # سوپر ادمین دسترسی کامل دارد
+            pass
+
+        # --- سایر نقش‌ها یا نقش نامعتبر ---
+        else:
+            return Response({"message": "دسترسی غیرمجاز."}, status=status.HTTP_403_FORBIDDEN)
+
+        # ادامه عملیات آپدیت
         serializer = self.get_serializer(instance=section, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            # اصلاح: user.id -> user.user_id
-            logger.info(f"Section {section_uuid} updated successfully by User {user.user_id}.")
+            logger.info(f"Section {section_uuid} updated successfully by User {user.user_id} (Role: {role}).")
         
         return Response({"message": "کلاس با موفقیت ویرایش شد."}, status=status.HTTP_200_OK)
-
+    
 class SectionCreateView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -204,28 +230,17 @@ class SectionCreateView(generics.GenericAPIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer = self.get_serializer(data=request.data, context={'request': request})
         
         try:
-            if role == "teacher":
-                section = serializer.save(teacher=user)
-                
-            elif role == "admin":
-                teacher_id = request.data.get('teacher')
-                if teacher_id:
-                    target_teacher = User.objects.get(pk=teacher_id)
-                    if target_teacher.university != user.university:
-                        return Response({"message": "شما نمی‌توانید برای استاد دانشگاه دیگر کلاس بسازید."}, status=status.HTTP_403_FORBIDDEN)
-                
-                section = serializer.save()
-                
-            else:
-                section = serializer.save()
-
+            serializer.is_valid(raise_exception=True)
+            section = serializer.save()
+            
             logger.info(f"Section created successfully: ID {section.section_id} by User {user.user_id}.")
             return Response({"message": "کلاس با موفقیت ایجاد شد."}, status=status.HTTP_201_CREATED)
             
+        except ValidationError as e:
+            return Response({"message": e.detail}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
              logger.error(f"Error creating section: {e}")
              return Response({"message": "خطا در ایجاد کلاس."}, status=status.HTTP_400_BAD_REQUEST)
