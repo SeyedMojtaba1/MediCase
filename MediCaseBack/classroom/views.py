@@ -25,6 +25,7 @@ from .serializer import (
     HospitalSubjectListSerializer,
     HospitalSubjectRetrieveSerializer,
     BulkCreditUpdateSerializer,
+    SectionRemoveSerializer,
 )
 from .models import (
     Section, 
@@ -37,6 +38,7 @@ from .models import (
     StudentCredit, 
     CreditTransaction,
 )
+from rest_framework import serializers
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
@@ -736,3 +738,31 @@ class BulkCreditUpdateView(APIView):
             "amount": amount
         }, status=status.HTTP_200_OK)
 
+class SectionRemoveView(generics.GenericAPIView):
+    # فرض بر این است که JWTAuthentication را در بالای فایل ایمپورت کرده‌اید
+    authentication_classes = [JWTAuthentication] 
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = SectionRemoveSerializer
+    
+    @extend_schema(
+        request=SectionRemoveSerializer,
+        summary="بستن کلاس (Soft Delete)",
+        description="وضعیت کلاس را در دیتابیس به Closed تغییر می‌دهد اما وضعیت دانشجویان تغییری نمی‌کند."
+    )
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        try:
+            serializer.is_valid(raise_exception=True)
+            section = serializer.save()
+            user = request.user
+            
+            logger.info(f"Section {section.section_id} status changed to Closed by User {user.id}.")
+            return Response(
+                {"message": f"وضعیت کلاس '{section.name}' با موفقیت به 'بسته شده' (Closed) تغییر یافت."}, 
+                status=status.HTTP_200_OK
+            )
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+             logger.error(f"Error closing section: {e}")
+             return Response({"message": "خطا در عملیات بستن کلاس."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -644,3 +644,57 @@ class BulkCreditUpdateSerializer(serializers.Serializer):
         required=False,
         help_text="نوع عملیات: add (افزایش مقدار فعلی) یا set (تغییر کامل به این مقدار)"
     )
+
+class SectionRemoveSerializer(serializers.Serializer):
+    section_id = serializers.CharField(
+        required=True,
+        help_text="شناسه کلاس (به صورت رشته رمزنگاری شده مانند خروجی لیست کلاس‌ها)"
+    )
+
+    def validate(self, attrs):
+        request = self.context.get('request')
+        user = request.user
+        short_id = attrs.get('section_id')
+
+        # تبدیل شناسه کوتاه به UUID اصلی
+        try:
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            raise serializers.ValidationError({"section_id": "شناسه کلاس نامعتبر است."})
+
+        # بررسی وجود کلاس
+        try:
+            section = Section.objects.get(section_id=section_uuid)
+        except Section.DoesNotExist:
+            raise serializers.ValidationError({"section_id": "کلاسی با این شناسه یافت نشد."})
+
+        # --- بررسی سطح دسترسی کاربر ---
+        if not user.main_role:
+             raise serializers.ValidationError({"detail": "نقش کاربر مشخص نیست."})
+
+        role = user.main_role.name.lower()
+
+        if role == "student":
+            raise serializers.ValidationError({"detail": "شما اجازه بستن کلاس را ندارید."})
+        elif role == "teacher":
+            if section.teacher != user:
+                raise serializers.ValidationError({"detail": "شما فقط می‌توانید کلاس‌های خودتان را ببندید."})
+        elif role == "admin":
+            if section.teacher and section.teacher.university != user.university:
+                raise serializers.ValidationError({"detail": "شما فقط مجاز به بستن کلاس‌های دانشگاه خود هستید."})
+        elif role == "superadmin":
+            pass # سوپر ادمین به همه چیز دسترسی دارد
+        else:
+            raise serializers.ValidationError({"detail": "شما دسترسی بستن کلاس را ندارید."})
+
+        attrs['section_instance'] = section
+        return attrs
+
+    def save(self, **kwargs):
+        section = self.validated_data['section_instance']
+        
+        # تغییر وضعیت کلاس به Closed (بدون تغییر وضعیت دانشجویان)
+        section.status = 'Closed'
+        section.save()
+            
+        return section
