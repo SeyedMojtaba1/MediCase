@@ -26,6 +26,7 @@ from .serializer import (
     HospitalSubjectRetrieveSerializer,
     BulkCreditUpdateSerializer,
     SectionRemoveSerializer,
+    SingleCreditUpdateSerializer,
 )
 from .models import (
     Section, 
@@ -793,3 +794,96 @@ class SectionRemoveView(generics.GenericAPIView):
         except Exception as e:
              logger.error(f"Error closing section: {e}")
              return Response({"message": "خطا در عملیات بستن کلاس."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+         
+class SingleCreditUpdateView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    @extend_schema(
+        request=SingleCreditUpdateSerializer,
+    )
+    def post(self, request):
+        serializer = SingleCreditUpdateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        student_number = serializer.validated_data['student_number']
+        subject_name = serializer.validated_data['subject_name']
+        amount = serializer.validated_data['amount']
+        mode = serializer.validated_data['mode']
+        custom_desc = serializer.validated_data.get('description', "")
+
+        user = request.user
+
+        if not user.main_role:
+             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
+        
+        role = user.main_role.name.lower()
+        if role not in ['admin', 'superadmin']:
+            logger.warning(f"Unauthorized Single Credit Update: User {user.user_id} tried to update credits.")
+            return Response({"message": "شما اجازه تغییر اعتبار دانشجویان را ندارید."}, status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            target_student = User.objects.get(personal_number=student_number)
+        except User.DoesNotExist:
+            return Response({"message": "دانشجویی با این شماره یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        if role == 'admin':
+            if target_student.university != user.university:
+                return Response({"message": "شما فقط مجاز به تغییر اعتبار دانشجویان دانشگاه خود هستید."}, status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            target_subject = Subject.objects.get(english_name=subject_name)
+        except Subject.DoesNotExist:
+            return Response({"message": "درسی با این نام یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            with transaction.atomic():
+                credit_obj, created = StudentCredit.objects.select_for_update().get_or_create(
+                    user=target_student, 
+                    subject=target_subject,
+                    defaults={'balance': 0}
+                )
+                
+                old_balance = credit_obj.balance
+                change_amount = 0
+
+                if mode == 'add':
+                    credit_obj.balance += amount
+                    change_amount = amount
+                elif mode == 'set':
+                    change_amount = amount - old_balance
+                    credit_obj.balance = amount
+                
+                credit_obj.save()
+                
+                student_user = User.objects.select_for_update().get(pk=target_student.pk)
+                if student_user.scenario_credit is None:
+                    student_user.scenario_credit = 0
+                student_user.scenario_credit += change_amount
+                student_user.save()
+
+                description = custom_desc if custom_desc else f"شارژ دستی درس {target_subject.persian_name}"
+                CreditTransaction.objects.create(
+                    actor=user,
+                    student=target_student,
+                    section=None,
+                    amount=change_amount,
+                    balance_after=credit_obj.balance,
+                    action_type='ALLOCATE',
+                    description=description
+                )
+            
+            logger.info(f"Single Credit Update: Student {student_number}, Subject {subject_name}, Amount {change_amount}, By {user.user_id}")
+
+        except Exception as e:
+            logger.error(f"Error in SingleCreditUpdate: {e}")
+            return Response({"message": "خطا در بروزرسانی اعتبار."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response({
+            "message": "اعتبار دانشجو با موفقیت بروزرسانی شد.",
+            "student": f"{target_student.first_name} {target_student.last_name}",
+            "subject": target_subject.english_name,
+            "new_balance": credit_obj.balance,
+            "wallet_change": change_amount
+        }, status=status.HTTP_200_OK)
