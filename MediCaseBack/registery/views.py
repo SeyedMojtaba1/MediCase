@@ -249,8 +249,9 @@ def reset_pass(request):
 @api_view(["POST"])
 def chenge_pass(request):
     serializer = ChengePassSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    message = serializer.validate_and_change_password(request=request)
+    serializer.is_valid(raise_exception=True) 
+    
+    message = serializer.save() 
     return Response({"message": message}, status=status.HTTP_200_OK)
 
 class ProfileView(generics.RetrieveAPIView):

@@ -218,22 +218,29 @@ class ChengePassSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=8)
     new_password = serializers.CharField(min_length=8)
     
-    def validate_and_change_password(self, request):
-        personal_number = request.data.get('personal_number', None)
-        password = request.data.get('password', None)
-        new_password = request.data.get('new_password', None)
+    def validate(self, attrs):
+        personal_number = attrs.get('personal_number')
+        password = attrs.get('password')
         
         try:
             user = User.objects.get(personal_number=personal_number)
-            if not check_password(password, user.password):
-                return "Password is incorrect."
         except User.DoesNotExist:
-            raise serializers.ValidationError("User does not exist.")
+            raise serializers.ValidationError({"personal_number": "کاربر یافت نشد."})
+            
+        if not check_password(password, user.password):
+            raise serializers.ValidationError({"password": "رمز عبور فعلی اشتباه است."})
+            
+        attrs['user'] = user
+        return attrs
+
+    def save(self, **kwargs):
+        user = self.validated_data['user']
+        new_password = self.validated_data['new_password']
         
         user.set_password(new_password)
         user.save()
         
-        return "Your password Changed successfuly."
+        return "رمز عبور با موفقیت تغییر کرد."
 
 class ProfileSerializer(serializers.ModelSerializer):
     main_role = main_role = serializers.CharField(source='main_role.name', read_only=True)
