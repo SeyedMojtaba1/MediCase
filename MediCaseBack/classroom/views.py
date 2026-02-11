@@ -739,15 +739,12 @@ class BulkCreditUpdateView(APIView):
         }, status=status.HTTP_200_OK)
 
 class SectionRemoveView(generics.GenericAPIView):
-    # فرض بر این است که JWTAuthentication را در بالای فایل ایمپورت کرده‌اید
     authentication_classes = [JWTAuthentication] 
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = SectionRemoveSerializer
     
     @extend_schema(
         request=SectionRemoveSerializer,
-        summary="بستن کلاس (Soft Delete)",
-        description="وضعیت کلاس را در دیتابیس به Closed تغییر می‌دهد اما وضعیت دانشجویان تغییری نمی‌کند."
     )
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request})

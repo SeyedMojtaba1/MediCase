@@ -27,6 +27,7 @@ urlpatterns = [
    path('sectionlist/', views.SectionListView.as_view(), name='sectionlist'),
    path('sectionretrieve/<str:section_id>/', views.SectionRetrieveView.as_view(), name='sectionretrieve'),
    path('sectioncreate/', views.SectionCreateView.as_view(), name='sectioncreate'),
+   path('sectionremove/', views.SectionRemoveView.as_view(), name='sectionremove'),
    path('sectionupdate/<str:section_id>/', views.SectionUpdateViewSet.as_view({'put': 'update'}), name='sectionupdate'),
    path('studentsectioncreate/', views.StudentSectionCreateView.as_view(), name='studentsectioncreate'),
    path('studentsectionlist/', views.StudentSectionListView.as_view(), name='studentsectionlist'),
