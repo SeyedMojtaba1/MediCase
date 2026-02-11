@@ -632,3 +632,15 @@ class StudentCreditSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentCredit
         fields = ['subject_name', 'subject_name_fa', 'balance']
+        
+class BulkCreditUpdateSerializer(serializers.Serializer):
+    amount = serializers.IntegerField(
+        required=True, 
+        help_text="مقدار اعتباری که باید اضافه یا تنظیم شود (باید عدد باشد)"
+    )
+    mode = serializers.ChoiceField(
+        choices=['add', 'set'], 
+        default='add',
+        required=False,
+        help_text="نوع عملیات: add (افزایش مقدار فعلی) یا set (تغییر کامل به این مقدار)"
+    )

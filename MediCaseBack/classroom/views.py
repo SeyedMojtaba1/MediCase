@@ -631,18 +631,22 @@ class BulkCreditUpdateView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
+    # با این دکوریتور، فیلدها در Swagger نمایش داده می‌شوند
+    @extend_schema(
+        request=BulkCreditUpdateSerializer,
+        summary="گروهی: بروزرسانی اعتبار دانشجویان یک کلاس",
+        description="افزایش یا تنظیم دقیق اعتبار همه دانشجویان فعال در یک کلاس خاص."
+    )
     def post(self, request, section_id):
-        amount = request.data.get('amount')
-        mode = request.data.get('mode', 'add')
-        user = request.user
+        # استفاده از سریالایزر برای اعتبارسنجی ورودی‌ها
+        serializer = BulkCreditUpdateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        if amount is None:
-            return Response({"error": "مقدار amount الزامی است."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        try:
-            amount = int(amount)
-        except ValueError:
-            return Response({"error": "مقدار amount باید عدد باشد."}, status=status.HTTP_400_BAD_REQUEST)
+        # دریافت داده‌های اعتبارسنجی شده (تایپ کستینگ اتوماتیک انجام شده است)
+        amount = serializer.validated_data['amount']
+        mode = serializer.validated_data.get('mode', 'add')
+        user = request.user
 
         if not user.main_role:
              return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
