@@ -12,6 +12,7 @@ from .models import Role
 from rest_framework_simplejwt.tokens import RefreshToken
 from classroom.serializer import StudentCreditSerializer
 from django.core.mail import EmailMultiAlternatives
+from classroom.models import Subject, StudentCredit
 import environ
 from .utils import send_reset_otp_task
 import logging
