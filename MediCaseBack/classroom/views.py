@@ -24,6 +24,7 @@ from .serializer import (
     HospitalSubjectSerializer,
     HospitalSubjectListSerializer,
     HospitalSubjectRetrieveSerializer,
+    BulkCreditUpdateSerializer,
 )
 from .models import (
     Section, 
