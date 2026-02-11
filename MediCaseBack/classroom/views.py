@@ -421,6 +421,36 @@ class MembersSectionListView(generics.ListAPIView):
         # اصلاح: user.id -> user.user_id
         logger.info(f"User {user.user_id} retrieved members list for section {section_uuid}.")
         return StudentSection.objects.filter(section=section).select_related('student')
+    
+    def list(self, request, *args, **kwargs):
+        # ۱. دریافت لیست فعلی دانشجویان ثبت‌نام شده
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        members_data = list(serializer.data) # تبدیل ReturnList به لیست پایتون
+        
+        # ۲. پیدا کردن کلاس و استخراج اطلاعات استاد
+        short_id = self.kwargs.get('section_id')
+        try:
+            section_uuid = decode_short_uuid(short_id)
+            section = Section.objects.select_related('teacher').get(section_id=section_uuid)
+            
+            if section.teacher:
+                teacher_data = {
+                    "first_name": section.teacher.first_name,
+                    "last_name": section.teacher.last_name,
+                    "personal_number": section.teacher.personal_number,
+                    "username": section.teacher.username,
+                    "done_scenarios": str(section.teacher.done_scenarios) if section.teacher.done_scenarios else "0",
+                    "profile_image": str(section.teacher.profile_image) if section.teacher.profile_image else None,
+                    "main_role": section.teacher.main_role.name if section.teacher.main_role else "Teacher"
+                }
+                # ۳. استاد را به ابتدای لیست اعضا (ایندکس ۰) اضافه می‌کنیم
+                members_data.insert(0, teacher_data)
+        except (ValueError, Section.DoesNotExist):
+            pass
+            
+        # ۴. ارسال لیست کامل به کلاینت
+        return Response(members_data)
 
 class SemesterViewSet(viewsets.ReadOnlyModelViewSet):
     authentication_classes = [JWTAuthentication]
