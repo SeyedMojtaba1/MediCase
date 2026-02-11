@@ -32,6 +32,7 @@ urlpatterns = [
     path("class/", include(router.urls)),
     path("class/", include("classroom.urls")),
     path("pulmonologyscenario/", include("pulmonology_scenario.urls")),
+    path("tutorial/", include("tutorial.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/docs/", SpectacularSwaggerView.as_view(url_name="schema")),
 ]
