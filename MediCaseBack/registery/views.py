@@ -38,7 +38,7 @@ from .permission import IsAdminOrSuperAdmin
 class SignupViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
-    permission_classes = [IsAdminOrSuperAdmin]
+    permission_classes = [permissions.AllowAny]
     
     parser_classes = [parsers.MultiPartParser, parsers.FormParser, parsers.JSONParser]
 
@@ -51,11 +51,11 @@ class SignupViewSet(viewsets.GenericViewSet):
     def _single_create(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        
-        if request.user.main_role.name.lower() == 'admin':
-            user = serializer.save(university=request.user.university)
-        else:
-            user = serializer.save()
+        user = serializer.save()
+        # if request.user.main_role.name.lower() == 'admin':
+        #     user = serializer.save(university=request.user.university)
+        # else:
+        #     user = serializer.save()
         
         data = {
             "user": {
