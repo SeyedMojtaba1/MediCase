@@ -282,6 +282,8 @@ class UserViewSet(ReadOnlyModelViewSet):
             'university', 
             'faculty', 
             'department'
+        ).prefetch_related(
+            'subject_credits'
         ).all()
         
         user = self.request.user
@@ -294,20 +296,17 @@ class UserViewSet(ReadOnlyModelViewSet):
         if role_name == 'superadmin':
             return queryset
 
-        if not user.university:
-            return queryset.none()
+        if role_name == 'admin':
+            return queryset
 
-        queryset = queryset.filter(university=user.university)
+        if role_name == 'teacher':
+            return queryset.filter(is_active=True)
 
         if role_name == 'student':
-            queryset = queryset.filter(is_active=True)
+            if user.university:
+                return queryset.filter(university=user.university, is_active=True)
+            return queryset.none()
             
-        elif role_name == 'teacher':
-            queryset = queryset.filter(is_active=True)
-
-        elif role_name == 'admin':
-            pass 
-
         return queryset
 
 class RoleViewSet(ReadOnlyModelViewSet):
