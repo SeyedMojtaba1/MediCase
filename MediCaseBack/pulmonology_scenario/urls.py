@@ -15,4 +15,5 @@ urlpatterns = [
    path('sectionleaderboard/<str:section_id>/', views.SectionLeaderboardBySectionIdView.as_view()),
    path('daily-scenario/start/', views.GetDailyScenarioView.as_view(), name='start-daily-scenario'),
    path('daily-scenario/ranking/', views.DailyScenarioRankingView.as_view(), name='daily-scenario-ranking'),
+   path('advancedranking/', views.AdvancedUniversityRankingView.as_view(), name='advanced-ranking'),
 ]

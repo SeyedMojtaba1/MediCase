@@ -2,7 +2,7 @@ from rest_framework import viewsets, generics, permissions, status, decorators
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from .serializer import (
     UserScenarioAttemptListSerializer, 
     ScenarioRetrieveSerializer, 
@@ -13,8 +13,10 @@ from .serializer import (
     StudentScenarioRankSerializer,
     SectionLeaderboardSerializer,
 )
+from django.db.models import Sum, Q
 from django.utils import timezone
 from .models import ScenarioTemplate, StudentLog, PulmonologyFeedback, UserScenarioAttempt, PulmonologyFeedback, DailyScenario
+from classroom.models import Section
 from django.contrib.auth import get_user_model
 from .utils import senario_creator_celery, feedback_creator_celery, decode_short_uuid
 from rest_framework.pagination import PageNumberPagination
@@ -415,3 +417,90 @@ class DailyScenarioRankingView(APIView):
             })
 
         return Response(ranking_data, status=status.HTTP_200_OK)
+    
+class AdvancedUniversityRankingView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    @extend_schema(
+        summary="رنکینگ پیشرفته دانشگاهی",
+        description="رنکینگ کاربران بر اساس فیلترهای اختیاری کلاس، تاریخ و درس. نتایج به دانشگاه کاربر محدود می‌شود.",
+        parameters=[
+            OpenApiParameter(name='section_id', description='شناسه کوتاه کلاس (Short UUID)', required=False, type=str),
+            OpenApiParameter(name='date', description='تاریخ به فرمت YYYY-MM-DD', required=False, type=str),
+            OpenApiParameter(name='subject', description='نام انگلیسی درس', required=False, type=str),
+        ]
+    )
+    def get(self, request):
+        user = request.user
+        
+        short_section_id = request.query_params.get('section_id')
+        filter_date = request.query_params.get('date')
+        filter_subject = request.query_params.get('subject')
+
+        users_queryset = User.objects.all()
+
+        if not (user.main_role and user.main_role.name.lower() == 'superadmin'):
+            if user.university:
+                users_queryset = users_queryset.filter(university=user.university)
+            else:
+                return Response({"message": "شما به دانشگاهی متصل نیستید."}, status=status.HTTP_403_FORBIDDEN)
+
+        attempt_filters = Q(attempts__is_done=True) & Q(attempts__score__isnull=False)
+
+        if short_section_id:
+            try:
+                section_uuid = decode_short_uuid(short_section_id)
+                section = Section.objects.get(section_id=section_uuid)
+                
+                if user.main_role.name.lower() != 'superadmin' and section.teacher and section.teacher.university != user.university:
+                     return Response({"message": "شما به این کلاس دسترسی ندارید."}, status=status.HTTP_403_FORBIDDEN)
+
+                users_queryset = users_queryset.filter(
+                    studentsections__section=section,
+                    studentsections__student_status='Active'
+                )
+                
+                if section.subject:
+                    attempt_filters &= Q(attempts__scenario_template__related_subject=section.subject)
+                    
+            except (ValueError, Section.DoesNotExist):
+                return Response({"message": "کلاس مورد نظر یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        if filter_date:
+            attempt_filters &= Q(attempts__end_time__date=filter_date)
+
+        if filter_subject:
+            attempt_filters &= Q(attempts__scenario_template__related_subject__english_name__iexact=filter_subject)
+
+        leaderboard = users_queryset.annotate(
+            total_score=Sum('attempts__score', filter=attempt_filters)
+        ).filter(
+            total_score__isnull=False,
+            total_score__gt=0
+        ).order_by('-total_score')
+
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(leaderboard, request)
+
+        data = []
+        start_rank = paginator.page.start_index() if result_page else 1
+        
+        for index, rank_user in enumerate(result_page):
+            profile_image_url = None
+            if rank_user.profile_image:
+                try:
+                    profile_image_url = request.build_absolute_uri(rank_user.profile_image.url)
+                except:
+                    profile_image_url = None
+
+            data.append({
+                "rank": start_rank + index,
+                "username": rank_user.username,
+                "profile_image": profile_image_url,
+                "score": rank_user.total_score,
+                "university": rank_user.university.english_name if rank_user.university else "Unknown"
+            })
+
+        return paginator.get_paginated_response(data)
