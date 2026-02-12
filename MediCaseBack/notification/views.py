@@ -11,9 +11,9 @@ from .serializers import (
 from .permissions import IsSuperAdminRole, IsUniversityAdminRole, IsSectionStaffRole, is_super_admin
 from classroom.models import Section, StudentSection
 
+
 class SystemAnnouncementViewSet(viewsets.ModelViewSet):
     serializer_class = SystemAnnouncementSerializer
-    
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsSuperAdminRole()]
@@ -50,22 +50,15 @@ class UniversityAnnouncementViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        validated_uni = serializer.validated_data.get('target_university')
         
-        final_uni = None
-
-        if is_super_admin(user):
-            if not validated_uni:
-                raise ValidationError({"target_university": "SuperAdmin must select a target university."})
-            final_uni = validated_uni
-        else:
-            if not user.university:
-                 raise PermissionDenied("You are not assigned to any university.")
-            
-            final_uni = user.university
-
-        serializer.save(author=user, scope='UNIVERSITY', target_university=final_uni)
-
+        if not user.university:
+             raise PermissionDenied("You must be assigned to a university to post university announcements.")
+        
+        serializer.save(
+            author=user, 
+            scope='UNIVERSITY', 
+            target_university=user.university
+        )
 
 class SectionAnnouncementViewSet(viewsets.ModelViewSet):
     serializer_class = SectionAnnouncementSerializer
@@ -73,22 +66,28 @@ class SectionAnnouncementViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             return [permissions.IsAuthenticated()]
-            
         return [IsSectionStaffRole()]
 
     def get_queryset(self):
         user = self.request.user
+        
         if is_super_admin(user):
             return Announcement.objects.filter(scope='SECTION').order_by('-created_at')
 
         teacher_sections = Section.objects.filter(teacher=user)
-        student_sections_ids = StudentSection.objects.filter(student=user, student_status='Active').values_list('section', flat=True)
+
+        student_sections_ids = StudentSection.objects.filter(
+            student=user, 
+            student_status='Active'
+        ).values_list('section', flat=True)
         
         admin_university_query = Q()
         if user.main_role and user.main_role.name == 'Admin' and user.university:
              admin_university_query = Q(target_section__teacher__university=user.university)
 
-        return Announcement.objects.filter(scope='SECTION').filter(
+        return Announcement.objects.filter(
+            scope='SECTION'
+        ).filter(
             Q(target_section__in=teacher_sections) | 
             Q(target_section__id__in=student_sections_ids) |
             admin_university_query
@@ -96,6 +95,7 @@ class SectionAnnouncementViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
+        
         section = serializer.validated_data['target_section']
         
         if is_super_admin(user):
@@ -110,6 +110,6 @@ class SectionAnnouncementViewSet(viewsets.ModelViewSet):
                 is_uni_admin = True
         
         if not (is_owner_teacher or is_uni_admin):
-            raise PermissionDenied("You do not have permission to post announcements in this specific section.")
+            raise PermissionDenied(f"You do not have permission to post announcements in section {section.section_id}.")
             
         serializer.save(author=user, scope='SECTION')

@@ -5,6 +5,7 @@ from university.models import University
 
 class SystemAnnouncementSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model = Announcement
         fields = ['id', 'title', 'content', 'created_at', 'author']
@@ -12,17 +13,12 @@ class SystemAnnouncementSerializer(serializers.ModelSerializer):
 
 class UniversityAnnouncementSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
-    target_university = serializers.PrimaryKeyRelatedField(
-        queryset=University.objects.all(),
-        required=False,
-        allow_null=True
-    )
+    target_university = serializers.CharField(source='target_university.english_name', read_only=True)
 
     class Meta:
         model = Announcement
         fields = ['id', 'title', 'content', 'created_at', 'author', 'target_university']
-        read_only_fields = ['author', 'created_at']
-
+    
 class SectionAnnouncementSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
     section_id = serializers.PrimaryKeyRelatedField(
@@ -31,7 +27,6 @@ class SectionAnnouncementSerializer(serializers.ModelSerializer):
         required=True,
         write_only=True
     )
-
     target_section_id = serializers.UUIDField(source='target_section.section_id', read_only=True)
 
     class Meta:
