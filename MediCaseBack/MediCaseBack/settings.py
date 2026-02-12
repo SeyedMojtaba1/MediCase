@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     'classroom',
     'pulmonology_scenario',
     'tutorial',
+    'notification',
     'drf_spectacular',
 ]
 
