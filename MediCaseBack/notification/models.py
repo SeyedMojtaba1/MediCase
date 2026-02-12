@@ -15,10 +15,7 @@ class Announcement(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='announcements')
-    
     scope = models.CharField(max_length=20, choices=SCOPE_CHOICES)
-    
-    # فیلدهای اختیاری که بسته به اسکوپ پر می‌شوند
     target_university = models.ForeignKey(
         University, 
         on_delete=models.CASCADE, 
