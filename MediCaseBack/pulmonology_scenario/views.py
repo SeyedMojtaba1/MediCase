@@ -12,6 +12,8 @@ from .serializer import (
     FeedbackListSerializer,
     StudentScenarioRankSerializer,
     SectionLeaderboardSerializer,
+    RankingOutputSerializer,
+    RankingInputSerializer,
 )
 from django.db.models import Sum, Q
 from django.utils import timezone
@@ -410,7 +412,7 @@ class DailyScenarioRankingView(APIView):
 
             ranking_data.append({
                 "rank": rank,
-                "username": user.username,  # فیلد درخواستی شما
+                "username": user.username,
                 "profile_image": profile_image_url,
                 "score": attempt.score,
                 "finished_at": attempt.end_time
@@ -423,20 +425,20 @@ class AdvancedUniversityRankingView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     @extend_schema(
-        summary="رنکینگ پیشرفته دانشگاهی",
-        description="رنکینگ کاربران بر اساس فیلترهای اختیاری کلاس، تاریخ و درس. نتایج به دانشگاه کاربر محدود می‌شود.",
-        parameters=[
-            OpenApiParameter(name='section_id', description='شناسه کوتاه کلاس (Short UUID)', required=False, type=str),
-            OpenApiParameter(name='date', description='تاریخ به فرمت YYYY-MM-DD', required=False, type=str),
-            OpenApiParameter(name='subject', description='نام انگلیسی درس', required=False, type=str),
-        ]
+        parameters=[RankingInputSerializer],
+        responses={200: RankingOutputSerializer(many=True)} 
     )
     def get(self, request):
         user = request.user
         
-        short_section_id = request.query_params.get('section_id')
-        filter_date = request.query_params.get('date')
-        filter_subject = request.query_params.get('subject')
+        input_serializer = RankingInputSerializer(data=request.query_params)
+        if not input_serializer.is_valid():
+            return Response(input_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+        validated_data = input_serializer.validated_data
+        short_section_id = validated_data.get('section_id')
+        filter_date = validated_data.get('date')
+        filter_subject = validated_data.get('subject')
 
         users_queryset = User.objects.all()
 
@@ -484,23 +486,12 @@ class AdvancedUniversityRankingView(APIView):
         paginator.page_size = 20
         result_page = paginator.paginate_queryset(leaderboard, request)
 
-        data = []
         start_rank = paginator.page.start_index() if result_page else 1
         
-        for index, rank_user in enumerate(result_page):
-            profile_image_url = None
-            if rank_user.profile_image:
-                try:
-                    profile_image_url = request.build_absolute_uri(rank_user.profile_image.url)
-                except:
-                    profile_image_url = None
+        for index, user_obj in enumerate(result_page):
+            user_obj.rank = start_rank + index
+            user_obj.score = user_obj.total_score 
 
-            data.append({
-                "rank": start_rank + index,
-                "username": rank_user.username,
-                "profile_image": profile_image_url,
-                "score": rank_user.total_score,
-                "university": rank_user.university.english_name if rank_user.university else "Unknown"
-            })
+        serializer = RankingOutputSerializer(result_page, many=True, context={'request': request})
 
-        return paginator.get_paginated_response(data)
+        return paginator.get_paginated_response(serializer.data)

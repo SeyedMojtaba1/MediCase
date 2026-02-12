@@ -86,3 +86,23 @@ class SectionLeaderboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'top_score']
+
+class RankingInputSerializer(serializers.Serializer):
+    section_id = serializers.CharField(max_length=20)
+    date = serializers.DateField(required=False)
+    subject = serializers.CharField(required=False)
+
+class RankingOutputSerializer(serializers.ModelSerializer):
+    rank = serializers.IntegerField()
+    score = serializers.IntegerField()
+    university_name = serializers.CharField(source='university.english_name', read_only=True, default="Unknown")
+
+    class Meta:
+        model = User
+        fields = [
+            'rank',
+            'username',
+            'profile_image',
+            'score',
+            'university_name',
+        ]
