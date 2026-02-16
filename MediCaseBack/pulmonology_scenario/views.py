@@ -158,9 +158,6 @@ class FeedbackRetrieveView(generics.RetrieveAPIView):
     lookup_field = 'tracking_code' 
     lookup_value_regex = '[^/]+'
 
-    def get_queryset(self):
-        return PulmonologyFeedback.objects.all()
-
 class FeedbackListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]

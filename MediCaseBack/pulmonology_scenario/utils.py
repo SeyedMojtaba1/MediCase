@@ -21,14 +21,13 @@ def decode_short_uuid(short_id: str) -> uuid.UUID:
 @shared_task
 def senario_creator_celery(personal_number, tracking_code):
     """
-    وظیفه: تولید محتوای سناریو توسط هوش مصنوعی و ذخیره آن به عنوان یک Template.
-    نکته: کسر اعتبار کاربر قبلاً در API انجام شده است.
+    وظیفه: تولید محتوای سناریو توسط هوش مصنوعی و ذخیره آن به عنوان یک Template 
+    و ایجاد رکورد ناتمام برای کاربر جهت نمایش در لیست.
     """
     logger.info(f"Starting scenario generation for tracking_code: {tracking_code}")
 
     # 1. فراخوانی هوش مصنوعی
     try:
-        # خروجی فرضی: دیکشنری سناریو، نام انگلیسی بیماری، نوع بیماری
         scenario_data, target_disease_name, type_disease = scenario_creator()
         
         if isinstance(scenario_data, dict) and "error" in scenario_data:
@@ -52,16 +51,30 @@ def senario_creator_celery(personal_number, tracking_code):
                     english_name=target_disease_name, 
                     type_disease=type_disease
                 )
+                
             # 3. ذخیره سناریو در جدول ScenarioTemplate
-            # نکته: اینجا user دخالتی ندارد، چون این یک الگو است
             template, created = ScenarioTemplate.objects.get_or_create(
                 tracking_code=tracking_code,
                 defaults={
-                    'title': f"Scenario for {target_disease_name}", # یا عنوانی که AI می‌دهد
+                    'title': f"Scenario for {target_disease_name}", 
                     'content': scenario_data,
                     'disease': disease
                 }
             )
+
+            # --- بخش اضافه‌شده: ایجاد اتصال بین کاربر و سناریو ---
+            # کاربر را از طریق شماره پرسنلی (که به تسک پاس داده شده) پیدا می‌کنیم
+            user = User.objects.filter(personal_number=personal_number).first()
+            if user:
+                # یک تلاش ناتمام می‌سازیم تا در scenariolist نمایش داده شود
+                UserScenarioAttempt.objects.create(
+                    user=user,
+                    scenario_template=template,
+                    is_done=False
+                )
+            else:
+                logger.warning(f"User with personal_number {personal_number} not found. Attempt not created.")
+            # --------------------------------------------------------
 
             if created:
                 logger.info(f"ScenarioTemplate {tracking_code} created successfully.")
