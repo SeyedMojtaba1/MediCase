@@ -105,8 +105,10 @@
     },
       "general_appearance": {
                 "mood_and_behavior": "مود و رفتار",
-                "overall_appearance": "ظاهر کلی",
-                "posture_and_position": "حالت و وضعیت",
+                 "overall_appearance": { "nutritional_status": "ظاهر کلی" },
+                "posture_and_position": {
+        "position_of_comfort": "حالت و وضعیت"
+      },
                 "level_of_consciousness": "سطح هوشیاری",
                 "cardiopulmonary_and_circulatory_clues": {
                     "edema": "اِدم",
@@ -143,6 +145,7 @@
         "carotid_bruit": "برویی کاروتید",
         "lymph_nodes_size_consistency": "سایز و قوام لنف نودها",
         "lymph_nodes_mobility_tenderness": "تحرک و حساسیت به لمس لنف نودها"
+        
 
     }},
     "respiratory_system": {

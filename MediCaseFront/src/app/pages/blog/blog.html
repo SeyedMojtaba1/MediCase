@@ -1,0 +1,27 @@
+<div class="w-full flex flex-col gap-10 p-10">
+
+  <app-dash-nav [welcome]="false" title="پایگاه دانش"></app-dash-nav>
+
+  <p class="text-gray-500 text-sm text-justify">
+    اینجا بیمارستان مدیکیس است؛ جایی که بیماران گوناگون در انتظار رسیدگی و درمان هستند. هر بخش، ماجرای مخصوص به خود را
+    دارد و هر بیماری، چالشی برای مهارت و دانش شماست.
+
+    با انتخاب درس موردنظر، وارد بخش مربوطه شوید و روند درمان را آغاز کنید. در این مسیر، با موقعیت‌های متنوع روبه‌رو
+    می‌شوید، مهارت‌های خود را می‌سنجید و قدم‌به‌قدم به بهبود بیماران کمک می‌کنید.
+  </p>
+
+  <div class="grid grid-cols-3 gap-10 items-stretch">
+    @for (sub of subjects; track sub) {
+
+      <div class="flex flex-col gap-3">
+
+
+        <p [routerLink]="'/dashboard/s/hospital/intro/'+sub.english_name"
+           class="text-lg px-5 cursor-pointer">🔷 {{ sub.persian_name }} </p>
+
+
+      </div>
+
+    }
+  </div>
+</div>

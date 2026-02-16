@@ -5,7 +5,6 @@ import {DashNavT} from '../../../../../shared/components/dash-nav-t/dash-nav-t';
 import {TableModule} from 'primeng/table';
 import {AddStudent} from './add-student/add-student';
 import {APP_CONFIG} from '../../../../../config/app.config';
-import {forkJoin, switchMap} from 'rxjs';
 import {EditSection} from './edit-section/edit-section';
 import {Card} from '../../../../../layouts/card/card';
 
@@ -26,7 +25,7 @@ export class SectionPageT {
 
   section = ''
   section_detail: any
-  members: any
+  members: any[] = [];
   teacher = ''
 
   visible = false
@@ -42,23 +41,18 @@ export class SectionPageT {
   ngOnInit() {
     this.section = this.route.snapshot.paramMap.get('id')!;
 
-    this.master.sectionRetrieve(this.section).pipe(
-      switchMap((sectionRes: any) => {
-        this.section_detail = sectionRes.body;
+    this.master.sectionRetrieve(this.section).subscribe(sectionRes => {
+      this.section_detail = sectionRes.body;
 
-        return forkJoin({
-          members: this.master.memberSectionList(this.section),
-          teacher: this.master.user(this.section_detail.teacher)
-        });
-      })
-    ).subscribe({
-      next: ({members, teacher}) => {
-        this.members = members.body;
-        this.teacher = "دکتر " + teacher.body.first_name + " " + teacher.body.last_name;
-      },
-      error: err => console.log(err),
-      complete: () => this.changeDetectorRef.detectChanges()
+      this.master.memberSectionList(this.section).subscribe(res => {
+        this.members = res.body ?? res;
+        this.changeDetectorRef.detectChanges();
+      });
+      this.changeDetectorRef.detectChanges();
+
     });
+
+
   }
 
 

@@ -21,7 +21,8 @@
           {{ this.section_detail.name }}
         </p>
         <p class="text-white text-sm font-light">
-          {{ this.teacher }} | ترم {{ this.section_detail.semester_code }}
+          دکتر {{ this.members[0].first_name + ' ' + this.members[0].last_name }} |
+          ترم {{ this.section_detail.semester_code }}
           | {{ this.section_detail.student_count }} نفر
         </p>
       </div>
@@ -64,49 +65,60 @@
 
       <!--    جدول دانشجویان-->
       <div class="card px-10">
-        <p-table [tableStyle]="{'min-width': '50rem'}"
-                 [value]="members"
+        @if (members?.length) {
+          <p-table [tableStyle]="{'min-width': '50rem'}"
+                   [value]="members"
 
-                 stripedRows>
+                   stripedRows>
 
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width: 60px; text-align:center;">ردیف</th>
-              <th style="width: 60px; text-align:center;"></th>
-              <th style="width: 120px; text-align:center;">نام و نام خانوادگی</th>
-              <th style="width: 180px; text-align:center;">نام کاربری</th>
-              <th style="width: 180px; text-align:center;">شماره دانشجویی</th>
-              <th style="width: 150px; text-align:center;">سناریو انجام‌شده</th>
-            </tr>
-          </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 60px; text-align:center;">ردیف</th>
+                <th style="width: 60px; text-align:center;"></th>
+                <th style="width: 120px; text-align:center;">نام و نام خانوادگی</th>
+                <th style="width: 180px; text-align:center;">نام کاربری</th>
+                <th style="width: 180px; text-align:center;">شماره دانشجویی</th>
+                <th style="width: 180px; text-align:center;">نقش</th>
+                <th style="width: 150px; text-align:center;">سناریو انجام‌شده</th>
+              </tr>
+            </ng-template>
 
-          <ng-template let-i="rowIndex" let-member pTemplate="body">
-            <tr>
-              <td style="text-align:center;">{{ i + 1 }}</td>
+            <ng-template let-i="rowIndex" let-member pTemplate="body">
+              <tr>
+                <td style="text-align:center;">{{ i + 1 }}</td>
 
-              <td style="text-align:center;"><img
-                [routerLink]="'/user/' + member.personal_number"
-                [src]="APP_CONFIG.baseURL + 'media/' + member.profile_image"
-                class="cursor-pointer h-10 w-10 object-cover"
-                style="
+                <td style="text-align:center;"><img
+                  [routerLink]="'/user/' + member.personal_number"
+                  [src]="APP_CONFIG.baseURL + 'media/' + member.profile_image"
+                  class="cursor-pointer h-10 w-10 object-cover"
+                  style="
               border-radius: 50%;
               object-fit: cover;
             "
-              /></td>
+                /></td>
 
-              <td [routerLink]="'/user/' + member.personal_number" class="cursor-pointer"
-                  style="text-align:center;">{{ member.first_name + ' ' + member.last_name }}
-              </td>
+                <td [routerLink]="'/user/' + member.personal_number" class="cursor-pointer"
+                    style="text-align:center;">{{ member.first_name + ' ' + member.last_name }}
+                </td>
 
-              <td class="justify-center" style="text-align:center;">
-                <p [routerLink]="'/user/' + member.personal_number" class="cursor-pointer">{{ member.username }}</p>
-              </td>
-              <td style="text-align:center;">{{ member.personal_number }}</td>
-              <td style="text-align:center;">{{ member.done_scenarios }}</td>
-            </tr>
-          </ng-template>
+                <td class="justify-center" style="text-align:center;">
+                  <p [routerLink]="'/user/' + member.personal_number" class="cursor-pointer">{{ member.username }}</p>
+                </td>
+                <td style="text-align:center;">{{ member.personal_number }}</td>
+                @if (member.main_role == 'teacher') {
+                  <td style="text-align:center;">استاد</td>
+                } @else if (member.main_role == 'student') {
+                  <td style="text-align:center;">دانشجو</td>
+                } @else {
+                  <td style="text-align:center;">ادمین</td>
+                }
 
-        </p-table>
+                <td style="text-align:center;">{{ member.done_scenarios }}</td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+        }
       </div>
     </div>
 

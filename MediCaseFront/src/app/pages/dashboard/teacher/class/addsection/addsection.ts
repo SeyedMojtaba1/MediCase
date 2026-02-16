@@ -77,9 +77,14 @@ export class Addsection implements AfterViewInit {
     this.master.semesters().subscribe({
       next: data => {
         this.semesters = data.body
+        this.semesters = data.body.sort((a: any, b: any) => {
+          return Number(a.code) - Number(b.code);
+        });
+
         this.master.subjectList().subscribe({
           next: data => {
             this.subjects = data.body
+
             this.subjectOptions = this.subjects.map((s: any) => ({
               ...s,
               label: s["persian-name"],
@@ -144,13 +149,14 @@ export class Addsection implements AfterViewInit {
       !this.data.subject ||
       !this.data.semester_code ||
       !this.start_date ||
-      !this.end_date ||
-      !this.data.description) {
+      !this.end_date
+    ) {
 
       this.toast.showError("لطفاً تمام فیلدها را تکمیل کنید");
       return;
     }
 
+    if (!this.data.description) this.data.description = ".";
     // تبدیل تاریخ‌ها
     this.data.start_date = this.jalaliToTimestamp(this.start_date)
     this.data.end_date = this.jalaliToTimestamp(this.end_date)

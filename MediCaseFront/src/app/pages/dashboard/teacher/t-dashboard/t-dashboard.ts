@@ -18,4 +18,5 @@ import {DashNavT} from '../../../../shared/components/dash-nav-t/dash-nav-t';
 export class TDashboard {
 
 
+  protected readonly localStorage = localStorage;
 }

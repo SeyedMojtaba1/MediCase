@@ -4,7 +4,7 @@
       [routerLink]="item.link"
       class="group w-full text-[#148591]"
       routerLinkActive="active-route text-white bg-gradient-to-l from-[#148691] to-[#216067] rounded-full"
-      [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+      [routerLinkActiveOptions]="{ exact: item.exact || false }"
     >
       <div
         class="p-5 py-3 rounded-xl w-full  cursor-pointer transition-all duration-300"

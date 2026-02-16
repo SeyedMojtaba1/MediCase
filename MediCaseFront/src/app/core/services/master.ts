@@ -139,6 +139,27 @@ export class Master {
   }
 
 
+  changePassword(
+    password: string,
+    new_password: string,
+  ): Observable<HttpResponse<any>> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    return this.http.post<any>(
+      this.BASE_URL + 'registery/chengepass/',
+      {
+        personal_number: localStorage.getItem("personal_number"),
+        password: password,
+        new_password: new_password,
+      },
+      {
+        headers,
+        observe: 'response',
+      },
+    );
+  }
+
+
   // ***************************************************************************
   // ***************************************************************************
   //                              subject
@@ -253,7 +274,7 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.get<any>(this.BASE_URL + '/class/sectionretrieve/' + id + '/', {
+    return this.http.get<any>(this.BASE_URL + 'class/sectionretrieve/' + id + '/', {
       headers,
       observe: 'response',
       withCredentials: true
@@ -280,7 +301,7 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.post<any>(this.BASE_URL + '/class/studentsectioncreate/', {
+    return this.http.post<any>(this.BASE_URL + 'class/studentsectioncreate/', {
       section: section,
       student: student,
       student_status: "Active"
@@ -404,7 +425,7 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.get<any>(this.BASE_URL + '/pulmonologyscenario/scenariolist/' + localStorage.getItem('personal_number') + '/', {
+    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/scenariolist/' + localStorage.getItem('personal_number') + '/', {
       headers,
       withCredentials: true
     });
@@ -415,7 +436,7 @@ export class Master {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     })
-    return this.http.get<any>(this.BASE_URL + '/pulmonologyscenario/feedbacklist/' + localStorage.getItem('personal_number') + '/', {
+    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/feedbacklist/' + localStorage.getItem('personal_number') + '/', {
       headers,
       withCredentials: true
     })

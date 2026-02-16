@@ -19,12 +19,22 @@ export class Stat {
 
   data: any
   resData: any
+  expandedAlerts: { [key: string]: boolean } = {
+    alert1: false,
+    alert2: false
+  };
   protected readonly console = console;
 
   constructor(public master: Master, public changeDetectorRef: ChangeDetectorRef, public toastService: ToastService) {
   }
 
+
   ngOnInit() {
+    this.getList()
+  }
+
+
+  getList() {
     this.master.scenarioList().subscribe({
       next: data => {
         this.data = data;
@@ -41,14 +51,22 @@ export class Stat {
     });
   }
 
-
   getFeedbackCode(scenarioCode: string): string | null {
     if (!this.resData) return null;
 
-    // پیدا کردن فیدبکی که scenario_tracking_code آن با کد سناریو برابر است
-    const feedback = this.resData.find((f: any) => f.scenario_tracking_code === scenarioCode);
-    return feedback ? feedback.tracking_code : null;
+    const feedbacks = this.resData.filter(
+      (f: any) =>
+        f.scenario_tracking_code === scenarioCode &&
+        f.generated === true
+    );
 
+    if (!feedbacks.length) return null;
+
+    return feedbacks[feedbacks.length - 1].tracking_code;
+  }
+
+  toggleAlert(alertId: string) {
+    this.expandedAlerts[alertId] = !this.expandedAlerts[alertId];
   }
 
   createScenrio() {

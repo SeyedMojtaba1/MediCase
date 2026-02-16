@@ -32,8 +32,16 @@ export class ScenarioIntro implements OnInit {
         // اگر امتیاز از حدی بالاتر بود یا صرفاً جهت خوش‌آمدگویی
         this.fireConfetti();
       },
-      error: (err) => console.error('Error fetching feedback:', err)
+      error: (err) => {
+        // this.feedback = Data
+        this.changeDetectorRef.detectChanges()
+      },
+      complete: () => {
+        console.log(this.feedback.score.obtained);
+        this.changeDetectorRef.detectChanges();
+      }
     });
+    this.changeDetectorRef.detectChanges()
   }
 
   fireConfetti() {

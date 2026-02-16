@@ -1,0 +1,24 @@
+{
+  "overall_result": {
+    "title": "نیازمند بازنگری",
+    "english_title": "Needs Improvement",
+    "color_code": "#EF6C00",
+    "is_passed": false
+  },
+  "score": {
+    "obtained": 40,
+    "total": 100,
+    "raw_details": "47 / 117"
+  },
+  "time_management": {
+    "duration_formatted": "13:00",
+    "total_allowed_formatted": "15:00",
+    "duration_seconds": 780,
+    "is_time_up": false,
+    "analysis": {
+      "level_title": "قابل قبول",
+      "level_color": "#FBC02D",
+      "feedback_message": "مدیریت زمان شما خوب بود، اما می‌توانید سریع‌تر عمل کنید."
+    }
+  }
+}

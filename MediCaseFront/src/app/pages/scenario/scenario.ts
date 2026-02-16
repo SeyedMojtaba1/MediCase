@@ -6,6 +6,7 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Master} from '../../core/services/master';
 import Questions from '../../../../public/json/senario.json'
 import Log from '../../../../public/json/student_log.json'
+import Data from '../../../../public/json/t.json'
 import confetti from 'canvas-confetti';
 
 interface Disease {
@@ -298,6 +299,14 @@ export class Scenario {
       next: data => {
         localStorage.setItem('data', JSON.stringify(data));
       },
+      error: err => {
+        this.data = Data
+        console.log(this.data);
+        this.buildQuestions()
+        this.buildPhysicalExamQuestions()
+        this.buildParaclinicQuestions()
+        this.changeDetectorRef.detectChanges();
+      },
       complete: () => {
         const raw = localStorage.getItem('data');
 
@@ -307,6 +316,7 @@ export class Scenario {
         } else {
           this.data = '';
         }
+
 
         this.buildQuestions()
         this.buildPhysicalExamQuestions()
@@ -578,6 +588,7 @@ export class Scenario {
 
   buildQuestions() {
     const history = this.questionText["history_taking"]; // سؤالات (عنوان‌ها)
+    console.log(history);
     const answers = this.data.history_taking;            // پاسخ‌ها
     const logs = this.log.history_taking;                // زمان مشاهده
 

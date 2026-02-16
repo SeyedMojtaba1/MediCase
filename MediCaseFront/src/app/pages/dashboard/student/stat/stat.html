@@ -2,9 +2,38 @@
 
   <app-dash-nav [welcome]="false" title="گزارش عملکرد"></app-dash-nav>
 
+  <div class="w-full flex flex-col gap-4 px-10">
+
+
+    <div (click)="toggleAlert('alert2')"
+         class="bg-amber-50/50 border-r-4 border-amber-500 p-4 rounded-lg cursor-pointer transition-all shadow-sm">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <span class="w-2 h-2 bg-amber-500 rounded-full ml-3"></span>
+          <span class="font-bold text-amber-900">توجه : پس از پذیرش بیمار، آماده سازی مقدمات پذیرش در حدود 30-60 ثانیه به طول می انجامد. پس از پایان این زمان، لیست را refresh کنید</span>
+        </div>
+        <!--        <span class="text-xs text-amber-600 underline">-->
+        <!--        {{ expandedAlerts['alert2'] ? 'بستن' : 'مشاهده جزئیات' }}-->
+        <!--      </span>-->
+      </div>
+      @if (expandedAlerts['alert2']) {
+        <div
+          class="mt-3 pt-3 border-t border-amber-200 text-sm text-amber-800 leading-relaxed animate-in slide-in-from-top-2 duration-300">
+          متن توضیحات مربوط به آلرت دوم در اینجا قرار می‌گیرد. می‌توانید از استایل‌های متفاوتی برای تمایز این دو استفاده
+          کنید.
+        </div>
+      }
+    </div>
+
+  </div>
+
   <div class="w-full flex flex-row justify-between px-10 text-gray-400 text-sm items-center">
     <p>{{ data?.length }} نتیجه یافت شد</p>
-    <app-action (click)="createScenrio()" icon="/images/svg/add-large-fill.svg" text="پذیرش بیمار"></app-action>
+    <div class="flex flex-row gap-5 items-center">
+      <app-action (click)="createScenrio()" icon="/images/svg/add-large-fill.svg" text="پذیرش بیمار"></app-action>
+      <app-action (click)="this.getList()" icon="images/svg/refresh-line.svg"></app-action>
+    </div>
+
   </div>
 
   <app-card>
@@ -13,6 +42,8 @@
       <tr>
         <th class="px-6 py-3" scope="col">#</th>
         <th class="px-6 py-3" scope="col">کد پیگیری</th>
+        <th class="px-6 py-3" scope="col">بیماری</th>
+        <th class="px-6 py-3" scope="col">نمره</th>
         <th class="px-6 py-3" scope="col">وضعیت</th>
         <th class="px-6 py-3" scope="col">عملیات</th>
       </tr>
@@ -24,8 +55,23 @@
 
             <td class="px-6 py-4 font-mono">{{ a.tracking_code }}</td>
 
+            <td>
+              @if (a.is_done) {
+                {{ a.disease_name }}
+              } @else {
+                <span class="text-gray-400 text-xs">—</span>
+              }
+            </td>
+            <td>
+              @if (a.is_done) {
+                {{ a.score }}
+              } @else {
+                <span class="text-gray-400 text-xs">—</span>
+              }
+            </td>
+
             <td class="px-6 py-4">
-              @if (a.done) {
+              @if (a.is_done) {
                 <span class="flex items-center justify-center text-green-600">
                 <span class="w-2 h-2 bg-green-600 rounded-full ml-2"></span>
                 انجام شده
@@ -40,7 +86,7 @@
 
             <td class="px-6 py-4">
               <div class="flex justify-center items-center">
-                @if (a.done) {
+                @if (a.is_done) {
                   @let feedbackCode = getFeedbackCode(a.tracking_code);
 
                   @if (feedbackCode) {
@@ -50,7 +96,9 @@
                       [url]="'/report/' + feedbackCode">
                     </app-action>
                   } @else {
-                    <span class="text-xs text-gray-400 italic">در حال تولید گزارش...</span>
+                    <span class="text-xs text-gray-400 italic">
+    در حال تولید گزارش...
+  </span>
                   }
 
                 } @else {

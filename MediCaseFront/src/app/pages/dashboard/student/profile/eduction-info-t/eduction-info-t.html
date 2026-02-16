@@ -14,14 +14,14 @@
       <!--      نام-->
       <div class="flex flex-col font-light text-sm gap-1">
         <label class="text-xs font-light text-gray-400" for="studentnum">شماره پرسنلی</label>
-        <input disabled id="studentnum" pInputText pSize="small" value="123512434"/>
+        <input [value]="user.personal_number" disabled id="studentnum" pInputText pSize="small"/>
       </div>
 
 
       <!--      نام-->
       <div class="flex flex-col font-light text-sm gap-1">
         <label class="text-xs font-light text-gray-400" for="majory">رشته </label>
-        <input disabled id="majory" pInputText pSize="small" value="پزشکی"/>
+        <input [value]="user.major" disabled id="majory" pInputText pSize="small"/>
       </div>
 
 

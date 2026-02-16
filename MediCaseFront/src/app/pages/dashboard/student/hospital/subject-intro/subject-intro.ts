@@ -24,6 +24,7 @@ export class SubjectIntro {
   subject = ''
   data: any = [];
   isActive = false
+  protected readonly localStorage = localStorage;
 
   constructor(public route: ActivatedRoute, public master: Master, public changeDetectorRef: ChangeDetectorRef) {
   }
@@ -42,7 +43,7 @@ export class SubjectIntro {
         this.master.studentSubjectList().subscribe({
           next: (data: any) => {
             this.isActive = data.body.some((x: any) =>
-              x.subject === this.subject && x.access_status === true
+              x.english_name === this.subject && x.access_status === true
             );
           },
           error: error => {
@@ -56,5 +57,4 @@ export class SubjectIntro {
     })
 
   }
-
 }

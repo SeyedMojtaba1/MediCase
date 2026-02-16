@@ -7,20 +7,20 @@
 
     @for (item of data; track item) {
       <app-card>
-        @if (item.hospital_english == 'farabi') {
+        @if (item.hospital == 'farabi') {
           <img src="images/hospital/farabi.jpg" routerLink="/scenariostart"
                class="w-full cursor-pointer h-auto rounded-md">
-        } @else if (item.hospital_english == 'chamran') {
+        } @else if (item.hospital == 'chamran') {
           <img src="images/hospital/chamran.jpg" routerLink="/scenariostart"
                class="cursor-pointer w-full h-auto rounded-md">
-        } @else if (item.hospital_english == 'alzahra') {
+        } @else if (item.hospital == 'alzahra') {
           <img src="images/hospital/alzahra.jpg" routerLink="/scenariostart"
                class="cursor-pointer w-full h-auto rounded-md">
-        } @else if (item.hospital_english == 'khorshid') {
+        } @else if (item.hospital == 'khorshid') {
           <img src="images/hospital/khorshid.jpg" routerLink="/scenariostart"
                class="cursor-pointer w-full h-auto rounded-md">
         }
-        <p class="font-bold cursor-pointer" routerLink="/scenariostart">{{ item.hospital_persian }}</p>
+        <p class="font-bold cursor-pointer text-center" routerLink="/scenariostart">{{ item.hospital }}</p>
         <p class="text-gray-500 text-sm">{{ item.hospital_address }}</p>
         @if (item.access_status == true) {
           <div class="flex flex-row items-center text-sm justify-center text-gray-500">

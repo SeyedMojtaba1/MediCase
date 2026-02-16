@@ -59,6 +59,9 @@ export class EditSection {
     this.master.semesters().subscribe({
       next: res => {
         this.semesters = res.body;
+        this.semesters = res.body.sort((a: any, b: any) => {
+          return Number(a.code) - Number(b.code);
+        });
       },
       complete: () => {
         // 2) دریافت اطلاعات سِکشن

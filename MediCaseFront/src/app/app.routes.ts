@@ -25,6 +25,8 @@ import {SectionPageS} from './pages/dashboard/student/class/section-page-s/secti
 import {Scenario} from './pages/scenario/scenario';
 import {ScenarioIntro} from './pages/scenario/scenario-intro/scenario-intro';
 import {ScenarioStart} from './pages/scenario/scenario-start/scenario-start';
+import {Single} from './pages/blog/single/single';
+import {Blog} from './pages/blog/blog';
 
 export const routes: Routes = [
 
@@ -68,6 +70,12 @@ export const routes: Routes = [
     children: [
       {path: '', component: SDashboard},
       {
+        path: 'blog', children: [
+          {path: '', component: Blog},
+          {path: ':id', component: Single},
+        ]
+      },
+      {
         path: 'hospital', children: [
           {path: '', component: Hospital},
           {path: 'intro/:subject', component: SubjectIntro},
@@ -93,6 +101,12 @@ export const routes: Routes = [
     data: {role: 'teacher'},
     children: [
       {path: '', component: TDashboard},
+      {
+        path: 'blog', children: [
+          {path: '', component: Blog},
+          {path: ':id', component: Single},
+        ]
+      },
       {path: 'profile', component: PProfile},
       {path: 'stat', component: Statt},
       {

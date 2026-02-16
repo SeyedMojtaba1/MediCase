@@ -13,4 +13,7 @@ import {InputText} from 'primeng/inputtext';
 })
 export class EductionInfoT {
   @Input() user: any
+
+  ngOnInit() {
+  }
 }

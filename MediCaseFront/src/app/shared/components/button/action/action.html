@@ -4,8 +4,9 @@
     <img [src]="icon" class="cursor-pointer invert-100 h-6 w-6">
   }
 
-  <p class="text-white cursor-pointer">
-    {{ text }}
-  </p>
-
+  @if (text) {
+    <p class="text-white cursor-pointer">
+      {{ text }}
+    </p>
+  }
 </div>
