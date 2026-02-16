@@ -56,16 +56,33 @@ def scenario_create(request):
                 {"detail": "اعتبار شما برای ساخت سناریو کافی نیست."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+            
         user_obj.scenario_credit -= 1
         user_obj.save()
+
+        unattempted_template = ScenarioTemplate.objects.exclude(
+            attempts__user=user_obj
+        ).first() 
+
+        if unattempted_template:
+            tracking_code = unattempted_template.tracking_code
+            
+            UserScenarioAttempt.objects.create(
+                user=user_obj,
+                scenario_template=unattempted_template,
+                is_done=False
+            )
+            
+            message = "سناریو از مخزن موجود با موفقیت به شما اختصاص یافت."
         
-        tracking_code = generate_tracking_code(10)
-        senario_creator_celery.delay(user_obj.personal_number, tracking_code)
+        else:
+            tracking_code = generate_tracking_code(10)
+            senario_creator_celery.delay(user_obj.personal_number, tracking_code)
+            message = "سناریوهای موجود تمام شده بود. درخواست ساخت سناریو جدید با هوش مصنوعی ثبت شد."
 
     return Response(
         {
-            "message": "درخواست ساخت سناریو با موفقیت ثبت شد.",
+            "message": message,
             "tracking_code": tracking_code,
             "remaining_credit": user_obj.scenario_credit
         }, 
