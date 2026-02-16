@@ -110,30 +110,36 @@ def feedback_create(request, *args, **kwargs):
     except ScenarioTemplate.DoesNotExist:
         return Response({"detail": "سناریو یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
+    # پیدا کردن آخرین تلاش کاربر در صورت وجود
     attempt = UserScenarioAttempt.objects.filter(
         user=user, 
         scenario_template=template
     ).order_by('-start_time').first()
 
-    if not attempt:
-        return Response(
-            {"detail": "هیچ تلاشی برای این سناریو یافت نشد. ابتدا سناریو را شروع کنید."}, 
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
     with transaction.atomic():
+        # اگر تلاشی از قبل وجود نداشت، همین الان یکی می‌سازیم
+        if not attempt:
+            attempt = UserScenarioAttempt.objects.create(
+                user=user,
+                scenario_template=template,
+                is_done=True
+            )
+        # اگر وجود داشت (مثلا از طریق سناریوی روزانه) وضعیت آن را به اتمام‌یافته تغییر می‌دهیم
+        elif not attempt.is_done:
+            attempt.is_done = True
+            attempt.save()
+
+        # ثبت لاگ
         StudentLog.objects.create(
             attempt=attempt,
             student_log=student_log_data,
         )
 
-        if not attempt.is_done:
-            attempt.is_done = True
-            attempt.save()
-
         disease_name = template.disease.english_name if template.disease else "Unknown"
         disease_type = template.disease.type_disease if template.disease else "Unknown"
         feedback_tracking_code = generate_tracking_code(10)
+        
+        # ارسال به Celery برای پردازش هوش مصنوعی
         feedback_creator_celery.delay(
             feedback_tracking_code, 
             str(attempt.attempt_id),
@@ -141,6 +147,7 @@ def feedback_create(request, *args, **kwargs):
             disease_type, 
             student_log_data
         )
+        
     return Response({"tracking_code": feedback_tracking_code}, status=status.HTTP_200_OK)
 
 class FeedbackRetrieveView(generics.RetrieveAPIView):
