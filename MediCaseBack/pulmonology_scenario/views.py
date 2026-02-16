@@ -76,7 +76,7 @@ class ScenarioRetrieveView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ScenarioRetrieveSerializer
-    queryset = ScenarioTemplate.objects.filter(related_subject__english_name__iexact="Pulmonology")
+    queryset = ScenarioTemplate.objects.all()
     lookup_field = 'tracking_code'
     lookup_value_regex = '[^/]+'
     
