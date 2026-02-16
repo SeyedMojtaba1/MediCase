@@ -132,7 +132,7 @@ def feedback_create(request, *args, **kwargs):
         # ثبت لاگ
         StudentLog.objects.create(
             attempt=attempt,
-            student_log=student_log_data,
+            action_log=student_log_data
         )
 
         disease_name = template.disease.english_name if template.disease else "Unknown"
