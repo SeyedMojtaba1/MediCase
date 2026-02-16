@@ -159,7 +159,7 @@ class FeedbackRetrieveView(generics.RetrieveAPIView):
     lookup_value_regex = '[^/]+'
 
     def get_queryset(self):
-        return PulmonologyFeedback.objects.filter(attempt__user=self.request.user)
+        return PulmonologyFeedback.objects.all()
 
 class FeedbackListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
