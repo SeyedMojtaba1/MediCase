@@ -17,4 +17,4 @@ RUN pip install -i https://mirror-pypi.runflare.com/ -r requirements.txt
 
 COPY MediCaseBack/ .
 
-CMD ["gunicorn", "MediCaseBack.asgi:application", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "MediCaseBack.wsgi:application", "--bind", "0.0.0.0:8000"]

@@ -17,6 +17,7 @@ class TutorialPage(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE, related_name='pages')
     title = models.CharField(max_length=255)
     content = models.TextField()
+    x_content = models.TextField()
     order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
