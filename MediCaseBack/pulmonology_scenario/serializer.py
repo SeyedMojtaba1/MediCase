@@ -68,7 +68,7 @@ class FeedbackListSerializer(serializers.ModelSerializer):
     class Meta:
         model = PulmonologyFeedback
         fields = [
-            'feedback_id',
+            'tracking_code',
             'scenario_tracking_code',
             'generated'
         ]
