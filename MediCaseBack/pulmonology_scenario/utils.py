@@ -93,22 +93,28 @@ def feedback_creator_celery(feedback_tracking_code, attempt_id, disease_name, ty
         
         # مدیریت اینکه خروجی فقط متن است یا دیکشنری شامل نمره
         if isinstance(ai_response, dict):
-            # اگر 'content' نبود کل دیکشنری رو به عنوان محتوا در نظر بگیر
-            # یا حداقل یک دیکشنری خالی بده که دیتابیس خطا ندهد
-            feedback_content = ai_response.get('content')
-            if feedback_content is None:
-                logger.warning(f"AI response dict didn't have 'content' key. Response: {ai_response}")
-                feedback_content = ai_response # ذخیره کل جواب به عنوان فال‌بک
+            # گرفتن کل خروجی به عنوان محتوا (همان کاری که در مرحله قبل انجام دادیم)
+            feedback_content = ai_response.get('content', ai_response) 
             
-            score = ai_response.get('score')
-        else:
-            # اگر دیکشنری نبود (مثلا رشته بود)
-            feedback_content = ai_response if ai_response else {}
-            score = None
+            # --- تغییر جدید برای حل مشکل score ---
+            raw_score = ai_response.get('score')
+            
+            if isinstance(raw_score, dict):
+                # اگر نمره یک دیکشنری بود، عدد obtained را بگیر
+                score = raw_score.get('obtained', 0)
+            else:
+                # اگر مستقیماً عدد بود
+                score = raw_score
 
-        # خط دفاعی آخر: اگر به هر دلیلی باز هم None بود
-        if feedback_content is None:
-            feedback_content = {"error": "AI response was empty or None"}
+            # تبدیل امن به عدد اعشاری (در صورتی که نوع داده Float باشد)
+            try:
+                score = float(score) if score is not None else 0.0
+            except (ValueError, TypeError):
+                score = 0.0
+                
+        else:
+            feedback_content = ai_response if ai_response else {}
+            score = 0.0
 
     except Exception as e:
         logger.error(f"Error in feedback_generator AI: {str(e)}")
