@@ -161,8 +161,8 @@ CELERY_BEAT_SCHEDULE = {
     },
     "generate-nightly-scenarios": {
         "task": "pulmonology_scenario.tasks.generate_nightly_scenarios_task",
-        "schedule": crontab(hour=1, minute=0), # ساعت 1 بامداد
-        "kwargs": {"count": 15}, # مثلا هر شب ۱۵ سناریو بسازد (قابل تغییر)
+        "schedule": crontab(hour=1, minute=0), 
+        "kwargs": {"count": 20}, 
     },
 }
 
