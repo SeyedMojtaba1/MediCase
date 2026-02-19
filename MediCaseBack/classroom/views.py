@@ -772,25 +772,54 @@ class BulkCreditUpdateView(APIView):
 class SectionRemoveView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication] 
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = SectionRemoveSerializer
+    lookup_field = 'section_id'
     
-    @extend_schema(
-        request=SectionRemoveSerializer,
-    )
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data, context={'request': request})
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        short_id = self.kwargs.get(self.lookup_field)
+        
         try:
-            serializer.is_valid(raise_exception=True)
-            section = serializer.save()
-            user = request.user
+            section_uuid = decode_short_uuid(short_id)
+        except ValueError:
+            logger.warning(f"Invalid section_id format received: {short_id} from user {user.user_id}")
+            return Response(
+                {"message": "شناسه کلاس (section ID) نامعتبر است."}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            section = Section.objects.get(section_id=section_uuid)
+        except Section.DoesNotExist:
+            return Response({"message": "کلاسی با این مشخصات یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        if not user.main_role:
+             return Response({"message": "نقش کاربر مشخص نیست."}, status=status.HTTP_403_FORBIDDEN)
+
+        role = user.main_role.name.lower()
+        has_permission = False
+
+        if role == "superadmin":
+            has_permission = True
+        elif role == "admin":
+            if section.teacher and section.teacher.university == user.university:
+                has_permission = True
+        elif role == "teacher":
+            if section.teacher == user:
+                has_permission = True
+        
+        if not has_permission:
+            logger.warning(f"Unauthorized Section Close Attempt: User {user.user_id} tried to close section {section_uuid}.")
+            return Response({"message": "شما اجازه حذف (بستن) این کلاس را ندارید."}, status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            section.status = 'Closed'
+            section.save()
             
-            logger.info(f"Section {section.section_id} status changed to Closed by User {user.id}.")
+            logger.info(f"Section {section.section_id} status changed to Closed by User {user.user_id}.")
             return Response(
                 {"message": f"وضعیت کلاس '{section.name}' با موفقیت به 'بسته شده' (Closed) تغییر یافت."}, 
                 status=status.HTTP_200_OK
             )
-        except serializers.ValidationError as e:
-            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
              logger.error(f"Error closing section: {e}")
              return Response({"message": "خطا در عملیات بستن کلاس."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
