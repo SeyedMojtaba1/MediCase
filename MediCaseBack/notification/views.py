@@ -74,7 +74,6 @@ class UniversityAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet)
              raise PermissionDenied("You must be assigned to a university to post university announcements.")
         
         target_uni = user.university
-        
         serializer.save(
             author=user, 
             scope='UNIVERSITY', 
