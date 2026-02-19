@@ -25,7 +25,6 @@ SCENARIO_MAP = {
     },
     "PH": {
         "idiopathic_pah": PH_IDIOPATHIC_PAH,
-        "ph_left_heart": PH_LEFT_HEART,
         "ph_lung_disease": PH_LUNG_DISEASE
     },
     "COPD": {
@@ -58,7 +57,6 @@ DETAILED_SCENARIO_MAP = {
     },
     "PH": {
         "idiopathic_pah": PH_IDIOPATHIC_PAH_DETAILED,
-        # "ph_left_heart": PH_LEFT_HEART_DETAILED,
         "ph_lung_disease": PH_LUNG_DISEASE_DETAILED
     },
     "COPD": {
