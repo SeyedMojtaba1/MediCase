@@ -88,7 +88,7 @@ class SectionLeaderboardSerializer(serializers.ModelSerializer):
         fields = ['username', 'top_score']
 
 class RankingInputSerializer(serializers.Serializer):
-    section_id = serializers.CharField(max_length=20)
+    section_id = serializers.CharField(max_length=20, required=False)
     date = serializers.DateField(required=False)
     subject = serializers.CharField(required=False)
 
