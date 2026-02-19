@@ -18,14 +18,13 @@ class UniversitySerializer(serializers.ModelSerializer):
             'rector_name',
             'description',
         ]
-        extra_kwargs = {
-            'url': {'lookup_field': 'english_name'}
-        }
         
-class FacultySerializer(serializers.HyperlinkedIdentityField):
+# 1. اصلاح ارث‌بری: استفاده از ModelSerializer
+class FacultySerializer(serializers.ModelSerializer):
     university = serializers.HyperlinkedRelatedField(
         view_name='university-detail',
-        read_only=True
+        read_only=True,
+        lookup_field='english_name'  # 2. اضافه کردن lookup_field مربوط به دانشگاه
     )
     
     class Meta:
@@ -37,14 +36,12 @@ class FacultySerializer(serializers.HyperlinkedIdentityField):
             'phone_number',
             'email'
         ]
-        extra_kwargs = {
-            'url': {'lookup_field': 'name'}
-        }
 
 class DepartmentSerializer(serializers.ModelSerializer):
     faculty = serializers.HyperlinkedRelatedField(
         view_name='faculty-detail',
-        read_only=True
+        read_only=True,
+        lookup_field='name'  # 3. اضافه کردن lookup_field مربوط به دانشکده
     )
     
     class Meta:
@@ -54,6 +51,3 @@ class DepartmentSerializer(serializers.ModelSerializer):
             'name',
             'head_of_department'
         ]
-        extra_kwargs = {
-            'url': {'lookup_field': 'name'}
-        }
