@@ -15,6 +15,7 @@ from classroom.utils import decode_short_uuid
 
 class ShortUUIDLookupMixin:
     lookup_field = 'notification_id'
+    lookup_value_regex = '[\w-]+'
 
     def get_object(self):
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
@@ -69,7 +70,6 @@ class UniversityAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet)
 
     def perform_create(self, serializer):
         user = self.request.user
-        
         if not is_super_admin(user) and not user.university:
              raise PermissionDenied("You must be assigned to a university to post university announcements.")
         
