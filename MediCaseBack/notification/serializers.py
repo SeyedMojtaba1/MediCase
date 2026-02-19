@@ -6,12 +6,14 @@ from classroom.utils import encode_short_uuid, decode_short_uuid
 
 class SystemAnnouncementSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
+    # این فیلد خروجی را به صورت Short UUID نمایش می‌دهد
     notification_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Announcement
         fields = ['notification_id', 'title', 'content', 'created_at', 'author']
-        read_only_fields = ['author', 'created_at']
+        # نکته مهم: notification_id باید حتما اینجا باشد تا از اعتبارسنجی ورودی معاف شود
+        read_only_fields = ['author', 'created_at', 'notification_id']
 
     def get_notification_id(self, obj):
         return encode_short_uuid(obj.notification_id)
@@ -24,6 +26,8 @@ class UniversityAnnouncementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Announcement
         fields = ['notification_id', 'title', 'content', 'created_at', 'author', 'target_university']
+        # اضافه کردن notification_id به read_only_fields
+        read_only_fields = ['author', 'created_at', 'target_university', 'notification_id']
 
     def get_notification_id(self, obj):
         return encode_short_uuid(obj.notification_id)
@@ -37,7 +41,8 @@ class SectionAnnouncementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Announcement
         fields = ['notification_id', 'title', 'content', 'created_at', 'author', 'section_id', 'target_section_id']
-        read_only_fields = ['author', 'created_at', 'target_section_id']
+        # اضافه کردن notification_id به read_only_fields
+        read_only_fields = ['author', 'created_at', 'target_section_id', 'notification_id']
 
     def get_notification_id(self, obj):
         return encode_short_uuid(obj.notification_id)

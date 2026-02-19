@@ -7,7 +7,6 @@ from .views import (
 )
 
 router = DefaultRouter()
-# آدرس‌دهی جداگانه برای هر سطح
 router.register(r'system', SystemAnnouncementViewSet, basename='notification-system')
 router.register(r'university', UniversityAnnouncementViewSet, basename='notification-university')
 router.register(r'section', SectionAnnouncementViewSet, basename='notification-section')
