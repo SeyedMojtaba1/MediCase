@@ -266,13 +266,9 @@ class StudentRankInSectionView(APIView):
 class FeedbackRankInSectionView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = "tracking_code"
     
-    def get(self, request):
-        tracking_code = self.kwargs.get('tracking_code')
+    def get(self, request, tracking_code):
         try:
-            # اینجا مسیر scenario__user تغییر کرده است
-            # فیدبک -> attempt -> user
             target_feedback = PulmonologyFeedback.objects.select_related(
                 'attempt__user'
             ).get(tracking_code=tracking_code)
