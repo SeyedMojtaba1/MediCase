@@ -65,13 +65,16 @@ class UniversityAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet)
 
     def perform_create(self, serializer):
         user = self.request.user
-        if not user.university:
+        
+        if not is_super_admin(user) and not user.university:
              raise PermissionDenied("You must be assigned to a university to post university announcements.")
+        
+        target_uni = user.university
         
         serializer.save(
             author=user, 
             scope='UNIVERSITY', 
-            target_university=user.university
+            target_university=target_uni
         )
 
 
@@ -79,9 +82,9 @@ class SectionAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet):
     serializer_class = SectionAnnouncementSerializer
     
     def get_permissions(self):
-        if self.action in ['list', 'retrieve']:
-            return [permissions.IsAuthenticated()]
-        return [IsSectionStaffRole()]
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsSectionStaffRole()]
+        return [permissions.IsAuthenticated()]
 
     def get_queryset(self):
         user = self.request.user
@@ -103,13 +106,13 @@ class SectionAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet):
             scope='SECTION'
         ).filter(
             Q(target_section__in=teacher_sections) | 
-            Q(target_section__id__in=student_sections_ids) |
+            Q(target_section__in=student_sections_ids) |
             admin_university_query
         ).distinct().order_by('-created_at')
 
     def perform_create(self, serializer):
         user = self.request.user
-        section = serializer.validated_data['target_section']
+        section = serializer.validated_data['section_id']
         
         if is_super_admin(user):
             serializer.save(author=user, scope='SECTION')
@@ -117,6 +120,7 @@ class SectionAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet):
 
         is_owner_teacher = (section.teacher == user)
         is_uni_admin = False
+        
         if user.main_role and user.main_role.name == 'Admin' and user.university:
             if section.teacher and section.teacher.university == user.university:
                 is_uni_admin = True
