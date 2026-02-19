@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions
 from rest_framework.exceptions import PermissionDenied, ValidationError, NotFound
 from django.db.models import Q
+import uuid
 
 from .models import Announcement
 from .serializers import (
@@ -19,12 +20,15 @@ class ShortUUIDLookupMixin:
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
         short_id = self.kwargs.get(lookup_url_kwarg)
 
+        if str(short_id).count('-') == 4 and len(str(short_id)) == 36:
+            return super().get_object()
+
         try:
             uuid_id = decode_short_uuid(short_id)
-        except ValueError:
+        except (ValueError, TypeError):
             raise NotFound("شناسه اعلان نامعتبر است.")
 
-        self.kwargs[lookup_url_kwarg] = uuid_id
+        self.kwargs[lookup_url_kwarg] = str(uuid_id)
         
         return super().get_object()
 
@@ -99,7 +103,7 @@ class SectionAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet):
         ).values_list('section', flat=True)
         
         admin_university_query = Q()
-        if user.main_role and user.main_role.name == 'Admin' and user.university:
+        if user.main_role and user.main_role.name.lower() == 'admin' and user.university:
              admin_university_query = Q(target_section__teacher__university=user.university)
 
         return Announcement.objects.filter(
@@ -120,8 +124,7 @@ class SectionAnnouncementViewSet(ShortUUIDLookupMixin, viewsets.ModelViewSet):
 
         is_owner_teacher = (section.teacher == user)
         is_uni_admin = False
-        
-        if user.main_role and user.main_role.name == 'Admin' and user.university:
+        if user.main_role and user.main_role.name.lower() == 'admin' and user.university:
             if section.teacher and section.teacher.university == user.university:
                 is_uni_admin = True
         
