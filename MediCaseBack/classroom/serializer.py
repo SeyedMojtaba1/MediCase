@@ -567,6 +567,7 @@ class HospitalSerializer(serializers.ModelSerializer):
             'province', 
             'phone_number', 
             'email', 
+            'hospital_image',
             'website', 
             'capacity', 
             'description'
