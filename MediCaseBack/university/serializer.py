@@ -19,12 +19,11 @@ class UniversitySerializer(serializers.ModelSerializer):
             'description',
         ]
         
-# 1. اصلاح ارث‌بری: استفاده از ModelSerializer
 class FacultySerializer(serializers.ModelSerializer):
     university = serializers.HyperlinkedRelatedField(
         view_name='university-detail',
         read_only=True,
-        lookup_field='english_name'  # 2. اضافه کردن lookup_field مربوط به دانشگاه
+        lookup_field='english_name'
     )
     
     class Meta:
@@ -41,7 +40,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
     faculty = serializers.HyperlinkedRelatedField(
         view_name='faculty-detail',
         read_only=True,
-        lookup_field='name'  # 3. اضافه کردن lookup_field مربوط به دانشکده
+        lookup_field='name'
     )
     
     class Meta:

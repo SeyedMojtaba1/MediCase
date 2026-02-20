@@ -2512,7 +2512,7 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
       "question": "need_aspiration",
       "analysis": "خیر."
     },
-    "effusion_type": ""
+    "effusion_type": "none"
   }
 }
 

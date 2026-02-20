@@ -43,23 +43,25 @@ class RegisterSerializer(serializers.ModelSerializer):
             'personal_number', 
             'main_role',
             'major',
-            'subject_name', # اضافه شده
+            'subject_name', 
+            'university',
         ]
     
     def create(self, validated_data):
-        # جدا کردن نام درس از داده‌ها
         subject_name = validated_data.pop('subject_name', None)
-
+        university = validated_data.pop('university', None)
+        
         user = User.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
             username=validated_data['username'],
-            scenario_credit=0, # مقدار اولیه صفر است تا با کردیت درس جمع شود
+            scenario_credit=0,
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             personal_number=validated_data['personal_number'],
             phone_number=validated_data.get('phone_number', ''),
             major=validated_data['major'],
+            university=university,
         )
         
         try:
@@ -277,7 +279,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         }
 
 class UserSerializer(serializers.ModelSerializer):
-    # فیلدهای اضافی برای نمایش نام‌ها به جای ID
     main_role = serializers.CharField(source='main_role.name', read_only=True)
     university = serializers.CharField(source='university.english_name', read_only=True)
     faculty = serializers.CharField(source='faculty.name', read_only=True)
@@ -286,7 +287,6 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        # لیست کامل تمام فیلدهایی که ممکن است نمایش داده شوند
         fields = [
             "first_name",
             "last_name",
@@ -306,54 +306,28 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def to_representation(self, instance):
-        """
-        این متد تصمیم می‌گیرد چه فیلدهایی بر اساس نقش کاربر درخواست‌دهنده نمایش داده شود.
-        """
-        # دریافت داده‌های کامل به صورت دیکشنری
         ret = super().to_representation(instance)
         
         request = self.context.get('request')
         if not request or not request.user.is_authenticated:
-            # اگر کاربر لاگین نیست یا درخواست موجود نیست، کمترین دسترسی را بده
             return self.get_public_fields(ret)
 
         current_user = request.user
         role_name = current_user.main_role.name.lower() if current_user.main_role else ""
 
-        # 1. سوپرادمین: دسترسی کامل به همه
         if current_user.is_superuser or role_name == 'superadmin':
             return ret
 
-        # 2. ادمین
         if role_name == 'admin':
-            # اگر کاربر هدف هم‌دانشگاهی ادمین باشد -> دسترسی کامل
-            if current_user.university == instance.university:
-                return ret
-            # در غیر این صورت (دانشگاه دیگر) -> دسترسی محدود
             return self.get_public_fields(ret)
 
-        # 3. استاد (Teacher)
         if role_name == 'teacher':
-            # چک می‌کنیم آیا این دانشجو (`instance`) در یکی از کلاس‌های این استاد (`current_user`) هست یا نه
-            # از رابطه معکوس studentsections در مدل User استفاده می‌کنیم
-            # مسیر: User -> StudentSection -> Section -> Teacher
-            is_student_of_teacher = instance.studentsections.filter(
-                section__teacher=current_user
-            ).exists()
-            
-            if is_student_of_teacher:
-                return ret
-            else:
-                return self.get_public_fields(ret)
+            return self.get_public_fields(ret)
 
-        # 4. دانشجو (Student) یا سایر نقش‌ها
-        # دسترسی محدود (Public)
-        return self.get_public_fields(ret)
+        else:
+            return self.get_public_fields(ret)
 
     def get_public_fields(self, data):
-        """
-        فیلتر کردن دیکشنری دیتا برای نمایش فقط فیلدهای عمومی (حالت Student)
-        """
         public_fields = [
             "first_name",
             "last_name",
