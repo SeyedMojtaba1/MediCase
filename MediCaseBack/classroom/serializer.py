@@ -558,7 +558,19 @@ class StudentSubjectRetrieveSerializer(serializers.ModelSerializer):
 class HospitalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hospital
-        fields = ['english_name', 'persian_name', 'type', 'address', 'city', 'province', 'phone_number', 'email', 'website', 'capacity', 'description']
+        fields = [
+            'english_name', 
+            'persian_name', 
+            'type', 
+            'address', 
+            'city', 
+            'province', 
+            'phone_number', 
+            'email', 
+            'website', 
+            'capacity', 
+            'description'
+        ]
         extra_kwargs = {'url': {'lookup_field': 'english_name'}}
 
 class HospitalSubjectSerializer(serializers.ModelSerializer):

@@ -159,6 +159,11 @@ class Hospital(models.Model):
     province = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=15, blank=True)
     email = models.EmailField(blank=True)
+    hospital_image = models.ImageField(
+        upload_to='hospital/',
+        blank=True,
+        null=True,
+    )
     website = models.URLField()
     capacity = models.IntegerField()
     description = models.TextField(blank=True, max_length=500)
