@@ -128,7 +128,7 @@ export const routes: Routes = [
   {path: 'forget', component: Forget},
   {path: 'dashboard', redirectTo: 'dashboard/s', pathMatch: 'full'},
   {path: '', redirectTo: 'dashboard/s', pathMatch: 'full'},
-  {path: '**', redirectTo: '404'},
+  // {path: '**', redirectTo: '404'},
   {
     path: '404', component: DashboardLayout, children: [
       {path: '', component: NotFound404},

@@ -425,7 +425,7 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/scenariolist/' + localStorage.getItem('personal_number') + '/', {
+    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/scenariolist/', {
       headers,
       withCredentials: true
     });

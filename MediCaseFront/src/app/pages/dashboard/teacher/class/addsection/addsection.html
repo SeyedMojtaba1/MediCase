@@ -23,19 +23,24 @@
     <p-select [(ngModel)]="data.semester_code" [options]="semesters" class="w-60 " optionLabel="code" optionValue="code"
               placeholder="انتخاب ترم"/>
   </div>
-
-  <div class="flex items-center gap-4 mb-8  w-full justify-between">
-    <label class="font-semibold " for="email">تاریخ شروع کلاس</label>
-    <input [(ngModel)]="this.start_date" class="font-Vazirmatn w-60 " data-jdp pInputText/>
-
+  <div class="flex items-center gap-4 mb-8 w-full justify-between">
+    <label class="font-semibold">تاریخ شروع کلاس</label>
+    <input (ngModelChange)="updateMinEndDate($event)"
+           [(ngModel)]="this.start_date"
+           class="font-Vazirmatn w-60"
+           data-jdp
+           data-jdp-min-date="today"
+           pInputText/>
   </div>
 
-  <div class="flex items-center gap-4 mb-8  w-full justify-between">
-    <label class="font-semibold" for="email">تاریخ پایان کلاس</label>
-    <input [(ngModel)]="this.end_date" class="font-Vazirmatn w-60 " data-jdp pInputText/>
-
+  <div class="flex items-center gap-4 mb-8 w-full justify-between">
+    <label class="font-semibold">تاریخ پایان کلاس</label>
+    <input [(ngModel)]="this.end_date"
+           class="font-Vazirmatn w-60"
+           data-jdp
+           id="end-date-input"
+           pInputText/>
   </div>
-
   <div class="flex items-center gap-4 mb-8 w-full justify-between">
     <label class="font-semibold" for="desc">توضیحات</label>
     <textarea [(ngModel)]="data.description" class="w-60" id="desc" pInputText placeholder="توضیحات کلاس"></textarea>

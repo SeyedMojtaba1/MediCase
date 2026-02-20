@@ -1,14 +1,12 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {DashNav} from '../../shared/components/dash-nav/dash-nav';
 import {Master} from '../../core/services/master';
-import {Card} from '../../layouts/card/card';
 import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-blog',
   imports: [
     DashNav,
-    Card,
     RouterLink,
 
 

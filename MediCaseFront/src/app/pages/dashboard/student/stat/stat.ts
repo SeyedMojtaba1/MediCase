@@ -64,11 +64,7 @@ export class Stat {
 
     return feedbacks[feedbacks.length - 1].tracking_code;
   }
-
-  toggleAlert(alertId: string) {
-    this.expandedAlerts[alertId] = !this.expandedAlerts[alertId];
-  }
-
+  
   createScenrio() {
     this.master.pulmonologyScenarioCreate().subscribe({
       next: data => {

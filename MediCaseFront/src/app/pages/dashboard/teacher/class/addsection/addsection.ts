@@ -54,20 +54,24 @@ export class Addsection implements AfterViewInit {
   constructor(public router: Router, public master: Master, public toast: ToastService, public changeDetectorRef: ChangeDetectorRef) {
   }
 
-
   ngAfterViewInit() {
-    // شروع کار datepicker
+    // تنظیم کلی: هر اینپوت محدودیت را از اتریبیوت خودش بخواند
     jalaliDatepicker.startWatch({
-      // تنظیمات اختیاری
       minDate: "attr",
-      maxDate: "attr",
-      date: {
-        // تاریخ پیش‌فرض
-        year: 1403,
-        month: 1,
-        day: 1
-      }
+      autoHide: true
     });
+  }
+
+  updateMinEndDate(newStartDate: string) {
+    const endDateElement = document.getElementById('end-date-input');
+
+    if (endDateElement && newStartDate) {
+      endDateElement.setAttribute('data-jdp-min-date', newStartDate);
+
+      if (this.end_date && this.end_date < newStartDate) {
+        this.end_date = "";
+      }
+    }
   }
 
   ngOnInit() {
@@ -119,11 +123,6 @@ export class Addsection implements AfterViewInit {
 
   }
 
-  Confirm() {
-
-    this.master.createSection(this.data)
-    this.close.emit();
-  }
 
   Back() {
     this.close.emit();

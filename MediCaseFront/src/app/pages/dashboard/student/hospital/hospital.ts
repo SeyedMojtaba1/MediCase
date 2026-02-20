@@ -56,7 +56,7 @@ export class Hospital {
 
   hasAccess(sub: any) {
     return this.list.some(
-      (x: any) => x.subject === sub.english_name && x.access_status === true
+      (x: any) => x.english_name === sub.english_name && x.access_status
     );
   }
 }

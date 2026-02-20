@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {Action} from '../../../shared/components/button/action/action';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {Master} from '../../../core/services/master';
+import {ToastService} from '../../../core/services/toast';
 
 @Component({
   selector: 'app-scenario-start',
@@ -25,7 +26,7 @@ export class ScenarioStart implements OnInit, OnDestroy {
   tracking_code = signal('')
 
 
-  constructor(public master: Master) {
+  constructor(public master: Master, public Toast: ToastService, public router: Router) {
   }
 
   ngOnInit() {
@@ -42,15 +43,23 @@ export class ScenarioStart implements OnInit, OnDestroy {
         const list = Array.isArray(data) ? data : (data?.body || []);
 
         if (list.length > 0) {
-          const firstPendingTask = list.find((item: any) => item.done === false);
+          const firstPendingTask = list.find((item: any) => item.is_done === false);
 
           if (firstPendingTask) {
             this.tracking_code.set(firstPendingTask.tracking_code);
           } else {
-            console.warn('تسک انجام نشده‌ای یافت نشد.');
+            setTimeout(() => {
+                this.Toast.showError('ابتدا نیاز است یک بیمار را پذیرش کنید')
+              }, 2000
+            )
+            this.router.navigateByUrl("dashboard/s/stat");
           }
         } else {
-          console.warn('لیست دریافتی خالی است یا آرایه نیست.');
+          setTimeout(() => {
+              this.Toast.showError('ابتدا نیاز است یک بیمار را پذیرش کنید')
+            }, 2000
+          )
+          this.router.navigateByUrl("dashboard/s/stat");
         }
       },
       error: err => {

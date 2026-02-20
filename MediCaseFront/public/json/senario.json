@@ -11,7 +11,6 @@
       "marital_status": ""
     },
     "chief_complaint": "contains patient's main reason of visit and its onset time"
-
   },
   "history_taking": {
     "present_illness": {
@@ -95,27 +94,25 @@
     }
   },
   "physical_exam": {
-      "vital_signs": {
-        "BP": "فشار خون",
-        "T": "دمای بدن",
-        "PR": "ضربان قلب",
-        "RR": "تعداد تنفس",
-        "SpO2": "غلظت O2",
-        "GCS": "سطح هوشیاری"
+    "vital_signs": {
+      "BP": "فشار خون",
+      "T": "دمای بدن",
+      "PR": "ضربان قلب",
+      "RR": "تعداد تنفس",
+      "SpO2": "غلظت O2",
+      "GCS": "سطح هوشیاری"
     },
-      "general_appearance": {
-                "mood_and_behavior": "مود و رفتار",
-                 "overall_appearance": { "nutritional_status": "ظاهر کلی" },
-                "posture_and_position": {
-        "position_of_comfort": "حالت و وضعیت"
-      },
-                "level_of_consciousness": "سطح هوشیاری",
-                "cardiopulmonary_and_circulatory_clues": {
-                    "edema": "اِدم",
-                    "dyspnea": "دیسپنه",
-                    "cyanosis": "سیانوز"
-                }
-            },
+    "general_appearance": {
+      "mood_and_behavior": "مود و رفتار",
+      "overall_appearance": "ظاهر کلی",
+      "posture_and_position": "حالت و وضعیت",
+      "level_of_consciousness": "سطح هوشیاری",
+      "cardiopulmonary_and_circulatory_clues": {
+        "edema": "اِدم",
+        "dyspnea": "دیسپنه",
+        "cyanosis": "سیانوز"
+      }
+    },
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": "تقارن و ضایعات",
@@ -145,9 +142,8 @@
         "carotid_bruit": "برویی کاروتید",
         "lymph_nodes_size_consistency": "سایز و قوام لنف نودها",
         "lymph_nodes_mobility_tenderness": "تحرک و حساسیت به لمس لنف نودها"
-        
-
-    }},
+      }
+    },
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": "استفاده از عضلات فرعی",
@@ -162,7 +158,8 @@
         "breath_sounds": "صداهای تنفسی",
         "breath_sounds_intensity": "شدت صداهای تنفسی",
         "adventitious_sounds": "صداهای اضافی"
-    }},
+      }
+    },
     "cardiovascular_system": {
       "JVP_assessment": "فشار ورید ژوگولار",
       "palpation": {
@@ -171,7 +168,7 @@
       },
       "auscultation": {
         "heart_sounds_s1_s2": "صداهای قلب S1-S2",
-        "extra_sounds_s3_s4_murmurs":"صدا های اضافه قلب S3-S4",
+        "extra_sounds_s3_s4_murmurs": "صدا های اضافه قلب S3-S4",
         "murmurs": "Murmur"
       },
       "peripheral_pulses_and_extremities": {
@@ -187,7 +184,6 @@
         "bowel_sounds": "صداهای روده",
         "vascular_bruits": "برویی عروق شکمی"
       },
-      
       "percussion": {
         "general": "صداهای دق",
         "organ_borders": "حدود کبد و طحال"
@@ -195,10 +191,9 @@
       "palpation": {
         "superficial_tenderness": "لمس سطحی",
         "deep_masses_and_organs": "ارگان ها و توده های عمقی",
-              "peritoneal_signs": " علائم پریتونیت "
-
+        "peritoneal_signs": " علائم پریتونیت "
       },
-      "peritoneal_signs":"علائم صفراوی"
+      "peritoneal_signs": "علائم صفراوی"
     },
     "neurological": {
       "mental_status_and_LOC": "وضعیت ذهنی و سطح هوشیاری",
@@ -223,41 +218,41 @@
   },
   "paraclinic": {
     "basic_blood_tests": {
-                "BMP": {
-                    "Na": "Na",
-                    "BUN": "BUN",
-                    "Cr": "Cr"
-                },
-                "CBC": {
-                    "WBC": "WBC",
-                    "Hb": "Hb",
-                    "Plt": "Plt"
-                },
-                "ESR": "ESR",
-                "CRP": "CRP",
-                "VBG": {
-                    "pH": "ph",
-                    "PCO2": "PCO2",
-                    "HCO3" : "HCO3"
-                },
-                "LFTs": {
-                    "ALT": "ALT",
-                    "AST": "AST"
-                }
+      "BMP": {
+        "Na": "Na",
+        "BUN": "BUN",
+        "Cr": "Cr"
+      },
+      "CBC": {
+        "WBC": "WBC",
+        "Hb": "Hb",
+        "Plt": "Plt"
+      },
+      "ESR": "ESR",
+      "CRP": "CRP",
+      "VBG": {
+        "pH": "ph",
+        "PCO2": "PCO2",
+        "HCO3": "HCO3"
+      },
+      "LFTs": {
+        "ALT": "ALT",
+        "AST": "AST"
+      }
     },
-     "specialized_lung_tests": {
-                "D_dimer": "D dimer",
-                "Sputum_AFB": "Sputum AFB",
-                "BNP_NT_proBNP": "BNP NT proBNP",
-                "Sputum_analysis": {
-                    "Gram_Stain": "Gram Stain",
-                    "Sample_Quality": "Sample Quality"
-                },
-                "a1_antitrypsin_level": "a1 antitrypsin level"
-            },
+    "specialized_lung_tests": {
+      "D_dimer": "D dimer",
+      "Sputum_AFB": "Sputum AFB",
+      "BNP_NT_proBNP": "BNP NT proBNP",
+      "Sputum_analysis": {
+        "Gram_Stain": "Gram Stain",
+        "Sample_Quality": "Sample Quality"
+      },
+      "a1_antitrypsin_level": "a1 antitrypsin level"
+    },
     "immunity_and_serology": {
-       "HIV_test": "HIV test",
-        "Autoimmune_pannel_ANA_ANCA": "Autoimmune pannel ANA ANCA"
+      "HIV_test": "HIV test",
+      "Autoimmune_pannel_ANA_ANCA": "Autoimmune pannel ANA ANCA"
     },
     "simple_imaging": {
       "Chest_X_Ray": {
@@ -268,19 +263,18 @@
       "Chest_CT_CTPA": {
         "Lung_Parenchyma_and_Pleura": ""
       },
-       "Pet_scan": "Pet scan",
+      "Pet_scan": "Pet scan",
       "MRI_chest": "MRI"
     },
     "functional_tests": {
-      "dlco":"DLCO",
+      "dlco": "DLCO",
       "peak_flow": "Peak Flow",
-      "Spirometry":{
-        "result" : "result",
-        "reversibility" : "Reversibillity"},
+      "Spirometry": {
+        "result": "result",
+        "reversibility": "Reversibillity"
+      },
       "plethysmography": "plethysmography"
     },
-
-    
     "procedures": {
       "Bronchoscopy": "Bronchoscopy",
       "torachonthesis": "thoracentesis"
