@@ -68,27 +68,23 @@ class RegisterSerializer(serializers.ModelSerializer):
             role = Role.objects.get(name=validated_data['main_role'])
             user.main_role = role
         except Role.DoesNotExist:
-            # در صورت نبود نقش، می‌توان خطا داد یا نقش پیش‌فرض گذاشت
             pass
         
         user.save()
 
-        # منطق اختصاص کردیت به درس و آپدیت کردیت کلی
         if subject_name:
             subject = Subject.objects.filter(english_name=subject_name).first()
             if subject:
                 credit_amount = 100
                 
-                # 1. ایجاد کردیت اختصاصی برای درس
                 StudentCredit.objects.create(
                     user=user,
                     subject=subject,
                     balance=credit_amount
                 )
                 
-                # 2. اضافه کردن به کردیت کلی کاربر (مجموع همه درس‌ها)
                 user.scenario_credit += credit_amount
-                user.save() # ذخیره تغییرات در مدل User
+                user.save()
                 
             else:
                 logger.warning(f"Subject '{subject_name}' not found for user {user.username}")
@@ -317,12 +313,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         if current_user.is_superuser or role_name == 'superadmin':
             return ret
-
-        if role_name == 'admin':
-            return self.get_public_fields(ret)
-
-        if role_name == 'teacher':
-            return self.get_public_fields(ret)
 
         else:
             return self.get_public_fields(ret)

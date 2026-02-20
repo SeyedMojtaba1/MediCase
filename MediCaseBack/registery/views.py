@@ -304,7 +304,7 @@ class UserViewSet(ReadOnlyModelViewSet):
 
         if role_name == 'student':
             if user.university:
-                return queryset.filter(university=user.university, is_active=True)
+                return queryset.filter(is_active=True)
             return queryset.none()
             
         return queryset
