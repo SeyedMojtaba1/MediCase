@@ -15,6 +15,7 @@ from django.core.mail import EmailMultiAlternatives
 from classroom.models import Subject, StudentCredit
 import environ
 from .utils import send_reset_otp_task
+from university.models import University
 import logging
 import random
 import datetime
@@ -28,8 +29,13 @@ User = get_user_model()
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     main_role = serializers.CharField()
-    # فیلد ورودی برای نام درس (فقط نوشتن)
     subject_name = serializers.CharField(write_only=True, required=False, allow_null=True)
+    university = serializers.SlugRelatedField(
+        queryset=University.objects.all(),
+        slug_field='english_name',
+        required=False,
+        allow_null=True
+    )
     
     class Meta:
         model = User
