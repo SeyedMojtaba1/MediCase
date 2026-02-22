@@ -84,3 +84,5 @@ class PulmonologyFeedback(models.Model):
     generated = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     tracking_code = models.CharField(max_length=50, unique=True, null=True, blank=True, db_index=True)
+    is_shared = models.BooleanField(default=False)
+

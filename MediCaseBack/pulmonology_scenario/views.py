@@ -512,3 +512,39 @@ class AdvancedUniversityRankingView(APIView):
         serializer = RankingOutputSerializer(result_page, many=True, context={'request': request})
 
         return paginator.get_paginated_response(serializer.data)
+
+@extend_schema(responses={200: {"type": "object", "properties": {"is_shared": {"type": "boolean"}, "message": {"type": "string"}}}})
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def toggle_feedback_share(request, tracking_code):
+    try:
+        feedback = PulmonologyFeedback.objects.get(
+            tracking_code=tracking_code, 
+            attempt__user=request.user
+        )
+    except PulmonologyFeedback.DoesNotExist:
+        return Response(
+            {"detail": "فیدبک یافت نشد یا شما اجازه تغییر آن را ندارید."}, 
+            status=status.HTTP_404_NOT_FOUND
+        )
+    
+    feedback.is_shared = not feedback.is_shared
+    feedback.save()
+    
+    msg = "فیدبک شما با موفقیت به اشتراک گذاشته شد." if feedback.is_shared else "اشتراک‌گذاری فیدبک لغو شد."
+    
+    return Response({
+        "is_shared": feedback.is_shared,
+        "message": msg
+    }, status=status.HTTP_200_OK)
+
+
+class SharedFeedbackRetrieveView(generics.RetrieveAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = FeedbackRetrieveSerializer
+    lookup_field = 'tracking_code'
+    lookup_value_regex = '[^/]+'
+
+    def get_queryset(self):
+        return PulmonologyFeedback.objects.filter(is_shared=True)

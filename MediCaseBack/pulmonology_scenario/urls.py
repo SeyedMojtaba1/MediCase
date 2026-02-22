@@ -16,4 +16,6 @@ urlpatterns = [
    path('daily-scenario/start/', views.GetDailyScenarioView.as_view(), name='start-daily-scenario'),
    path('daily-scenario/ranking/', views.DailyScenarioRankingView.as_view(), name='daily-scenario-ranking'),
    path('advancedranking/', views.AdvancedUniversityRankingView.as_view(), name='advanced-ranking'),
+   path('toggle-share-feedback/<str:tracking_code>/', views.toggle_feedback_share, name='toggle-share-feedback'),
+   path('shared-feedback/<str:tracking_code>/', views.SharedFeedbackRetrieveView.as_view(), name='shared-feedback-retrieve'),
 ]
