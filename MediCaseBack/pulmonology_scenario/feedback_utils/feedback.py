@@ -64,8 +64,10 @@ class ClinicalEvaluator:
         
         correct_final = self.optimal.get("final_diagnosis", {}).get("disease", "")
         
-        student_diff = self.student.get("student_selected_differentials", [])
-        student_final = self.student.get("student_final_diagnosis", "")
+        student_diff_dict = self.student.get("differential_diagnosis", {})
+        student_diff = list(student_diff_dict.keys()) if isinstance(student_diff_dict, dict) else self.student.get("student_selected_differentials", [])
+        
+        student_final = self.student.get("final_diagnosis", {}).get("disease", self.student.get("student_final_diagnosis", ""))
 
         is_final_correct = (student_final.lower() == correct_final.lower())
         
