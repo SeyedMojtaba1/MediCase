@@ -29,7 +29,6 @@ export class EditSection {
   @Output() close = new EventEmitter<void>();
   @Input() sectionID = ''
 
-  visible = false;
   code = ''
   start_date: string = '';
   end_date: string = '';

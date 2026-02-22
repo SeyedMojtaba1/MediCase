@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {APP_CONFIG} from '../../config/app.config';
@@ -436,7 +436,7 @@ export class Master {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     })
-    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/feedbacklist/' + localStorage.getItem('personal_number') + '/', {
+    return this.http.get<any>(this.BASE_URL + 'pulmonologyscenario/feedbacklist/', {
       headers,
       withCredentials: true
     })
@@ -479,8 +479,76 @@ export class Master {
 
   }
 
+
+// ***************************************************************************
+// ***************************************************************************
+//                              ranking
+// ***************************************************************************
+// ***************************************************************************
+
+  advancedRanking(
+    date?: string,
+    section_id?: string,
+    subject?: any
+  ): Observable<HttpResponse<any>> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    });
+
+    let params = new HttpParams();
+
+    if (date) {
+      params = params.set('date', date);
+    }
+
+    if (section_id) {
+      params = params.set('section_id', section_id);
+    }
+
+    if (subject) {
+      params = params.set('subject', subject);
+    }
+
+    return this.http.get<any>(
+      this.BASE_URL + 'pulmonologyscenario/advancedranking/',
+      {
+        headers,
+        params,
+        withCredentials: true,
+        observe: 'response'
+      }
+    );
+  }
+
+
+// ***************************************************************************
+// ***************************************************************************
+//                              daily scenario
+// ***************************************************************************
+// ***************************************************************************
+
+
+// ***************************************************************************
+// ***************************************************************************
+//                              notifications
+// ***************************************************************************
+// ***************************************************************************
+
+
+// ***************************************************************************
+// ***************************************************************************
+//                              tutorial
+// ***************************************************************************
+// ***************************************************************************
+
+
+// ***************************************************************************
+// ***************************************************************************
+//                              university
+// ***************************************************************************
+// ***************************************************************************
+
+  
 }
-
-
-
-

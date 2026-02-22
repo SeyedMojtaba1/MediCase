@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {Master} from '../../../../../core/services/master';
 import {DashNavT} from '../../../../../shared/components/dash-nav-t/dash-nav-t';
@@ -31,9 +31,10 @@ export class SectionPageT {
   visible = false
   isModalOpen = false
 
-  edit_isModalOpen = false
+  edit_isModalOpen = signal(false)
   edit_visible = false
   protected readonly APP_CONFIG = APP_CONFIG;
+  protected readonly console = console;
 
   constructor(public route: ActivatedRoute, public master: Master, public changeDetectorRef: ChangeDetectorRef) {
   }
@@ -54,7 +55,6 @@ export class SectionPageT {
 
 
   }
-
 
   addStudentClick() {
     this.visible = true

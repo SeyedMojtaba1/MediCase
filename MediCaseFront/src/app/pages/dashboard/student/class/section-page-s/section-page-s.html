@@ -29,6 +29,14 @@
       <div
         class="absolute inset-5 flex flex-row items-end gap-3 justify-end cursor-pointer"
       >
+        <a [routerLink]="'/dashboard/s/hospital/select/'+ this.section_detail.subject"
+
+           class="flex hover:scale-105 transition-all duration-300 flex-row gap-2 items-center p-2 px-3 rounded-md bg-[#148591]/75">
+          <p class="text-white text-sm font-light">
+            ویزیت بیمار
+          </p>
+          <img class="brightness-0 h-5 w-auto invert-100" src="images/svg/add-large-fill.svg"/>
+        </a>
       </div>
 
 

@@ -8,9 +8,14 @@
     <div
       class="bg-amber-50/50 border-r-4 border-amber-500 p-4 rounded-lg transition-all shadow-sm">
       <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <span class="w-2 h-2 bg-amber-500 rounded-full ml-3"></span>
-          <span class="font-bold text-amber-900">توجه : پس از پذیرش بیمار، آماده سازی مقدمات پذیرش در حدود 30-60 ثانیه به طول می انجامد. پس از پایان این زمان، لیست را refresh کنید</span>
+        <div class="flex items-start">
+          <span class="w-2 h-2 mt-2 bg-amber-500 rounded-full ml-3"></span>
+          <div class="flex flex-col">
+            <span class="font-bold text-amber-900">توجه : پس از پذیرش بیمار، آماده سازی مقدمات پذیرش در حدود 30-60 ثانیه به طول می انجامد. پس از پایان این زمان، لیست را refresh کنید</span>
+            <br>
+
+            <span class=" text-amber-900">در صورتی که بیمار خود را پذیرش و معاینه کرده اید، حدود 10 ثانیه صبر کرده و مجددا صفحه را به روز رسانی کنید تا نتیجه ویزیت بیمار را مشاهده کنید</span>
+          </div>
         </div>
 
       </div>
@@ -20,7 +25,10 @@
   </div>
 
   <div class="w-full flex flex-row justify-between px-10 text-gray-400 text-sm items-center">
-    <p>{{ data?.length }} نتیجه یافت شد</p>
+    <div class="flex flex-row items-center gap-5">
+      <p>{{ data?.length }} نتیجه یافت شد</p>
+      <p>اعتبار شما: {{ this.credit() }} بیمار </p>
+    </div>
     <div class="flex flex-row gap-5 items-center">
       <app-action (click)="createScenrio()" icon="images/svg/add-large-fill.svg" text="پذیرش بیمار"></app-action>
       <app-action (click)="this.getList()" icon="images/svg/refresh-line.svg"></app-action>
@@ -34,6 +42,7 @@
       <tr>
         <th class="px-6 py-3" scope="col">#</th>
         <th class="px-6 py-3" scope="col">کد پیگیری</th>
+        <th class="px-6 py-3" scope="col">تاریخ ویزیت بیمار</th>
         <th class="px-6 py-3" scope="col">بیماری</th>
         <th class="px-6 py-3" scope="col">نمره</th>
         <th class="px-6 py-3" scope="col">وضعیت</th>
@@ -47,6 +56,13 @@
 
             <td class="px-6 py-4 font-mono">{{ a.tracking_code }}</td>
 
+            <td>
+              @if (a.is_done) {
+                {{ formatDate(a.start_time) }}
+              } @else {
+                <span class="text-gray-400 text-xs">—</span>
+              }
+            </td>
             <td>
               @if (a.is_done) {
                 {{ a.disease_name }}

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, signal} from '@angular/core';
 import {DashNav} from '../../../../shared/components/dash-nav/dash-nav';
 import {Master} from '../../../../core/services/master';
 import {Action} from '../../../../shared/components/button/action/action';
@@ -19,6 +19,7 @@ export class Stat {
 
   data: any
   resData: any
+  credit = signal(0)
   expandedAlerts: { [key: string]: boolean } = {
     alert1: false,
     alert2: false
@@ -31,8 +32,14 @@ export class Stat {
 
   ngOnInit() {
     this.getList()
+    this.getCredit()
   }
 
+  getCredit() {
+    this.master.profile().subscribe(profile => {
+      this.credit.set(profile.body.scenario_credit)
+    })
+  }
 
   getList() {
     this.master.scenarioList().subscribe({
@@ -64,7 +71,7 @@ export class Stat {
 
     return feedbacks[feedbacks.length - 1].tracking_code;
   }
-  
+
   createScenrio() {
     this.master.pulmonologyScenarioCreate().subscribe({
       next: data => {
@@ -79,4 +86,19 @@ export class Stat {
       }
     })
   }
+
+
+  formatDate(dateStr: string): string {
+    if (!dateStr) return '—';
+
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat('fa-IR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
+  }
+
 }

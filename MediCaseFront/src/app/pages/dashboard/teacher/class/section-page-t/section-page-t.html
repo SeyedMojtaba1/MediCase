@@ -27,22 +27,22 @@
         </p>
       </div>
       <div
-        class="absolute inset-5 flex flex-row items-end gap-3 justify-end cursor-pointer"
+        class="absolute inset-5 flex flex-row items-end gap-3 justify-end "
       >
         <div class="flex flex-row items-center gap-3">
           <div
             (click)="isModalOpen=true;visible=true"
             class="flex hover:scale-105 transition-all duration-300 flex-row gap-2 items-center p-2 px-3 rounded-md bg-[#148591]/75">
-            <p class="text-white text-sm font-light">
+            <p class="text-white cursor-pointer text-sm font-light">
               افزودن دانشجو
             </p>
             <img class="brightness-0 h-5 w-auto invert-100" src="images/svg/add-large-fill.svg"/>
           </div>
           <!--          <div class="w-[1px] h-5 bg-white"></div>-->
-          <div (click)="edit_isModalOpen=true;edit_visible=true"
+          <div (click)="edit_isModalOpen.set(true);edit_visible=true;this.changeDetectorRef.detectChanges()"
                class="flex flex-row gap-2 items-center p-2 px-3 rounded-md ">
 
-            <p class="text-white text-sm font-light">
+            <p class="text-white cursor-pointer text-sm font-light">
               ویرایش کلاس
             </p>
             <img class="brightness-0 h-5 w-auto invert-100" src="images/svg/edit-2-fill.svg"/>
@@ -131,6 +131,6 @@
 
 
 <app-edit-section
-  (close)="edit_isModalOpen = false" [sectionID]="section"
-  [show]="edit_isModalOpen"
+  (close)="edit_isModalOpen.set(false) " [sectionID]="section"
+  [show]="edit_isModalOpen()"
 ></app-edit-section>

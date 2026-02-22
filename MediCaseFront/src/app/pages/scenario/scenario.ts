@@ -87,10 +87,7 @@ export class Scenario {
   physicalExamBySection: Record<string, Question[]> = {};
   questionsBySection: Record<string, Question[]> = {};
   paraclinicBySection: Record<string, Question[]> = {};
-  showDifferentialDiagnosisModal: boolean = false;
-  differentialDiagnosisStage: number = 1;
-  selectedDifferentialDiseases: Disease[] = [];
-  finalDiagnosis: string | null = null;
+  showExitModal: boolean = false;
   scenarioData: any = Questions;
 // در کلاس Scenario
   sectionMedia: any = {
@@ -262,16 +259,35 @@ export class Scenario {
   mediaUrl: string = "https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg";
   public code: any;
   public trackingCode: any;
+
+// در کلاس Scenario این متغیرها را اضافه یا اصلاح کنید
+  showDifferentialDiagnosisModal: boolean = false;
+  pleuralAssessmentStage: number = 1;
+  differentialDiagnosisStage: number = 1;
+  finalDiagnosis: string | null = null;
+  selectedDifferentialDiseases: any[] = []; // لیستی که بیماری‌های مرحله اول در آن ذخیره می‌شوند
+  pleuralAssessmentData = {
+    has_effusion: 'false',
+    need_aspiration: 'false',
+    effusion_type: 'none'
+  };
   protected readonly APP_CONFIG = APP_CONFIG;
   protected readonly sessionStorage = sessionStorage;
   protected readonly Log = Log;
   protected readonly console = console;
-  private timeLeft = 15 * 60;
+  private timeLeft = 60 * 15;
   private intervalId: any;
 
   constructor(public router: Router, public changeDetectorRef: ChangeDetectorRef, public master: Master, public route: ActivatedRoute) {
   }
 
+  get filteredFinalDiseases() {
+    return this.selectedDifferentialDiseases.filter(d => d.name !== 'Pleural_Effusion');
+  }
+
+  get filteredInitialDiseases() {
+    return this.diseases.filter(d => d.name !== 'Pleural_Effusion');
+  }
 
   ngOnInit() {
 
@@ -326,6 +342,79 @@ export class Scenario {
     })
   }
 
+
+// ۴. مدیریت مراحل افیوژن
+  setHasEffusion(value: boolean) {
+    this.pleuralAssessmentData.has_effusion = value ? 'true' : 'false';
+    if (value) {
+      this.differentialDiagnosisStage = 4;
+    } else {
+      this.pleuralAssessmentData.need_aspiration = 'false';
+      this.pleuralAssessmentData.effusion_type = 'none';
+      this.finishAndSaveLog();
+    }
+  }
+
+  setNeedAspiration(value: boolean) {
+    this.pleuralAssessmentData.need_aspiration = value ? 'true' : 'false';
+    if (value) {
+      this.differentialDiagnosisStage = 5;
+    } else {
+      this.pleuralAssessmentData.effusion_type = 'none';
+      this.finishAndSaveLog();
+    }
+  }
+
+  setEffusionType(type: string) {
+    this.pleuralAssessmentData.effusion_type = type;
+    this.finishAndSaveLog();
+  }
+
+// ۵. متد ثبت نهایی لاگ با ساختار درخواستی شما
+  finishAndSaveLog() {
+    this.log.final_diagnosis = {
+      "disease": this.finalDiagnosis
+    };
+    this.log.pleural_effusion_assessment = {
+      "has_effusion": this.pleuralAssessmentData.has_effusion,
+      "need_aspiration": this.pleuralAssessmentData.need_aspiration,
+      "effusion_type": this.pleuralAssessmentData.effusion_type
+    };
+
+    console.log("Log Saved:", this.log);
+    this.showDifferentialDiagnosisModal = false;
+    this.master.pulmonologyScenarioFeedbackCreate(this.trackingCode, this.log).subscribe({
+      next: data => {
+        this.router.navigateByUrl('/dashboard/s/stat');
+      },
+      error: err => {
+        alert("خطایی وجود داشت. مجددا تلاش کنید")
+      }
+    })
+  }
+
+// ۶. متد بستن مودال
+  closeDifferentialDiagnosisModal() {
+    this.showDifferentialDiagnosisModal = false;
+    this.differentialDiagnosisStage = 1;
+  }
+
+  selectFinalAndNext(diseaseName: string) {
+    this.finalDiagnosis = diseaseName;
+    this.differentialDiagnosisStage = 3; // مرحله ۳: سوال "آیا افیوژن دارد؟"
+  }
+
+  toggleDisease(disease: any) {
+    const index = this.selectedDifferentialDiseases.indexOf(disease);
+    if (index > -1) {
+      this.selectedDifferentialDiseases.splice(index, 1);
+    } else {
+      if (this.selectedDifferentialDiseases.length < 4) {
+        this.selectedDifferentialDiseases.push(disease);
+      }
+    }
+  }
+
   playClick() {
     this.clickSound.currentTime = 0;
     this.clickSound.volume = 0.3
@@ -334,34 +423,6 @@ export class Scenario {
 
   isArray(obj: any): boolean {
     return Array.isArray(obj);
-  }
-
-// در فایل scenario.ts متد setQuestion را پیدا و به این صورت اصلاح کنید:
-
-  setQuestion(q: any) {
-    this.playClick();
-    q.visible = true;
-    q.answer_time = new Date().toLocaleTimeString('fa-IR');
-
-    const paraclinics = this.scenarioData.patient_info.paraclinic; // نام فیلد را طبق سناریو چک کنید
-    const textL2 = this.scenarioData.text_l2.paraclinics;
-
-    // ۱. فیلتر تست‌های خون
-    if (q.id === 'crp' || q.id === 'esr' || q.id.includes('blood')) {
-      q.answer = this.processBasicBloodTests(q.answer, textL2, q.id);
-    }
-    // ۲. مدیریت Thorachocentesis و سایر پروسیجرها که آبجکت هستند
-    else if (q.id === 'thorachocentesis' || typeof q.answer === 'object') {
-      const data = paraclinics[q.id];
-      if (data && typeof data === 'object' && !Array.isArray(data)) {
-        // استفاده از متد بازگشتی برای تبدیل آبجکت به متن خوانا
-        q.answer = this.processFlattenedObject(data, textL2[q.id]);
-      } else {
-        q.answer = data;
-      }
-    } else {
-      q.answer = paraclinics[q.id];
-    }
   }
 
   playSuccess() {
@@ -429,9 +490,10 @@ export class Scenario {
       {id: 4, title: 'پاراکلینیک', icon: 'pi pi-folder'},
       {id: 5, title: 'تشخیص افتراقی', icon: 'pi pi-pencil'},
       {id: 6, title: 'درمان', icon: 'pi pi-lock'},
+      {id: 7, title: 'بازگشت', icon: 'pi pi-sign-out'}
+
     ];
   }
-
 
   toggleMute() {
     this.isMuted.set(!this.isMuted());
@@ -447,12 +509,15 @@ export class Scenario {
     }
   }
 
-// ...
 // در کلاس Scenario
   selectSection(section: Section) {
     if (section.id === 5) {
       this.showDifferentialDiagnosisModal = true;
       this.differentialDiagnosisStage = 1;
+      this.playClick();
+      return;
+    } else if (section.id === 7) {
+      this.showExitModal = true;
       this.playClick();
       return;
     }
@@ -549,22 +614,22 @@ export class Scenario {
     this.playClick();
   }
 
-// ...
 
-  // بستن پاپ‌آپ (به همراه ریست کردن مرحله)
-  closeDifferentialDiagnosisModal() {
-    this.showDifferentialDiagnosisModal = false;
-    this.differentialDiagnosisStage = 1;
-    this.selectedDifferentialDiseases = [];
-    this.finalDiagnosis = null;
+  closeExitModal() {
+    this.showExitModal = false;
     this.playClick();
   }
 
   startTimer() {
     this.intervalId = setInterval(() => {
+
       if (this.timeLeft <= 0) {
         clearInterval(this.intervalId);
-        this.timer.set('00:00')
+        this.timeLeft = 0;
+        this.timer.set('00:00');
+
+        this.showDifferentialDiagnosisModal = true;
+        this.changeDetectorRef.detectChanges();
         return;
       }
 
@@ -574,12 +639,8 @@ export class Scenario {
       const seconds = this.timeLeft % 60;
 
       this.timer.set(`${this.pad(minutes)}:${this.pad(seconds)}`);
-    }, 1000);
-  }
 
-  setTime(path: any) {
-    path = this.timer();
-    this.playClick()
+    }, 1000);
   }
 
   pad(val: number) {
@@ -787,55 +848,10 @@ export class Scenario {
       return;
     }
 
-    const currentTime = this.timer(); // زمان فعلی سناریو
-
-    // --- ۱. Differential Diagnosis با ۸ کلید ثابت ---
-    this.log.differential_diagnosis = {};
-
-    // اول همه ۸ بیماری را به false مقداردهی کن
-    Object.values(this.diseaseCodeMap).forEach(code => {
-      this.log.differential_diagnosis[code] = false;
-    });
-
-    // برای بیماری‌هایی که انتخاب شده‌اند → زمان درج کن
-    this.selectedDifferentialDiseases.forEach(disease => {
-      const code = this.diseaseCodeMap[disease.name];
-      if (code) {
-        this.log.differential_diagnosis[code] = currentTime;
-      }
-    });
-
-// --- ۲. Final Diagnosis ---
-    this.log.final_diagnosis = {};
-
-    const finalCode = this.diseaseCodeMap[this.finalDiagnosis];
-
-    if (finalCode) {
-      this.log.final_diagnosis[finalCode] = currentTime;
-    }
-
-    // --- ۳. اقدامات بعد ---
-    alert(`سناریو به پایان رسید. تشخیص نهایی: ${this.finalDiagnosis}`);
-
-    const treatmentSection = this.sections.find(s => s.id === 6);
-    if (treatmentSection) {
-      treatmentSection.title = 'درمان (پایان یافته)';
-      this.activeSection = 5;
-    }
-
-    this.master.pulmonologyScenarioFeedbackCreate(this.trackingCode, this.log).subscribe({
-      next: (data) => {
-        console.log(data)
-      }
-    });
-
-    this.showDifferentialDiagnosisModal = false;
-    this.fireConfetti();
-    this.router.navigateByUrl('/stat');
-    this.playSuccess();
+    this.playClick();
     this.changeDetectorRef.detectChanges();
-  }
 
+  }
 
   isAnswerArray(answer: any): answer is ParaclinicResult[] {
     return Array.isArray(answer);
@@ -954,6 +970,10 @@ export class Scenario {
     });
   }
 
+  confirmExit() {
+    this.router.navigate(['/dashboard/s/stat']);
+  }
+
 
 // متد کمکی برای پردازش داده‌های Spirometry
   private processSpirometryData(spirometryData: any, textL2: any): string | ParaclinicResult[] {
@@ -1053,3 +1073,6 @@ export class Scenario {
     return flattenedString;
   }
 }
+
+
+

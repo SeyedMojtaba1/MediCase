@@ -14,7 +14,28 @@
     <!-- Sections -->
     <div class="flex flex-col w-full gap-5">
       @for (section of sections; track section) {
-        @if (section.id === 6) {
+        @if (section.id === 7) {
+          <button (click)="playClick(); selectSection(section)"
+                  [ngClass]="activeSection==section.id ? 'bg-red-400' : 'bg-red-600'  "
+                  class="cursor-pointer flex flex-row gap-3 items-center
+                     bg-red-500
+                     text-white
+                     font-semibold
+                     px-6
+                     py-3
+                     rounded-2xl
+                     shadow-[0_4px_0_#BF290D]
+                     hover:bg-red-700
+                     active:translate-y-1
+                     active:shadow-[0_2px_0_#0f6c74]
+                     transition-all
+                     duration-150"
+          >
+            <i [class]="section.icon + ' text-2xl'"></i>
+            <p>{{ section.title }}</p>
+
+          </button>
+        } @else if (section.id === 6) {
           @let isSectionDisabled = true;
 
           <button
@@ -182,7 +203,7 @@
             <span>Past Medical History</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['past_medical_history']"
               alt="toggle icon"
@@ -240,7 +261,7 @@
             <span>Drug History</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['drug_history']"
               alt="toggle icon"
@@ -298,7 +319,7 @@
             <span>Allergies</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['allergies']"
               alt="toggle icon"
@@ -356,7 +377,7 @@
             <span>Family History</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['family_history']"
               alt="toggle icon"
@@ -414,7 +435,7 @@
             <span>Social History</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['social_history']"
               alt="toggle icon"
@@ -470,7 +491,7 @@
             <span>Review Of System</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['ros']"
               alt="toggle icon"
@@ -536,7 +557,7 @@
             <span>معاینه عمومی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['general_appearance']"
               alt="toggle icon"
@@ -595,7 +616,7 @@
             <span>علائم حیاتی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['vital_signs']"
               alt="toggle icon"
@@ -652,7 +673,7 @@
             <span>سر و گردن</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['head_and_neck']"
               alt="toggle icon"
@@ -849,7 +870,7 @@
             <span>سیستم تنفسی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['respiratory_system']"
               alt="toggle icon"
@@ -905,7 +926,7 @@
             <span>سیستم قلبی عروقی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['cardiovascular_system']"
               alt="toggle icon"
@@ -961,7 +982,7 @@
             <span>سیستم شکمی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['abdominal_system']"
               alt="toggle icon"
@@ -1012,7 +1033,7 @@
           >
             <span>سیستم عصبی</span>
             <img
-              [src]="'/images/svg/arrow-down-wide-fill.svg'"
+              [src]="'images/svg/arrow-down-wide-fill.svg'"
               [class.rotate-180]="sectionOpenState['neurological']"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               alt="toggle icon"
@@ -1054,7 +1075,7 @@
           >
             <span>سیستم اسکلتی عضلانی</span>
             <img
-              [src]="'/images/svg/arrow-down-wide-fill.svg'"
+              [src]="'images/svg/arrow-down-wide-fill.svg'"
               [class.rotate-180]="sectionOpenState['musculoskeletal_system']"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               alt="toggle icon"
@@ -1111,7 +1132,7 @@
             <span>آزمایش‌های پایه خون</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['basic_blood_tests']"
               alt="toggle icon"
@@ -1201,7 +1222,7 @@
             <span>آزمایش‌های تخصصی ریه</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['specialized_lung_tests']"
               alt="toggle icon"
@@ -1258,7 +1279,7 @@
             <span>ایمنی و سرولوژی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['immunity_and_serology']"
               alt="toggle icon"
@@ -1318,7 +1339,7 @@
             <span>تست‌های عملکردی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['functional_tests']"
               alt="toggle icon"
@@ -1417,7 +1438,7 @@
             <span>تصویر برداری عمومی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['simple_imaging']"
               alt="toggle icon"
@@ -1473,7 +1494,7 @@
             <span>تصویر برداری تخصصی</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['advanced_imaging']"
               alt="toggle icon"
@@ -1529,7 +1550,7 @@
             <span>پراسیجر ها</span>
 
             <img
-              src="/images/svg/arrow-down-wide-fill.svg"
+              src="images/svg/arrow-down-wide-fill.svg"
               class="w-8 h-8 transition-transform duration-300 invert-100"
               [class.rotate-180]="sectionOpenState['procedures']"
               alt="toggle icon"
@@ -1670,7 +1691,7 @@
         {{ this.first_name() + ' ' + this.last_name() }}
       </p>
 
-      <img class="w-6 h-auto cursor-pointer" src="/images/svg/search.svg">
+      <img class="w-6 h-auto cursor-pointer" src="images/svg/search.svg">
     </div>
 
     <!-- Timer left -->
@@ -1742,7 +1763,7 @@
         'bg-[#148591] hover:bg-[#0f747c] shadow-[0_3px_0_#0f6c74]': selectedDifferentialDiseases.includes(disease),
         'bg-gray-600 hover:bg-gray-700 shadow-[0_3px_0_#4a4a4a]': !selectedDifferentialDiseases.includes(disease)
       }"
-                class="py-2 rounded-lg font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]"
+                class="py-2 cursor-pointer rounded-lg font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]"
               >
                 {{ disease.name.replace('_', ' ') }}
               </button>
@@ -1755,7 +1776,7 @@
                     'bg-green-600 hover:bg-green-700': selectedDifferentialDiseases.length >= 2 && selectedDifferentialDiseases.length <= 4 ,
                     'bg-gray-500 cursor-not-allowed': selectedDifferentialDiseases.length < 2 || selectedDifferentialDiseases.length > 4
                   }"
-                  class="mt-4 w-full py-3 text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#0a522e] active:translate-y-1 active:shadow-[0_2px_0_#0a522e]"
+                  class="mt-4 w-full py-3 cursor-pointer text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#0a522e] active:translate-y-1 active:shadow-[0_2px_0_#0a522e]"
           >
             ادامه (انتخاب تشخیص نهایی)
           </button>
@@ -1774,7 +1795,7 @@
                   'bg-yellow-500 text-gray-900 font-extrabold shadow-[0_3px_0_#9a7000]': finalDiagnosis === disease.name,
                   'bg-gray-600 hover:bg-gray-700 shadow-[0_3px_0_#4a4a4a]': finalDiagnosis !== disease.name
                 }"
-                class="py-2 rounded-lg font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]"
+                class="py-2 rounded-lg cursor-pointer font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]"
               >
                 {{ disease.name.replace('_', ' ') }}
               </button>
@@ -1787,22 +1808,166 @@
                     'bg-red-600 hover:bg-red-700': finalDiagnosis,
                     'bg-gray-500 cursor-not-allowed': !finalDiagnosis
                   }"
-                  class="mt-4 w-full py-3 text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#8c160b] active:translate-y-1 active:shadow-[0_2px_0_#8c160b]"
+                  class="mt-4 cursor-pointer w-full py-3 text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#8c160b] active:translate-y-1 active:shadow-[0_2px_0_#8c160b]"
           >
             پایان سناریو و ذخیره تشخیص نهایی
           </button>
 
           <button (click)="differentialDiagnosisStage = 1; finalDiagnosis = null"
-                  class="mt-3 w-full py-2 text-sm bg-gray-700 hover:bg-gray-600 rounded-lg transition duration-150">
-            بازگشت به مرحله انتخاب ۴ بیماری
+                  class="mt-3 w-full py-2 cursor-pointer text-sm bg-gray-700 hover:bg-gray-600 rounded-lg transition duration-150">
+            بازگشت به مرحله قبل
           </button>
         </div>
       }
 
       <button (click)="closeDifferentialDiagnosisModal()"
-              class="mt-6 w-full py-2 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition duration-150">
+              class="mt-6 cursor-pointer w-full py-2 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition duration-150">
         بستن پنجره
       </button>
+
+    </div>
+  </div>
+}
+
+
+@if (showExitModal) {
+
+  <div class="fixed inset-0 bg-black/50 bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl text-white w-full max-w-lg">
+
+      <h3 class="text-2xl font-bold mb-6 text-center border-b border-white/30 pb-3">
+        بازگشت به صفحه اصلی
+      </h3>
+
+      <p>آیا از خروج خود اطمینان دارید؟<br>
+        در صورت خروج، اقدامات شما ذخیره نخواهد شد.</p>
+
+      <div class="grid grid-cols-2 gap-5">
+
+        <button (click)="confirmExit()"
+                class="cursor-pointer mt-6 w-full py-2 bg-red-700 text-white rounded-lg hover:bg-gray-600 transition duration-150">
+          خروج
+        </button>
+
+        <button (click)="closeExitModal()"
+                class="cursor-pointer mt-6 w-full py-2 bg-green-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition duration-150">
+          ادامه می دهم
+        </button>
+
+
+      </div>
+
+    </div>
+  </div>
+}
+
+
+@if (showDifferentialDiagnosisModal) {
+  <div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+    <div class="bg-[#1e1e1e] w-full max-w-2xl rounded-3xl p-8 text-white shadow-2xl">
+
+      @if (differentialDiagnosisStage === 1) {
+        <h3 class="text-xl font-bold mb-6 text-center text-[#148591]">تشخیص‌های افتراقی (۲ تا ۴ مورد)</h3>
+        <div class="grid grid-cols-2 gap-4">
+          @for (disease of filteredInitialDiseases; track disease.name) {
+            <button (click)="toggleDisease(disease)"
+                    [ngClass]="{
+                'bg-[#148591] hover:bg-[#0f747c] shadow-[0_3px_0_#0f6c74]': selectedDifferentialDiseases.includes(disease),
+                'bg-gray-600 hover:bg-gray-700 shadow-[0_3px_0_#4a4a4a]': !selectedDifferentialDiseases.includes(disease)
+              }"
+                    class="py-2 cursor-pointer rounded-lg font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]">
+              {{ disease.name.replace('_', ' ') }}
+            </button>
+          }
+        </div>
+        <button (click)="differentialDiagnosisStage = 2"
+                [disabled]="selectedDifferentialDiseases.length < 2 || selectedDifferentialDiseases.length > 4"
+                [ngClass]="{
+                  'bg-green-600 hover:bg-green-700': selectedDifferentialDiseases.length >= 2 && selectedDifferentialDiseases.length <= 4,
+                  'bg-gray-500 cursor-not-allowed': selectedDifferentialDiseases.length < 2 || selectedDifferentialDiseases.length > 4
+                }"
+                class="mt-4 w-full py-3 cursor-pointer text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#0a522e] active:translate-y-1 active:shadow-[0_2px_0_#0a522e]">
+          ادامه (انتخاب تشخیص نهایی)
+        </button>
+      }
+
+      @if (differentialDiagnosisStage === 2) {
+        <h3 class="text-xl font-bold mb-6 text-center text-yellow-500">تشخیص نهایی را انتخاب کنید</h3>
+        <div class="grid grid-cols-2 gap-4">
+          @for (disease of filteredFinalDiseases; track disease.name) {
+            <button (click)="finalDiagnosis = disease.name"
+                    [ngClass]="{
+                'bg-yellow-500 text-gray-900 font-extrabold shadow-[0_3px_0_#9a7000]': finalDiagnosis === disease.name,
+                'bg-gray-600 hover:bg-gray-700 shadow-[0_3px_0_#4a4a4a]': finalDiagnosis !== disease.name
+              }"
+                    class="py-2 rounded-lg cursor-pointer font-semibold transition-all duration-150 active:translate-y-0.5 active:shadow-[0_1px_0]">
+              {{ disease.name.replace('_', ' ') }}
+            </button>
+          }
+        </div>
+        <button (click)="selectFinalAndNext(finalDiagnosis!)"
+                [disabled]="!finalDiagnosis"
+                [ngClass]="{'bg-red-600 hover:bg-red-700': finalDiagnosis, 'bg-gray-500 cursor-not-allowed': !finalDiagnosis}"
+                class="mt-4 cursor-pointer w-full py-3 text-white font-bold rounded-lg transition duration-150 shadow-[0_4px_0_#8c160b] active:translate-y-1 active:shadow-[0_2px_0_#8c160b]">
+          تایید و مرحله بعد
+        </button>
+      }
+
+      @if (differentialDiagnosisStage >= 3) {
+        <div class="text-center">
+          <p class="text-xl mb-8">
+            @if (differentialDiagnosisStage === 3) {
+              آیا بیمار دچار Pleural Effusion است؟
+            }
+            @if (differentialDiagnosisStage === 4) {
+              آیا نیاز به Pleural Aspiration دارد؟
+            }
+            @if (differentialDiagnosisStage === 5) {
+              نوع پلورال افیوژن را انتخاب کنید:
+            }
+          </p>
+
+          <div class="flex flex-col gap-4">
+            @if (differentialDiagnosisStage === 3 || differentialDiagnosisStage === 4) {
+              <div class="flex gap-4">
+                <button (click)="differentialDiagnosisStage === 3 ? setHasEffusion(true) : setNeedAspiration(true)"
+                        class="flex-1 py-4 cursor-pointer bg-[#148591] text-white font-bold rounded-xl shadow-[0_4px_0_#0f6c74] active:translate-y-1 transition-all">
+                  بله
+                </button>
+                <button (click)="differentialDiagnosisStage === 3 ? setHasEffusion(false) : setNeedAspiration(false)"
+                        class="flex-1 py-4 cursor-pointer bg-red-600 text-white font-bold rounded-xl shadow-[0_4px_0_#8c160b] active:translate-y-1 transition-all">
+                  خیر
+                </button>
+              </div>
+            }
+            @if (differentialDiagnosisStage === 5) {
+              <div class="grid grid-cols-2 gap-4">
+                <button (click)="setEffusionType('transudative')"
+                        class="py-4 cursor-pointer bg-[#148591] text-white font-bold rounded-xl shadow-[0_4px_0_#0f6c74] active:translate-y-1">
+                  Transudative
+                </button>
+                <button (click)="setEffusionType('exudative')"
+                        class="py-4 cursor-pointer bg-[#148591] text-white font-bold rounded-xl shadow-[0_4px_0_#0f6c74] active:translate-y-1">
+                  Exudative
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="mt-8 pt-6 border-t border-white/10 flex flex-col gap-3">
+        @if (differentialDiagnosisStage > 1) {
+          <button (click)="differentialDiagnosisStage = differentialDiagnosisStage - 1"
+                  class="w-full py-2 cursor-pointer text-sm bg-gray-700 hover:bg-gray-600 rounded-lg transition-all shadow-[0_2px_0_#4a4a4a] active:translate-y-0.5">
+            بازگشت به مرحله قبل
+          </button>
+        }
+        <button (click)="closeDifferentialDiagnosisModal()"
+                class="w-full py-2 cursor-pointer bg-gray-800 text-white text-sm rounded-lg hover:bg-gray-700 transition-all">
+          بستن و انصراف
+        </button>
+      </div>
 
     </div>
   </div>

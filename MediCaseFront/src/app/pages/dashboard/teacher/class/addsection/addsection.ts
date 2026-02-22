@@ -155,7 +155,7 @@ export class Addsection implements AfterViewInit {
       return;
     }
 
-    if (!this.data.description) this.data.description = ".";
+    if (!this.data.description) this.data.description = "";
     // تبدیل تاریخ‌ها
     this.data.start_date = this.jalaliToTimestamp(this.start_date)
     this.data.end_date = this.jalaliToTimestamp(this.end_date)

@@ -1,6 +1,6 @@
 <p-dialog
   (onHide)="onHide()"
-  [(visible)]="visible"
+  [(visible)]="show"
   [dismissableMask]="true"
   [modal]="true"
   [style]="{ width: '30rem' }"
@@ -42,7 +42,7 @@
   </div>
 
   <div class="flex justify-end gap-2">
-    <p-button (click)="visible = false" label="بازگشت" severity="secondary"/>
+    <p-button (click)="show = false" label="بازگشت" severity="secondary"/>
     <p-button (click)="Confirm()" label="ویرایش"/>
   </div>
 
