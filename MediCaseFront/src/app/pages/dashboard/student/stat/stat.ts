@@ -61,6 +61,7 @@ export class Stat {
   getFeedbackCode(scenarioCode: string): string | null {
     if (!this.resData) return null;
 
+    // فیلتر کردن فیدبک‌های مربوط به این سناریو که با موفقیت تولید شده‌اند
     const feedbacks = this.resData.filter(
       (f: any) =>
         f.scenario_tracking_code === scenarioCode &&
@@ -69,7 +70,19 @@ export class Stat {
 
     if (!feedbacks.length) return null;
 
-    return feedbacks[feedbacks.length - 1].tracking_code;
+    // بازگرداندن اولین فیدبک (اولین تلاش) به جای آخرین
+    return feedbacks[0].tracking_code;
+  }
+
+  getFirstScore(scenarioCode: string): string | number {
+    if (!this.resData) return '—';
+
+    const feedbacks = this.resData.filter(
+      (f: any) => f.scenario_tracking_code === scenarioCode && f.generated === true
+    );
+
+    // اگر فیدبکی پیدا شد، نمره اولین تلاش را برگردان، در غیر این صورت نمره پیش‌فرض سناریو
+    return feedbacks.length > 0 ? feedbacks[0].score : '—';
   }
 
   createScenrio() {
