@@ -1,5 +1,7 @@
 import json
 
+import json
+
 class ClinicalEvaluator:
     def __init__(self, optimal, student_log, total_time_minutes=15):
         self.optimal = optimal
@@ -13,12 +15,13 @@ class ClinicalEvaluator:
         
         self.weights = {
             "default": 1,
-            "history_taking": 0,
-            "physical_exam": 0,
-            "paraclinic": 3,
-            "diagnosis": 15,
-            "pleural_assessment": 10,
-            "noise_penalty": 0.5
+            "history_taking": 7,
+            "physical_exam": 7,
+            "paraclinic": 20,
+            "diagnosis": 300,
+            "differential_diagnosis": 20,
+            "pleural_assessment": 50,
+            "noise_penalty": 10
         }
 
     def _parse_time_to_seconds(self, time_str):
@@ -94,9 +97,12 @@ class ClinicalEvaluator:
             is_required = str(opt_val).lower() == "true"
             
             weight = self.weights['default']
-            if 'diagnosis' in action: weight = self.weights['diagnosis']
+            # بررسی differential_diagnosis باید قبل از diagnosis باشد تا تداخل اسمی ایجاد نشود
+            if 'differential_diagnosis' in action: weight = self.weights['differential_diagnosis']
+            elif 'diagnosis' in action: weight = self.weights['diagnosis']
             elif 'physical_exam' in action: weight = self.weights['physical_exam']
             elif 'paraclinic' in action: weight = self.weights['paraclinic']
+            elif 'history_taking' in action: weight = self.weights['history_taking'] # برای گرفتن وزن history
 
             if is_required:
                 self.max_possible_score += weight
@@ -120,7 +126,9 @@ class ClinicalEvaluator:
                 self.actions_report.append({"action": action, "status": "missed"})
             
             elif not is_required and is_performed:
-                self.score -= self.weights.get('noise_penalty', 0)
+                # اعمال پنالتی (نویز) فقط اگر اکشن مربوط به پاراکلینیک یا تشخیص افتراقی باشد
+                if 'paraclinic' in action or 'differential_diagnosis' in action:
+                    self.score -= self.weights.get('noise_penalty', 0)
                 self.actions_report.append({"action": action, "status": "noise"})
             
 
@@ -129,7 +137,6 @@ class ClinicalEvaluator:
 
     def evaluate_pleural_effusion(self):
         optimal_pleural = self.optimal.get("pleural_effusion_assessment", {})
-        # استخراج پاسخ‌های دانشجو از لاگ (فرض بر این است که فرانت‌ اند این فیلدها را می‌فرستد)
         student_pleural = self.student.get("student_pleural_assessment", {})
 
         is_correct = (
