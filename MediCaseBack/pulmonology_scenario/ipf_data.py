@@ -731,7 +731,7 @@ class IPFDataGenerator:
     def _generate_personal_information(self):
         gender = self.random.choice(["مرد", "زن"])
         age_num = self.random.randint(55, 85) # IPF usually older
-        age_str = f"{age_num} ساله"
+        age_str = f"{age_num}"
         
         name_key = "MALE" if gender == "مرد" else "FEMALE"
         first_name = self.random.choice(self.RANDOM_DATA_LISTS["first_names_sample_100"][name_key])
