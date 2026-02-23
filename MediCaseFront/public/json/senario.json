@@ -255,14 +255,10 @@
       "Autoimmune_pannel_ANA_ANCA": "Autoimmune pannel ANA ANCA"
     },
     "simple_imaging": {
-      "Chest_X_Ray": {
-        "PA_Lateral_Findings_and_Effusion": ""
-      }
+      "Chest_X_Ray": "X RAY"
     },
     "advanced_imaging": {
-      "Chest_CT_CTPA": {
-        "Lung_Parenchyma_and_Pleura": ""
-      },
+      "Chest_CT_CTPA": "CT CTPA",
       "Pet_scan": "Pet scan",
       "MRI_chest": "MRI"
     },

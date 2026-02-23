@@ -27,7 +27,6 @@ interface ParaclinicResult {
   normalValue?: string;
 }
 
-
 interface Question {
   id: string;
   title: string;
@@ -36,7 +35,6 @@ interface Question {
   visible: boolean;
   answer_time: string;
 }
-
 
 @Component({
   selector: 'app-scenario',
@@ -60,8 +58,6 @@ export class Scenario {
     "PTE": "disease4",
     "IPF": "disease5",
     "PH": "disease6",
-    "Pleural_Effusion": "disease7",
-    "ARDS": "disease8"
   };
   @ViewChild('videoPlayer') videoElementRef!: ElementRef<HTMLVideoElement>;
   imageUrl = signal('https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg')
@@ -76,30 +72,22 @@ export class Scenario {
   successSound = new Audio('sounds/success.mp3');
   bgsound = new Audio('sounds/bg.mp3');
   isVideoLoading = signal(false)
-  previousMediaUrl: string = "https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg";
   sectionOpenState: Record<string, boolean> = {};
-  questions: Question[] = [];
-  // لیست متن سوالا
   questionText: any = Questions
-  //لیست دیتا های ai
   data: any
-  //لیست دیتایی که قراره بفرستیم
   log: any = Log
   physicalExamBySection: Record<string, Question[]> = {};
   questionsBySection: Record<string, Question[]> = {};
   paraclinicBySection: Record<string, Question[]> = {};
   showExitModal: boolean = false;
-  scenarioData: any = Questions;
-// در کلاس Scenario
   sectionMedia: any = VIDEO_MAPPING
   mediaType: 'image' | 'video' = 'image';
   mediaUrl: string = "https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg";
   public code: any;
   public trackingCode: any;
+  currentCharacter = signal('young_male');
 
-// در کلاس Scenario این متغیرها را اضافه یا اصلاح کنید
   showDifferentialDiagnosisModal: boolean = false;
-  pleuralAssessmentStage: number = 1;
   differentialDiagnosisStage: number = 1;
   finalDiagnosis: string | null = null;
   selectedDifferentialDiseases: any[] = []; // لیستی که بیماری‌های مرحله اول در آن ذخیره می‌شوند
@@ -110,16 +98,10 @@ export class Scenario {
   };
   protected readonly APP_CONFIG = APP_CONFIG;
   protected readonly sessionStorage = sessionStorage;
-  protected readonly Log = Log;
-  protected readonly console = console;
   private timeLeft = 60 * 15;
   private intervalId: any;
 
   constructor(public router: Router, public changeDetectorRef: ChangeDetectorRef, public master: Master, public route: ActivatedRoute) {
-  }
-
-  get filteredFinalDiseases() {
-    return this.selectedDifferentialDiseases.filter(d => d.name !== 'Pleural_Effusion');
   }
 
   get filteredInitialDiseases() {
@@ -151,6 +133,7 @@ export class Scenario {
     this.master.pulmonologyScenarioRetrieve(this.trackingCode).subscribe({
       next: data => {
         localStorage.setItem('data', JSON.stringify(data));
+        this.updateCharacterType(data);
       },
       error: err => {
         this.data = Data
@@ -180,7 +163,33 @@ export class Scenario {
   }
 
 
-// ۴. مدیریت مراحل افیوژن
+  updateCharacterType(apiData: any) {
+    const profile = apiData.scenario.patient_profile.personal_information;
+
+    // ۱. استخراج عدد از رشته سن (مثلا تبدیل "39 ساله" به 39)
+    const ageNumber = parseInt(profile.age.replace(/[^0-9]/g, ''));
+
+    // ۲. تشخیص جنسیت (مرد یا زن)
+    const gender = profile.gender; // "مرد" یا "زن"
+
+    let type = '';
+
+    if (gender === 'مرد') {
+      type = ageNumber < 50 ? 'young_male' : 'old_male';
+    } else if (gender === 'زن') {
+      type = ageNumber < 50 ? 'young_female' : 'old_female';
+    } else {
+      // مقدار پیش‌فرض در صورت بروز خطا
+      type = 'young_male';
+    }
+
+    // ۳. آپدیت کردن وضعیت برنامه
+    // this.currentCharacter.set(type);
+
+    console.log(`Character set to: ${type} based on Age: ${ageNumber} and Gender: ${gender}`);
+  }
+
+
   setHasEffusion(value: boolean) {
     this.pleuralAssessmentData.has_effusion = value ? 'true' : 'false';
     if (value) {
@@ -207,7 +216,6 @@ export class Scenario {
     this.finishAndSaveLog();
   }
 
-// ۵. متد ثبت نهایی لاگ با ساختار درخواستی شما
   finishAndSaveLog() {
     this.log.final_diagnosis = {
       "disease": this.finalDiagnosis
@@ -230,7 +238,6 @@ export class Scenario {
     })
   }
 
-// ۶. متد بستن مودال
   closeDifferentialDiagnosisModal() {
     this.showDifferentialDiagnosisModal = false;
     this.differentialDiagnosisStage = 1;
@@ -314,8 +321,6 @@ export class Scenario {
       {name: 'PTE', checked: false},
       {name: 'IPF', checked: false},
       {name: 'PH', checked: false},
-      {name: 'Pleural_Effusion', checked: false},
-      {name: 'ARDS', checked: false},
     ];
   }
 
@@ -346,7 +351,6 @@ export class Scenario {
     }
   }
 
-// در کلاس Scenario
   selectSection(section: Section) {
     if (section.id === 5) {
       this.showDifferentialDiagnosisModal = true;
@@ -372,7 +376,6 @@ export class Scenario {
     }, 100);
   }
 
-// متد جدید برای تنظیم مدیا بر اساس بخش
   setSectionMedia(section: Section) {
 
     let media;
@@ -391,8 +394,9 @@ export class Scenario {
     // برای بخش‌هایی که مدیا ندارند از پیش‌فرض استفاده کن
     const mediaKey = sectionMediaMap[section.id];
 
-    if (mediaKey) {
-      media = this.sectionMedia[mediaKey];
+    const characterMedia = this.sectionMedia[this.currentCharacter()];
+    if (characterMedia && mediaKey) {
+      media = characterMedia[mediaKey];
     }
 
     // --- مدیریت URL و نوع مدیا ---
@@ -423,7 +427,6 @@ export class Scenario {
     this.playSuccess();
   }
 
-  // مدیریت انتخاب/حذف بیماری در مرحله ۱
   toggleDiseaseSelection(disease: Disease) {
     const index = this.selectedDifferentialDiseases.findIndex(d => d.name === disease.name);
 
@@ -436,7 +439,6 @@ export class Scenario {
     }
   }
 
-  // رفتن از مرحله ۱ به مرحله ۲
   goToFinalDiagnosisStage() {
     if (this.selectedDifferentialDiseases.length >= 2 && this.selectedDifferentialDiseases.length <= 4) {
       this.differentialDiagnosisStage = 2;
@@ -446,12 +448,10 @@ export class Scenario {
     }
   }
 
-  // انتخاب تشخیص نهایی در مرحله ۲
   setFinalDiagnosis(diseaseName: string) {
     this.finalDiagnosis = diseaseName;
     this.playClick();
   }
-
 
   closeExitModal() {
     this.showExitModal = false;
@@ -487,7 +487,6 @@ export class Scenario {
 
   buildQuestions() {
     const history = this.questionText["history_taking"]; // سؤالات (عنوان‌ها)
-    console.log(history);
     const answers = this.data.history_taking;            // پاسخ‌ها
     const logs = this.log.history_taking;                // زمان مشاهده
 
@@ -604,13 +603,13 @@ export class Scenario {
     let media;
     const defaultImageUrl = 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg';
 
-    // ابتدا سعی کنید مدیا را بر اساس systemName و question.id پیدا کنید
+    const characterMedia = this.sectionMedia[this.currentCharacter()];
     const specificKey = `${systemName}-${question.id}`;
-    media = this.sectionMedia[specificKey];
 
-    // اگر پیدا نشد، سعی کنید بر اساس systemName و بخش‌های question.id پیدا کنید
+    if (characterMedia) {
+      media = characterMedia[specificKey] || characterMedia[systemName];
+    }
     if (!media) {
-      // برای سوالاتی که id آنها شامل "-" است (مثلاً inspection-accessory_muscles)
       if (question.id.includes('-')) {
         const parts = question.id.split('-');
         if (parts.length >= 2) {
@@ -620,7 +619,6 @@ export class Scenario {
       }
     }
 
-    // اگر هنوز پیدا نشد، از systemName استفاده کنید
     if (!media) {
       media = this.sectionMedia[systemName];
     }
@@ -812,10 +810,8 @@ export class Scenario {
     this.router.navigate(['/dashboard/s/stat']);
   }
 
-
 // متد کمکی برای پردازش داده‌های Spirometry
   private processSpirometryData(spirometryData: any, textL2: any): string | ParaclinicResult[] {
-    // spirometryData ساختار: { result: {...}, reversibility: "..." }
 
     if (!spirometryData.result && !spirometryData.reversibility) {
       return 'داده‌ای موجود نیست';
@@ -823,7 +819,6 @@ export class Scenario {
 
     let resultString = '';
 
-    // پردازش بخش result
     if (spirometryData.result && typeof spirometryData.result === 'object') {
       resultString += 'نتایج اسپیرومتری:\n';
       for (const key in spirometryData.result) {

@@ -94,7 +94,6 @@ export class Addsection implements AfterViewInit {
               label: s["persian-name"],
               value: s.id
             }));
-            console.log(this.subjectOptions);
           },
           error: err => {
             this.toast.showError('خطایی در دریافت اطلاعات وجود دارد')

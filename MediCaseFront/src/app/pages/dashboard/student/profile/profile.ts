@@ -31,7 +31,6 @@ export class Profile implements OnInit {
   ngOnInit() {
     this.master.profile().subscribe({
       next: data => {
-        console.log(data);
         this.user = {
           first_name: data.body.first_name,
           last_name: data.body.last_name,
@@ -46,7 +45,6 @@ export class Profile implements OnInit {
           username: data.body.username,
           scenario_credit: data.body.scenario_credit
         };
-        console.log(this.user);
       },
       complete: () => {
         this.changeDetector.detectChanges();

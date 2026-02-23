@@ -53,7 +53,6 @@ export class ScenarioIntro implements OnInit {
         this.changeDetectorRef.detectChanges()
       },
       complete: () => {
-        console.log(this.feedback.score.obtained);
         this.changeDetectorRef.detectChanges();
       }
     });
