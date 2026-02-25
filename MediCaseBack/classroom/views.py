@@ -832,13 +832,12 @@ class SingleCreditUpdateView(APIView):
     @extend_schema(
         request=SingleCreditUpdateSerializer,
     )
-    def post(self, request):
+    def post(self, request, section_id):
         serializer = SingleCreditUpdateSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         student_number = serializer.validated_data['student_number']
-        subject_name = serializer.validated_data['subject_name']
         amount = serializer.validated_data['amount']
         mode = serializer.validated_data['mode']
         custom_desc = serializer.validated_data.get('description', "")
@@ -854,18 +853,30 @@ class SingleCreditUpdateView(APIView):
             return Response({"message": "شما اجازه تغییر اعتبار دانشجویان را ندارید."}, status=status.HTTP_403_FORBIDDEN)
 
         try:
+            from .utils import decode_short_uuid
+            try:
+                section_uuid = decode_short_uuid(section_id)
+            except ValueError:
+                section_uuid = section_id 
+
+            section = Section.objects.select_related('subject', 'teacher').get(section_id=section_uuid)
+        except Section.DoesNotExist:
+            return Response({"message": "کلاس مورد نظر یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
             target_student = User.objects.get(personal_number=student_number)
         except User.DoesNotExist:
             return Response({"message": "دانشجویی با این شماره یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
 
         if role == 'admin':
+            if section.teacher and section.teacher.university != user.university:
+                return Response({"message": "شما دسترسی به این کلاس را ندارید."}, status=status.HTTP_403_FORBIDDEN)
             if target_student.university != user.university:
                 return Response({"message": "شما فقط مجاز به تغییر اعتبار دانشجویان دانشگاه خود هستید."}, status=status.HTTP_403_FORBIDDEN)
 
-        try:
-            target_subject = Subject.objects.get(english_name=subject_name)
-        except Subject.DoesNotExist:
-            return Response({"message": "درسی با این نام یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+        target_subject = section.subject 
+        if not target_subject:
+             return Response({"error": "این کلاس به هیچ درسی متصل نیست."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             with transaction.atomic():
@@ -899,18 +910,18 @@ class SingleCreditUpdateView(APIView):
                     defaults={'access_status': True}
                 )
 
-                description = custom_desc if custom_desc else f"شارژ دستی درس {target_subject.persian_name}"
+                description = custom_desc if custom_desc else f"شارژ دستی کلاس {section.name}"
                 CreditTransaction.objects.create(
                     actor=user,
                     student=target_student,
-                    section=None,
+                    section=section, 
                     amount=change_amount,
                     balance_after=credit_obj.balance,
                     action_type='ALLOCATE',
                     description=description
                 )
             
-            logger.info(f"Single Credit Update: Student {student_number}, Subject {subject_name}, Amount {change_amount}, By {user.user_id}")
+            logger.info(f"Single Credit Update: Student {student_number}, Section {section.name}, Amount {change_amount}, By {user.user_id}")
 
         except Exception as e:
             logger.error(f"Error in SingleCreditUpdate: {e}")
@@ -920,6 +931,8 @@ class SingleCreditUpdateView(APIView):
             "message": "اعتبار دانشجو با موفقیت بروزرسانی شد.",
             "student": f"{target_student.first_name} {target_student.last_name}",
             "subject": target_subject.english_name,
+            "section": section.name,
             "new_balance": credit_obj.balance,
             "wallet_change": change_amount
         }, status=status.HTTP_200_OK)
+        

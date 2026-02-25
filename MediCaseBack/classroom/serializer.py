@@ -700,7 +700,6 @@ class SectionRemoveSerializer(serializers.Serializer):
 
 class SingleCreditUpdateSerializer(serializers.Serializer):
     student_number = serializers.CharField()
-    subject_name = serializers.CharField()
     amount = serializers.IntegerField()
     mode = serializers.ChoiceField(choices=['add', 'set'], default='add')
-    description = serializers.CharField(allow_blank=True)
+    description = serializers.CharField(allow_blank=True, required=False)
