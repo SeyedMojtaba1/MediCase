@@ -40,6 +40,9 @@ def generate_tracking_code(length: int = 10) -> str:
     return ''.join(secrets.choice(ALPHABET) for _ in range(length))
 
 @extend_schema(
+    parameters=[
+        OpenApiParameter(name='section_id', description='شناسه کوتاه کلاس (Short ID)', required=True, type=str)
+    ],
     responses={200: "Tracking Code JSON"}
 )
 @api_view(['GET'])
@@ -47,7 +50,29 @@ def generate_tracking_code(length: int = 10) -> str:
 @permission_classes([permissions.IsAuthenticated])
 def scenario_create(request):
     user = request.user
+    short_section_id = request.query_params.get('section_id')
     
+    if not short_section_id:
+         return Response(
+            {"detail": "شناسه کلاس (section_id) الزامی است."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+         
+    try:
+        section_uuid = decode_short_uuid(short_section_id)
+        section_obj = Section.objects.get(section_id=section_uuid)
+    except (ValueError, Section.DoesNotExist):
+        return Response({"detail": "کلاس مورد نظر یافت نشد."}, status=status.HTTP_404_NOT_FOUND)
+        
+    is_active_student = StudentSection.objects.filter(
+        section=section_obj, 
+        student=user, 
+        student_status='Active'
+    ).exists()
+    
+    if not is_active_student:
+        return Response({"detail": "شما عضو فعال این کلاس نیستید."}, status=status.HTTP_403_FORBIDDEN)
+
     with transaction.atomic():
         user_obj = User.objects.select_for_update().get(pk=user.pk)
         
@@ -70,6 +95,7 @@ def scenario_create(request):
             UserScenarioAttempt.objects.create(
                 user=user_obj,
                 scenario_template=unattempted_template,
+                section=section_obj,
                 is_done=False
             )
             
@@ -77,7 +103,8 @@ def scenario_create(request):
         
         else:
             tracking_code = generate_tracking_code(10)
-            senario_creator_celery.delay(user_obj.personal_number, tracking_code)
+            
+            senario_creator_celery.delay(user_obj.personal_number, tracking_code, str(section_uuid)) 
             message = "سناریوهای موجود تمام شده بود. درخواست ساخت سناریو جدید با هوش مصنوعی ثبت شد."
 
     return Response(

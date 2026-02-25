@@ -3,7 +3,7 @@ PTE_MASSIVE_PTE_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "شروع علائم در آمبولی ماسی‌و **بسیار ناگهانی و فاجعه‌بار** است. بیمار ممکن است در حال فعالیت عادی بوده که ناگهان دچار کلاپس، تنگی نفس شدید یا سنکوپ شده است."
+        "analysis": "شروع علائم در آمبولی ماسی‌و بسیار ناگهانی و فاجعه‌بار است. بیمار ممکن است در حال فعالیت عادی بوده که ناگهان دچار کلاپس، تنگی نفس شدید یا سنکوپ شده است."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -23,7 +23,7 @@ PTE_MASSIVE_PTE_DETAILED = {
       },
       "question6": {
         "question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟",
-        "analysis": "درد قفسه سینه در نوع ماسی‌و اغلب **رترواسترنال (پشت جناغ)** و فشارنده است (شبیه سکته قلبی) که ناشی از ایسکمی حاد بطن راست (RV Ischemia) و اتساع ناگهانی شریان ریه است، نه صرفاً درد پلوریتیک."
+        "analysis": "درد قفسه سینه در نوع ماسی‌و اغلب رترواسترنال (پشت جناغ) و فشارنده است (شبیه سکته قلبی) که ناشی از ایسکمی حاد بطن راست (RV Ischemia) و اتساع ناگهانی شریان ریه است، نه صرفاً درد پلوریتیک."
       },
       "question7": {
         "question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟",
@@ -211,7 +211,7 @@ PTE_MASSIVE_PTE_DETAILED = {
       },
       "question11": {
         "question": "آیا سابقه سردرد شدید یا جدید، تشنج، ضعف یا بی‌حسی در دست‌ها/پاها، مشکل در تعادل/هماهنگی، یا تغییر در حافظه دارید؟",
-        "analysis": "**سنکوپ (غش کردن)**: این علامت بسیار مهم و اختصاصی برای آمبولی ماسی‌و است. انسداد ناگهانی جریان خون ریه باعث کاهش شدید پرشدگی بطن چپ و افت برون‌ده قلبی می‌شود که به صورت سنکوپ تظاهر می‌کند."
+        "analysis": "سنکوپ (غش کردن): این علامت بسیار مهم و اختصاصی برای آمبولی ماسی‌و است. انسداد ناگهانی جریان خون ریه باعث کاهش شدید پرشدگی بطن چپ و افت برون‌ده قلبی می‌شود که به صورت سنکوپ تظاهر می‌کند."
       },
       "question12": {
         "question": "آیا اخیراً احساس افسردگی، اضطراب، تغییرات شدید خلقی، یا مشکل در خواب (بی‌خوابی/پرخوابی) داشته‌اید؟",
@@ -230,58 +230,58 @@ PTE_MASSIVE_PTE_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
-        "analysis": "**افت فشار خون (Hypotension)**: فشار سیستولیک زیر ۹۰ (یا افت بیش از ۴۰ تا از فشار پایه) تعریف آمبولی **ماسیو** است. این یعنی بیمار در شوک انسدادی (Obstructive Shock) است."
+        "question": "فشار خون(BP)",
+        "analysis": "افت فشار خون (Hypotension): فشار سیستولیک زیر ۹۰ (یا افت بیش از ۴۰ تا از فشار پایه) تعریف آمبولی ماسیو است. این یعنی بیمار در شوک انسدادی (Obstructive Shock) است."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "معمولاً نرمال یا پایین (هیپوترمی ناشی از شوک) است."
       },
       "PR": {
-        "question": "PR",
-        "analysis": "**تاکیکاردی شدید** و نخی (Thready pulse) نشان‌دهنده تلاش قلب برای جبران افت فشار است."
+        "question": "نبض و تعداد ضربان قلب(PR)",
+        "analysis": "تاکیکاردی شدید و نخی (Thready pulse) نشان‌دهنده تلاش قلب برای جبران افت فشار است."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه شدید."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "اشباع اکسیژن(SpO2)",
         "analysis": "هایپوکسمی شدید و مقاوم به اکسیژن (به دلیل شنت شدید و عدم تطابق V/Q) دیده می‌شود."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "ممکن است به دلیل کاهش خونرسانی مغزی (شوک) سطح هوشیاری کاهش یابد."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "بی‌قرار و آژیت‌ه (ناشی از هیپوکسی مغزی)."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "سرد، مرطوب (Diaphoretic) و رنگ‌پریده (علائم شوک)."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "حالت و وضعیت",
         "analysis": "بی‌قراری در بستر."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "گیجی (Confusion) یا کاهش هوشیاری."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ادم یک‌طرفه پا (DVT) یا ادم ژنرالیزه ناشی از نارسایی حاد راست."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "دیسپنه",
           "analysis": "گرسنگی هوا (Air Hunger)."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "سیانوز مرکزی و محیطی (به دلیل شوک و هیپوکسی) شایع است."
         }
       }
@@ -289,81 +289,81 @@ PTE_MASSIVE_PTE_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "حساسیت به لمس (Tenderness)",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "واکنش های مردمک",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکات خارج چشمی (EOM)",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "مشاهده پرده صماخ",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم بینی و ترشحات",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت به لمس سینوس ها",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "مخاط دهان و ضایعات",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
-          "analysis": "**اتساع شدید وریدهای گردن (Distended JVP)**: نشانه نارسایی حاد و ناگهانی قلب راست (Acute Cor Pulmonale) است که قادر به پمپاژ خون به داخل ریه مسدود شده نیست."
+          "question": "مشاهده گردن",
+          "analysis": "اتساع شدید وریدهای گردن (Distended JVP): نشانه نارسایی حاد و ناگهانی قلب راست (Acute Cor Pulmonale) است که قادر به پمپاژ خون به داخل ریه مسدود شده نیست."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال (مگر در پنوموتوراکس تنشنی که تشخیص افتراقی شوک است)."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "معاینه غده تیرویید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "برویی کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و یکنواختی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -371,176 +371,176 @@ PTE_MASSIVE_PTE_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات فرعی تنفسی",
           "analysis": "استفاده شدید از عضلات تنفسی."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "نرمال."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "نرمال."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق",
         "analysis": "نرمال (Resonant)."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
-          "analysis": "**ریه معمولاً پاک است (Clear lungs).** این یافته در کنار شوک و هیپوکسی شدید، قویاً مطرح کننده آمبولی ماسی‌و است (چون مشکل در عروق است نه در کیسه‌های هوایی)."
+          "question": "شدت صداهای تنفسی",
+          "analysis": "ریه معمولاً پاک است (Clear lungs). این یافته در کنار شوک و هیپوکسی شدید، قویاً مطرح کننده آمبولی ماسی‌و است (چون مشکل در عروق است نه در کیسه‌های هوایی)."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی تنفسی",
           "analysis": "معمولاً ندارد."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "به شدت برجسته است."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس",
           "analysis": "لمس ضربان شدید بطن راست (Parasternal Heave) ناشی از فشار حاد."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
-          "analysis": "**صدای دوم (P2) بسیار بلند** به دلیل فشار بالای شریان ریه."
+          "question": "صداهای قلب S1-S2",
+          "analysis": "صدای دوم (P2) بسیار بلند به دلیل فشار بالای شریان ریه."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
-          "analysis": "شنیدن صدای **S3 گالوپ راست** و سوفل نارسایی تری‌کوسپید (TR) نشانه نارسایی حاد بطن راست و وضعیت وخیم بیمار است."
+          "question": "صدای اضافی S3-S4",
+          "analysis": "شنیدن صدای S3 گالوپ راست و سوفل نارسایی تری‌کوسپید (TR) نشانه نارسایی حاد بطن راست و وضعیت وخیم بیمار است."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "نبض‌های محیطی و یکنواختی آنها",
           "analysis": "نبض‌ها ضعیف و نخی (Thready) هستند (نشانه شوک)."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییرات تروفیک اندام‌ها",
           "analysis": "انتهاها سرد و سیانوتیک."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دما و زمان پرشدگی مویرگی اندام‌ها",
           "analysis": "زمان پرشدگی مویرگی طولانی (> ۲ ثانیه)."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "DVT در اندام تحتانی."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صداهای روده",
           "analysis": "کاهش صداها به دلیل هیپوپرفیوژن روده‌ها (در شوک)."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "بروی‌های عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "ممکن است کبد بزرگ و دردناک باشد (احتقان حاد کبدی ناشی از نارسایی راست)."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "حساسیت سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "توده‌ها و اندام‌های عمیق",
           "analysis": "تندرنس کبد."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم پریتونئال",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح آگاهی",
         "analysis": "کاهش هوشیاری به دلیل شوک."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "ارواح گردن",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "ضعف عمومی."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "حساسیت نوری، لمسی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "انعکاس‌های عمقی اندام‌ها",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و راه‌رفتن",
         "analysis": "غیرقابل ارزیابی (بیمار بدحال است)."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل و تورم، قرمزی، یا دفورمیتی آنها",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات و آتروفی یا ضعف آنها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "حساسیت و کرپیتوس",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "دامنه حرکتی فعال و غیرفعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -565,64 +565,64 @@ PTE_MASSIVE_PTE_DETAILED = {
       },
       "VBG": {
         "question": "VBG",
-        "analysis": "**اسیدوز متابولیک (لاکتیک)** ناشی از شوک و هیپوکسی بافتی، همراه با افت شدید اکسیژن."
+        "analysis": "اسیدوز متابولیک (لاکتیک) ناشی از شوک و هیپوکسی بافتی، همراه با افت شدید اکسیژن."
       },
       "LFTs": {
         "question": "LFTs",
-        "analysis": "**افزایش آنزیم‌های کبدی (AST/ALT)** ناشی از ایسکمی کبد (شوک) و احتقان حاد کبد (Shock Liver) شایع است."
+        "analysis": "افزایش آنزیم‌های کبدی (AST/ALT) ناشی از ایسکمی کبد (شوک) و احتقان حاد کبد (Shock Liver) شایع است."
       }
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
-        "analysis": "**مثبت قوی.** هرچند در بیمار با شوک و شک بالا به PTE، نباید منتظر جواب دایمر ماند و باید فوراً تصویربرداری یا اکو انجام شود."
+        "question": "D dimer",
+        "analysis": "مثبت قوی. هرچند در بیمار با شوک و شک بالا به PTE، نباید منتظر جواب دایمر ماند و باید فوراً تصویربرداری یا اکو انجام شود."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
-        "analysis": "**بسیار بالا.** تروپونین و BNP بالا نشان‌دهنده اتساع حاد و آسیب شدید عضله بطن راست (RV Microinfarction) هستند و پیش‌آگهی را بدتر می‌کنند."
+        "question": "BNP NT proBNP",
+        "analysis": "بسیار بالا. تروپونین و BNP بالا نشان‌دهنده اتساع حاد و آسیب شدید عضله بطن راست (RV Microinfarction) هستند و پیش‌آگهی را بدتر می‌کنند."
       },
       "Sputum_analysis": {
         "question": "Sputum_analysis",
         "analysis": "نامرتبط."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune pannel ANA ANCA",
         "analysis": "نامرتبط."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
-        "analysis": "اغلب نرمال است. گاهی علامت **Westermark** (کاهش مارکرهای عروقی در یک سمت به دلیل قطع جریان خون) یا بزرگی شریان پولمونر مرکزی (Sausage Sign) دیده می‌شود."
+        "question": "Chest X-Ray",
+        "analysis": "اغلب نرمال است. گاهی علامت Westermark (کاهش مارکرهای عروقی در یک سمت به دلیل قطع جریان خون) یا بزرگی شریان پولمونر مرکزی (Sausage Sign) دیده می‌شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
-        "analysis": "**استاندارد طلایی.** نقص پرشدگی بزرگ در شریان ریوی اصلی (Saddle Embolus) یا شاخه‌های اصلی (Lobar) دیده می‌شود. نسبت قطر بطن راست به چپ (RV/LV ratio) بالای ۱ است."
+        "question": "Chest CT CTPA",
+        "analysis": "استاندارد طلایی. نقص پرشدگی بزرگ در شریان ریوی اصلی (Saddle Embolus) یا شاخه‌های اصلی (Lobar) دیده می‌شود. نسبت قطر بطن راست به چپ (RV/LV ratio) بالای ۱ است."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "غیرقابل انجام."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "غیرقابل انجام."
       },
       "Spirometry": {
@@ -630,7 +630,7 @@ PTE_MASSIVE_PTE_DETAILED = {
         "analysis": "غیرقابل انجام."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "غیرقابل انجام."
       }
     },
@@ -640,7 +640,7 @@ PTE_MASSIVE_PTE_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Torachonthesis",
         "analysis": "نامرتبط."
       }
     }
@@ -660,7 +660,7 @@ PTE_MASSIVE_PTE_DETAILED = {
     },
     "disease4": {
       "question": "PTE",
-      "analysis": "**تشخیص قطعی!** ترکیب افت فشار خون (شوک)، علائم نارسایی حاد راست (JVP بالا) و ریه پاک، تریاد کلاسیک آمبولی ریه ماسی‌و است. این یک اورژانس واقعی است که نیاز به ترومبولیز (حل کردن لخته) یا آمبولکتومی دارد."
+      "analysis": "تشخیص قطعی! ترکیب افت فشار خون (شوک)، علائم نارسایی حاد راست (JVP بالا) و ریه پاک، تریاد کلاسیک آمبولی ریه ماسی‌و است. این یک اورژانس واقعی است که نیاز به ترومبولیز (حل کردن لخته) یا آمبولکتومی دارد."
     },
     "disease5": {
       "question": "IPF",
@@ -851,18 +851,18 @@ PTE_MASSIVE_PTE = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "true", "AST": "true" }
+        "VBG": "true",
+        "LFTs": "true"
       },
       "specialized_lung_tests": {
         "D_dimer": "true",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "true",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis":  "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -878,18 +878,12 @@ PTE_MASSIVE_PTE = {
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": { "FEV1": "false", "FVC": "false", "FEV1/FVC": "false" },
-          "reversibility": "false"
-        },
+        "Spirometry": "false",
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
@@ -915,7 +909,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "آمبولی ریه (PTE) با شروع **ناگهانی (Sudden Onset)** مشخص می‌شود. بیمار دقیقاً لحظه‌ای که درد قفسه سینه شروع شد را به یاد می‌آورد (برخلاف پنومونی که تدریجی است)."
+        "analysis": "آمبولی ریه (PTE) با شروع ناگهانی (Sudden Onset) مشخص می‌شود. بیمار دقیقاً لحظه‌ای که درد قفسه سینه شروع شد را به یاد می‌آورد (برخلاف پنومونی که تدریجی است)."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -927,7 +921,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
-        "analysis": "سرفه شایع است. اگر با **خلط خونی (Hemoptysis)** همراه باشد، قویاً مطرح‌کننده **انفارکتوس ریوی** است. یعنی لخته خونرسانی بخشی از بافت ریه را قطع کرده و باعث نکروز و خونریزی شده است."
+        "analysis": "سرفه شایع است. اگر با خلط خونی (Hemoptysis) همراه باشد، قویاً مطرح‌کننده انفارکتوس ریوی است. یعنی لخته خونرسانی بخشی از بافت ریه را قطع کرده و باعث نکروز و خونریزی شده است."
       },
       "question5": {
         "question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟",
@@ -935,7 +929,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
       },
       "question6": {
         "question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟",
-        "analysis": "شاه‌علامت این سناریو! درد قفسه سینه از نوع **پلوریتیک** (Pleuritic) است؛ یعنی دردی تیز و خنجری که با دم عمیق یا سرفه بدتر می‌شود. این نشان می‌دهد لخته به شاخه‌های انتهایی (محیطی) رفته و پرده جنب را تحریک کرده است."
+        "analysis": "شاه‌علامت این سناریو! درد قفسه سینه از نوع پلوریتیک (Pleuritic) است؛ یعنی دردی تیز و خنجری که با دم عمیق یا سرفه بدتر می‌شود. این نشان می‌دهد لخته به شاخه‌های انتهایی (محیطی) رفته و پرده جنب را تحریک کرده است."
       },
       "question7": {
         "question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟",
@@ -1107,7 +1101,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
       },
       "question7": {
         "question": "آیا سابقه سرفه، خس‌خس سینه، خلط خونی (هموپتیزی)، یا تنگی نفس (به جز تنگی نفس مرتبط با فعالیت شدید) دارید؟",
-        "analysis": "**هموپتیزی (Hemoptysis)** یعنی خلط خونی، یکی از علائم سه‌گانه کلاسیک (درد پلوریتیک + تنگی نفس + هموپتیزی) در انفارکتوس ریوی است."
+        "analysis": "هموپتیزی (Hemoptysis) یعنی خلط خونی، یکی از علائم سه‌گانه کلاسیک (درد پلوریتیک + تنگی نفس + هموپتیزی) در انفارکتوس ریوی است."
       },
       "question8": {
         "question": "آیا دچار حالت تهوع، استفراغ، سوزش سر دل، درد شکم، تغییر در عادات اجابت مزاج (اسهال یا یبوست)، خونریزی از مقعد، یا زردی پوست و چشم (یرقان) هستید؟",
@@ -1142,58 +1136,58 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
-        "analysis": "فشار خون معمولاً **نرمال** است. (چون لخته کوچک و محیطی است و انسداد مکانیکی بزرگی ایجاد نکرده که باعث افت فشار شود)."
+        "question": "فشار خون(BP)",
+        "analysis": "فشار خون معمولاً نرمال است. (چون لخته کوچک و محیطی است و انسداد مکانیکی بزرگی ایجاد نکرده که باعث افت فشار شود)."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "تب خفیف (کمتر از ۳۸.۵) ممکن است دیده شود."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی (ضربان بالا) اغلب وجود دارد که ناشی از درد شدید پلوریتیک و اضطراب است."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه (تنفس سریع و سطحی) برای اجتناب از درد تنفس عمیق (Splinting) بسیار شایع است."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "اشباع اکسیژن(SpO2)",
         "analysis": "ممکن است نرمال یا کمی پایین باشد. چون درگیری ریه وسیع نیست، افت شدید اکسیژن کمتر دیده می‌شود."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "بیمار هوشیار اما بسیار دردمند و مضطرب است (Pain Distress)."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "تنفس‌های کوتاه و محتاطانه (Splinting) برای جلوگیری از درد."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "حالت و وضعیت",
         "analysis": "نرمال."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "بررسی علائم DVT (قرمزی، گرمی، تورم ساق پا) ضروری است."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "دیسپنه",
           "analysis": "وجود دارد."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "معمولاً ندارد."
         }
       }
@@ -1201,81 +1195,81 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "سپتوم بینی و ترشحات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "حساسیت به لمس (Tenderness)",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "واکنش های مردمک",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکات خارج چشمی (EOM)",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "مشاهده پرده صماخ",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم بینی و ترشحات",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت به لمس سینوس ها",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "مخاط دهان و ضایعات",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهده گردن",
           "analysis": "معمولاً وریدهای گردن (JVD) نرمال هستند (چون نارسایی قلب راست در آمبولی‌های کوچک محیطی رخ نمی‌دهد)."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "معاینه غده تیرویید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "برویی کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و یکنواختی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -1283,150 +1277,150 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات فرعی تنفسی",
           "analysis": "ممکن است به دلیل درد از تنفس عمیق خودداری کند (Splinting)."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش حرکت قفسه سینه در سمت دردناک (به صورت ارادی برای کاهش درد)."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "نرمال."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق",
         "analysis": "معمولاً نرمال است. اگر ناحیه انفارکتوس بزرگ باشد، ممکن است ماتیته (Dullness) خفیف سمع شود."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "ممکن است به دلیل تنفس سطحی (ناشی از درد) صداها کاهش یابد."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
-          "analysis": "**صدای مالش پلور (Pleural Friction Rub)**: این یافته بسیار مهم و اختصاصی برای انفارکتوس ریوی است که نشان‌دهنده التهاب سطح پلور روی منطقه انفارکتوس می‌باشد."
+          "question": "صداهای اضافی تنفسی",
+          "analysis": "صدای مالش پلور (Pleural Friction Rub): این یافته بسیار مهم و اختصاصی برای انفارکتوس ریوی است که نشان‌دهنده التهاب سطح پلور روی منطقه انفارکتوس می‌باشد."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "نرمال (فشار قلب راست بالا نرفته است)."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صداهای قلب S1-S2",
           "analysis": "نرمال."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3-S4",
           "analysis": "نرمال (بدون S3 یا سوفل نارسایی تری‌کوسپید)."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "نبض‌های محیطی و یکنواختی آنها",
           "analysis": "تاکیکاردی."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییرات تروفیک اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دما و زمان پرشدگی مویرگی اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
-          "analysis": "**علائم DVT** (تورم، درد، قرمزی ساق پا) در معاینه اندام تحتانی باید جستجو شود."
+          "question": "اِدم اندام‌ها",
+          "analysis": "علائم DVT (تورم، درد، قرمزی ساق پا) در معاینه اندام تحتانی باید جستجو شود."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صداهای روده",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "بروی‌های عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "حساسیت سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "توده‌ها و اندام‌های عمیق",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم پریتونئال",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح آگاهی",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "ارواح گردن",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "حساسیت نوری، لمسی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "انعکاس‌های عمقی اندام‌ها",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و راه‌رفتن",
         "analysis": "نرمال."
       }
     },
@@ -1477,7 +1471,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
       },
       "VBG": {
         "question": "VBG",
-        "analysis": "**آلکالوز تنفسی** (PCO2 پایین) و هایپوکسمی خفیف شایع است."
+        "analysis": "آلکالوز تنفسی (PCO2 پایین) و هایپوکسمی خفیف شایع است."
       },
       "LFTs": {
         "question": "LFTs",
@@ -1487,7 +1481,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     "specialized_lung_tests": {
       "D_dimer": {
         "question": "D_dimer",
-        "analysis": "**بسیار حساس (High Sensitivity).** اگر منفی باشد، احتمال PTE بسیار کم است. در این سناریو انتظار داریم مثبت باشد."
+        "analysis": "بسیار حساس (High Sensitivity). اگر منفی باشد، احتمال PTE بسیار کم است. در این سناریو انتظار داریم مثبت باشد."
       },
       "Sputum_AFB": {
         "question": "Sputum_AFB",
@@ -1495,7 +1489,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
       },
       "BNP_NT_proBNP": {
         "question": "BNP_NT_proBNP",
-        "analysis": "**نرمال است!** تفاوت کلیدی با آمبولی‌های بزرگ (Submassive/Massive) همین‌جاست. در نوع محیطی/انفارکتوس، لخته کوچک است و انسداد عمده‌ای در مسیر جریان خون ایجاد نمی‌کند، پس بطن راست تحت فشار (Strain) نیست و تروپونین یا BNP بالا نمی‌رود."
+        "analysis": "نرمال است! تفاوت کلیدی با آمبولی‌های بزرگ (Submassive/Massive) همین‌جاست. در نوع محیطی/انفارکتوس، لخته کوچک است و انسداد عمده‌ای در مسیر جریان خون ایجاد نمی‌کند، پس بطن راست تحت فشار (Strain) نیست و تروپونین یا BNP بالا نمی‌رود."
       },
       "Sputum_analysis": {
         "question": "Sputum_analysis",
@@ -1519,13 +1513,13 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**Hampton's Hump** (یک تراکم گوه‌ای شکل در محیط ریه که قاعده آن به سمت پلور است) علامت کلاسیک رادیولوژیک برای انفارکتوس ریوی است. همچنین ممکن است بالا رفتن دیافراگم در سمت مبتلا دیده شود."
+        "analysis": "Hampton's Hump (یک تراکم گوه‌ای شکل در محیط ریه که قاعده آن به سمت پلور است) علامت کلاسیک رادیولوژیک برای انفارکتوس ریوی است. همچنین ممکن است بالا رفتن دیافراگم در سمت مبتلا دیده شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
         "question": "Chest_CT_CTPA",
-        "analysis": "**استاندارد طلایی.** نقص پرشدگی (Filling defect) در شریان‌های سگمنتال یا ساب‌سگمنتال (محیطی) دیده می‌شود."
+        "analysis": "استاندارد طلایی. نقص پرشدگی (Filling defect) در شریان‌های سگمنتال یا ساب‌سگمنتال (محیطی) دیده می‌شود."
       }
     },
     "functional_tests": {
@@ -1552,7 +1546,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Torachonthesis",
         "analysis": "ممکن است افیوژن پلورال خفیف و خونی (Exudative/Bloody) دیده شود. معمولاً حجم آن کم است و نیاز به تخلیه ندارد، مگر برای رد کردن عفونت در موارد مشکوک."
       }
     }
@@ -1572,7 +1566,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     },
     "disease4": {
       "question": "PTE",
-      "analysis": "**تشخیص نهایی!** تابلوی درد پلوریتیک ناگهانی، هموپتزی، ریسک فاکتورهای DVT و یافته‌های رادیولوژیک (Hampton's hump/CTPA) تشخیص را قطعی می‌کند."
+      "analysis": "تشخیص نهایی! تابلوی درد پلوریتیک ناگهانی، هموپتزی، ریسک فاکتورهای DVT و یافته‌های رادیولوژیک (Hampton's hump/CTPA) تشخیص را قطعی می‌کند."
     },
     "disease5": {
       "question": "IPF",
@@ -1763,18 +1757,18 @@ PTE_PERIPHERAL_INFARCT = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "true",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -1790,18 +1784,12 @@ PTE_PERIPHERAL_INFARCT = {
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": { "FEV1": "false", "FVC": "false", "FEV1/FVC": "false" },
-          "reversibility": "false"
-        },
+        "Spirometry": "false",
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false" 
       }
     },
     "differential_diagnosis": {
@@ -1827,7 +1815,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "آمبولی ریه (PTE) کلاسیک‌ترین مثال برای شروع **ناگهانی (Acute/Sudden)** علائم است. برخلاف پنومونی یا بدتر شدن تدریجی نارسایی قلبی، بیمار دقیقاً لحظه‌ای که «نفسش گرفت» یا «درد شروع شد» را به یاد دارد."
+        "analysis": "آمبولی ریه (PTE) کلاسیک‌ترین مثال برای شروع ناگهانی (Acute/Sudden) علائم است. برخلاف پنومونی یا بدتر شدن تدریجی نارسایی قلبی، بیمار دقیقاً لحظه‌ای که «نفسش گرفت» یا «درد شروع شد» را به یاد دارد."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -1835,11 +1823,11 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       },
       "question3": {
         "question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟",
-        "analysis": "**تنگی نفس (Dyspnea)** شایع‌ترین علامت PTE است (در بیش از ۸۰٪ موارد). حتی در استراحت هم وجود دارد و با کوچکترین فعالیتی تشدید می‌شود."
+        "analysis": "تنگی نفس (Dyspnea) شایع‌ترین علامت PTE است (در بیش از ۸۰٪ موارد). حتی در استراحت هم وجود دارد و با کوچکترین فعالیتی تشدید می‌شود."
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
-        "analysis": "سرفه در PTE ممکن است رخ دهد اما معمولاً خشک است. اگر بیمار **هموپتزی** (خلط خونی) داشته باشد، نشان‌دهنده انفارکتوس ریوی (مرگ بخشی از بافت ریه نزدیک پلور) است که درد پلوریتیک هم ایجاد می‌کند."
+        "analysis": "سرفه در PTE ممکن است رخ دهد اما معمولاً خشک است. اگر بیمار هموپتزی (خلط خونی) داشته باشد، نشان‌دهنده انفارکتوس ریوی (مرگ بخشی از بافت ریه نزدیک پلور) است که درد پلوریتیک هم ایجاد می‌کند."
       },
       "question5": {
         "question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟",
@@ -1847,7 +1835,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       },
       "question6": {
         "question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟",
-        "analysis": "دو نوع درد در PTE داریم: ۱. **درد پلوریتیک** (تیز، با تنفس بدتر می‌شود) که ناشی از انفارکتوس دیستال است. ۲. **درد رترواسترنال** (فشارنده) که ناشی از ایسکمی بطن راست (RV Strain) در آمبولی‌های بزرگ (ساب‌ماسیو/ماسیو) است."
+        "analysis": "دو نوع درد در PTE داریم: ۱. درد پلوریتیک (تیز، با تنفس بدتر می‌شود) که ناشی از انفارکتوس دیستال است. ۲. درد رترواسترنال (فشارنده) که ناشی از ایسکمی بطن راست (RV Strain) در آمبولی‌های بزرگ (ساب‌ماسیو/ماسیو) است."
       },
       "question7": {
         "question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟",
@@ -1859,7 +1847,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       },
       "question9": {
         "question": "آیا قبلاً هم مشکل مشابهی داشته‌اید و چه درمانی به شما کمک کرده است؟",
-        "analysis": "قوی‌ترین ریسک فاکتور برای آمبولی ریه، **سابقه قبلی DVT یا PTE** است. اگر بیمار بگوید «پایم قبلاً لخته داشته»، تشخیص تقریباً قطعی است."
+        "analysis": "قوی‌ترین ریسک فاکتور برای آمبولی ریه، سابقه قبلی DVT یا PTE است. اگر بیمار بگوید «پایم قبلاً لخته داشته»، تشخیص تقریباً قطعی است."
       },
       "question10": {
         "question": "آیا دچار کاهش وزن، خستگی یا از دست دادن اشتها شده‌اید؟",
@@ -1880,7 +1868,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       "question2": {
         "question2a": {
           "question": "آیا تا به حال عمل جراحی (بزرگ یا کوچک) داشته‌اید؟ و آیا تا به حال در بیمارستان بستری شده‌اید؟",
-          "analysis": "**تریاد ویرشو (Virchow's Triad):** جراحی اخیر (به‌ویژه ارتوپدی لگن و زانو) یا تروما، باعث آسیب عروقی و بی‌حرکتی می‌شود که دو ضلع اصلی تشکیل لخته هستند."
+          "analysis": "تریاد ویرشو (Virchow's Triad): جراحی اخیر (به‌ویژه ارتوپدی لگن و زانو) یا تروما، باعث آسیب عروقی و بی‌حرکتی می‌شود که دو ضلع اصلی تشکیل لخته هستند."
         },
         "question2b": {
           "question": "اگر بله، دلیلش چه بوده و در چه سالی؟ همچنین، آیا تا به حال انتقال خون داشته‌اید؟",
@@ -1908,7 +1896,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       "question1": {
         "question1a": {
           "question": "لطفاً لیست تمام داروهایی که در حال حاضر به صورت مرتب (روزانه، هفتگی یا ماهانه) مصرف می‌کنید را به من بگویید.",
-          "analysis": "**قرص‌های ضدبارداری (OCP)** و درمان‌های هورمونی (HRT) استروژن‌دار، بمب‌های لخته‌ساز هستند! در خانم جوانی که با تنگی نفس ناگهانی می‌آید، حتماً این را بپرسید."
+          "analysis": "قرص‌های ضدبارداری (OCP) و درمان‌های هورمونی (HRT) استروژن‌دار، بمب‌های لخته‌ساز هستند! در خانم جوانی که با تنگی نفس ناگهانی می‌آید، حتماً این را بپرسید."
         },
         "question1b": {
           "question": "دوز هر دارو چقدر است و چند بار در روز مصرف می‌کنید؟",
@@ -2019,7 +2007,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       },
       "question7": {
         "question": "آیا سابقه سرفه، خس‌خس سینه، خلط خونی (هموپتیزی)، یا تنگی نفس (به جز تنگی نفس مرتبط با فعالیت شدید) دارید؟",
-        "analysis": "هموپتیزی (خلط خونی) در کنار درد پلوریتیک نشانه **انفارکتوس ریه** (Pulmonary Infarction) است."
+        "analysis": "هموپتیزی (خلط خونی) در کنار درد پلوریتیک نشانه انفارکتوس ریه (Pulmonary Infarction) است."
       },
       "question8": {
         "question": "آیا دچار حالت تهوع، استفراغ، سوزش سر دل، درد شکم، تغییر در عادات اجابت مزاج (اسهال یا یبوست)، خونریزی از مقعد، یا زردی پوست و چشم (یرقان) هستید؟",
@@ -2054,58 +2042,58 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
-        "analysis": "نکته کلیدی تعریف **Submassive**: فشار خون سیستولیک **طبیعی** (بالای ۹۰) است. اگر فشار افتاده باشد، وارد فاز **Massive** (High Risk) می‌شویم که درمانش متفاوت است (ترومبولیتیک)."
+        "question": "فشار خون(BP)",
+        "analysis": "نکته کلیدی تعریف Submassive: فشار خون سیستولیک طبیعی (بالای ۹۰) است. اگر فشار افتاده باشد، وارد فاز Massive (High Risk) می‌شویم که درمانش متفاوت است (ترومبولیتیک)."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "معمولاً نرمال یا کمی بالاست. تب بالا نشانه پنومونی است."
       },
       "PR": {
-        "question": "PR",
-        "analysis": "**تاکیکاردی** (ضربان > ۱۰۰) شایع‌ترین یافته غیرطبیعی در علائم حیاتی است."
+        "question": "ضربان قلب(PR)",
+        "analysis": "تاکیکاردی (ضربان > ۱۰۰) شایع‌ترین یافته غیرطبیعی در علائم حیاتی است."
       },
       "RR": {
-        "question": "RR",
-        "analysis": "**تاکی‌پنه** (تنفس سریع) تقریباً در همه بیماران وجود دارد."
+        "question": "تعداد تنفس(RR)",
+        "analysis": "تاکی‌پنه (تنفس سریع) تقریباً در همه بیماران وجود دارد."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "اشباع اکسیژن(SpO2)",
         "analysis": "هایپوکسمی (افت اکسیژن) شایع است، اما نرمال بودن آن PTE را رد نمی‌کند."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال است، مگر در شوک شدید."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "بیمار مضطرب و بی‌قرار است."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "دیسترس تنفسی واضح."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "حالت و وضعیت",
         "analysis": "نرمال."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ادم یک‌طرفه ساق پا (DVT) قویاً مطرح‌کننده آمبولی است."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "دیسپنه",
           "analysis": "تنفس سطحی و سریع."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "در ساب‌ماسیو هنوز اکسیژناسیون آنقدر مختل نشده که سیانوز واضح بدهد، اما ممکن است."
         }
       }
@@ -2113,69 +2101,69 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "سپتوم بینی و ترشحات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "حساسیت به لمس (Tenderness)",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "واکنش های مردمک",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکات خارج چشمی (EOM)",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "مشاهده پرده صماخ",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم بینی و ترشحات",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت به لمس سینوس ها",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "مخاط دهان و ضایعات",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
-          "analysis": "**برجستگی وریدهای گردن (JVD)** نشانه فشار بالای بطن راست (RV Strain) و نارسایی حاد قلب راست است که مشخصه نوع ساب‌ماسیو است."
+          "question": "مشاهده گردن",
+          "analysis": "برجستگی وریدهای گردن (JVD) نشانه فشار بالای بطن راست (RV Strain) و نارسایی حاد قلب راست است که مشخصه نوع ساب‌ماسیو است."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراکئال",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
@@ -2214,131 +2202,132 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق",
         "analysis": "معمولاً نرمال است. اگر انفارکتوس ریه رخ داده باشد، ممکن است ماتیته (Dullness) خفیف داشته باشیم."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "اغلب نرمال (Clear) است. این تضاد بین «تنگی نفس شدید» و «سمع ریه نرمال» بسیار به نفع آمبولی است."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی تنفسی",
           "analysis": "معمولاً نرمال است. گاهی صدای مالش پلور (Pleural Rub) در صورت انفارکتوس شنیده می‌شود."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "افزایش JVP نشانه نارسایی حاد بطن راست است."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس",
+
           "analysis": "ممکن است ضربان کوبنده بطن راست (RV Heave) در کنار جناغ لمس شود."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
-          "analysis": "**تشدید صدای دوم ریوی (Loud P2)** ناشی از فشار بالای شریان ریه است."
+          "question": "صداهای قلب S1-S2",
+          "analysis": "تشدید صدای دوم ریوی (Loud P2) ناشی از فشار بالای شریان ریه است."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3-S4",
           "analysis": "ممکن است سوفل نارسایی تری‌کوسپید (TR) یا گالوپ S3/S4 راست شنیده شود که نشانه فشار روی بطن راست است."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "نبض‌های محیطی و یکنواختی آنها",
           "analysis": "تاکیکاردی."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییرات تروفیک اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دما و زمان پرشدگی مویرگی اندام‌ها",
           "analysis": "نرمال (چون در ساب‌ماسیو هنوز شوک و افت فشار نداریم)."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
-          "analysis": "**ورم یک‌طرفه ساق پا**، درد در لمس مسیر وریدی و تفاوت قطر ساق‌ها، نشانه‌های DVT هستند."
+          "question": "اِدم اندام‌ها",
+          "analysis": "ورم یک‌طرفه ساق پا، درد در لمس مسیر وریدی و تفاوت قطر ساق‌ها، نشانه‌های DVT هستند."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "بروت‌های عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "حساسیت سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "توده‌ها و اندام‌های عمیق",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم پریتونئال",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح آگاهی",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "ارواح گردن",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "حساسیت نوری، لمسی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "انعکاس‌های عمقی اندام‌ها",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و راه‌رفتن",
         "analysis": "نرمال."
       }
     },
@@ -2389,7 +2378,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       },
       "VBG": {
         "question": "VBG",
-        "analysis": "**آلکالوز تنفسی** (PCO2 پایین) و **هایپوکسمی** (PO2 پایین) یافته‌های کلاسیک هستند."
+        "analysis": "آلکالوز تنفسی (PCO2 پایین) و هایپوکسمی (PO2 پایین) یافته‌های کلاسیک هستند."
       },
       "LFTs": {
         "question": "LFTs",
@@ -2399,7 +2388,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
     "specialized_lung_tests": {
       "D_dimer": {
         "question": "D_dimer",
-        "analysis": "**تست غربالگری عالی.** اگر منفی باشد، PTE تقریبا رد می‌شود (High Negative Predictive Value). اما اگر مثبت باشد، اختصاصی نیست و نیاز به تصویربرداری تاییدی دارد."
+        "analysis": "تست غربالگری عالی. اگر منفی باشد، PTE تقریبا رد می‌شود (High Negative Predictive Value). اما اگر مثبت باشد، اختصاصی نیست و نیاز به تصویربرداری تاییدی دارد."
       },
       "Sputum_AFB": {
         "question": "Sputum_AFB",
@@ -2407,7 +2396,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
       },
       "BNP_NT_proBNP": {
         "question": "BNP_NT_proBNP",
-        "analysis": "**حیاتی برای تعیین نوع ساب‌ماسیو.** افزایش تروپونین و BNP نشان‌دهنده کشش و آسیب دیواره بطن راست (RV Strain) است. اگر فشار خون نرمال باشد ولی این مارکرها بالا باشند، تشخیص Submassive PE است که مانیتورینگ دقیق‌تری می‌طلبد."
+        "analysis": "حیاتی برای تعیین نوع ساب‌ماسیو. افزایش تروپونین و BNP نشان‌دهنده کشش و آسیب دیواره بطن راست (RV Strain) است. اگر فشار خون نرمال باشد ولی این مارکرها بالا باشند، تشخیص Submassive PE است که مانیتورینگ دقیق‌تری می‌طلبد."
       },
       "Sputum_analysis": {
         "question": "Sputum_analysis",
@@ -2431,13 +2420,13 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**اغلب نرمال است!** همین نرمال بودن عکس در برابر تنگی نفس شدید، شک به PTE را بالا می‌برد. گاهی علائم خاص مثل Hampton's Hump (مثلث ماتیته در محیط) یا Westermark Sign (کاهش مارکرهای عروقی) دیده می‌شود."
+        "analysis": "اغلب نرمال است! همین نرمال بودن عکس در برابر تنگی نفس شدید، شک به PTE را بالا می‌برد. گاهی علائم خاص مثل Hampton's Hump (مثلث ماتیته در محیط) یا Westermark Sign (کاهش مارکرهای عروقی) دیده می‌شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
         "question": "Chest_CT_CTPA",
-        "analysis": "**استاندارد طلایی تشخیص (CT Angiography).** نقص پرشدگی (Filling Defect) در شریان‌های ریوی را نشان می‌دهد. همچنین بزرگی بطن راست (RV Dilation) را برای تایید نوع ساب‌ماسیو می‌سنجد."
+        "analysis": "استاندارد طلایی تشخیص (CT Angiography). نقص پرشدگی (Filling Defect) در شریان‌های ریوی را نشان می‌دهد. همچنین بزرگی بطن راست (RV Dilation) را برای تایید نوع ساب‌ماسیو می‌سنجد."
       }
     },
     "functional_tests": {
@@ -2464,7 +2453,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Torachonthesis",
         "analysis": "معمولاً نیاز نیست. افیوژن در PTE معمولاً کم‌حجم و خونی است. فقط در صورت شک به عفونت همزمان یا افیوژن حجیم انجام می‌شود."
       }
     }
@@ -2484,7 +2473,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
     },
     "disease4": {
       "question": "PTE",
-      "analysis": "**تشخیص نهایی!** تابلوی بالینی (تنگی نفس ناگهانی، ریسک فاکتورها)، پاراکلینیک (D-Dimer بالا، تروپونین بالا، آلکالوز تنفسی) و تصویربرداری (CTPA مثبت) همگی به نفع آمبولی ریه ساب‌ماسیو هستند."
+      "analysis": "تشخیص نهایی! تابلوی بالینی (تنگی نفس ناگهانی، ریسک فاکتورها)، پاراکلینیک (D-Dimer بالا، تروپونین بالا، آلکالوز تنفسی) و تصویربرداری (CTPA مثبت) همگی به نفع آمبولی ریه ساب‌ماسیو هستند."
     },
     "disease5": {
       "question": "IPF",
@@ -2675,18 +2664,18 @@ PTE_SUBMASSIVE_PTE = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "true",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "true",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -2702,18 +2691,12 @@ PTE_SUBMASSIVE_PTE = {
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": { "FEV1": "false", "FVC": "false", "FEV1/FVC": "false" },
-          "reversibility": "false"
-        },
+        "Spirometry": "false",
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false" 
       }
     },
     "differential_diagnosis": {

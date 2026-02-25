@@ -19,14 +19,9 @@ def decode_short_uuid(short_id: str) -> uuid.UUID:
     return uuid.UUID(bytes=base64.urlsafe_b64decode(short_id + padding))
 
 @shared_task
-def senario_creator_celery(personal_number, tracking_code):
-    """
-    وظیفه: تولید محتوای سناریو توسط هوش مصنوعی و ذخیره آن به عنوان یک Template 
-    و ایجاد رکورد ناتمام برای کاربر جهت نمایش در لیست.
-    """
+def senario_creator_celery(personal_number, tracking_code, section_uuid=None): 
     logger.info(f"Starting scenario generation for tracking_code: {tracking_code}")
 
-    # 1. فراخوانی هوش مصنوعی
     try:
         scenario_data, target_disease_name, type_disease = scenario_creator()
         
@@ -45,14 +40,12 @@ def senario_creator_celery(personal_number, tracking_code):
                 type_disease=type_disease
             ).first()
 
-            # اگر بیماری پیدا نشد، یکی جدید می‌سازیم
             if not disease:
                 disease = PulmonologyDisease.objects.create(
                     english_name=target_disease_name, 
                     type_disease=type_disease
                 )
                 
-            # 3. ذخیره سناریو در جدول ScenarioTemplate
             template, created = ScenarioTemplate.objects.get_or_create(
                 tracking_code=tracking_code,
                 defaults={
@@ -62,19 +55,16 @@ def senario_creator_celery(personal_number, tracking_code):
                 }
             )
 
-            # --- بخش اضافه‌شده: ایجاد اتصال بین کاربر و سناریو ---
-            # کاربر را از طریق شماره پرسنلی (که به تسک پاس داده شده) پیدا می‌کنیم
             user = User.objects.filter(personal_number=personal_number).first()
             if user:
-                # یک تلاش ناتمام می‌سازیم تا در scenariolist نمایش داده شود
                 UserScenarioAttempt.objects.create(
                     user=user,
                     scenario_template=template,
+                    section_id=section_uuid,
                     is_done=False
                 )
             else:
                 logger.warning(f"User with personal_number {personal_number} not found. Attempt not created.")
-            # --------------------------------------------------------
 
             if created:
                 logger.info(f"ScenarioTemplate {tracking_code} created successfully.")
@@ -89,7 +79,6 @@ def senario_creator_celery(personal_number, tracking_code):
         traceback.print_exc()
         
         return {"detail": f"An internal error occurred: {str(e)}"}
-
 
 @shared_task
 def feedback_creator_celery(feedback_tracking_code, attempt_id, disease_name, type_disease, student_log_data):

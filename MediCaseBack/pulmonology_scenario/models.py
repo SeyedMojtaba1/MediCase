@@ -2,7 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from classroom.models import Subject
+from classroom.models import Subject, Section
 
 User = get_user_model()
 
@@ -63,6 +63,7 @@ class UserScenarioAttempt(models.Model):
     attempt_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="attempts")
     scenario_template = models.ForeignKey(ScenarioTemplate, on_delete=models.CASCADE, related_name="attempts")
+    section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, blank=True, related_name="scenario_attempts")
     is_done = models.BooleanField(default=False)
     score = models.IntegerField(null=True, blank=True)
     start_time = models.DateTimeField(auto_now_add=True)

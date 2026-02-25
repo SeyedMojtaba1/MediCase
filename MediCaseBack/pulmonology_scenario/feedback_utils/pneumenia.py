@@ -3,7 +3,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "پنومونی آتیپیک (مثل مایکوپلاسما) معمولاً شروعی **تدریجی (Subacute)** دارد. بیمار ممکن است بگوید از ۱۰ روز پیش احساس سرماخوردگی و خستگی داشته که آرام‌آرام بدتر شده و به سرفه خشک تبدیل شده است."
+        "analysis": "پنومونی آتیپیک (مثل مایکوپلاسما) معمولاً شروعی تدریجی (Subacute) دارد. بیمار ممکن است بگوید از ۱۰ روز پیش احساس سرماخوردگی و خستگی داشته که آرام‌آرام بدتر شده و به سرفه خشک تبدیل شده است."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -11,15 +11,15 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
       },
       "question3": {
         "question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟",
-        "analysis": "تنگی نفس معمولاً خفیف است. اصطلاح **Walking Pneumonia** به همین دلیل استفاده می‌شود: بیمار با وجود پنومونی، راه می‌رود و کارهای روزمره‌اش را (هرچند با سختی) انجام می‌دهد."
+        "analysis": "تنگی نفس معمولاً خفیف است. اصطلاح Walking Pneumonia به همین دلیل استفاده می‌شود: بیمار با وجود پنومونی، راه می‌رود و کارهای روزمره‌اش را (هرچند با سختی) انجام می‌دهد."
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
-        "analysis": "شاه‌علامت بالینی! سرفه در اینجا معمولاً **خشک، مزاحم و تکان‌دهنده (Non-productive)** است. اگر هم خلط داشته باشد، معمولاً سفید و موکوییدی است، نه چرکی و زنگ‌زده."
+        "analysis": "شاه‌علامت بالینی! سرفه در اینجا معمولاً خشک، مزاحم و تکان‌دهنده (Non-productive) است. اگر هم خلط داشته باشد، معمولاً سفید و موکوییدی است، نه چرکی و زنگ‌زده."
       },
       "question5": {
         "question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟",
-        "analysis": "بله، شایع است. ارگانیسم‌های آتیپیک (مایکوپلاسما/کلامیدیا) می‌توانند باعث التهاب راه‌های هوایی و **برونکواسپاسم** شوند، حتی در کسانی که سابقه آسم ندارند."
+        "analysis": "بله، شایع است. ارگانیسم‌های آتیپیک (مایکوپلاسما/کلامیدیا) می‌توانند باعث التهاب راه‌های هوایی و برونکواسپاسم شوند، حتی در کسانی که سابقه آسم ندارند."
       },
       "question6": {
         "question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟",
@@ -165,7 +165,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
       },
       "question4": {
         "question": "در خانه همراه چه کسانی زندگی می‌کنید؟",
-        "analysis": "بسیار مهم! پنومونی‌های آتیپیک (به خصوص مایکوپلاسما) در محیط‌های جمعی مثل **خوابگاه‌ها، پادگان‌ها و مدارس** شیوع بالایی دارند و اغلب افراد خانواده همزمان درگیر می‌شوند."
+        "analysis": "بسیار مهم! پنومونی‌های آتیپیک (به خصوص مایکوپلاسما) در محیط‌های جمعی مثل خوابگاه‌ها، پادگان‌ها و مدارس شیوع بالایی دارند و اغلب افراد خانواده همزمان درگیر می‌شوند."
       }
     },
     "ros": {
@@ -187,7 +187,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
       },
       "question5": {
         "question": "آیا دچار وزوز گوش، کاهش شنوایی، خونریزی بینی، گرفتگی مزمن بینی، گلودرد مزمن، مشکل در بلع (دیسفاژی)، یا آفت و زخم‌های دهانی مکرر هستید؟",
-        "analysis": "**نکته طلایی:** گلودرد (Pharyngitis) و گوش‌درد در پنومونی‌های آتیپیک شایع است. التهاب پرده گوش (Bullous Myringitis) یک یافته اختصاصی برای مایکوپلاسما است."
+        "analysis": "نکته طلایی: گلودرد (Pharyngitis) و گوش‌درد در پنومونی‌های آتیپیک شایع است. التهاب پرده گوش (Bullous Myringitis) یک یافته اختصاصی برای مایکوپلاسما است."
       },
       "question6": {
         "question": "آیا سابقه درد قفسه سینه، تپش قلب، تنگی نفس با فعالیت، تنگی نفس در حالت خوابیده (ارتوپنه)، یا تورم پاها (ادم) دارید؟",
@@ -230,58 +230,58 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "معمولاً نرمال است."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "تب خفیف یا اصلا وجود ندارد."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "ممکن است کمی بالا باشد اما متناسب با حال عمومی بیمار است."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "ممکن است کمی افزایش یابد، اما دیسترس تنفسی شدید نادر است."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "معمولاً نرمال یا کمی کاهش یافته (بالای ۹۴٪) است."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "حال عمومی بیمار خوب است (Non-toxic). ممکن است کمی خسته به نظر برسد."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "بیمار «راه می‌رود» و بدحال نیست."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نرمال."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ندارد."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "تنگی نفس خفیف، معمولاً فقط با فعالیت."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "ندارد."
         }
       }
@@ -289,81 +289,81 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "حساسیت روی سینوس‌ها (Sinus tenderness) در پنومونی‌های آتیپیک (کلامیدیا/مایکوپلاسما) شایع است."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
-          "analysis": "معاینه پرده گوش (TM) حیاتی است! وجود تاول روی پرده گوش (**Bullous Myringitis**) نشانه بسیار اختصاصی برای عفونت مایکوپلاسما است."
+          "question": "ظاهر پرده گوش",
+          "analysis": "معاینه پرده گوش (TM) حیاتی است! وجود تاول روی پرده گوش (Bullous Myringitis) نشانه بسیار اختصاصی برای عفونت مایکوپلاسما است."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "ممکن است مثبت باشد."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "قرمزی و التهاب حلق (Pharyngitis) بدون اگزودا در این بیماران شایع است."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهده گردن",
           "analysis": "نرمال."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "ممکن است لنفادنوپاتی خفیف گردنی (Reactive) وجود داشته باشد."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "ممکن است کمی حساس باشند."
         }
       }
@@ -371,176 +371,176 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "معمولاً استفاده نمی‌شود."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقار گردن",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "نرمال."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "فریمیوس لمسی",
           "analysis": "معمولاً نرمال است. چون درگیری ریه به صورت بینابینی (Interstitial) و تکه‌تکه (Patchy) است و تراکم یکدست (Consolidation) نداریم."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "معمولاً نرمال (Resonant) است."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "صداهای تنفسی ممکن است نرمال یا کمی خشن (Harsh) باشند."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
-          "analysis": "یک ویژگی مهم **«گسست بالینی-رادیولوژیک»** است. یعنی در سمع ممکن است ریه پاک باشد یا فقط چند کراکل (Rales) پراکنده و ویزینگ (Wheeze) شنیده شود، در حالی که عکس ریه درگیری وسیعی را نشان می‌دهد."
+          "question": "صداهای اضافی",
+          "analysis": "یک ویژگی مهم «گسست بالینی-رادیولوژیک» است. یعنی در سمع ممکن است ریه پاک باشد یا فقط چند کراکل (Rales) پراکنده و ویزینگ (Wheeze) شنیده شود، در حالی که عکس ریه درگیری وسیعی را نشان می‌دهد."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "نرمال."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "نرمال."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4 و سرخورده",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "نرمال."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی‌ عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "ماهیچه ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -574,55 +574,55 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "معمولاً نرمال است (مگر اینکه بیمار بی‌حرکت بوده و شک به DVT/PE باشد)."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "اگر سرفه بیش از ۲-۳ هفته طول بکشد، برای رد سل (TB) لازم است، اما در ارزیابی اولیه اولویت ندارد."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "نرمال."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
-        "analysis": "**نکته تشخیصی:** رنگ‌آمیزی گرم خلط (Gram Stain) معمولاً تعداد زیادی گلبول سفید (WBC) را نشان می‌دهد اما **هیچ باکتری‌ای دیده نمی‌شود**! (چون مایکوپلاسما دیواره سلولی ندارد و کلامیدیا داخل سلولی است). این تناقض (WBC مثبت، باکتری منفی) نشانه پنومونی آتیپیک است."
+        "question": "Sputum analysis",
+        "analysis": "نکته تشخیصی: رنگ‌آمیزی گرم خلط (Gram Stain) معمولاً تعداد زیادی گلبول سفید (WBC) را نشان می‌دهد اما هیچ باکتری‌ای دیده نمی‌شود! (چون مایکوپلاسما دیواره سلولی ندارد و کلامیدیا داخل سلولی است). این تناقض (WBC مثبت، باکتری منفی) نشانه پنومونی آتیپیک است."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "معمولاً لازم نیست، مگر ریسک فاکتور وجود داشته باشد."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "نامرتبط."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
-        "analysis": "نمای رادیوگرافی معمولاً «بدتر» از حال عمومی بیمار است. درگیری‌ها به صورت **ارتشاحات بینابینی (Interstitial)**، تکه‌تکه (Patchy) یا رتیکولوندولار دیده می‌شود، نه تراکم لوبار یکدست."
+        "question": "Chest X-Ray",
+        "analysis": "نمای رادیوگرافی معمولاً «بدتر» از حال عمومی بیمار است. درگیری‌ها به صورت ارتشاحات بینابینی (Interstitial)، تکه‌تکه (Patchy) یا رتیکولوندولار دیده می‌شود، نه تراکم لوبار یکدست."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "معمولاً لازم نیست، مگر اینکه تشخیص مبهم باشد. نماهای Ground-glass opacity دیده می‌شود."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "نامرتبط."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "نامرتبط (مگر در بیمار آسمی)."
       },
       "Spirometry": {
@@ -630,7 +630,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
         "analysis": "در فاز حاد عفونت انجام نمی‌شود."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "نامرتبط."
       }
     },
@@ -640,7 +640,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
         "analysis": "معمولاً لازم نیست."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Torachonthesis",
         "analysis": "افیوژن پلورال در پنومونی آتیپیک ناشایع و معمولاً خفیف است و نیاز به تپ ندارد."
       }
     }
@@ -851,18 +851,18 @@ PNEUMENIA_ATYPICAL_WALKING = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "true",
         "CRP": "true",
-        "VBG": { "pH": "false", "PCO2": "false", "HCO3": "false" },
-        "LFTs": { "ALT": "true", "AST": "true" }
+        "VBG": "false",
+        "LFTs": "true"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "true", "Sample_Quality": "true" },
+        "Sputum_analysis": "true",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -878,18 +878,12 @@ PNEUMENIA_ATYPICAL_WALKING = {
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": { "FEV1": "false", "FVC": "false", "FEV1/FVC": "false" },
-          "reversibility": "false"
-        },
+        "Spirometry": "false",
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
@@ -1142,58 +1136,58 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "پایش همودینامیک برای رد سپسیس."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "تب بالا (High grade) و نوسانی (Hectic) نشانه تجمع چرک (Abscess/Empyema) است."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی واکنشی."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه شدید به دلیل فشار مایع روی ریه و کاهش حجم ریوی."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "هایپوکسمی شایع است."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "بررسی سطح هوشیاری."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "بیمار بدحال و توکسیک به نظر می‌رسد."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "دیسترس تنفسی."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "خوابیدن به سمت پهلوی درگیر (برای اجازه دادن به ریه سالم برای انبساط بهتر)."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "ممکن است کاهش یابد."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "معمولاً ندارد (افتراق از CHF)."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "تنگی نفس شدید."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "در موارد شدید."
         }
       }
@@ -1201,81 +1195,81 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکات خارج چشمی (EOM)",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات دهانی",
           "analysis": "بهداشت نامناسب دهان و دندان ریسک آسپیراسیون باکتری‌های بی‌هوازی و ایجاد آمپیم را بالا می‌برد."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهده گردن",
           "analysis": "استفاده از عضلات فرعی."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
-          "analysis": "بسیار مهم! در افیوژن‌های حجیم، تراشه به سمت **مخالف** (طرف سالم) هل داده می‌شود (Push effect)."
+          "question": "موقعیت تراشه",
+          "analysis": "بسیار مهم! در افیوژن‌های حجیم، تراشه به سمت مخالف (طرف سالم) هل داده می‌شود (Push effect)."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و یکنواختی گره‌های لنفاوی",
           "analysis": "لنفادنوپاتی می‌تواند نشانه بدخیمی یا سل باشد."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -1283,176 +1277,176 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "استفاده واضح به دلیل سختی تنفس."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "ممکن است قفسه سینه در سمت مبتلا برجسته‌تر به نظر برسد یا حرکت تنفسی کمتری داشته باشد (Lag)."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "حرکت قفسه سینه",
           "analysis": "کاهش حرکت قفسه سینه در سمت درگیر."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
-          "analysis": "نکته کلیدی در افتراق! در ناحیه پنومونی (بالای مایع) فرمیتوس افزایش می‌یابد، اما روی ناحیه افیوژن (پایین) فرمیتوس **کاهش** می‌یابد یا از بین می‌رود (چون مایع مانع عبور لرزش صداست)."
+          "question": "Tractile Fremitus",
+          "analysis": "نکته کلیدی در افتراق! در ناحیه پنومونی (بالای مایع) فرمیتوس افزایش می‌یابد، اما روی ناحیه افیوژن (پایین) فرمیتوس کاهش می‌یابد یا از بین می‌رود (چون مایع مانع عبور لرزش صداست)."
         }
       },
       "percussion": {
-        "question": "percussion",
-        "analysis": "**ماتیته سنگی** (Stony Dullness) روی ناحیه افیوژن شنیده می‌شود که شدیدتر از ماتیته پنومونی ساده است."
+        "question": "دق قفسه سینه",
+        "analysis": "ماتیته سنگی (Stony Dullness) روی ناحیه افیوژن شنیده می‌شود که شدیدتر از ماتیته پنومونی ساده است."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
-          "analysis": "**کاهش شدید یا فقدان** صداهای تنفسی در قاعده ریه (روی مایع) شنیده می‌شود. در مرز بالایی مایع ممکن است صدای برونکیال (Egophony) شنیده شود."
+          "question": "شدت صداهای تنفسی",
+          "analysis": "کاهش شدید یا فقدان صداهای تنفسی در قاعده ریه (روی مایع) شنیده می‌شود. در مرز بالایی مایع ممکن است صدای برونکیال (Egophony) شنیده شود."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صدای اضافی تنفسی",
           "analysis": "ممکن است صدای مالش پلور (Friction Rub) در مراحل اولیه (قبل از تجمع زیاد مایع) شنیده شود."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "معمولاً نرمال است. اگر بالا باشد به نفع نارسایی قلبی است."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "ممکن است PMI (ضربه نوک قلب) به دلیل فشار مایع حجیم سمت چپ، به سمت راست جابجا شود."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "تاکیکاردی."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی Q3 و Q4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقار نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "ادم اندام‌ها",
           "analysis": "نبود ادم."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "بررسی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق عمومی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "اندام‌ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "گیجی در سپسیس شدید."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "عصب‌های مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "حساسیت جدار قفسه سینه در محل درد پلوریتیک ممکن است وجود داشته باشد."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -1486,55 +1480,55 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "برای رد آمبولی ریه (که آن هم می‌تواند افیوژن بدهد). البته در عفونت هم مثبت می‌شود."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نرمال (مگر شک به سل)."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "نرمال. اگر بالا باشد یعنی علت افیوژن قلبی (CHF) است، نه پنومونی."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum analysis",
         "analysis": "رنگ‌آمیزی گرم و کشت خلط برای یافتن پاتوژن اصلی (استرپتوکوک، استافیلوکوک، بی‌هوازی‌ها) ضروری است."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط (مگر در موارد مشکوک به عفونت فرصت‌طلب)."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "نامرتبط."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "محو شدن زاویه کوستوفرنیک (Costophrenic angle blunting) نشانه وجود مایع است (حداقل ۲۰۰ سی‌سی). نمای منیسک (Meniscus sign) دیده می‌شود. نمای لترال دکوبیتوس برای ارزیابی میزان و تحرک مایع ضروری است."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "برای افتراق آبسه ریه از آمپیم و دیدن مایع‌های لوکوله (Loculated) که در عکس ساده دیده نمی‌شوند، بسیار دقیق است. همچنین ضخیم شدن پلور (Pleural enhancement) را نشان می‌دهد."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "کاربرد ندارد."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "کاربرد ندارد."
       },
       "Spirometry": {
@@ -1542,7 +1536,7 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
         "analysis": "کاربرد ندارد و در فاز حاد خطرناک است."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "کاربرد ندارد."
       }
     },
@@ -1552,8 +1546,8 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
         "analysis": "تنها در صورت شک به انسداد برونش (تومور/جسم خارجی) که مانع تخلیه ترشحات شده، انجام می‌شود."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
-        "analysis": "**اقدام طلایی!** هر افیوژن پاراپنومونیک قابل توجه (>10mm در سونو/گرافی) باید نمونه‌برداری (Tap) شود. آنالیز مایع (قند، pH، LDH، پروتئین و کشت) تعیین می‌کند که آیا نیاز به لوله‌گذاری (Chest Tube) هست یا خیر. \n**معیارهای Light** برای تشخیص اگزودا استفاده می‌شود. \n**علائم افیوژن عارضه‌دار (نیاز به تخلیه):** pH < 7.20، گلوکز < 60، LDH > 1000 یا مشاهده چرک/باکتری."
+        "question": "Torachonthesis",
+        "analysis": "اقدام طلایی! هر افیوژن پاراپنومونیک قابل توجه (>10mm در سونو/گرافی) باید نمونه‌برداری (Tap) شود. آنالیز مایع (قند، pH، LDH، پروتئین و کشت) تعیین می‌کند که آیا نیاز به لوله‌گذاری (Chest Tube) هست یا خیر. \nمعیارهای Light برای تشخیص اگزودا استفاده می‌شود. \nعلائم افیوژن عارضه‌دار (نیاز به تخلیه): pH < 7.20، گلوکز < 60، LDH > 1000 یا مشاهده چرک/باکتری."
       }
     }
   },
@@ -1593,7 +1587,7 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
     },
     "need_aspiration": {
       "question": "need_aspiration",
-      "analysis": "**بله، حتماً.** چون احتمال عفونی شدن مایع (آمپیم) وجود دارد و درمان آن با آنتی‌بیوتیک خالی متفاوت است (نیاز به تخلیه فیزیکی دارد). اگر مایع اگزوداتیو با pH پایین باشد، درناژ فوری لازم است."
+      "analysis": "بله، حتماً. چون احتمال عفونی شدن مایع (آمپیم) وجود دارد و درمان آن با آنتی‌بیوتیک خالی متفاوت است (نیاز به تخلیه فیزیکی دارد). اگر مایع اگزوداتیو با pH پایین باشد، درناژ فوری لازم است."
     },
     "effusion_type": "exudative"
   }
@@ -1763,18 +1757,18 @@ PNEUMENIA_COMPLICATED_EFFUSION = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "true",
         "CRP": "true",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "true",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "true", "Sample_Quality": "true" },
+        "Sputum_analysis": "true",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -1791,17 +1785,14 @@ PNEUMENIA_COMPLICATED_EFFUSION = {
         "dlco": "false",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "false", "FVC": "false", "FEV1/FVC": "false" },
+          "Result": "false",
           "reversibility": "false"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "true", "LDH": "true", "Albumin": "true" },
-          "Fluid": { "Protein": "true", "LDH": "true", "Albumin": "true" }
-        }
+        "torachonthesis": "true"
       }
     },
     "differential_diagnosis": {
@@ -1827,7 +1818,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "در پنومونی باکتریال تیپیک (مثل پنوموکوک)، شروع علائم معمولاً **ناگهانی (Acute)** است. برخلاف نوع آتیپیک یا ویروسی که تدریجی است، اینجا بیمار ممکن است دقیقاً ساعت شروع لرز شدید را به یاد بیاورد."
+        "analysis": "در پنومونی باکتریال تیپیک (مثل پنوموکوک)، شروع علائم معمولاً ناگهانی (Acute) است. برخلاف نوع آتیپیک یا ویروسی که تدریجی است، اینجا بیمار ممکن است دقیقاً ساعت شروع لرز شدید را به یاد بیاورد."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -1839,7 +1830,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
-        "analysis": "سوال کلیدی! در نوع تیپیک، سرفه معمولاً **مولد (Productive)** است. خلط رنگی (چرکی) یا خلط «زنگ‌زده» (Rusty Sputum) که ناشی از نشت گلبول‌های قرمز به آلوئول در مرحله «کبدی شدن قرمز» است، نشانه اختصاصی پنومونی پنوموکوکی است."
+        "analysis": "سوال کلیدی! در نوع تیپیک، سرفه معمولاً مولد (Productive) است. خلط رنگی (چرکی) یا خلط «زنگ‌زده» (Rusty Sputum) که ناشی از نشت گلبول‌های قرمز به آلوئول در مرحله «کبدی شدن قرمز» است، نشانه اختصاصی پنومونی پنوموکوکی است."
       },
       "question5": {
         "question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟",
@@ -1847,11 +1838,11 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
       },
       "question6": {
         "question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟",
-        "analysis": "درد **پلوریتیک** (درد تیز که با تنفس عمیق بدتر می‌شود) در پنومونی لوبار بسیار شایع است. این یعنی التهاب از بافت ریه عبور کرده و به پرده جنب (Pleura) رسیده است."
+        "analysis": "درد پلوریتیک (درد تیز که با تنفس عمیق بدتر می‌شود) در پنومونی لوبار بسیار شایع است. این یعنی التهاب از بافت ریه عبور کرده و به پرده جنب (Pleura) رسیده است."
       },
       "question7": {
         "question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟",
-        "analysis": "لرز شدید و تکان‌دهنده (**Rigors**) علامت کلاسیک ورود باکتری به خون (باکتریمی) در پنومونی پنوموکوکی است. تب بالا پاسخ بدن به طوفان سایتوکاینی (IL-1, IL-6) است."
+        "analysis": "لرز شدید و تکان‌دهنده (Rigors) علامت کلاسیک ورود باکتری به خون (باکتریمی) در پنومونی پنوموکوکی است. تب بالا پاسخ بدن به طوفان سایتوکاینی (IL-1, IL-6) است."
       },
       "question8": {
         "question": "آیا دچار تورم در پاها، تپش قلب یا سرگیجه شده‌اید؟",
@@ -1880,7 +1871,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
       "question2": {
         "question2a": {
           "question": "آیا تا به حال عمل جراحی (بزرگ یا کوچک) داشته‌اید؟ و آیا تا به حال در بیمارستان بستری شده‌اید؟",
-          "analysis": "سابقه **اسپلنکتومی** (برداشتن طحال) بیمار را به شدت در برابر باکتری‌های کپسول‌دار (مثل پنوموکوک) بی‌دفاع می‌کند و یک وضعیت اورژانسی محسوب می‌شود."
+          "analysis": "سابقه اسپلنکتومی (برداشتن طحال) بیمار را به شدت در برابر باکتری‌های کپسول‌دار (مثل پنوموکوک) بی‌دفاع می‌کند و یک وضعیت اورژانسی محسوب می‌شود."
         },
         "question2b": {
           "question": "اگر بله، دلیلش چه بوده و در چه سالی؟ همچنین، آیا تا به حال انتقال خون داشته‌اید؟",
@@ -1889,7 +1880,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
       },
       "question3": {
         "question": "آیا سابقه بیماری های قلبی، ریوی و مغزی را دارید؟",
-        "analysis": "بسیار مهم! سابقه نارسایی قلبی می‌تواند علائمی دقیقاً شبیه پنومونی ایجاد کند. سابقه سکته مغزی ریسک **آسپیراسیون** (پریدن غذا در ریه) را به عنوان علت پنومونی بالا می‌برد."
+        "analysis": "بسیار مهم! سابقه نارسایی قلبی می‌تواند علائمی دقیقاً شبیه پنومونی ایجاد کند. سابقه سکته مغزی ریسک آسپیراسیون (پریدن غذا در ریه) را به عنوان علت پنومونی بالا می‌برد."
       },
       "question4": {
         "question": "آیا در حال حاظر یا در گذشته سرطان فعال داشته‌اید؟",
@@ -1975,7 +1966,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
       },
       "question2": {
         "question": "آیا الکل مصرف می‌کنید؟ اگر بله، نوع و میزان مصرف آن در هفته چقدر است؟",
-        "analysis": "مصرف الکل ریسک **آسپیراسیون** (به دلیل کاهش هوشیاری) و عفونت با باکتری‌های گرم منفی (کلبسیلا) و بی‌هوازی‌ها را بالا می‌برد."
+        "analysis": "مصرف الکل ریسک آسپیراسیون (به دلیل کاهش هوشیاری) و عفونت با باکتری‌های گرم منفی (کلبسیلا) و بی‌هوازی‌ها را بالا می‌برد."
       },
       "question3": {
         "question3a": {
@@ -2054,58 +2045,58 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "افت فشار خون (سیستول < ۹۰) نشانه سپسیس شدید و شوک است و در سیستم امتیازدهی CURB-65، یک امتیاز خطر محسوب می‌شود."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "تب بالا (هایپرترمی) نشانه عفونت فعال است. در افراد مسن یا شوک سپتیک، ممکن است بیمار هیپوترم (سرد) باشد که نشانه بدی است."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی (ضربان بالا) پاسخ فیزیولوژیک بدن به تب، دهیدراتاسیون و سپسیس است."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تعداد تنفس بالای ۳۰ در دقیقه (تاکی‌پنه) نشانه دیسترس تنفسی و اسیدوز است و معیار مهمی برای بستری شدن است."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "افت اکسیژن خون (Hypoxemia) نشان‌دهنده پر شدن آلوئول‌ها و شنت خونی است. هدف درمان حفظ بالای ۹۲-۹۴٪ است."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "کاهش سطح هوشیاری (Confusion) به دلیل هیپوکسی مغزی یا سپسیس رخ می‌دهد و پیش‌آگهی را بدتر می‌کند."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "بیمار ممکن است مضطرب یا در موارد شدید، لتارژیک باشد."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "ظاهر بدحال (Toxic Look)، صورت برافروخته (Flushed) و تعریق."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "حالت و وضعیت",
         "analysis": "تمایل به دراز کشیدن به سمت دردناک قفسه سینه (Splinting) برای کاهش درد پلوریتیک."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "بررسی گیجی (Confusion) برای معیار CURB-65."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "معمولاً ندارد. ادم نشانه نارسایی قلبی است."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "دیسپنه",
           "analysis": "تلاش تنفسی آشکار."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "سیانوز (کبودی) لب‌ها نشانه هیپوکسی شدید و نیاز فوری به اکسیژن است."
         }
       }
@@ -2113,81 +2104,81 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "ممکن است تبخال (Herpes Labialis) دیده شود که با عفونت پنوموکوکی ارتباط دارد."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال (مگر در سینوزیت همراه)."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت و ظاهر گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "Tenderness سینوس‌ها",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "خشکی مخاط به دلیل تب و کم‌آبی."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "ممکن است قرمزی (Pharyngitis) خفیف دیده شود."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهده گردن",
           "analysis": "استفاده از عضلات فرعی گردن (Accessory muscles) برای تنفس."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "معمولاً در خط وسط است. انحراف تراشه نشانه پنوموتوراکس یا افیوژن حجیم است."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "معمولاً لنفادنوپاتی گردنی نداریم."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -2195,176 +2186,176 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "عضلات اضافی",
           "analysis": "استفاده از عضلات نشانه افزایش کار تنفسی و کاهش کمپلیانس ریه است."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "حرکت قفسه سینه در سمت درگیر ممکن است به دلیل درد پلوریتیک کاهش یابد (Lag)."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش اتساع قفسه سینه در سمت مبتلا."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
-          "analysis": "**افزایش لرزش لمسی** (Increased Fremitus) یافته کلاسیک پنومونی لوبار است. بافت متراکم (Consolidation) صدا را بهتر از هوای معمولی منتقل می‌کند."
+          "question": "Tactile Fremitus",
+          "analysis": "افزایش لرزش لمسی (Increased Fremitus) یافته کلاسیک پنومونی لوبار است. بافت متراکم (Consolidation) صدا را بهتر از هوای معمولی منتقل می‌کند."
         }
       },
       "percussion": {
-        "question": "percussion",
-        "analysis": "**ماتیته در دق** (Dullness) روی ناحیه درگیر شنیده می‌شود که نشان‌دهنده پر شدن فضاهای هوایی با مایع التهابی است."
+        "question": "دق قفسه سینه",
+        "analysis": "ماتیته در دق (Dullness) روی ناحیه درگیر شنیده می‌شود که نشان‌دهنده پر شدن فضاهای هوایی با مایع التهابی است."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
-          "analysis": "**صدای تنفسی برونکیال** (Bronchial Breathing) در ناحیه محیطی ریه شنیده می‌شود. همچنین صدای **Egophony** (تبدیل صدای E به A) مثبت است."
+          "question": "شدت صدای تنفسی",
+          "analysis": "صدای تنفسی برونکیال (Bronchial Breathing) در ناحیه محیطی ریه شنیده می‌شود. همچنین صدای Egophony (تبدیل صدای E به A) مثبت است."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
-          "analysis": "**کراکل** (Rales) به خصوص در انتهای دم شنیده می‌شود. ممکن است صدای مالش پلور (Pleural Rub) هم وجود داشته باشد."
+          "question": "صدای اضافی",
+          "analysis": "کراکل (Rales) به خصوص در انتهای دم شنیده می‌شود. ممکن است صدای مالش پلور (Pleural Rub) هم وجود داشته باشد."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "برای ارزیابی حجم مایع بدن (هیدراتاسیون) بررسی می‌شود."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "تاکیکاردی سینوسی. عدم وجود صدای S3 یا مورمور به رد نارسایی قلبی و مشکلات دریچه‌ای کمک می‌کند."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "معمولاً پر و تند (Bounding) به دلیل تب، یا ضعیف در صورت شوک."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "سرد بودن انتهاها و زمان پرشدگی مویرگی طولانی نشانه شوک و هیپوپرفیوژن است."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "نبود ادم به نفع تشخیص پنومونی و رد نارسایی احتقانی قلب (CHF) است."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی‌ عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "گاهی پنومونی لوب تحتانی باعث درد ارجاعی به شکم و حساسیت در لمس می‌شود (مشابه آپاندیسیت)."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "گیجی (Confusion) معیار مهمی برای شدت بیماری (CURB-65) است، به‌ویژه در سالمندان."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "عصب‌های مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "دامنه حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -2377,7 +2368,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
       },
       "CBC": {
         "question": "CBC",
-        "analysis": "**لکوسیتوز** (WBC > 12000) با ارجحیت نوتروفیل‌ها (Left Shift) نشانه کلاسیک عفونت باکتریال است. کاهش گلبول سفید (Leukopenia) علامت هشداردهنده سپسیس شدید است."
+        "analysis": "لکوسیتوز (WBC > 12000) با ارجحیت نوتروفیل‌ها (Left Shift) نشانه کلاسیک عفونت باکتریال است. کاهش گلبول سفید (Leukopenia) علامت هشداردهنده سپسیس شدید است."
       },
       "ESR": {
         "question": "ESR",
@@ -2398,55 +2389,55 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "برای رد کردن آمبولی ریه (PE) در موارد مشکوک. البته در عفونت شدید هم دایمر بالا می‌رود و اختصاصیت کمی دارد."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "اگر بیمار ریسک فاکتور سل (TB) دارد یا کویتی (حفره) در عکس ریه دیده شده، باید چک شود. در موارد تیپیک اولویت ندارد."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "برای افتراق پنومونی از نارسایی قلبی (CHF). اگر BNP نرمال باشد، تنگی نفس منشا قلبی ندارد."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
-        "analysis": "رنگ‌آمیزی گرم خلط (Gram Stain) اگر نمونه باکیفیت باشد (سلول اپیتلیال < ۱۰، نوتروفیل > ۲۵)، می‌تواند **دیپلوکوک‌های گرم مثبت** (پنوموکوک) را نشان داده و آنتی‌بیوتیک را هدفمند کند."
+        "question": "Sputum analysis",
+        "analysis": "رنگ‌آمیزی گرم خلط (Gram Stain) اگر نمونه باکیفیت باشد (سلول اپیتلیال < ۱۰، نوتروفیل > ۲۵)، می‌تواند دیپلوکوک‌های گرم مثبت (پنوموکوک) را نشان داده و آنتی‌بیوتیک را هدفمند کند."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "مربوط به بیماری‌های مزمن (COPD) است و در پنومونی حاد کاربرد ندارد."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "در موارد پنومونی شدید، راجعه، یا با پاتوژن‌های فرصت‌طلب (مثل پنوموسیستیس)، برای رد نقص ایمنی چک می‌شود."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "در موارد معمول CAP لازم نیست، مگر اینکه شک به واسکولیت یا پنومونی بینابینی باشد."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
-        "analysis": "**استاندارد طلایی تشخیص!** در پنومونی تیپیک، یک **تراکم لوبار** (Lobar Consolidation) با **برونکوگرام هوایی** (Air Bronchogram) دیده می‌شود که تشخیص را مسجل می‌کند."
+        "question": "Chest X-Ray",
+        "analysis": "استاندارد طلایی تشخیص! در پنومونی تیپیک، یک تراکم لوبار (Lobar Consolidation) با برونکوگرام هوایی (Air Bronchogram) دیده می‌شود که تشخیص را مسجل می‌کند."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "در موارد تیپیک که CXR واضح است، سی‌تی اسکن لازم نیست. فقط زمانی انجام می‌شود که به عوارض (مثل آبسه، آمپیم) یا تشخیص‌های دیگر (تومور، آمبولی) شک کنیم."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "در فاز حاد عفونت انجام نمی‌شود."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "مربوط به پایش آسم است."
       },
       "Spirometry": {
@@ -2454,7 +2445,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
         "analysis": "در بیمار بدحال با پنومونی حاد، انجام اسپیرومتری ممنوع است و کمکی به تشخیص نمی‌کند."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "کاربرد ندارد."
       }
     },
@@ -2464,7 +2455,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
         "analysis": "روشی تهاجمی است و فقط برای بیماران با نقص ایمنی، موارد مشکوک به جسم خارجی یا تومور، و پنومونی‌های مقاوم به درمان استفاده می‌شود."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Torachonthesis",
         "analysis": "تنها در صورتی انجام می‌شود که در عکس ریه، مایع پلور قابل توجه (Effusion) دیده شود. هدف، رد کردن عفونت فضای پلور (آمپیم) است."
       }
     }
@@ -2675,18 +2666,18 @@ PNEUMENIA_TYPICAL_LOBAR = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "true",
         "CRP": "true",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "true",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "true", "Sample_Quality": "true" },
+        "Sputum_analysis": "true",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -2703,17 +2694,14 @@ PNEUMENIA_TYPICAL_LOBAR = {
         "dlco": "false",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "false", "FVC": "false", "FEV1/FVC": "false" },
+          "Result": "false",
           "reversibility": "false"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
