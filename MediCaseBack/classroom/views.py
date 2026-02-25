@@ -666,19 +666,14 @@ class BulkCreditUpdateView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    # با این دکوریتور، فیلدها در Swagger نمایش داده می‌شوند
     @extend_schema(
         request=BulkCreditUpdateSerializer,
-        summary="گروهی: بروزرسانی اعتبار دانشجویان یک کلاس",
-        description="افزایش یا تنظیم دقیق اعتبار همه دانشجویان فعال در یک کلاس خاص."
     )
     def post(self, request, section_id):
-        # استفاده از سریالایزر برای اعتبارسنجی ورودی‌ها
         serializer = BulkCreditUpdateSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # دریافت داده‌های اعتبارسنجی شده (تایپ کستینگ اتوماتیک انجام شده است)
         amount = serializer.validated_data['amount']
         mode = serializer.validated_data.get('mode', 'add')
         user = request.user
@@ -743,6 +738,12 @@ class BulkCreditUpdateView(APIView):
                         student_user.scenario_credit = 0
                     student_user.scenario_credit += change_amount
                     student_user.save()
+
+                    StudentSubject.objects.get_or_create(
+                        student=student_user,
+                        subject=target_subject,
+                        defaults={'access_status': True}
+                    )
 
                     CreditTransaction.objects.create(
                         actor=user,
@@ -891,6 +892,12 @@ class SingleCreditUpdateView(APIView):
                     student_user.scenario_credit = 0
                 student_user.scenario_credit += change_amount
                 student_user.save()
+
+                StudentSubject.objects.get_or_create(
+                    student=target_student,
+                    subject=target_subject,
+                    defaults={'access_status': True}
+                )
 
                 description = custom_desc if custom_desc else f"شارژ دستی درس {target_subject.persian_name}"
                 CreditTransaction.objects.create(

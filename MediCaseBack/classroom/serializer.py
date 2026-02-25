@@ -9,17 +9,12 @@ from .utils import decode_short_uuid, encode_short_uuid, update_section_statuses
 from datetime import date
 from celery import shared_task
 
-# ==============================================================================
-# Logger Setup
-# Ensure 'university' matches the app name defined in settings.py LOGGING config
-# ==============================================================================
 logger = logging.getLogger('classroom')
 
 User = get_user_model()
 
 class SectionListSerializer(serializers.ModelSerializer):
     section_id = serializers.SerializerMethodField(read_only=True)
-    # فیلدهای زیر را به SerializerMethodField تغییر دهید
     teacher = serializers.SerializerMethodField(read_only=True)
     semester_code = serializers.SerializerMethodField(read_only=True)
     semester_name = serializers.SerializerMethodField(read_only=True)
@@ -697,8 +692,6 @@ class SectionRemoveSerializer(serializers.Serializer):
 
     def save(self, **kwargs):
         section = self.validated_data['section_instance']
-        
-        # تغییر وضعیت کلاس به Closed (بدون تغییر وضعیت دانشجویان)
         section.status = 'Closed'
         section.save()
             

@@ -78,23 +78,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         user.save()
 
-        if subject_name:
-            subject = Subject.objects.filter(english_name=subject_name).first()
-            if subject:
-                credit_amount = 100
-                
-                StudentCredit.objects.create(
-                    user=user,
-                    subject=subject,
-                    balance=credit_amount
-                )
-                
-                user.scenario_credit += credit_amount
-                user.save()
-                
-            else:
-                logger.warning(f"Subject '{subject_name}' not found for user {user.username}")
-
         return user
     
 class EmailLoginSerializer(serializers.Serializer):
