@@ -623,7 +623,7 @@ class HospitalSubjectRetrieveSerializer(serializers.ModelSerializer):
     hospital_persian = serializers.CharField(source='hospital.persian_name', read_only=True)
     class Meta:
         model = HospitalSubject
-        fields = ['subject', ,'hospital_english', 'hospital_persian', 'access_status']
+        fields = ['subject', 'hospital_english', 'hospital_persian', 'access_status']
         extra_kwargs = {'url': {'lookup_field': 'subject'}}
 
 class StudentCreditSerializer(serializers.ModelSerializer):
