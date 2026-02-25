@@ -198,7 +198,7 @@ class FeedbackRetrieveView(generics.RetrieveAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FeedbackRetrieveSerializer
-    queryset = PulmonologyFeedback.objects.all()
+    queryset = PulmonologyFeedback.objects.select_related('attempt__scenario_template').all()
     lookup_field = 'tracking_code' 
     lookup_value_regex = '[^/]+'
 

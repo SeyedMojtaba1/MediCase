@@ -52,26 +52,42 @@ class StudentLogSerializer(serializers.Serializer):
     
 class FeedbackRetrieveSerializer(serializers.ModelSerializer):
     feedback = serializers.JSONField(source='feedback_content')
+    patient_profile = serializers.SerializerMethodField()
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
             'feedback',
+            'patient_profile',
         ]
+        
+    def get_patient_profile(self, obj):
+        try:
+            return obj.attempt.scenario_template.content.get('patient_profile', None)
+        except (AttributeError, AttributeError):
+            return None
         
 class FeedbackListSerializer(serializers.ModelSerializer):
     scenario_tracking_code = serializers.CharField(
         source='attempt.scenario_template.tracking_code', 
         read_only=True
     )
+    patient_profile = serializers.SerializerMethodField()
     
     class Meta:
         model = PulmonologyFeedback
         fields = [
             'tracking_code',
             'scenario_tracking_code',
-            'generated'
+            'generated',
+            'patient_profile',
         ]
+
+    def get_patient_profile(self, obj):
+        try:
+            return obj.attempt.scenario_template.content.get('patient_profile', None)
+        except (AttributeError, AttributeError):
+            return None
 
 class StudentScenarioRankSerializer(serializers.ModelSerializer):
     completed_scenarios_count = serializers.IntegerField(read_only=True)
