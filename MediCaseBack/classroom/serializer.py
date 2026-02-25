@@ -619,10 +619,11 @@ class HospitalSubjectListSerializer(serializers.ModelSerializer):
         
 class HospitalSubjectRetrieveSerializer(serializers.ModelSerializer):
     subject = serializers.CharField(source='subject.english_name', read_only=True)
-    hospital = serializers.CharField(source='hospital.english_name', read_only=True)
+    hospital_english = serializers.CharField(source='hospital.english_name', read_only=True)
+    hospital_persian = serializers.CharField(source='hospital.persian_name', read_only=True)
     class Meta:
         model = HospitalSubject
-        fields = ['subject', 'hospital', 'access_status']
+        fields = ['subject', ,'hospital_english', 'hospital_persian', 'access_status']
         extra_kwargs = {'url': {'lookup_field': 'subject'}}
 
 class StudentCreditSerializer(serializers.ModelSerializer):
