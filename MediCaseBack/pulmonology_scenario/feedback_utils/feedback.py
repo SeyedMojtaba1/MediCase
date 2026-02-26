@@ -3,7 +3,12 @@ import json
 class ClinicalEvaluator:
     def __init__(self, optimal, student_log, total_time_minutes=15):
         self.optimal = optimal
-        self.student = student_log
+        
+        # ۱. اصلاح خودکارِ نام کلید قدیمی قلب و عروق که از فرانت‌اند می‌آید
+        student_str = json.dumps(student_log)
+        student_str = student_str.replace('"2_pulses_and_extremities"', '"peripheral_pulses_and_extremities"')
+        self.student = json.loads(student_str)
+        
         self.total_time_seconds = total_time_minutes * 60
         self.score = 0
         self.max_possible_score = 0
@@ -26,7 +31,7 @@ class ClinicalEvaluator:
         if not time_str or str(time_str).lower() in ["false", "true", "none"]:
             return None
         try:
-            parts = list(map(int, time_str.split(':')))
+            parts = list(map(int, str(time_str).split(':')))
             if len(parts) == 2:
                 return parts[0] * 60 + parts[1]
             elif len(parts) == 3:
@@ -52,8 +57,8 @@ class ClinicalEvaluator:
         start_time_seconds = max(self.timestamps)
         
         end_time_seconds = self.final_diag_timestamp
-        
         if end_time_seconds is None:
+            # زمان اتمام برابر است با کمترین زمان ثبت شده در لاگ (چون تایمر شمارش معکوس است)
             end_time_seconds = min(self.timestamps) if self.timestamps else 0
             
         duration = start_time_seconds - end_time_seconds
@@ -61,7 +66,7 @@ class ClinicalEvaluator:
 
     def evaluate_diagnosis_accuracy(self):
         optimal_diff = self.optimal.get("differential_diagnosis", {})
-        correct_differentials = [d for d, val in optimal_diff.items() if val == "true"]
+        correct_differentials = [d for d, val in optimal_diff.items() if str(val).lower() == "true"]
         
         correct_final = self.optimal.get("final_diagnosis", {}).get("disease", "")
         
@@ -70,7 +75,7 @@ class ClinicalEvaluator:
         
         student_final = self.student.get("final_diagnosis", {}).get("disease", self.student.get("student_final_diagnosis", ""))
 
-        is_final_correct = (student_final.lower() == correct_final.lower())
+        is_final_correct = (str(student_final).lower() == str(correct_final).lower())
         
         missed_diffs = [d for d in correct_differentials if d not in student_diff]
         extra_diffs = [d for d in student_diff if d not in correct_differentials]
@@ -86,17 +91,31 @@ class ClinicalEvaluator:
         
     def evaluate_performance(self):
         flat_optimal = self._flatten_dict(self.optimal)
-        flat_student = self._flatten_dict(self.student)
+        raw_flat_student = self._flatten_dict(self.student)
+        
+        # ۲. بسط دادن هوشمندِ سوالات کلی دانشجو به زیرسوالاتِ بهینه (مثلا question1 به 1a و 1b)
+        flat_student = {}
+        for s_k, s_v in raw_flat_student.items():
+            expanded = False
+            for o_k in flat_optimal.keys():
+                if o_k.startswith(s_k + "."):
+                    flat_student[o_k] = s_v
+                    expanded = True
+            if not expanded:
+                flat_student[s_k] = s_v
         
         all_actions = set(flat_optimal.keys()).union(set(flat_student.keys()))
         
         for action in all_actions:
+            # ۳. جلوگیری از تداخلِ بخش‌های تشخیصی با بخش‌های اکشن (جلوگیری از Noise شدن تشخیص نهایی)
+            if action.startswith("final_diagnosis") or action.startswith("pleural_effusion_assessment"):
+                continue
+                
             opt_val = flat_optimal.get(action)
             is_required = str(opt_val).lower() == "true"
             
             weight = self.weights['default']
             if 'differential_diagnosis' in action: weight = self.weights['differential_diagnosis']
-            elif 'diagnosis' in action: weight = self.weights['diagnosis']
             elif 'physical_exam' in action: weight = self.weights['physical_exam']
             elif 'paraclinic' in action: weight = self.weights['paraclinic']
             elif 'history_taking' in action: weight = self.weights['history_taking']
@@ -112,8 +131,6 @@ class ClinicalEvaluator:
                 ts = self._parse_time_to_seconds(stud_val)
                 if ts is not None:
                     self.timestamps.append(ts)
-                    if "final_diagnosis" in action:
-                        self.final_diag_timestamp = ts
 
             if is_required and is_performed:
                 self.score += weight
@@ -133,13 +150,14 @@ class ClinicalEvaluator:
 
     def evaluate_pleural_effusion(self):
         optimal_pleural = self.optimal.get("pleural_effusion_assessment", {})
-        # اینجا نام کلید اصلاح شد:
+        
+        # ۴. اصلاحِ نام کلید جستجو برای مایع پلور (student_pleural_assessment به pleural_effusion_assessment تغییر یافت)
         student_pleural = self.student.get("pleural_effusion_assessment", {})
 
         is_correct = (
-            student_pleural.get("has_effusion") == optimal_pleural.get("has_effusion") and
-            student_pleural.get("need_aspiration") == optimal_pleural.get("need_aspiration") and
-            student_pleural.get("effusion_type") == optimal_pleural.get("effusion_type")
+            str(student_pleural.get("has_effusion")).lower() == str(optimal_pleural.get("has_effusion")).lower() and
+            str(student_pleural.get("need_aspiration")).lower() == str(optimal_pleural.get("need_aspiration")).lower() and
+            str(student_pleural.get("effusion_type")).lower() == str(optimal_pleural.get("effusion_type")).lower()
         )
         
         return {
