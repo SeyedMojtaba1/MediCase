@@ -429,7 +429,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
           "analysis": "نرمال."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
@@ -816,7 +816,7 @@ IPF_ACUTE_IPF_EXACERBATION = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "true",
           "extremities_temperature_and_cap_refill": "true",
@@ -870,18 +870,15 @@ IPF_ACUTE_IPF_EXACERBATION = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "false",
-          "reversibility": "false"
-        },
+        "Spirometry": "false",
         "plethysmography": "false"
       },
       "procedures": {
@@ -1338,7 +1335,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
           "analysis": "*Pericardarditis: صدای مالش پریکارد(Rub) در فاز حاد حمله روماتیسمی ممکن است شنیده شود."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
@@ -1725,7 +1722,7 @@ IPF_RHEUMATOID_ILD = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "false",
           "extremities_temperature_and_cap_refill": "true",
@@ -1779,18 +1776,15 @@ IPF_RHEUMATOID_ILD = {
         "Autoimmune_pannel_ANA_ANCA": "true"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "true",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "true",
-          "reversibility": "false"
-        },
+        "Spirometry": "true",
         "plethysmography": "true"
       },
       "procedures": {
@@ -2247,7 +2241,7 @@ IPF_STABLE_IPF_DETAILED = {
           "analysis": "نرمال."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
@@ -2634,7 +2628,7 @@ IPF_STABLE_IPF = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "true",
           "extremities_temperature_and_cap_refill": "true",
@@ -2688,18 +2682,15 @@ IPF_STABLE_IPF = {
         "Autoimmune_pannel_ANA_ANCA": "true"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "true",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "true",
-          "reversibility": "false"
-        },
+        "Spirometry": "true",
         "plethysmography": "true"
       },
       "procedures": {

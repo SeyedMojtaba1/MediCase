@@ -215,7 +215,7 @@ PH_IDIOPATHIC_PAH_DETAILED = {
       },
       "question12": {
         "question": "آیا اخیراً احساس افسردگی، اضطراب، تغییرات شدید خلقی، یا مشکل در خواب (بی‌خوابی/پرخوابی) داشته‌اید؟",
-        "analysis": "مشکلات خواب ممکن است ناشی از آپنه خواب (OSA) باشد که علت هایپرتنشن ریوی (گروه ۳) است، اما خود اضطراب علت نیست."
+        "analysis": "مشکل خواب ممکن است ناشی از آپنه خواب (OSA) باشد که علت هایپرتنشن ریوی (گروه ۳) است، اما خود اضطراب علت نیست."
       },
       "question13": {
         "question": "آیا دچار افزایش تشنگی، افزایش گرسنگی، افزایش ادرار (پلی اوری)، یا عدم تحمل گرما/سرما شده‌اید؟",
@@ -412,7 +412,7 @@ PH_IDIOPATHIC_PAH_DETAILED = {
       "palpation": {
         "precordial_palpation_heave_thrill": {
           "question": "لمس قلب و بررسی Heave Thrill",
-          "analysis": "لمس ضربان قوی در کنار جناغ (Left Parasternal Heave) نشانه هایپرتروفی بطن راست (RVH) است."
+          "analysis": "لمس ضربان قوی در کنار جناغ (Left Parasternal Heave) نشانه هیپرتروفی بطن راست (RVH) است."
         },
         "pmi_assessment": {
           "question": "بررسی PMI",
@@ -429,7 +429,7 @@ PH_IDIOPATHIC_PAH_DETAILED = {
           "analysis": "سوفل پان‌سیستولیک نارسایی تری‌کوسپید (TR) و صدای چهارم قلب (S4) راست (ناشی از RVH) یافته‌های شایعی هستند."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نبض‌ها ممکن است ضعیف و نخی‌شکل باشند (به دلیل کاهش Stroke Volume)."
@@ -821,7 +821,7 @@ PH_IDIOPATHIC_PAH = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "true"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "false",
           "extremities_temperature_and_cap_refill": "true",
@@ -875,18 +875,15 @@ PH_IDIOPATHIC_PAH = {
         "Autoimmune_pannel_ANA_ANCA": "true"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "true",
-          "reversibility": "false"
-        },
+        "Spirometry": "true",
         "plethysmography": "false"
       },
       "procedures": {
@@ -1343,7 +1340,7 @@ PH_LUNG_DISEASE_DETAILED = {
           "analysis": "سوفل نارسایی تری‌کوسپید (TR) در این بیماران شایع است."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "معمولاً نرمال است، مگر در موارد شدید."
@@ -1730,7 +1727,7 @@ PH_LUNG_DISEASE = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "true"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "true",
           "extremities_temperature_and_cap_refill": "true",
@@ -1784,18 +1781,15 @@ PH_LUNG_DISEASE = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "true",
-          "reversibility": "false"
-        },
+        "Spirometry": "true",
         "plethysmography": "false"
       },
       "procedures": {

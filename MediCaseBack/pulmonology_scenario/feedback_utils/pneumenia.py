@@ -429,7 +429,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
           "analysis": "نرمال."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
@@ -816,7 +816,7 @@ PNEUMENIA_ATYPICAL_WALKING = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "false",
           "extremities_temperature_and_cap_refill": "true",
@@ -870,10 +870,10 @@ PNEUMENIA_ATYPICAL_WALKING = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "false" }
+        "Chest_CT_CTPA": "false"
       },
       "functional_tests": {
         "dlco": "false",
@@ -1266,7 +1266,7 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
         },
         "lymph_nodes_size_consistency": {
           "question": "اندازه و یکنواختی گره‌های لنفاوی",
-          "analysis": "لنفادنوپاتی می‌تواند نشانه بدخیمی یا سل باشد."
+          "analysis": "لنفادنوپاتی می‌تواند نشانه بدخیمی یا سل."
         },
         "lymph_nodes_mobility_tenderness": {
           "question": "حرکت و حساسیت گره‌های لنفاوی",
@@ -1335,7 +1335,7 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
           "analysis": "نرمال."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقار نبض‌های محیطی",
           "analysis": "نرمال."
@@ -1722,7 +1722,7 @@ PNEUMENIA_COMPLICATED_EFFUSION = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "false",
           "extremities_temperature_and_cap_refill": "true",
@@ -1776,18 +1776,15 @@ PNEUMENIA_COMPLICATED_EFFUSION = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "false",
-          "reversibility": "false"
-        },
+        "Spirometry": "false",
         "plethysmography": "false"
       },
       "procedures": {
@@ -2244,7 +2241,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
           "analysis": "نرمال."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "معمولاً پر و تند (Bounding) به دلیل تب، یا ضعیف در صورت شوک."
@@ -2631,7 +2628,7 @@ PNEUMENIA_TYPICAL_LOBAR = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "false",
           "extremities_temperature_and_cap_refill": "true",
@@ -2685,18 +2682,15 @@ PNEUMENIA_TYPICAL_LOBAR = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "false" }
+        "Chest_CT_CTPA": "false"
       },
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "false",
-          "reversibility": "false"
-        },
+        "Spirometry": "false",
         "plethysmography": "false"
       },
       "procedures": {

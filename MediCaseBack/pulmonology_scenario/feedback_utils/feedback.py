@@ -1,7 +1,5 @@
 import json
 
-import json
-
 class ClinicalEvaluator:
     def __init__(self, optimal, student_log, total_time_minutes=15):
         self.optimal = optimal
@@ -97,12 +95,11 @@ class ClinicalEvaluator:
             is_required = str(opt_val).lower() == "true"
             
             weight = self.weights['default']
-            # بررسی differential_diagnosis باید قبل از diagnosis باشد تا تداخل اسمی ایجاد نشود
             if 'differential_diagnosis' in action: weight = self.weights['differential_diagnosis']
             elif 'diagnosis' in action: weight = self.weights['diagnosis']
             elif 'physical_exam' in action: weight = self.weights['physical_exam']
             elif 'paraclinic' in action: weight = self.weights['paraclinic']
-            elif 'history_taking' in action: weight = self.weights['history_taking'] # برای گرفتن وزن history
+            elif 'history_taking' in action: weight = self.weights['history_taking']
 
             if is_required:
                 self.max_possible_score += weight
@@ -126,7 +123,6 @@ class ClinicalEvaluator:
                 self.actions_report.append({"action": action, "status": "missed"})
             
             elif not is_required and is_performed:
-                # اعمال پنالتی (نویز) فقط اگر اکشن مربوط به پاراکلینیک یا تشخیص افتراقی باشد
                 if 'paraclinic' in action or 'differential_diagnosis' in action:
                     self.score -= self.weights.get('noise_penalty', 0)
                 self.actions_report.append({"action": action, "status": "noise"})
@@ -137,7 +133,8 @@ class ClinicalEvaluator:
 
     def evaluate_pleural_effusion(self):
         optimal_pleural = self.optimal.get("pleural_effusion_assessment", {})
-        student_pleural = self.student.get("student_pleural_assessment", {})
+        # اینجا نام کلید اصلاح شد:
+        student_pleural = self.student.get("pleural_effusion_assessment", {})
 
         is_correct = (
             student_pleural.get("has_effusion") == optimal_pleural.get("has_effusion") and

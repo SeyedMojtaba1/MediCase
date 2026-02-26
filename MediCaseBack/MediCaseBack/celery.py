@@ -9,9 +9,9 @@ app = Celery('MediCaseBack')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-# app.conf.beat_schedule = {
-#     'generate-daily-scenarios-every-midnight': {
-#         'task': 'pulmonology_scenario.tasks.generate_daily_scenarios_task',
-#         'schedule': crontab(hour=0, minute=0),
-#     },
-# }
+app.conf.beat_schedule = {
+    'generate-daily-scenarios-every-midnight': {
+        'task': 'pulmonology_scenario.tasks.generate_daily_scenarios_task',
+        'schedule': crontab(hour=0, minute=0),
+    },
+}

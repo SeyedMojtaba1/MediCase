@@ -429,7 +429,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
           "analysis": "گالوپ راست."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
@@ -816,7 +816,7 @@ COPD_CHRONIC_BRONCHITIS = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "true",
           "extremities_temperature_and_cap_refill": "true",
@@ -870,18 +870,15 @@ COPD_CHRONIC_BRONCHITIS = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true",
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "false" }
+        "Chest_CT_CTPA": "false"
       },
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "true",
-          "reversibility": "true"
-        },
+        "Spirometry": "true",
         "plethysmography": "false"
       },
       "procedures": {
@@ -1099,7 +1096,7 @@ COPD_COR_PULMONALE_DETAILED = {
         "analysis": "منفی است."
       },
       "question6": {
-        "question": "آیا سابقه درد قفسه سینه، تپش قلب، تنگی نفس با فعالیت، تنگی نفس در حالت خوابیده (ارتوپنه)، یا تورم پاها (ادم) دارید؟",
+        "question": "آیا سابقه درد قفسه است، تپش قلب، تنگی نفس با فعالیت، تنگی نفس در حالت خوابیده (ارتوپنه)، یا تورم پاها (ادم) دارید؟",
         "analysis": "مثبت بودن تنگی نفس، تپش قلب و ادم."
       },
       "question7": {
@@ -1338,7 +1335,7 @@ COPD_COR_PULMONALE_DETAILED = {
           "analysis": "سوفل TR: سوفل هولوسیستولیک نارسایی تری‌کوسپید که با دم شدت می‌یابد (Carvallo's sign). صدای S3 راست (گالوپ) هم نشانه نارسایی قلب است."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
@@ -1725,7 +1722,7 @@ COPD_COR_PULMONALE = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "true"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "true",
           "extremities_temperature_and_cap_refill": "true",
@@ -1779,18 +1776,15 @@ COPD_COR_PULMONALE = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true",
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "false" }
+        "Chest_CT_CTPA": "false"
       },
       "functional_tests": {
         "dlco": "false",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "true",
-          "reversibility": "false"
-        },
+        "Spirometry": "true",
         "plethysmography": "false"
       },
       "procedures": {
@@ -2247,7 +2241,7 @@ COPD_EMPHYSEMA_DETAILED = {
           "analysis": "نرمال."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
@@ -2634,7 +2628,7 @@ COPD_EMPHYSEMA = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "true",
           "extremities_temperature_and_cap_refill": "true",
@@ -2688,18 +2682,15 @@ COPD_EMPHYSEMA = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true",
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "true",
         "peak_flow": "false",
-        "Spirometry": {
-          "Result": "true",
-          "reversibility": "true"
-        },
+        "Spirometry": "true",
         "plethysmography": "true"
       },
       "procedures": {

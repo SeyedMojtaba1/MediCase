@@ -429,7 +429,7 @@ PTE_MASSIVE_PTE_DETAILED = {
           "analysis": "شنیدن صدای S3 گالوپ راست و سوفل نارسایی تری‌کوسپید (TR) نشانه نارسایی حاد بطن راست و وضعیت وخیم بیمار است."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "نبض‌های محیطی و یکنواختی آنها",
           "analysis": "نبض‌ها ضعیف و نخی (Thready) هستند (نشانه شوک)."
@@ -816,7 +816,7 @@ PTE_MASSIVE_PTE = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "true"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "true",
           "extremities_temperature_and_cap_refill": "true",
@@ -870,10 +870,10 @@ PTE_MASSIVE_PTE = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "false",
@@ -1026,12 +1026,12 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
         },
         "question1b": {
           "question": "اگر بله، چه کسی و در چه سنی به آن مبتلا شده است؟",
-          "analysis": "اهمیت ژنتیکی."
+          "analysis": "سن پایین در ابتلا مهم است."
         }
       },
       "question2": {
         "question": "آیا در خانواده درجه یک شما، سابقه حمله قلبی (سکته قلبی)، سکته مغزی، یا نارسایی قلبی وجود دارد؟",
-        "analysis": "برای رد علل ایسکمیک قلبی (که درد قفسه سینه می‌دهند) مهم است."
+        "analysis": "برای رد علل قلبی تنگی نفس (MI) مهم است."
       },
       "question3": {
         "question3a": {
@@ -1335,7 +1335,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
           "analysis": "نرمال (بدون S3 یا سوفل نارسایی تری‌کوسپید)."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "نبض‌های محیطی و یکنواختی آنها",
           "analysis": "تاکیکاردی."
@@ -1722,7 +1722,7 @@ PTE_PERIPHERAL_INFARCT = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "false"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "false",
           "extremities_temperature_and_cap_refill": "true",
@@ -1776,10 +1776,10 @@ PTE_PERIPHERAL_INFARCT = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "false",
@@ -2242,7 +2242,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
           "analysis": "ممکن است سوفل نارسایی تری‌کوسپید (TR) یا گالوپ S3/S4 راست شنیده شود که نشانه فشار روی بطن راست است."
         }
       },
-      "2_pulses_and_extremities": {
+      "peripheral_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
           "question": "نبض‌های محیطی و یکنواختی آنها",
           "analysis": "تاکیکاردی."
@@ -2629,7 +2629,7 @@ PTE_SUBMASSIVE_PTE = {
           "heart_sounds_s1_s2": "true",
           "extra_sounds_s3_s4_murmurs": "true"
         },
-        "2_pulses_and_extremities": {
+        "peripheral_pulses_and_extremities": {
           "peripheral_pulses_symmetry_and_quality": "true",
           "extremities_color_and_trophic_changes": "false",
           "extremities_temperature_and_cap_refill": "true",
@@ -2683,10 +2683,10 @@ PTE_SUBMASSIVE_PTE = {
         "Autoimmune_pannel_ANA_ANCA": "false"
       },
       "simple_imaging": {
-        "Chest_X_Ray": { "PA_Lateral_Findings_and_Effusion": "true" }
+        "Chest_X_Ray": "true"
       },
       "advanced_imaging": {
-        "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "true" }
+        "Chest_CT_CTPA": "true"
       },
       "functional_tests": {
         "dlco": "false",
@@ -2702,7 +2702,7 @@ PTE_SUBMASSIVE_PTE = {
     "differential_diagnosis": {
       "disease1": "false",
       "disease2": "true",
-      "disease3": "true",
+      "disease3": "false",
       "disease4": "true",
       "disease5": "false",
       "disease6": "true"
