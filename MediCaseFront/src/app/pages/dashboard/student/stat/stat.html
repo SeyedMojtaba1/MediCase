@@ -41,7 +41,7 @@
       <thead class="text-xs text-gray-700 uppercase">
       <tr>
         <th class="px-6 py-3" scope="col">#</th>
-        <th class="px-6 py-3" scope="col">کد پیگیری</th>
+        <th class="px-6 py-3" scope="col">نام بیمار</th>
         <th class="px-6 py-3" scope="col">تاریخ ویزیت بیمار</th>
         <th class="px-6 py-3" scope="col">بیماری</th>
         <th class="px-6 py-3" scope="col">نمره</th>
@@ -54,7 +54,18 @@
           <tr class="border-b border-b-black/30 hover:bg-white/50">
             <td class="px-6 py-4 font-medium text-gray-900">{{ i + 1 }}</td>
 
-            <td class="px-6 py-4 font-mono">{{ a.tracking_code }}</td>
+            <td class="px-6 py-4 font-medium">
+              @let patient = getPatientInfo(a.tracking_code);
+              @if (patient) {
+                <button
+                  (click)="showPatientDetails(patient)"
+                  class="text-blue-600 hover:underline transition-all cursor-pointer">
+                  {{ patient.personal_information.first_name }} {{ patient.personal_information.last_name }}
+                </button>
+              } @else {
+                <span class="text-gray-400 italic text-xs">در انتظار تخصیص...</span>
+              }
+            </td>
 
             <td>
               @if (a.is_done) {
@@ -124,3 +135,41 @@
     </table>
   </app-card>
 </div>
+
+
+
+@if (selectedPatient) {
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+       (click)="closeModal()">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden" (click)="$event.stopPropagation()">
+      <div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
+        <h3 class="font-bold text-gray-800 text-lg">مشخصات بیمار</h3>
+        <button (click)="closeModal()" class="text-gray-400 cursor-pointer hover:text-gray-600">✕</button>
+      </div>
+      <div class="p-6 space-y-4 text-right" dir="rtl">
+        <div>
+          <p class="text-gray-400">شکایت اصلی:</p>
+          <p class="font-medium text-gray-900">{{ selectedPatient.chief_complaint }}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p class="text-gray-400">سن:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.age }}</p>
+          </div>
+          <div>
+            <p class="text-gray-400">جنسیت:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.gender }}</p>
+          </div>
+          <div>
+            <p class="text-gray-400">شغل:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.occupation }}</p>
+          </div>
+          <div>
+            <p class="text-gray-400">محل سکونت:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.place_of_residence }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

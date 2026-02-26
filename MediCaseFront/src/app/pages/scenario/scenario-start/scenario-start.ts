@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {Action} from '../../../shared/components/button/action/action';
-import {Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Master} from '../../../core/services/master';
 import {ToastService} from '../../../core/services/toast';
 
@@ -24,12 +24,13 @@ export class ScenarioStart implements OnInit, OnDestroy {
     'با انجام کامل روند ویزیت و تشخیص بیماری، در انتها گزارشی از وضعیت عملکرد شما توسط هوش مصنوعی تهیه می شود.'
   ];
   tracking_code = signal('')
+  id = ''
 
-
-  constructor(public master: Master, public Toast: ToastService, public router: Router) {
+  constructor(public route: ActivatedRoute, public master: Master, public Toast: ToastService, public router: Router) {
   }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id')!;
     this.selectRandomText();
     this.setTimer();
 
@@ -48,11 +49,11 @@ export class ScenarioStart implements OnInit, OnDestroy {
           if (firstPendingTask) {
             this.tracking_code.set(firstPendingTask.tracking_code);
           } else {
-            setTimeout(() => {
-                this.Toast.showError('ابتدا نیاز است یک بیمار را پذیرش کنید')
-              }, 2000
-            )
-            this.router.navigateByUrl("dashboard/s/stat");
+            this.master.pulmonologyScenarioCreate(this.id).subscribe({
+              next: (data: any) => {
+                this.tracking_code.set(data.body.tracking_code);
+              }
+            })
           }
         } else {
           setTimeout(() => {
@@ -87,7 +88,7 @@ export class ScenarioStart implements OnInit, OnDestroy {
   }
 
   setTimer() {
-    const duration = 10000; // ۱۰ ثانیه
+    const duration = 20000; // ۱۰ ثانیه
     const steps = 100;
     const stepTime = duration / steps;
 

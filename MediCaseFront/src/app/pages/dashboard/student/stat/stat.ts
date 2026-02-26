@@ -24,15 +24,32 @@ export class Stat {
     alert1: false,
     alert2: false
   };
+  selectedPatient: any = null; // برای ذخیره اطلاعات بیماری که روی آن کلیک شده
   protected readonly console = console;
 
   constructor(public master: Master, public changeDetectorRef: ChangeDetectorRef, public toastService: ToastService) {
   }
 
-
   ngOnInit() {
     this.getList()
     this.getCredit()
+  }
+
+// متدی برای پیدا کردن اطلاعات بیمار از لیست فیدبک‌ها
+  getPatientInfo(scenarioCode: string) {
+    if (!this.resData) return null;
+    const feedback = this.resData.find((f: any) => f.scenario_tracking_code === scenarioCode);
+    return feedback?.patient_profile || null;
+  }
+
+// متدی برای باز کردن مودال جزئیات
+  showPatientDetails(patient: any) {
+    this.selectedPatient = patient;
+  }
+
+// متدی برای بستن مودال
+  closeModal() {
+    this.selectedPatient = null;
   }
 
   getCredit() {
@@ -86,18 +103,19 @@ export class Stat {
   }
 
   createScenrio() {
-    this.master.pulmonologyScenarioCreate().subscribe({
-      next: data => {
-
-      },
-      complete: () => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000)
-        this.toastService.showSuccess('سناریوی درخواستی در صف تولید قرار گرفت. پس از حدود 30 ثانیه، صفحه را رفرش کرده و سناریو را مشاهده کنید')
-
-      }
-    })
+    // this.master.pulmonologyScenarioCreate().subscribe({
+    //   next: data => {
+    //
+    //   },
+    //   complete: () => {
+    //     setTimeout(() => {
+    //       window.location.reload();
+    //     }, 3000)
+    //     this.toastService.showSuccess('سناریوی درخواستی در صف تولید قرار گرفت. پس از حدود 30 ثانیه، صفحه را رفرش کرده و سناریو را مشاهده کنید')
+    //
+    //   }
+    // })
+    this.toastService.showWarn('جهت پذیرش بیمار، از صفحه کلاس اقدام نمایید')
   }
 
 

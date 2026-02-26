@@ -56,7 +56,7 @@ export const routes: Routes = [
     data: {role: 'student'}
   },
   {
-    path: 'scenariostart',
+    path: 'scenariostart/:id',
     component: ScenarioStart,
     canActivate: [AuthGuard, RoleGuard],
     data: {role: 'student'}

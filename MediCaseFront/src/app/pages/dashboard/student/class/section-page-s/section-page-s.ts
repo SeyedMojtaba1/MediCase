@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Master} from '../../../../../core/services/master';
 import {DashNavT} from '../../../../../shared/components/dash-nav-t/dash-nav-t';
 import {TableModule} from 'primeng/table';
@@ -29,7 +29,7 @@ export class SectionPageS {
   protected readonly APP_CONFIG = APP_CONFIG;
   protected readonly RouterLink = RouterLink;
 
-  constructor(public route: ActivatedRoute, public master: Master, public changeDetectorRef: ChangeDetectorRef) {
+  constructor(public router: Router, public route: ActivatedRoute, public master: Master, public changeDetectorRef: ChangeDetectorRef) {
   }
 
 
@@ -53,4 +53,5 @@ export class SectionPageS {
   addStudentClick() {
     this.visible = true
   }
+
 }

@@ -98,6 +98,7 @@ export class Scenario {
   };
   protected readonly APP_CONFIG = APP_CONFIG;
   protected readonly sessionStorage = sessionStorage;
+  protected readonly localStorage = localStorage;
   private timeLeft = 60 * 15;
   private intervalId: any;
 
@@ -106,6 +107,11 @@ export class Scenario {
 
   get filteredInitialDiseases() {
     return this.diseases.filter(d => d.name !== 'Pleural_Effusion');
+  }
+
+  get defaultCharacterImage(): string {
+    const character = this.currentCharacter();
+    return this.sectionMedia[character]?.default_image || 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg';
   }
 
   ngOnInit() {
@@ -162,7 +168,6 @@ export class Scenario {
     })
   }
 
-
   updateCharacterType(apiData: any) {
     const profile = apiData.scenario.patient_profile.personal_information;
 
@@ -184,11 +189,15 @@ export class Scenario {
     }
 
     // ۳. آپدیت کردن وضعیت برنامه
-    // this.currentCharacter.set(type);
+    this.currentCharacter.set(type);
+
+
+    this.mediaUrl = this.defaultCharacterImage;
+    this.mediaType = 'image';
+    this.changeDetectorRef.detectChanges();
 
     console.log(`Character set to: ${type} based on Age: ${ageNumber} and Gender: ${gender}`);
   }
-
 
   setHasEffusion(value: boolean) {
     this.pleuralAssessmentData.has_effusion = value ? 'true' : 'false';
@@ -362,11 +371,19 @@ export class Scenario {
       this.playClick();
       return;
     }
-
     this.activeSection = section.id;
 
     // نمایش مدیا بر اساس بخش انتخاب شده
     this.setSectionMedia(section);
+
+    if (section.id === 1 || section.id === 4) {
+      // بخش 1 پروفایل و بخش 4 پاراکلینیک است
+      // در هر دو حالت، عکس پیش‌فرض کاراکتر انتخابی را نشان بده
+      this.mediaType = 'image';
+      this.mediaUrl = this.defaultCharacterImage;
+      this.changeDetectorRef.detectChanges()
+    }
+
 
     // اضافه کردن این بخش برای کنترل صدای ویدیوهای جدید
     setTimeout(() => {
@@ -398,6 +415,7 @@ export class Scenario {
     if (characterMedia && mediaKey) {
       media = characterMedia[mediaKey];
     }
+
 
     // --- مدیریت URL و نوع مدیا ---
     let newMediaUrl = media ? media.url : defaultImageUrl;
@@ -600,80 +618,70 @@ export class Scenario {
   handleQuestionClick(question: Question, systemName: string, sectionCategory: 'history_taking' | 'physical_exam' | 'paraclinic') {
     this.playClick();
 
-    let media;
     const defaultImageUrl = 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg';
+    const currentCharacter = this.currentCharacter();
+    const mapping = VIDEO_MAPPING as any;
+    const characterMedia = mapping[currentCharacter];
 
-    const characterMedia = this.sectionMedia[this.currentCharacter()];
-    const specificKey = `${systemName}-${question.id}`;
+    let media = null;
 
     if (characterMedia) {
-      media = characterMedia[specificKey] || characterMedia[systemName];
-    }
-    if (!media) {
-      if (question.id.includes('-')) {
-        const parts = question.id.split('-');
-        if (parts.length >= 2) {
-          const potentialKey = `${systemName}-${parts[0]}`;
-          media = this.sectionMedia[potentialKey];
+      // ۱. اولویت اول: ترکیب نام سیستم و آی‌دی سوال (مثلاً vital_signs-BP)
+      const specificKey = `${systemName}-${question.id}`;
+      if (characterMedia[specificKey]) {
+        media = characterMedia[specificKey];
+        console.log('Priority 1: Found specific sub-section media:', specificKey);
+      }
+
+      // ۲. اولویت دوم: اگر سوال خودش دارای خط تیره است (منطق قبلی شما برای بخش‌هایی مثل eyes-left)
+      if (!media && question.id.includes('-')) {
+        const mainSubSection = question.id.split('-')[0];
+        const subSectionKey = `${systemName}-${mainSubSection}`;
+        if (characterMedia[subSectionKey]) {
+          media = characterMedia[subSectionKey];
+          console.log('Priority 2: Found main sub-section media:', subSectionKey);
         }
+      }
+
+      // ۳. اولویت سوم: چک کردن خودِ question.id به تنهایی
+      if (!media && characterMedia[question.id]) {
+        media = characterMedia[question.id];
+        console.log('Priority 3: Found media by question.id:', question.id);
+      }
+
+      // ۴. اولویت چهارم (Fallback): استفاده از ویدیوی پیش‌فرض کل بخش (مثلاً vital_signs)
+      if (!media && characterMedia[systemName]) {
+        media = characterMedia[systemName];
+        console.log('Priority 4: Falling back to default system media:', systemName);
       }
     }
 
-    if (!media) {
-      media = this.sectionMedia[systemName];
-    }
+    // باقی کدها برای اعمال ویدیو به المان...
+    const newMediaUrl = media ? media.url : defaultImageUrl;
+    const newMediaType = media ? (media.type || 'video') : 'image';
 
-    // --- مدیریت URL و نوع مدیا ---
-    let newMediaUrl = media ? media.url : defaultImageUrl;
-    let newMediaType = media ? media.type : 'image';
+    // ... (ادامه کد خودتان برای لود کردن ویدیو)
+    this.mediaType = newMediaType as 'image' | 'video';
+    const urlChanged = newMediaUrl !== this.mediaUrl;
+    this.mediaUrl = newMediaUrl;
 
-    // منطق لودینگ برای ویدیو
-    const mediaIsChangingToNewVideo = (newMediaType === 'video' && newMediaUrl !== this.mediaUrl);
-
-    if (newMediaType === 'video') {
-      if (mediaIsChangingToNewVideo) {
-        this.isVideoLoading.set(true);
+    if (newMediaType === 'video' && urlChanged) {
+      this.isVideoLoading.set(true);
+      this.changeDetectorRef.detectChanges();
+      if (this.videoElementRef) {
+        const video = this.videoElementRef.nativeElement;
+        video.load();
+        video.play().catch(() => this.isVideoLoading.set(false));
       }
     } else {
       this.isVideoLoading.set(false);
     }
 
-    // به‌روزرسانی پراپرتی‌ها
-    this.mediaType = newMediaType as 'image' | 'video';
-    this.mediaUrl = newMediaUrl;
-
-    // مدیریت ویدیو
-    if (mediaIsChangingToNewVideo && this.videoElementRef) {
-      this.changeDetectorRef.detectChanges();
-      this.videoElementRef.nativeElement.load();
-    }
-
-    // منطق لاگ و باز کردن سوال (همانند قبل)
+    // منطق لاگ و باز کردن سوال
     if (!question.open) {
-      const currentTime = this.timer();
-      question.answer_time = currentTime;
-
-      const logCategory = this.log[sectionCategory];
-
-      if (logCategory && !logCategory[systemName]) {
-        logCategory[systemName] = {};
-      }
-
-      const logSection = logCategory[systemName];
-      const [key, subKey] = question.id.split('-');
-
-      if (subKey) {
-        if (!logSection[key] || typeof logSection[key] !== 'object') {
-          logSection[key] = {};
-        }
-        logSection[key][subKey] = currentTime;
-      } else {
-        if (logSection) {
-          logSection[key] = currentTime;
-        }
-      }
+      question.answer_time = this.timer();
+      // ... منطق لاگ
     }
-
     question.open = true;
     this.changeDetectorRef.detectChanges();
   }

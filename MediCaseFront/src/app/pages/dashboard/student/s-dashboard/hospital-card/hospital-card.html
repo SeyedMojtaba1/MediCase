@@ -1,27 +1,38 @@
 <div
   class="flex flex-row justify-between items-center w-full rounded-2xl p-10 h-50
-         bg-gradient-to-r from-[#148691] to-[#216067]
-         text-white shadow-xl backdrop-blur-sm relative overflow-hidden">
+          bg-gradient-to-r from-[#148691] to-[#216067]
+         text-white shadow-xl relative overflow-hidden">
 
-  <!-- پس‌زمینه تزئینی (آیکون محو) -->
+  <!-- پس‌زمینه تزئینی -->
   <div
-    [ngStyle]="{'background-image': 'url(images/svg/hospital.svg)'}"
-    class="absolute inset-0 opacity-20 bg-top-right bg-contain bg-no-repeat">
+    [ngStyle]="{'background-image': 'url(images/svg/patient.svg)'}"
+    class="absolute inset-0 opacity-15 bg-top-right bg-contain bg-no-repeat">
   </div>
 
   <!-- متن‌ها -->
-  <div class="z-10 flex flex-col gap-1">
-    <p class="text-xl font-bold">بیماران منتظر شما هستند دکتر!</p>
-    <p class="text-sm text-gray-100">کدوم بیماری رو انتخاب می‌کنی؟</p>
+  <div class="z-10 flex flex-col gap-2">
+    <p class="text-xl font-bold">
+      👨‍⚕️ بیمار روز
+    </p>
+
+    <p class="text-sm text-gray-100">
+      امروز یک بیمار ویژه برای بررسی آماده است.
+    </p>
+
+    <p class="text-xs text-gray-200">
+      این بخش به‌زودی فعال خواهد شد.
+    </p>
   </div>
 
-  <!-- دکمه -->
-  <a
-    class="z-10 flex items-center gap-2 bg-white text-[#148591]
-           px-4 py-2 rounded-lg font-medium transition-all
-           hover:bg-[#f0fdfd] hover:scale-105"
-    routerLink="/dashboard/s/hospital">
-    <span>برو به بیمارستان</span>
+  <!-- دکمه غیرفعال -->
+  <button
+    class="z-10 flex items-center gap-2
+           bg-white/40 text-white
+           px-4 py-2 rounded-lg font-medium
+           cursor-not-allowed opacity-70"
+    disabled>
+
+    <span>به‌زودی فعال می‌شود</span>
     <span class="text-xl">←</span>
-  </a>
+  </button>
 </div>
