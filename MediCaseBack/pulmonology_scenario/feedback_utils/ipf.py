@@ -11,7 +11,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
       },
       "question3": {
         "question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟",
-        "analysis": "تنگی نفس در این حالت **شدید و پیشرونده** است. بیماری که قبلاً فقط با فعالیت تنگی نفس داشت، حالا در حالت استراحت هم دیسترس دارد (Acute on Chronic)."
+        "analysis": "تنگی نفس در این حالت شدید و پیشرونده است. بیماری که قبلاً فقط با فعالیت تنگی نفس داشت، حالا در حالت استراحت هم دیسترس دارد (Acute on Chronic)."
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
@@ -35,7 +35,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
       },
       "question9": {
         "question": "آیا قبلاً هم مشکل مشابهی داشته‌اید و چه درمانی به شما کمک کرده است؟",
-        "analysis": "بیمار **سابقه شناخته شده IPF** دارد و ممکن است داروهای آنتی‌فیبروتیک (پیرفنیدون/نینتدانیب) مصرف کند. دانستن سطح پایه تنگی نفس بیمار برای درک شدت افت فعلی حیاتی است."
+        "analysis": "بیمار سابقه شناخته شده IPF دارد و ممکن است داروهای آنتی‌فیبروتیک (پیرفنیدون/نینتدانیب) مصرف کند. دانستن سطح پایه تنگی نفس بیمار برای درک شدت افت فعلی حیاتی است."
       },
       "question10": {
         "question": "آیا دچار کاهش وزن، خستگی یا از دست دادن اشتها شده‌اید؟",
@@ -230,58 +230,58 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "معمولاً نرمال."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "ممکن است تب خفیف وجود داشته باشد (نشانه التهاب سیستمیک)."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی (ناشی از هیپوکسی)."
       },
       "RR": {
-        "question": "RR",
-        "analysis": "**تاکی‌پنه شدید:** تنفس‌های سریع و سطحی مشخصه ریه‌های سفت (Stiff Lungs) در فیبروز است."
+        "question": "تعداد تنفس(RR)",
+        "analysis": "تاکی‌پنه شدید: تنفس‌های سریع و سطحی مشخصه ریه‌های سفت (Stiff Lungs) در فیبروز است."
       },
       "SpO2": {
-        "question": "SpO2",
-        "analysis": "**هایپوکسمی شدید:** افت قابل توجه اکسیژن نسبت به سطح پایه بیمار، که با اکسیژن معمولی به سختی اصلاح می‌شود."
+        "question": "غلظت O2(SpO2)",
+        "analysis": "هایپوکسمی شدید: افت قابل توجه اکسیژن نسبت به سطح پایه بیمار، که با اکسیژن معمولی به سختی اصلاح می‌شود."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "مضطرب و بدحال."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "دیسترس تنفسی واضح."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نشسته."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ممکن است ادم پا (نارسایی راست) دیده شود."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "شدید."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "سیانوز مرکزی و کلابینگ (چماقی شدن انگشتان) در زمینه بیماری مزمن."
         }
       }
@@ -289,81 +289,81 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "استفاده از عضلات فرعی."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -371,176 +371,176 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "استفاده شدید."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش اتساع قفسه سینه (ریه سفت)."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "افزایش یافته (به دلیل فیبروز و تراکم)."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "نرمال یا ماتیته خفیف."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
-          "analysis": "**کراکل‌های دمی (Velcro Crackles):** صدای مشخصه فیبروز که شبیه باز کردن چسب ولکرو است. در حمله حاد، این صداها خشن‌تر شده و نواحی بیشتری از ریه را درگیر می‌کنند."
+          "question": "شدت صداهای تنفسی",
+          "analysis": "کراکل‌های دمی (Velcro Crackles): صدای مشخصه فیبروز که شبیه باز کردن چسب ولکرو است. در حمله حاد، این صداها خشن‌تر شده و نواحی بیشتری از ریه را درگیر می‌کنند."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "ممکن است ویزینگ خفیف هم شنیده شود."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "ممکن است بالا باشد (نارسایی راست)."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "ممکن است RV Heave لمس شود."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "P2 بلند (PH)."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
-          "analysis": "**کلابینگ (Clubbing):** تغییر شکل ناخن‌ها در IPF بسیار شایع است."
+          "question": "رنگ و تغییر شکل اندام‌ها",
+          "analysis": "کلابینگ (Clubbing): تغییر شکل ناخن‌ها در IPF بسیار شایع است."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "ادم پاها."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -557,7 +557,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
       },
       "ESR": {
         "question": "ESR",
-        "analysis": "**بالا:** مارکرهای التهابی (ESR/CRP) در حمله حاد بالا می‌روند، حتی در غیاب عفونت واضح."
+        "analysis": "بالا: مارکرهای التهابی (ESR/CRP) در حمله حاد بالا می‌روند، حتی در غیاب عفونت واضح."
       },
       "CRP": {
         "question": "CRP",
@@ -607,13 +607,13 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**ارتشاحات جدید:** علاوه بر نمای مشبک (Reticular) قدیمی در قاعده‌ها، سایه‌های جدید دوطرفه (New Opacities) دیده می‌شود."
+        "analysis": "ارتشاحات جدید: علاوه بر نمای مشبک (Reticular) قدیمی در قاعده‌ها، سایه‌های جدید دوطرفه (New Opacities) دیده می‌شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
         "question": "Chest_CT_CTPA",
-        "analysis": "**نمای شیشه‌مات جدید (New Ground-Glass Opacity):** این یافته کلیدی در HRCT است که روی زمینه فیبروز لانه زنبوری (Honeycombing) قدیمی سوار شده است و نشان‌دهنده آسیب حاد آلوئولی (DAD) است."
+        "analysis": "نمای شیشه‌مات جدید (New Ground-Glass Opacity): این یافته کلیدی در HRCT است که روی زمینه فیبروز لانه زنبوری (Honeycombing) قدیمی سوار شده است و نشان‌دهنده آسیب حاد آلوئولی (DAD) است."
       }
     },
     "functional_tests": {
@@ -627,7 +627,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
       },
       "Spirometry": {
         "question": "Spirometry",
-        "analysis": "**الگوی محدودکننده شدید (Severe Restriction):** اگر انجام شود (که معمولاً بیمار تحمل نمی‌کند)، کاهش شدید FVC نسبت به اسپیرومتری‌های قبلی دیده می‌شود."
+        "analysis": "الگوی محدودکننده شدید (Severe Restriction): اگر انجام شود (که معمولاً بیمار تحمل نمی‌کند)، کاهش شدید FVC نسبت به اسپیرومتری‌های قبلی دیده می‌شود."
       },
       "plethysmography": {
         "question": "plethysmography",
@@ -664,7 +664,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
     },
     "disease5": {
       "question": "IPF",
-      "analysis": "**تشخیص نهایی:** بدتر شدن حاد علائم تنفسی + سایه‌های جدید در سی‌تی‌اسکن + رد کردن عفونت و نارسایی قلبی = حمله حاد IPF."
+      "analysis": "تشخیص نهایی: بدتر شدن حاد علائم تنفسی + سایه‌های جدید در سی‌تی‌اسکن + رد کردن عفونت و نارسایی قلبی = حمله حاد IPF."
     },
     "disease6": {
       "question": "PH",
@@ -851,18 +851,18 @@ IPF_ACUTE_IPF_EXACERBATION = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "true",
         "CRP": "true",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "true",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "true",
-        "Sputum_analysis": { "Gram_Stain": "true", "Sample_Quality": "true" },
+        "Sputum_analysis": "true",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -879,17 +879,14 @@ IPF_ACUTE_IPF_EXACERBATION = {
         "dlco": "false",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "false", "FVC": "false", "FEV1/FVC": "false" },
+          "Result": "false",
           "reversibility": "false"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
@@ -915,7 +912,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "شروع علائم ریوی در RA-ILD معمولاً **تدریجی و موذی (Insidious)** است. بیمار ممکن است ماه‌ها یا سال‌ها سرفه خشک داشته باشد که به آن بی‎توجه بوده است."
+        "analysis": "شروع علائم ریوی در RA-ILD معمولاً تدریجی و موذی (Insidious) است. بیمار ممکن است ماه‌ها یا سال‌ها سرفه خشک داشته باشد که به آن بی‎توجه بوده است."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -927,7 +924,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
-        "analysis": "**سرفه خشک (Dry Cough):** یکی از شایع‌ترین و زودرس‌ترین علائم درگیری ریه در بیماری‌های روماتیسمی است."
+        "analysis": "سرفه خشک (Dry Cough): یکی از شایع‌ترین و زودرس‌ترین علائم درگیری ریه در بیماری‌های روماتیسمی است."
       },
       "question5": {
         "question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟",
@@ -935,7 +932,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "question6": {
         "question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟",
-        "analysis": "**پلوریت (Pleuritis):** درگیری پرده جنب در RA شایع است و می‌تواند باعث درد پلوریتیک (درد تیز با تنفس) شود."
+        "analysis": "پلوریت (Pleuritis): درگیری پرده جنب در RA شایع است و می‌تواند باعث درد پلوریتیک (درد تیز با تنفس) شود."
       },
       "question7": {
         "question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟",
@@ -958,7 +955,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا بیماری طولانی مدت (مزمن) مثل قند (دیابت)، فشار خون، آسم، مشکل تیروئید، یا بیماری جدی کلیوی/کبدی دارید؟",
-          "analysis": "سابقه **آرتریت روماتوئید (RA)** یا سایر بیماری‌های بافت همبند (مثل اسکلرودرمی). گاهی درگیری ریه اولین تظاهر بیماری است و مفاصل بعداً درگیر می‌شوند."
+          "analysis": "سابقه آرتریت روماتوئید (RA) یا سایر بیماری‌های بافت همبند (مثل اسکلرودرمی). گاهی درگیری ریه اولین تظاهر بیماری است و مفاصل بعداً درگیر মোহন می‌شوند."
         },
         "question1b": {
           "question": "اگر بله، تشخیص این بیماری از چه موقع بوده است؟",
@@ -996,7 +993,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       "question1": {
         "question1a": {
           "question": "لطفاً لیست تمام داروهایی که در حال حاضر به صورت مرتب (روزانه، هفتگی یا ماهانه) مصرف می‌کنید را به من بگویید.",
-          "analysis": "**سمیت دارویی:** متوتروکسات (Methotrexate)، لفلونوماید و داروهای بیولوژیک (Anti-TNF) خودشان می‌توانند باعث بیماری ریوی (Pneumonitis) شوند. افتراق عوارض دارو از پیشرفت بیماری RA چالش اصلی است."
+          "analysis": "سمیت دارویی: متوتروکسات (Methotrexate)، لفلونوماید و داروهای بیولوژیک (Anti-TNF) خودشان می‌توانند باعث بیماری ریوی (Pneumonitis) شوند. افتراق عوارض دارو از پیشرفت بیماری RA چالش اصلی است."
         },
         "question1b": {
           "question": "دوز هر دارو چقدر است و چند بار در روز مصرف می‌کنید؟",
@@ -1087,7 +1084,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "question2": {
         "question": "آیا سابقه راش، خارش، زخم‌های طولانی‌مدت، تغییر در رنگ یا بافت پوست/مو/ناخن، یا کبودی غیرعادی دارید؟",
-        "analysis": "**ندول‌های روماتوئید (Rheumatoid Nodules):** توده‌های سفت زیر پوستی در آرنج یا انگشتان که نشانه بیماری شدید و سرپوزیتو است."
+        "analysis": "ندول‌های روماتوئید (Rheumatoid Nodules): توده‌های سفت زیر پوستی در آرنج یا انگشتان که نشانه بیماری شدید و سرپوزیتو است."
       },
       "question3": {
         "question": "آیا اخیراً دچار سردرد، سرگیجه، سفتی گردن، یا بزرگ شدن غدد لنفاوی در گردن شده‌اید؟",
@@ -1095,7 +1092,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "question4": {
         "question": "آیا دچار تاری دید، دوبینی، درد چشم، قرمزی، یا کاهش دید ناگهانی شده‌اید؟",
-        "analysis": "**خشکی چشم (Keratoconjunctivitis Sicca):** همراهی سندرم شوگرن ثانویه با RA بسیار شایع است."
+        "analysis": "خشکی چشم (Keratoconjunctivitis Sicca): همراهی سندرم شوگرن ثانویه با RA بسیار شایع است."
       },
       "question5": {
         "question": "آیا دچار وزوز گوش، کاهش شنوایی، خونریزی بینی، گرفتگی مزمن بینی، گلودرد مزمن، مشکل در بلع (دیسفاژی)، یا آفت و زخم‌های دهانی مکرر هستید؟",
@@ -1119,7 +1116,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "question10": {
         "question": "آیا دچار درد مفاصل، سفتی صبحگاهی، تورم مفاصل، درد یا ضعف عضلانی، یا کمردرد مزمن هستید؟",
-        "analysis": "**شاه‌کلید تشخیص:** درد مفاصل (Arthralgia)، تورم و **خشکی صبحگاهی (Morning Stiffness)** که بیش از یک ساعت طول می‌کشد. درگیری مفاصل کوچک دست (MCP/PIP) و قرینه بودن ضایعات مشخصه RA است."
+        "analysis": "شاه‌کلید تشخیص: درد مفاصل (Arthralgia)، تورم و خشکی صبحگاهی (Morning Stiffness) که بیش از یک ساعت طول می‌کشد. درگیری مفاصل کوچک دست (MCP/PIP) و قرینه بودن ضایعات مشخصه RA است."
       },
       "question11": {
         "question": "آیا سابقه سردرد شدید یا جدید، تشنج، ضعف یا بی‌حسی در دست‌ها/پاها، مشکل در تعادل/هماهنگی، یا تغییر در حافظه دارید؟",
@@ -1142,58 +1139,58 @@ IPF_RHEUMATOID_ILD_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "نرمال."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "نرمال (مگر در فاز حاد التهابی)."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "نرمال."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه خفیف در فعالیت یا استراحت."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "افت اکسیژن در فعالیت (Desaturation) علامت زودرس درگیری بینابینی ریه است."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "نرمال."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "ممکن است دفرمیتی‌های مفصلی در دست‌ها قابل مشاهده باشد."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نرمال."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ندارد (مگر در PH پیشرفته)."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "وجود دارد."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "معمولاً ندارد."
         }
       }
@@ -1201,81 +1198,81 @@ IPF_RHEUMATOID_ILD_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "قرمزی (اپی‌اسکلریت/اسکلریت) یا خشکی چشم."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "خشکی مخاط دهان."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "نرمال."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -1283,176 +1280,176 @@ IPF_RHEUMATOID_ILD_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "ممکن است استفاده شود."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش قرینه انبساط قفسه سینه."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "افزایش یافته (در نواحی فیبروز شدید)."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "نرمال."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "نرمال."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
-          "analysis": "**کراکل‌های ظریف دمی (Fine Basal Crackles):** یا همان Velcro crackles در قاعده ریه‌ها. این اولین و مهم‌ترین یافته فیزیکی در ILD است، حتی قبل از اینکه عکس ریه تغییر کند."
+          "question": "صداهای اضافی",
+          "analysis": "کراکل‌های ظریف دمی (Fine Basal Crackles): یا همان Velcro crackles در قاعده ریه‌ها. این اولین و مهم‌ترین یافته فیزیکی در ILD است، حتی قبل از اینکه عکس ریه تغییر کند."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "نرمال."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "نرمال."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
-          "analysis": "*Pericardarditis:** صدای مالش پریکارد(Rub) در فاز حاد حمله روماتیسمی ممکن است شنیده شود."
+          "question": "صدای اضافی S3 و S4",
+          "analysis": "*Pericardarditis: صدای مالش پریکارد(Rub) در فاز حاد حمله روماتیسمی ممکن است شنیده شود."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
-          "analysis": "**پدیده رینود (Raynaud's):** تغییر رنگ انگشتان در سرما، اگر وجود داشته باشد، شک به سایر بیماری‌های بافت همبند (مثل اسکلرودرمی یا MCTD) را بیشتر می‌کند تا RA خالص."
+          "question": "رنگ و تغییر شکل اندام‌ها",
+          "analysis": "پدیده رینود (Raynaud's): تغییر رنگ انگشتان در سرما، اگر وجود داشته باشد، شک به سایر بیماری‌های بافت همبند (مثل اسکلرودرمی یا MCTD) را بیشتر می‌کند تا RA خالص."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "معمولاً ندارد."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال (گاهی اسپلنومگالی در سندرم فلتی)."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "ضعف عضلانی ناشی از میوپاتی التهابی یا عدم استفاده."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "ممکن است نوروپاتی محیطی یا گیرافتادگی عصب (مثل CTS) وجود داشته باشد."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
-          "analysis": "**دفرمیتی‌های مفصلی:** انحراف اولنار انگشتان (Ulnar deviation)، دفرمیتی گردن قو (Swan-neck) یا دکمه‌ای (Boutonniere) نشان‌دهنده RA پیشرفته و طولانی‌مدت است."
+          "question": "مفاصل",
+          "analysis": "دفرمیتی‌های مفصلی: انحراف اولنار انگشتان (Ulnar deviation)، دفرمیتی گردن قو (Swan-neck) یا دکمه‌ای (Boutonniere) نشان‌دهنده RA پیشرفته و طولانی‌مدت است."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "آتروفی عضلات بین استخوانی دست."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "حساسیت در مفاصل درگیر و سینوویت (بافت نرم و اسفنجی اطراف مفصل)."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "محدودیت حرکتی مفاصل."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "کاهش قدرت چنگ زدن (Grip Strength)."
       }
     }
@@ -1465,11 +1462,11 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "CBC": {
         "question": "CBC",
-        "analysis": "**کم‌خونی بیماری مزمن (Anemia of Chronic Disease):** شایع است. ممکن است پلاکت‌ها به عنوان واکنش فاز حاد بالا باشند (ترومبوسیتوز)."
+        "analysis": "کم‌خونی بیماری مزمن (Anemia of Chronic Disease): شایع است. ممکن است پلاکت‌ها به عنوان واکنش فاز حاد بالا باشند (ترومبوسیتوز)."
       },
       "ESR": {
         "question": "ESR",
-        "analysis": "**بالا:** افزایش ESR و CRP نشان‌دهنده فعالیت التهابی بیماری زمینه‌ای (RA) است و با پیشرفت ILD هم ارتباط دارد."
+        "analysis": "بالا: افزایش ESR و CRP نشان‌دهنده فعالیت التهابی بیماری زمینه‌ای (RA) است و با پیشرفت ILD هم ارتباط دارد."
       },
       "CRP": {
         "question": "CRP",
@@ -1513,25 +1510,25 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "Autoimmune_pannel_ANA_ANCA": {
         "question": "Autoimmune_pannel_ANA_ANCA",
-        "analysis": "**مثبت قوی:** فاکتور روماتوئید (**RF**) و آنتی‌بادی ضد سیترولین (**Anti-CCP**) در اکثریت بیماران RA-ILD مثبت هستند. تیتر بالای این آنتی‌بادی‌ها با ریسک بالاتر درگیری ریه همراه است."
+        "analysis": "مثبت قوی: فاکتور روماتوئید (RF) و آنتی‌بادی ضد سیترولین (Anti-CCP) در اکثریت بیماران RA-ILD مثبت هستند. تیتر بالای این آنتی‌بادی‌ها با ریسک بالاتر درگیری ریه همراه است."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**نمای رتیکولار (Reticular):** خطوط شبکه‌ای در قاعده‌ی ریه‌ها. ممکن است افیوژن پلورال یا ضخیم‌شدگی پلور هم دیده شود."
+        "analysis": "نمای رتیکولار (Reticular): خطوط شبکه‌ای در قاعده‌ی ریه‌ها. ممکن است افیوژن پلورال یا ضخیم‌شدگی پلور هم دیده شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
         "question": "Chest_CT_CTPA",
-        "analysis": "**الگوی UIP یا NSIP:** شایع‌ترین الگو در RA، الگوی UIP (شبیه IPF) با نمای لانه زنبوری (Honeycombing) در قاعده و محیط ریه است. الگوی NSIP (شیشه‌مات + رتیکولار) هم ممکن است دیده شود."
+        "analysis": "الگوی UIP یا NSIP: شایع‌ترین الگو در RA، الگوی UIP (شبیه IPF) با نمای لانه زنبوری (Honeycombing) در قاعده و محیط ریه است. الگوی NSIP (شیشه‌مات + رتیکولار) هم ممکن است دیده شود."
       }
     },
     "functional_tests": {
       "dlco": {
         "question": "dlco",
-        "analysis": "**کاهش یافته:** کاهش ظرفیت انتشار گاز (DLCO) حساس‌ترین تست برای تشخیص زودرس ILD است و حتی قبل از تغییرات اسپیرومتری رخ می‌دهد."
+        "analysis": "کاهش یافته: کاهش ظرفیت انتشار گاز (DLCO) حساس‌ترین تست برای تشخیص زودرس ILD است و حتی قبل از تغییرات اسپیرومتری رخ می‌دهد."
       },
       "peak_flow": {
         "question": "peak_flow",
@@ -1539,11 +1536,11 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "Spirometry": {
         "question": "Spirometry",
-        "analysis": "**الگوی محدودکننده (Restrictive):** کاهش FVC و FEV1 با نسبت FEV1/FVC نرمال یا بالا. این نشان‌دهنده کاهش حجم ریه به دلیل فیبروز و سفتی بافت است."
+        "analysis": "الگوی محدودکننده (Restrictive): کاهش FVC و FEV1 با نسبت FEV1/FVC نرمال یا بالا. این نشان‌دهنده کاهش حجم ریه به دلیل فیبروز و سفتی بافت است."
       },
       "plethysmography": {
         "question": "plethysmography",
-        "analysis": "**کاهش TLC:** تاییدکننده الگوی محدودکننده واقعی است."
+        "analysis": "کاهش TLC: تاییدکننده الگوی محدودکننده واقعی است."
       }
     },
     "procedures": {
@@ -1553,7 +1550,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
       },
       "torachonthesis": {
         "question": "torachonthesis",
-        "analysis": "اگر افیوژن پلورال وجود داشته باشد، آنالیز آن معمولاً **گلوکز بسیار پایین** (<30 mg/dL) و pH پایین را نشان می‌دهد که اختصاصی پلوریت روماتوئید است."
+        "analysis": "اگر افیوژن پلورال وجود داشته باشد، آنالیز آن معمولاً گلوکز بسیار پایین (<30 mg/dL) و pH پایین را نشان می‌دهد که اختصاصی پلوریت روماتوئید است."
       }
     }
   },
@@ -1576,7 +1573,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
     },
     "disease5": {
       "question": "IPF",
-      "analysis": "**تشخیص نهایی (نوع ثانویه):** اگر بیمار علائم مفصلی نداشت، تشخیص IPF (ایدیوپاتیک) بود. اما وجود آرتریت روماتوئید و سرولوژی مثبت، تشخیص را به **RA-ILD** تغییر می‌دهد. درمان و پیش‌آگهی این دو متفاوت است."
+      "analysis": "تشخیص نهایی (نوع ثانویه): اگر بیمار علائم مفصلی نداشت، تشخیص IPF (ایدیوپاتیک) بود. اما وجود آرتریت روماتوئید و سرولوژی مثبت، تشخیص را به RA-ILD تغییر می‌دهد. درمان و پیش‌آگهی این دو متفاوت است."
     },
     "disease6": {
       "question": "PH",
@@ -1763,18 +1760,18 @@ IPF_RHEUMATOID_ILD = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "true",
         "CRP": "true",
-        "VBG": { "pH": "false", "PCO2": "false", "HCO3": "false" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "false",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -1791,17 +1788,14 @@ IPF_RHEUMATOID_ILD = {
         "dlco": "true",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "false"
         },
         "plethysmography": "true"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
@@ -1827,7 +1821,7 @@ IPF_STABLE_IPF_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "شروع علائم IPF **بسیار تدریجی و موذی (Insidious)** است. بیماران اغلب ماه‌ها یا سال‌ها قبل از تشخیص، تنگی نفس خفیف داشته‌اند که به «پیری» یا «چاقی» نسبت داده شده است."
+        "analysis": "شروع علائم IPF بسیار تدریجی و موذی (Insidious) است. بیماران اغلب ماه‌ها یا سال‌ها قبل از تشخیص، تنگی نفس خفیف داشته‌اند که به «پیری» یا «چاقی» نسبت داده شده است."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -1839,7 +1833,7 @@ IPF_STABLE_IPF_DETAILED = {
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
-        "analysis": "**سرفه خشک و مقاوم (Dry, hacking cough):** در بیش از ۸۵٪ بیماران وجود دارد و معمولاً به درمان‌های معمول ضد سرفه پاسخ نمی‌دهد."
+        "analysis": "سرفه خشک و مقاوم (Dry, hacking cough): در بیش از ۸۵٪ بیماران وجود دارد و معمولاً به درمان‌های معمول ضد سرفه پاسخ نمی‌دهد."
       },
       "question5": {
         "question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟",
@@ -1870,7 +1864,7 @@ IPF_STABLE_IPF_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا بیماری طولانی مدت (مزمن) مثل قند (دیابت)، فشار خون، آسم، مشکل تیروئید، یا بیماری جدی کلیوی/کبدی دارید؟",
-          "analysis": "بیماری **ریفلاکس معده (GERD)** در بیماران IPF بسیار شایع است (تا ۹۰٪) و میکروآسپیراسیون اسید یکی از عوامل احتمالی ایجاد یا تشدید فیبروز است."
+          "analysis": "بیماری ریفلاکس معده (GERD) در بیماران IPF بسیار شایع است (تا ۹۰٪) و میکروآسپیراسیون اسید یکی از عوامل احتمالی ایجاد یا تشدید فیبروز است."
         },
         "question1b": {
           "question": "اگر بله، تشخیص این بیماری از چه موقع بوده است؟",
@@ -1908,7 +1902,7 @@ IPF_STABLE_IPF_DETAILED = {
       "question1": {
         "question1a": {
           "question": "لطفاً لیست تمام داروهایی که در حال حاضر به صورت مرتب (روزانه، هفتگی یا ماهانه) مصرف می‌کنید را به من بگویید.",
-          "analysis": "برای رد کردن **فیبروز ناشی از دارو** (مثل آمیودارون، متوتروکسات، نیتروفورانتوئین) حیاتی است. اگر بیمار این داروها را مصرف کند، تشخیص IPF (ایدیوپاتیک) زیر سوال می‌رود."
+          "analysis": "برای رد کردن فیبروز ناشی از دارو (مثل آمیودارون، متوتروکسات، نیتروفورانتوئین) حیاتی است. اگر بیمار این داروها را مصرف کند، تشخیص IPF (ایدیوپاتیک) زیر سوال می‌رود."
         },
         "question1b": {
           "question": "دوز هر دارو چقدر است و چند بار در روز مصرف می‌کنید؟",
@@ -1940,7 +1934,7 @@ IPF_STABLE_IPF_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا در خانواده درجه یک (پدر، مادر، خواهر یا برادر) شما، سابقه ابتلا به بیماری‌های مزمن و شایع زیر وجود دارد؟",
-          "analysis": "**فیبروز ریه خانوادگی (Familial PF):** در حدود ۵ تا ۲۰ درصد موارد IPF، سابقه خانوادگی مثبت وجود دارد (ژن‌های تلومراز و سورفکتانت)."
+          "analysis": "فیبروز ریه خانوادگی (Familial PF): در حدود ۵ تا ۲۰ درصد موارد IPF، سابقه خانوادگی مثبت وجود دارد (ژن‌های تلومراز و سورفکتانت)."
         },
         "question1b": {
           "question": "اگر بله، چه کسی و در چه سنی به آن مبتلا شده است؟",
@@ -1966,7 +1960,7 @@ IPF_STABLE_IPF_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا تا به حال سیگار، قلیان، پیپ، یا هر نوع محصول نیکوتینی مصرف کرده‌اید؟",
-          "analysis": "**ریسک فاکتور قوی!** بیشتر بیماران IPF سابقه مصرف سیگار (حال یا گذشته) را دارند."
+          "analysis": "ریسک فاکتور قوی! بیشتر بیماران IPF سابقه مصرف سیگار (حال یا گذشته) را دارند."
         },
         "question1b": {
           "question": "اگر قبلاً مصرف می‌کردید، چه زمانی ترک کرده‌اید؟",
@@ -1989,7 +1983,7 @@ IPF_STABLE_IPF_DETAILED = {
       },
       "question4": {
         "question": "در خانه همراه چه کسانی زندگی می‌کنید؟",
-        "analysis": "**مواجهات شغلی و محیطی:** برای رد کردن پنومونی ازدیاد حساسیتی (Hypersensitivity Pneumonitis) و آزبستوز، باید درباره شغل (فلزکاری، کشاورزی، سنگ‌تراشی) و حیوانات خانگی (پرندگان) پرسید. اگر مواجهه وجود داشته باشد، تشخیص IPF نیست."
+        "analysis": "مواجهات شغلی و محیطی: برای رد کردن پنومونی ازدیاد حساسیتی (Hypersensitivity Pneumonitis) و آزبستوز، باید درباره شغل (فلزکاری، کشاورزی، سنگ‌تراشی) و حیوانات خانگی (پرندگان) پرسید. اگر مواجهه وجود داشته باشد، تشخیص IPF نیست."
       }
     },
     "ros": {
@@ -2031,7 +2025,7 @@ IPF_STABLE_IPF_DETAILED = {
       },
       "question10": {
         "question": "آیا دچار درد مفاصل، سفتی صبحگاهی، تورم مفاصل، درد یا ضعف عضلانی، یا کمردرد مزمن هستید؟",
-        "analysis": "**نکته کلیدی:** بیماران IPF نباید علائم بیماری‌های بافت همبند (CTD) مثل درد و تورم مفاصل را داشته باشند. اگر داشته باشند، تشخیص CTD-ILD است."
+        "analysis": "نکته کلیدی: بیماران IPF نباید علائم بیماری‌های بافت همبند (CTD) مثل درد و تورم مفاصل را داشته باشند. اگر داشته باشند، تشخیص CTD-ILD است."
       },
       "question11": {
         "question": "آیا سابقه سردرد شدید یا جدید، تشنج، ضعف یا بی‌حسی در دست‌ها/پاها، مشکل در تعادل/هماهنگی، یا تغییر در حافظه دارید؟",
@@ -2054,58 +2048,58 @@ IPF_STABLE_IPF_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "نرمال."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "نرمال."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "نرمال."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه (تنفس سریع و کم‌عمق) در فعالیت."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "ممکن است در استراحت نرمال باشد اما با فعالیت به شدت افت می‌کند (Desaturation)."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "نرمال."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "خوب (در استراحت)."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نرمال."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ندارد."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "در فعالیت."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "در مراحل پیشرفته."
         }
       }
@@ -2113,81 +2107,81 @@ IPF_STABLE_IPF_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "نرمال."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -2195,176 +2189,176 @@ IPF_STABLE_IPF_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "ممکن است استفاده شود."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش اتساع قفسه سینه."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "افزایش یافته (به دلیل تراکم بافت)."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "نرمال."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "نرمال."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
-          "analysis": "**Fine Bibasilar Crackles (Velcro Rales):** کراکل‌های ظریف دمی که در قاعده هر دو ریه شنیده می‌شوند و شبیه صدای باز کردن چسب ولکرو هستند. این علامت تشخیصی مهم IPF است."
+          "question": "صداهای اضافی",
+          "analysis": "Fine Bibasilar Crackles (Velcro Rales): کراکل‌های ظریف دمی که در قاعده هر دو ریه شنیده می‌شوند و شبیه صدای باز کردن چسب ولکرو هستند. این علامت تشخیصی مهم IPF است."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "نرمال."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "نرمال."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
-          "analysis": "**کلابینگ (Clubbing):** چماقی شدن انگشتان در ۲۵ تا ۵۰ درصد بیماران IPF دیده می‌شود و نشانه پیش‌آگهی بدتر است."
+          "question": "رنگ و تغییر شکل اندام‌ها",
+          "analysis": "کلابینگ (Clubbing): چماقی شدن انگشتان در ۲۵ تا ۵۰ درصد بیماران IPF دیده می‌شود و نشانه پیش‌آگهی بدتر است."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "نرمال."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -2381,7 +2375,7 @@ IPF_STABLE_IPF_DETAILED = {
       },
       "ESR": {
         "question": "ESR",
-        "analysis": "**کمی بالا:** ممکن است ESR/CRP به صورت غیراختصاصی بالا باشد، اما اگر خیلی بالا باشد شک به بیماری‌های بافت همبند (CTD) را برمی‌انگیزد."
+        "analysis": "کمی بالا: ممکن است ESR/CRP به صورت غیراختصاصی بالا باشد، اما اگر خیلی بالا باشد شک به بیماری‌های بافت همبند (CTD) را برمی‌انگیزد."
       },
       "CRP": {
         "question": "CRP",
@@ -2425,25 +2419,25 @@ IPF_STABLE_IPF_DETAILED = {
       },
       "Autoimmune_pannel_ANA_ANCA": {
         "question": "Autoimmune_pannel_ANA_ANCA",
-        "analysis": "**منفی:** برای تشخیص IPF، باید تمام مارکرهای بیماری‌های خودایمنی (ANA, RF, Anti-CCP) منفی باشند. اگر مثبت باشند، تشخیص به بیماری بافت همبند تغییر می‌کند."
+        "analysis": "منفی: برای تشخیص IPF، باید تمام مارکرهای بیماری‌های خودایمنی (ANA, RF, Anti-CCP) منفی باشند. اگر مثبت باشند، تشخیص به بیماری بافت همبند تغییر می‌کند."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**نمای رتیکولار (Reticular):** خطوط شبکه‌ای در قاعده‌ی ریه‌ها و کاهش حجم ریه دیده می‌شود."
+        "analysis": "نمای رتیکولار (Reticular): خطوط شبکه‌ای در قاعده‌ی ریه‌ها و کاهش حجم ریه دیده می‌شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
         "question": "Chest_CT_CTPA",
-        "analysis": "**الگوی UIP (استاندارد طلایی):** وجود همزمان ۴ علامت: ۱. درگیری غالب در قاعده و زیر پلور ۲. نمای مشبک (Reticular) ۳. **لانه زنبوری (Honeycombing)** با یا بدون برونشکتازی کششی ۴. نبودن نماهای ناسازگار (مثل Ground glass وسیع)."
+        "analysis": "الگوی UIP (استاندارد طلایی): وجود همزمان ۴ علامت: ۱. درگیری غالب در قاعده و زیر پلور ۲. نمای مشبک (Reticular) ۳. لانه زنبوری (Honeycombing) با یا بدون برونشکتازی کششی ۴. نبودن نماهای ناسازگار (مثل Ground glass وسیع)."
       }
     },
     "functional_tests": {
       "dlco": {
         "question": "dlco",
-        "analysis": "**کاهش یافته:** کاهش DLCO حساس‌ترین تست برای تشخیص زودرس و پیگیری پیشرفت بیماری است."
+        "analysis": "کاهش یافته: کاهش DLCO حساس‌ترین تست برای تشخیص زودرس و پیگیری پیشرفت بیماری است."
       },
       "peak_flow": {
         "question": "peak_flow",
@@ -2451,11 +2445,11 @@ IPF_STABLE_IPF_DETAILED = {
       },
       "Spirometry": {
         "question": "Spirometry",
-        "analysis": "**الگوی محدودکننده (Restrictive):** کاهش FVC (ظرفیت حیاتی) و FEV1، با نسبت FEV1/FVC نرمال یا حتی افزایش یافته. این یعنی ریه کوچک و سفت شده است."
+        "analysis": "الگوی محدودکننده (Restrictive): کاهش FVC (ظرفیت حیاتی) و FEV1، با نسبت FEV1/FVC نرمال یا حتی افزایش یافته. این یعنی ریه کوچک و سفت شده است."
       },
       "plethysmography": {
         "question": "plethysmography",
-        "analysis": "**کاهش TLC:** کاهش ظرفیت کل ریه، تاییدکننده الگوی محدودکننده است."
+        "analysis": "کاهش TLC: کاهش ظرفیت کل ریه، تاییدکننده الگوی محدودکننده است."
       }
     },
     "procedures": {
@@ -2488,7 +2482,7 @@ IPF_STABLE_IPF_DETAILED = {
     },
     "disease5": {
       "question": "IPF",
-      "analysis": "**تشخیص قطعی.** سن بالای ۶۰ سال، کراکل‌های ولکرو، الگوی UIP در سی‌تی‌اسکن و رد کردن سایر علل شناخته شده."
+      "analysis": "تشخیص قطعی. سن بالای ۶۰ سال، کراکل‌های ولکرو، الگوی UIP در سی‌تی‌اسکن و رد کردن سایر علل شناخته شده."
     },
     "disease6": {
       "question": "PH",
@@ -2675,18 +2669,18 @@ IPF_STABLE_IPF = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "true",
         "CRP": "true",
-        "VBG": { "pH": "false", "PCO2": "false", "HCO3": "false" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "false",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -2703,17 +2697,14 @@ IPF_STABLE_IPF = {
         "dlco": "true",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "false"
         },
         "plethysmography": "true"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {

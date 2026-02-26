@@ -3,11 +3,11 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "برونشیت مزمن یک بیماری تدریجی است. تعریف بالینی آن وجود **سرفه خلط‌دار** برای حداقل ۳ ماه در سال، طی ۲ سال متوالی است."
+        "analysis": "برونشیت مزمن یک بیماری تدریجی است. تعریف بالینی آن وجود سرفه خلط‌دار برای حداقل ۳ ماه در سال، طی ۲ سال متوالی است."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
-        "analysis": "شروع بیماری بسیار تدریجی است، اما بیماران اغلب به دلیل **تشدید حاد (Exacerbation)** ناشی از عفونت‌های ویروسی یا باکتریال مراجعه می‌کنند."
+        "analysis": "شروع بیماری بسیار تدریجی است، اما بیماران اغلب به دلیل تشدید حاد (Exacerbation) ناشی از عفونت‌های ویروسی یا باکتریال مراجعه می‌کنند."
       },
       "question3": {
         "question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟",
@@ -15,7 +15,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
-        "analysis": "**علامت اصلی!** سرفه مولد (Productive) با خلط فراوان، به خصوص در صبح‌ها، ویژگی بارز برونشیت مزمن است (Hypersecretion of mucus)."
+        "analysis": "علامت اصلی! سرفه مولد (Productive) با خلط فراوان، به خصوص در صبح‌ها، ویژگی بارز برونشیت مزمن است (Hypersecretion of mucus)."
       },
       "question5": {
         "question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟",
@@ -31,7 +31,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       },
       "question8": {
         "question": "آیا دچار تورم در پاها، تپش قلب یا سرگیجه شده‌اید؟",
-        "analysis": "بسیار مهم! بیماران برونشیت مزمن زودتر دچار هایپوکسی و نارسایی قلب راست (Cor Pulmonale) می‌شوند، بنابراین **ادم پا (Bloater)** در آن‌ها شایع است."
+        "analysis": "بسیار مهم! بیماران برونشیت مزمن زودتر دچار هایپوکسی و نارسایی قلب راست (Cor Pulmonale) می‌شوند، بنابراین ادم پا (Bloater) در آن‌ها شایع است."
       },
       "question9": {
         "question": "آیا قبلاً هم مشکل مشابهی داشته‌اید و چه درمانی به شما کمک کرده است؟",
@@ -142,7 +142,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا تا به حال سیگار، قلیان، پیپ، یا هر نوع محصول نیکوتینی مصرف کرده‌اید؟",
-          "analysis": "**علت اصلی بیماری!** محاسبه Pack-Year برای تایید تشخیص ضروری است. دود سیگار باعث هایپرپلازی غدد موکوسی و التهاب مزمن می‌شود."
+          "analysis": "علت اصلی بیماری! محاسبه Pack-Year برای تایید تشخیص ضروری است. دود سیگار باعث هایپرپلازی غدد موکوسی و التهاب مزمن می‌شود."
         },
         "question1b": {
           "question": "اگر قبلاً مصرف می‌کردید، چه زمانی ترک کرده‌اید؟",
@@ -165,7 +165,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       },
       "question4": {
         "question": "در خانه همراه چه کسانی زندگی می‌کنید؟",
-        "analysis": "مواجهه با آلاینده‌های شغلی یا خانگی (سوخت زیستی) هم می‌تواند عامل COPD باشد."
+        "analysis": "مواجهه با آلاینده‌های شغلی یا خانگی (سوخت زیستی) هم می‌تواند عامل COPD."
       }
     },
     "ros": {
@@ -211,7 +211,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       },
       "question11": {
         "question": "آیا سابقه سردرد شدید یا جدید، تشنج، ضعف یا بی‌حسی در دست‌ها/پاها، مشکل در تعادل/هماهنگی، یا تغییر در حافظه دارید؟",
-        "analysis": "**سردرد صبحگاهی:** نشانه احتباس CO2 در طول خواب (هایپرکاپنیک) است."
+        "analysis": "سردرد صبحگاهی: نشانه احتباس CO2 در طول خواب (هایپرکاپنیک) است."
       },
       "question12": {
         "question": "آیا اخیراً احساس افسردگی، اضطراب، تغییرات شدید خلقی، یا مشکل در خواب (بی‌خوابی/پرخوابی) داشته‌اید؟",
@@ -230,140 +230,140 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "معمولاً نرمال است."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "نرمال (مگر عفونت فعال)."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی ناشی از مصرف دارو یا هیپوکسی."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه خفیف."
       },
       "SpO2": {
-        "question": "SpO2",
-        "analysis": "**افت اکسیژن (Hypoxemia):** در برونشیت مزمن به دلیل شنت (V/Q Mismatch) شایع است و باعث سیانوز می‌شود."
+        "question": "غلظت O2(SpO2)",
+        "analysis": "افت اکسیژن (Hypoxemia): در برونشیت مزمن به دلیل شنت (V/Q Mismatch) شایع است و باعث سیانوز می‌شود."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال، مگر در نارکوز CO2."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "معمولاً آرام است، برخلاف آمفیزم که دیسترس شدید دارد."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
-        "analysis": "**Blue Bloater:** بیمار چاق، سیانوتیک (کبود) و دارای ادم است."
+        "question": "ظاهر کلی",
+        "analysis": "Blue Bloater: بیمار چاق، سیانوتیک (کبود) و دارای ادم است."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نرمال."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "ممکن است خواب‌آلود باشد (CO2 بالا)."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
-          "analysis": "**ادم محیطی:** نشانه نارسایی قلب راست ثانویه به افزایش فشار ریه (Cor Pulmonale) است."
+          "question": "اِدم",
+          "analysis": "ادم محیطی: نشانه نارسایی قلب راست ثانویه به افزایش فشار ریه (Cor Pulmonale) است."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "وجود دارد اما بیمار کمتر از آمفیزم تقلا می‌کند."
         },
         "cyanosis": {
-          "question": "cyanosis",
-          "analysis": "**سیانوز:** لب‌ها و بستر ناخن‌ها کبود است."
+          "question": "سیانوز",
+          "analysis": "سیانوز: لب‌ها و بستر ناخن‌ها کبود است."
         }
       }
     },
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
-          "analysis": "**پرخونی ملتحمه:** به دلیل پلی‌سایتمی (غلظت خون بالا) و CO2 بالا."
+          "question": "صلبیه و ملتحمه",
+          "analysis": "پرخونی ملتحمه: به دلیل پلی‌سایتمی (غلظت خون بالا) و CO2 بالا."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "سیانوز زبان."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
-          "analysis": "**JVD:** اتساع وریدهای گردن به دلیل نارسایی قلب راست."
+          "question": "مشاهدات گردن",
+          "analysis": "JVD: اتساع وریدهای گردن به دلیل نارسایی قلب راست."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -371,176 +371,176 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "استفاده از عضلات تنفسی."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "معمولاً قفسه سینه نرمال است (برخلاف آمفیزم که بشکه‌ای است)."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "نرمال یا کمی کاهش یافته."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "نرمال."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "نرمال (رزونانس)."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "صداهای تنفسی ممکن است نرمال یا خشن باشند."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
-          "analysis": "**رونکای (Rhonchi) و ویزینگ:** صدای خشن ناشی از ترشحات فراوان در راه‌های هوایی که با سرفه تغییر می‌کند."
+          "question": "صداهای اضافی",
+          "analysis": "رونکای (Rhonchi) و ویزینگ: صدای خشن ناشی از ترشحات فراوان در راه‌های هوایی که با سرفه تغییر می‌کند."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "افزایش یافته (Cor Pulmonale)."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "لمس ضربان بطن راست (RV Heave)."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "صدای P2 بلند."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "گالوپ راست."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "گرم (به دلیل احتباس CO2 و گشادی عروق) و سیانوتیک."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "گرم."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "ادم گوده‌گذار."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "هپاتومگالی (ناشی از احتقان)."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "لمس کبد بزرگ."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "ممکن است خواب‌آلود باشد."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
-        "analysis": "**آستریکسی (لرزش دست):** نشانه هایپرکاپنیک (CO2 بالا) است."
+        "question": "حرکات غیرارادی",
+        "analysis": "آستریکسی (لرزش دست): نشانه هایپرکاپنیک (CO2 بالا) است."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال (تحلیل عضلانی کمتر از آمفیزم است)."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -553,7 +553,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       },
       "CBC": {
         "question": "CBC",
-        "analysis": "**پلی‌سایتمی (Polycythemia):** افزایش هموگلوبین و هماتوکریت در پاسخ به هیپوکسی مزمن."
+        "analysis": "پلی‌سایتمی (Polycythemia): افزایش هموگلوبین و هماتوکریت در پاسخ به هیپوکسی مزمن."
       },
       "ESR": {
         "question": "ESR",
@@ -565,7 +565,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       },
       "VBG": {
         "question": "VBG",
-        "analysis": "**اسیدوز تنفسی مزمن:** افزایش PCO2 (Hypercapnia) و کاهش PO2 (Hypoxemia) مشخصه برونشیت مزمن است."
+        "analysis": "اسیدوز تنفسی مزمن: افزایش PCO2 (Hypercapnia) و کاهش PO2 (Hypoxemia) مشخصه برونشیت مزمن است."
       },
       "LFTs": {
         "question": "LFTs",
@@ -607,7 +607,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**ریه کثیف (Dirty Lungs):** افزایش مارکرهای برونکوواسکولار و ضخیم شدن دیواره برونش‌ها. قلب ممکن است بزرگ باشد."
+        "analysis": "ریه کثیف (Dirty Lungs): افزایش مارکرهای برونکوواسکولار و ضخیم شدن دیواره برونش‌ها. قلب ممکن است بزرگ باشد."
       }
     },
     "advanced_imaging": {
@@ -619,7 +619,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
     "functional_tests": {
       "dlco": {
         "question": "dlco",
-        "analysis": "**نرمال:** این یافته کلیدی برای افتراق از آمفیزم است. در برونشیت مزمن سطح بستر عروقی و آلوئولی سالم است، پس انتشار گاز نرمال است."
+        "analysis": "نرمال: این یافته کلیدی برای افتراق از آمفیزم است. در برونشیت مزمن سطح بستر عروقی و آلوئولی سالم است، پس انتشار گاز نرمال است."
       },
       "peak_flow": {
         "question": "peak_flow",
@@ -627,7 +627,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
       },
       "Spirometry": {
         "question": "Spirometry",
-        "analysis": "**الگوی انسدادی:** کاهش FEV1/FVC به زیر ۷۰٪ که با اسپری برگشت‌پذیر نیست."
+        "analysis": "الگوی انسدادی: کاهش FEV1/FVC به زیر ۷۰٪ که با اسپری برگشت‌پذیر نیست."
       },
       "plethysmography": {
         "question": "plethysmography",
@@ -656,7 +656,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
     },
     "disease3": {
       "question": "COPD",
-      "analysis": "**تشخیص قطعی.** سرفه مزمن خلط‌دار، سیگار، انسداد غیرقابل برگشت در اسپیرومتری و DLCO نرمال."
+      "analysis": "تشخیص قطعی. سرفه مزمن خلط‌دار، سیگار، انسداد غیرقابل برگشت در اسپیرومتری و DLCO نرمال."
     },
     "disease4": {
       "question": "PTE",
@@ -851,18 +851,18 @@ COPD_CHRONIC_BRONCHITIS = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "true", "Sample_Quality": "true" },
+        "Sputum_analysis": "true",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -879,17 +879,14 @@ COPD_CHRONIC_BRONCHITIS = {
         "dlco": "false",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "true"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false" 
       }
     },
     "differential_diagnosis": {
@@ -915,7 +912,7 @@ COPD_COR_PULMONALE_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "بیمار سابقه‌ای طولانی از COPD دارد، اما شکایت فعلی او معمولاً **تشدید تدریجی تنگی نفس** و ظهور علائم جدید مثل **ورم پاها** در هفته‌های اخیر است که نشان‌دهنده شروع نارسایی قلب راست است."
+        "analysis": "بیمار سابقه‌ای طولانی از COPD دارد، اما شکایت فعلی او معمولاً تشدید تدریجی تنگی نفس و ظهور علائم جدید مثل ورم پاها در هفته‌های اخیر است که نشان‌دهنده شروع نارسایی قلب راست است."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -935,7 +932,7 @@ COPD_COR_PULMONALE_DETAILED = {
       },
       "question6": {
         "question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟",
-        "analysis": "بیمار ممکن است درد مبهم قفسه سینه داشته باشد که ناشی از **ایسکمی بطن راست** (RV Angina) است؛ زیرا عضله قلب راست ضخیم شده و نیاز به اکسیژن بیشتری دارد."
+        "analysis": "بیمار ممکن است درد مبهم قفسه سینه داشته باشد که ناشی از ایسکمی بطن راست (RV Angina) است؛ زیرا عضله قلب راست ضخیم شده و نیاز به اکسیژن بیشتری دارد."
       },
       "question7": {
         "question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟",
@@ -943,7 +940,7 @@ COPD_COR_PULMONALE_DETAILED = {
       },
       "question8": {
         "question": "آیا دچار تورم در پاها، تپش قلب یا سرگیجه شده‌اید؟",
-        "analysis": "**شاه‌علامت تشخیص!** ورم دوطرفه پاها (Edema) نشان می‌دهد که فشار شریان ریه آنقدر بالا رفته که بطن راست دیگر نمی‌تواند خون را پمپاژ کند و خون در وریدها پس می‌زند."
+        "analysis": "شاه‌علامت تشخیص! ورم دوطرفه پاها (Edema) نشان می‌دهد که فشار شریان ریه آنقدر بالا رفته که بطن راست دیگر نمی‌تواند خون را پمپاژ کند و خون در وریدها پس می‌زند."
       },
       "question9": {
         "question": "آیا قبلاً هم مشکل مشابهی داشته‌اید و چه درمانی به شما کمک کرده است؟",
@@ -1054,7 +1051,7 @@ COPD_COR_PULMONALE_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا تا به حال سیگار، قلیان، پیپ، یا هر نوع محصول نیکوتینی مصرف کرده‌اید؟",
-          "analysis": "**علت‌العلل!** سیگار کشیدن طولانی‌مدت عامل اصلی تخریب ریه و ایجاد فشار خون ریوی است."
+          "analysis": "علت‌العلل! سیگار کشیدن طولانی‌مدت عامل اصلی تخریب ریه و ایجاد فشار خون ریوی است."
         },
         "question1b": {
           "question": "اگر قبلاً مصرف می‌کردید، چه زمانی ترک کرده‌اید؟",
@@ -1111,7 +1108,7 @@ COPD_COR_PULMONALE_DETAILED = {
       },
       "question8": {
         "question": "آیا دچار حالت تهوع، استفراغ، سوزش سر دل، درد شکم، تغییر در عادات اجابت مزاج (اسهال یا یبوست)، خونریزی از مقعد، یا زردی پوست و چشم (یرقان) هستید؟",
-        "analysis": "**نکته ظریف:** بیماران با نارسایی شدید قلب راست دچار احتقان کبد و روده می‌شوند که باعث بی‌اشتهایی، تهوع و درد شکم (Congestive Gastropathy) می‌شود."
+        "analysis": "نکته ظریف: بیماران با نارسایی شدید قلب راست دچار احتقان کبد و روده می‌شوند که باعث بی‌اشتهایی، تهوع و درد شکم (Congestive Gastropathy) می‌شود."
       },
       "question9": {
         "question": "آیا دچار درد یا سوزش حین ادرار کردن، تکرر ادرار، خون در ادرار (هماچوری)، مشکل در کنترل ادرار، یا ترشحات غیرعادی هستید؟",
@@ -1142,58 +1139,58 @@ COPD_COR_PULMONALE_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "معمولاً نرمال است. فشار خون سیستمیک در کور-پولمونال مستقیماً تحت تأثیر نیست مگر در مراحل نهایی (شوک)."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "نرمال."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی (ضربان بالا) جهت جبران کاهش حجم ضربه‌ای."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه (تنفس سریع) به دلیل هیپوکسی."
       },
       "SpO2": {
-        "question": "SpO2",
-        "analysis": "**هیپوکسی شدید:** اشباع اکسیژن پایین است که علت اصلی انقباض عروق ریه و ایجاد فشار خون ریوی است."
+        "question": "غلظت O2(SpO2)",
+        "analysis": "هیپوکسی شدید: اشباع اکسیژن پایین است که علت اصلی انقباض عروق ریه و ایجاد فشار خون ریوی است."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "ممکن است به دلیل احتباس CO2 (نارکوز) کمی خواب‌آلود باشد."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "لتارژیک یا خواب‌آلود (به دلیل هایپرکاپنیک)."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "بیمار چاق، پف‌کرده و سیانوتیک (Blue Bloater) به نظر می‌رسد."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نشسته برای تنفس راحت‌تر."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "کاهش سطح هوشیاری در موارد شدید."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
-          "analysis": "**ادم گوده‌گذار (Pitting Edema):** در اندام تحتانی و ساکروم، نشانه بارز نارسایی قلب راست است."
+          "question": "اِدم",
+          "analysis": "ادم گوده‌گذار (Pitting Edema): در اندام تحتانی و ساکروم، نشانه بارز نارسایی قلب راست است."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "وجود دارد."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "سیانوز مرکزی و محیطی شدید."
         }
       }
@@ -1201,81 +1198,81 @@ COPD_COR_PULMONALE_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "پرخونی ملتحمه (چشم قورباغه‌ای) ناشی از پلی‌سایتمی و CO2 بالا."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "سیانوز زبان."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
-          "analysis": "**JVD برجسته:** ورید ژوگولار متسع است و موج a و v بلند دارد که نشانه فشار بالای دهلیز راست و نارسایی تری‌کوسپید است."
+          "question": "مشاهدات گردن",
+          "analysis": "JVD برجسته: ورید ژوگولار متسع است و موج a و v بلند دارد که نشانه فشار بالای دهلیز راست و نارسایی تری‌کوسپید است."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -1283,176 +1280,176 @@ COPD_COR_PULMONALE_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "استفاده از عضلات تنفسی."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "قفسه سینه بشکه‌ای (Barrel chest) در زمینه COPD."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش انبساط."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "کاهش یافته (به دلیل پرهوایی)."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "هیپررزونانس."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "کاهش صداهای تنفسی."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "ویزینگ و رونکای منتشر."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "مثبت (بالا)."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
-          "analysis": "**RV Heave:** لمس ضربان کوبنده بطن راست در کنار چپ جناغ یا زیر جناغ، نشانه هیپرتروفی بطن راست است."
+          "question": "لمس قلب و بررسی Heave Thrill",
+          "analysis": "RV Heave: لمس ضربان کوبنده بطن راست در کنار چپ جناغ یا زیر جناغ، نشانه هیپرتروفی بطن راست است."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال یا جابجا شده."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
-          "analysis": "**P2 بلند:** جزء ریوی صدای دوم قلب به شدت بلند شنیده می‌شود (نشانه هایپرتنشن ریوی)."
+          "question": "صدای قلب S1 و S2",
+          "analysis": "P2 بلند: جزء ریوی صدای دوم قلب به شدت بلند شنیده می‌شود (نشانه هایپرتنشن ریوی)."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
-          "analysis": "**سوفل TR:** سوفل هولوسیستولیک نارسایی تری‌کوسپید که با دم شدت می‌یابد (Carvallo's sign). صدای S3 راست (گالوپ) هم نشانه نارسایی قلب است."
+          "question": "صدای اضافی S3 و S4",
+          "analysis": "سوفل TR: سوفل هولوسیستولیک نارسایی تری‌کوسپید که با دم شدت می‌یابد (Carvallo's sign). صدای S3 راست (گالوپ) هم نشانه نارسایی قلب است."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "سیانوز انتهاها."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "گرم (Vasodilation ناشی از CO2)."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
-          "analysis": "**ادم شدید:** نشانه ناتوانی قلب راست در تخلیه خون وریدی."
+          "question": "اِدم اندام‌ها",
+          "analysis": "ادم شدید: نشانه ناتوانی قلب راست در تخلیه خون وریدی."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "ممکن است اتساع شکم (آسیت) دیده شود."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "تست مایع آزاد (آسیت) ممکن است مثبت باشد."
         },
         "organ_borders": {
-          "question": "organ_borders",
-          "analysis": "**هپاتومگالی:** کبد بزرگ و احتقانی در دق مشخص می‌شود."
+          "question": "حدود اندام‌ها",
+          "analysis": "هپاتومگالی: کبد بزرگ و احتقانی در دق مشخص می‌شود."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
-          "analysis": "**کبد ضربان‌دار (Pulsatile Liver):** در نارسایی شدید تری‌کوسپید، موج خون به کبد برمی‌گردد و آن را نبض‌دار می‌کند."
+          "question": "ارگان ها و توده‌های عمقی",
+          "analysis": "کبد ضربان‌دار (Pulsatile Liver): در نارسایی شدید تری‌کوسپید، موج خون به کبد برمی‌گردد و آن را نبض‌دار می‌کند."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "خواب‌آلودگی (نارکوز) یا تحریک‌پذیری (هیپوکسی)."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -1465,7 +1462,7 @@ COPD_COR_PULMONALE_DETAILED = {
       },
       "CBC": {
         "question": "CBC",
-        "analysis": "**پلی‌سایتمی ثانویه:** هماتوکریت بالا (Hct > 50-55%) پاسخ مغز استخوان به هیپوکسی مزمن است تا اکسیژن‌رسانی را حفظ کند."
+        "analysis": "پلی‌سایتمی ثانویه: هماتوکریت بالا (Hct > 50-55%) پاسخ مغز استخوان به هیپوکسی مزمن است تا اکسیژن‌رسانی را حفظ کند."
       },
       "ESR": {
         "question": "ESR",
@@ -1477,11 +1474,11 @@ COPD_COR_PULMONALE_DETAILED = {
       },
       "VBG": {
         "question": "VBG",
-        "analysis": "**اسیدوز تنفسی جبران‌شده:** PCO2 بالا و HCO3 بالا."
+        "analysis": "اسیدوز تنفسی جبران‌شده: PCO2 بالا و HCO3 بالا."
       },
       "LFTs": {
         "question": "LFTs",
-        "analysis": "**هپاتوپاتی احتقانی:** افزایش آنزیم‌های کبدی (ALT/AST) و بیلی‌روبین به دلیل پس‌زدن خون در کبد."
+        "analysis": "هپاتوپاتی احتقانی: افزایش آنزیم‌های کبدی (ALT/AST) و بیلی‌روبین به دلیل پس‌زدن خون در کبد."
       }
     },
     "specialized_lung_tests": {
@@ -1495,7 +1492,7 @@ COPD_COR_PULMONALE_DETAILED = {
       },
       "BNP_NT_proBNP": {
         "question": "BNP_NT_proBNP",
-        "analysis": "**بسیار بالا:** اتساع بطن راست باعث ترشح BNP می‌شود. این تست برای تایید نارسایی قلبی و افتراق از تنگی نفس صرفاً ریوی کمک‌کننده است."
+        "analysis": "بسیار بالا: اتساع بطن راست باعث ترشح BNP می‌شود. این تست برای تایید نارسایی قلبی و افتراق از تنگی نفس صرفاً ریوی کمک‌کننده است."
       },
       "Sputum_analysis": {
         "question": "Sputum_analysis",
@@ -1519,7 +1516,7 @@ COPD_COR_PULMONALE_DETAILED = {
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**بزرگی قلب راست:** سایه قلب بزرگ شده (Cardiomegaly) و پرخونی عروق ریوی دیده می‌شود. همچنین علائم COPD (پرهوایی) وجود دارد."
+        "analysis": "بزرگی قلب راست: سایه قلب بزرگ شده (Cardiomegaly) و پرخونی عروق ریوی دیده می‌شود. همچنین علائم COPD (پرهوایی) وجود دارد."
       }
     },
     "advanced_imaging": {
@@ -1568,7 +1565,7 @@ COPD_COR_PULMONALE_DETAILED = {
     },
     "disease3": {
       "question": "COPD",
-      "analysis": "**تشخیص نهایی (همراه با عارضه).** تابلوی بالینی (ادم، JVP، هپاتومگالی) روی زمینه COPD مزمن، تشخیص کور-پولمونال را قطعی می‌کند."
+      "analysis": "تشخیص نهایی (همراه با عارضه). تابلوی بالینی (ادم، JVP، هپاتومگالی) روی زمینه COPD مزمن، تشخیص کور-پولمونال را قطعی می‌کند."
     },
     "disease4": {
       "question": "PTE",
@@ -1763,18 +1760,18 @@ COPD_COR_PULMONALE = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "true",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "true", "AST": "true" }
+        "VBG": "true",
+        "LFTs": "true"
       },
       "specialized_lung_tests": {
         "D_dimer": "true",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "true",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -1791,17 +1788,14 @@ COPD_COR_PULMONALE = {
         "dlco": "false",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "false"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
@@ -1835,7 +1829,7 @@ COPD_EMPHYSEMA_DETAILED = {
       },
       "question3": {
         "question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟",
-        "analysis": "**تنگی نفس شدید (Severe Dyspnea):** علامت غالب آمفیزم است. بیماران برای حفظ اکسیژن خون مجبورند با تلاش زیاد و فرکانس بالا تنفس کنند (Puffers)، به همین دلیل کمتر سیانوتیک می‌شوند."
+        "analysis": "تنگی نفس شدید (Severe Dyspnea): علامت غالب آمفیزم است. بیماران برای حفظ اکسیژن خون مجبورند با تلاش زیاد و فرکانس بالا تنفس کنند (Puffers)، به همین دلیل کمتر سیانوتیک می‌شوند."
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
@@ -1863,7 +1857,7 @@ COPD_EMPHYSEMA_DETAILED = {
       },
       "question10": {
         "question": "آیا دچار کاهش وزن، خستگی یا از دست دادن اشتها شده‌اید؟",
-        "analysis": "**کاهش وزن (Weight Loss):** بیماران آمفیزم (Pink Puffers) معمولاً لاغر و کاکتیک هستند، زیرا انرژی زیادی صرف عمل تنفس می‌کنند و به دلیل تنگی نفس در غذا خوردن مشکل دارند."
+        "analysis": "کاهش وزن (Weight Loss): بیماران آمفیزم (Pink Puffers) معمولاً لاغر و کاکتیک هستند، زیرا انرژی زیادی صرف عمل تنفس می‌کنند و به دلیل تنگی نفس در غذا خوردن مشکل دارند."
       }
     },
     "past_medical_history": {
@@ -1940,7 +1934,7 @@ COPD_EMPHYSEMA_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا در خانواده درجه یک (پدر، مادر، خواهر یا برادر) شما، سابقه ابتلا به بیماری‌های مزمن و شایع زیر وجود دارد؟",
-          "analysis": "**کمبود آلفا-۱ آنتی‌تریپسین:** اگر بیمار جوان (<۴۵ سال) و غیرسیگاری باشد و دچار آمفیزم (به خصوص در لوب‌های تحتانی) شود، باید به فکر این بیماری ژنتیکی بود."
+          "analysis": "کمبود آلفا-۱ آنتی‌تریپسین: اگر بیمار جوان (<۴۵ سال) و غیرسیگاری باشد و دچار آمفیزم (به خصوص در لوب‌های تحتانی) شود، باید به فکر این بیماری ژنتیکی بود."
         },
         "question1b": {
           "question": "اگر بله، چه کسی و در چه سنی به آن مبتلا شده است؟",
@@ -1966,7 +1960,7 @@ COPD_EMPHYSEMA_DETAILED = {
       "question1": {
         "question1a": {
           "question": "آیا تا به حال سیگار، قلیان، پیپ، یا هر نوع محصول نیکوتینی مصرف کرده‌اید؟",
-          "analysis": "**علت اصلی!** سیگار باعث فعال شدن آنزیم‌های پروتئاز (مثل الاستاز) و تخریب دیواره آلوئول‌ها می‌شود."
+          "analysis": "علت اصلی! سیگار باعث فعال شدن آنزیم‌های پروتئاز (مثل الاستاز) و تخریب دیواره آلوئول‌ها می‌شود."
         },
         "question1b": {
           "question": "اگر قبلاً مصرف می‌کردید، چه زمانی ترک کرده‌اید؟",
@@ -2054,58 +2048,58 @@ COPD_EMPHYSEMA_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "معمولاً نرمال."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "نرمال."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی (به دلیل کار زیاد تنفسی)."
       },
       "RR": {
-        "question": "RR",
-        "analysis": "**تاکی‌پنه:** تنفس سریع برای حفظ سطح اکسیژن."
+        "question": "تعداد تنفس(RR)",
+        "analysis": "تاکی‌پنه: تنفس سریع برای حفظ سطح اکسیژن."
       },
       "SpO2": {
-        "question": "SpO2",
-        "analysis": "معمولاً **نرمال یا کمی پایین** (برخلاف برونشیت مزمن که افت شدید دارد). این بیماران با هایپرونتیلاسیون اکسیژن را حفظ می‌کنند (Pink Puffer)."
+        "question": "غلظت O2(SpO2)",
+        "analysis": "معمولاً نرمال یا کمی پایین (برخلاف برونشیت مزمن که افت شدید دارد). این بیماران با هایپرونتیلاسیون اکسیژن را حفظ می‌کنند (Pink Puffer)."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "مضطرب و در حال تقلا برای تنفس."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
-        "analysis": "**Pink Puffer:** بیمار لاغر، قرمز/صورتی (نه سیانوتیک) و در حال تنفس با لب‌های غنچه شده (Pursed-lip) است."
+        "question": "ظاهر کلی",
+        "analysis": "Pink Puffer: بیمار لاغر، قرمز/صورتی (نه سیانوتیک) و در حال تنفس با لب‌های غنچه شده (Pursed-lip) است."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "وضعیت سه‌پایه (Tripod position) برای استفاده از عضلات کمکی."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "معمولاً ندارد."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "شدید."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "معمولاً ندارد (مگر در مراحل انتهایی)."
         }
       }
@@ -2113,81 +2107,81 @@ COPD_EMPHYSEMA_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
-          "analysis": "**عضلات فرعی برجسته:** استفاده شدید از عضلات استرنوکلیدوماستوئید و اسکالن."
+          "question": "مشاهدات گردن",
+          "analysis": "عضلات فرعی برجسته: استفاده شدید از عضلات استرنوکلیدوماستوئید و اسکالن."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "ممکن است کوتاه به نظر برسد (به دلیل بالا رفتن شانه‌ها)."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -2195,176 +2189,176 @@ COPD_EMPHYSEMA_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "استفاده شدید."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
-          "analysis": "**قفسه سینه بشکه‌ای (Barrel Chest):** افزایش قطر قدامی-خلفی قفسه سینه به دلیل پرهوایی شدید (Hyperinflation)."
+          "question": "شکل و تقارن قفسه سینه",
+          "analysis": "قفسه سینه بشکه‌ای (Barrel Chest): افزایش قطر قدامی-خلفی قفسه سینه به دلیل پرهوایی شدید (Hyperinflation)."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش انبساط قفسه سینه (ریه از قبل پر است و جای بیشتری برای باز شدن ندارد)."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
-          "analysis": "**کاهش یافته:** هوای زیاد در فضای پلور و آلوئول‌ها عایق صداست."
+          "question": "Tactile Fremitus",
+          "analysis": "کاهش یافته: هوای زیاد در فضای پلور و آلوئول‌ها عایق صداست."
         }
       },
       "percussion": {
-        "question": "percussion",
-        "analysis": "**هیپررزونانس (Hyperresonance):** صدای طبل‌مانند در دق تمام قفسه سینه."
+        "question": "دق قفسه سینه",
+        "analysis": "هیپررزونانس (Hyperresonance): صدای طبل‌مانند در دق تمام قفسه سینه."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
-          "analysis": "**کاهش شدید صداهای تنفسی (Silent Chest):** صداهای ریوی دور و ضعیف شنیده می‌شوند."
+          "question": "شدت صداهای تنفسی",
+          "analysis": "کاهش شدید صداهای تنفسی (Silent Chest): صداهای ریوی دور و ضعیف شنیده می‌شوند."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "ممکن است نرمال باشد (برخلاف برونشیت که پر از صداست)."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "معمولاً نرمال."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "اصلاً لمس نمی‌شود یا به اپی‌گاستر جابجا شده است."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
-          "analysis": "**صداهای قلبی دور (Distant heart sounds):** به دلیل فاصله زیاد قلب از دیواره قفسه سینه (پرهوایی ریه)."
+          "question": "صدای قلب S1 و S2",
+          "analysis": "صداهای قلبی دور (Distant heart sounds): به دلیل فاصله زیاد قلب از دیواره قفسه سینه (پرهوایی ریه)."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "نرمال (صورتی)."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "معمولاً ندارد."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال (ممکن است به دلیل لاغری عضلات شکم برجسته نباشد)."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "کبد پایین‌تر از حد معمول دق می‌شود (پایین رانده شدن دیافراگم)."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "لمس کبد پایین آمده."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
-          "analysis": "**تحلیل شدید عضلانی (Muscle Wasting):** به خصوص در کمربند شانه‌ای و اندام‌ها، نشانه وضعیت کاتابولیک شدید است."
+          "question": "عضلات",
+          "analysis": "تحلیل شدید عضلانی (Muscle Wasting): به خصوص در کمربند شانه‌ای و اندام‌ها، نشانه وضعیت کاتابولیک شدید است."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -2415,7 +2409,7 @@ COPD_EMPHYSEMA_DETAILED = {
       },
       "a1_antitrypsin_level": {
         "question": "a1_antitrypsin_level",
-        "analysis": "**تست غربالگری:** در تمام بیماران با تشخیص جدید COPD (به خصوص آمفیزم پان‌آسینار در لوب‌های تحتانی) باید چک شود."
+        "analysis": "تست غربالگری: در تمام بیماران با تشخیص جدید COPD (به خصوص آمفیزم پان‌آسینار در لوب‌های تحتانی) باید چک شود."
       }
     },
     "immunity_and_serology": {
@@ -2431,19 +2425,19 @@ COPD_EMPHYSEMA_DETAILED = {
     "simple_imaging": {
       "Chest_X_Ray": {
         "question": "Chest_X_Ray",
-        "analysis": "**علائم پرهوایی:** دیافراگم صاف (Flat Diaphragm)، افزایش فضای رترواسترنال، قلب کوچک و عمودی (Drop Heart) و کاهش مارکرهای عروقی در محیط ریه."
+        "analysis": "علائم پرهوایی: دیافراگم صاف (Flat Diaphragm)، افزایش فضای رترواسترنال، قلب کوچک و عمودی (Drop Heart) و کاهش مارکرهای عروقی در محیط ریه."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
         "question": "Chest_CT_CTPA",
-        "analysis": "**تخریب پارانشیم:** وجود بول‌های هوایی (Bullae) و مناطق سیاه بدون بافت ریه، تشخیص آمفیزم را تایید و نوع آن (Centriacinar vs Panacinar) را مشخص می‌کند."
+        "analysis": "تخریب پارانشیم: وجود بول‌های هوایی (Bullae) و مناطق سیاه بدون بافت ریه، تشخیص آمفیزم را تایید و نوع آن (Centriacinar vs Panacinar) را مشخص می‌کند."
       }
     },
     "functional_tests": {
       "dlco": {
         "question": "dlco",
-        "analysis": "**کاهش یافته:** این یافته کلیدی برای افتراق آمفیزم از برونشیت مزمن و آسم است. به دلیل تخریب سطح تبادل گاز (دیواره آلوئول‌ها)، ظرفیت انتشار گاز کم می‌شود."
+        "analysis": "کاهش یافته: این یافته کلیدی برای افتراق آمفیزم از برونشیت مزمن و آسم است. به دلیل تخریب سطح تبادل گاز (دیواره آلوئول‌ها)، ظرفیت انتشار گاز کم می‌شود."
       },
       "peak_flow": {
         "question": "peak_flow",
@@ -2451,11 +2445,11 @@ COPD_EMPHYSEMA_DETAILED = {
       },
       "Spirometry": {
         "question": "Spirometry",
-        "analysis": "**الگوی انسدادی:** کاهش FEV1/FVC به زیر ۷۰٪ که برگشت‌پذیر نیست."
+        "analysis": "الگوی انسدادی: کاهش FEV1/FVC به زیر ۷۰٪ که برگشت‌پذیر نیست."
       },
       "plethysmography": {
         "question": "plethysmography",
-        "analysis": "**افزایش شدید حجم‌ها:** افزایش TLC (ظرفیت کل ریه) و RV (حجم باقیمانده) نشان‌دهنده حبس هوا (Air Trapping) است."
+        "analysis": "افزایش شدید حجم‌ها: افزایش TLC (ظرفیت کل ریه) و RV (حجم باقیمانده) نشان‌دهنده حبس هوا (Air Trapping) است."
       }
     },
     "procedures": {
@@ -2480,7 +2474,7 @@ COPD_EMPHYSEMA_DETAILED = {
     },
     "disease3": {
       "question": "COPD",
-      "analysis": "**تشخیص قطعی (فنوتیپ آمفیزم):** تنگی نفس شدید، لاغری، قفسه سینه بشکه‌ای، کاهش DLCO و نمای پرهوایی در عکس ریه."
+      "analysis": "تشخیص قطعی (فنوتیپ آمفیزم): تنگی نفس شدید، لاغری، قفسه سینه بشکه‌ای، کاهش DLCO و نمای پرهوایی در عکس ریه."
     },
     "disease4": {
       "question": "PTE",
@@ -2675,18 +2669,18 @@ COPD_EMPHYSEMA = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "true"
       },
       "immunity_and_serology": {
@@ -2703,17 +2697,14 @@ COPD_EMPHYSEMA = {
         "dlco": "true",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "true"
         },
         "plethysmography": "true"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {

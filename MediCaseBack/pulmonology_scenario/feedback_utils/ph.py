@@ -230,58 +230,58 @@ PH_IDIOPATHIC_PAH_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "فشار خون سیستمیک معمولاً نرمال یا پایین است. افت فشار خون نشانه کاهش برون‌ده قلبی است."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "برای رد علل عفونی باید چک شود."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی (ضربان بالا) مکانیسم جبرانی قلب برای حفظ برون‌ده قلبی در حضور حجم ضربه‌ای پایین است."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه (تنفس سریع) در بیماران PAH شایع است."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "افت اکسیژن خون، به خصوص هنگام فعالیت، در PAH دیده می‌شود."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "ارزیابی کلی وضعیت هوشیاری."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "اضطراب ناشی از تنگی نفس شایع است."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "آیا بیمار دیسترس تنفسی دارد؟ آیا لاغر و کاکتیک است؟"
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "آیا بیمار می‌تواند صاف دراز بکشد یا ارتوپنه دارد؟ (بیشتر در بیماری‌های قلب چپ دیده می‌شود)."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "کاهش پرفیوژن مغزی در مراحل پیشرفته می‌تواند هوشیاری را تحت تاثیر قرار دهد."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ادم اندام تحتانی نشانه نارسایی قلب راست (Cor Pulmonale) است."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "تنگی نفس در حالت استراحت نشانه کلاس عملکردی بالا (FC IV) است."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "سیانوز محیطی به دلیل استخراج بالای اکسیژن بافتی و کاهش برون‌ده قلبی رخ می‌دهد."
         }
       }
@@ -289,81 +289,81 @@ PH_IDIOPATHIC_PAH_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "تلانژکتازی روی صورت می‌تواند نشانه سندرم CREST باشد."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "کاربرد کمی دارد."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "رنگ‌پریدگی ملتحمه (آنمی) یا زردی صلبیه (مشکل کبدی) باید بررسی شود."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "کاربرد کمی دارد."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "کاربرد کمی دارد."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "کاربرد کمی دارد."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "کاربرد کمی دارد."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "کاربرد کمی دارد."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "کاربرد کمی دارد."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "سیانوز مرکزی در مخاط دهان قابل مشاهده است."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "بزرگی لوزه‌ها می‌تواند عامل آپنه خواب و PAH ثانویه باشد."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "اتساع وریدهای گردن (JVD) کلید تشخیص نارسایی قلب راست است."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "انحراف تراشه در پنوموتوراکس یا توده‌های مدیاستن دیده می‌شود."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "بزرگی تیروئید (گواتر) نیاز به بررسی عملکرد تیروئید دارد."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "بیشتر مربوط به بیماری‌های آترواسکلروتیک است."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "لنفادنوپاتی می‌تواند نشانه بدخیمی یا عفونت (مثل HIV) باشد."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "بررسی ویژگی‌های لنف‌نودها."
         }
       }
@@ -371,176 +371,176 @@ PH_IDIOPATHIC_PAH_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "استفاده از عضلات فرعی نشانه دیسترس تنفسی است."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "دفورمیتی قفسه سینه (مثل کیفواسکولیوز) می‌تواند علت PAH گروه ۳ باشد."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش انبساط در بیماری‌های محدودکننده ریه دیده می‌شود."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "معمولاً در PAH نرمال است."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "در PAH ایدیوپاتیک معمولاً نرمال (رزونانت) است. ماتیته نشانه افیوژن یا پنومونی است."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "در IPAH صداهای ریوی معمولاً شفاف (Clear) هستند. وجود کراکل یا ویزینگ به نفع بیماری‌های پارانشیم یا راه هوایی است."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "نبود صداهای اضافی (مثل رال) به تشخیص IPAH کمک می‌کند."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "افزایش JVP، به ویژه وجود موج a بلند (ناشی از انقباض دهلیز راست علیه فشار بالا) و موج v (در نارسایی تری‌کوسپید) بسیار تشخیصی است."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "لمس ضربان قوی در کنار جناغ (Left Parasternal Heave) نشانه هایپرتروفی بطن راست (RVH) است."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "معمولاً نرمال است، مگر اینکه بطن راست آنقدر بزرگ شود که بطن چپ را جابجا کند."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "جزء دوم صدای دوم قلب (P2) در ناحیه ریوی بسیار بلند و کوبنده شنیده می‌شود. این نشانه کلاسیک هایپرتنشن ریوی است."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "سوفل پان‌سیستولیک نارسایی تری‌کوسپید (TR) و صدای چهارم قلب (S4) راست (ناشی از RVH) یافته‌های شایعی هستند."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نبض‌ها ممکن است ضعیف و نخی‌شکل باشند (به دلیل کاهش Stroke Volume)."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "سردی انتهای اندام‌ها نشانه کاهش پرفیوژن است."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "زمان پرشدگی مویرگی (Capillary Refill) ممکن است طولانی شود."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "ادم گوده گذار اندام تحتانی نشانه احتباس مایع و نارسایی قلب راست است."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "اتساع شکم ممکن است ناشی از آسیت باشد."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "معمولاً نرمال است."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "برای بررسی تنگی شریان کلیوی (علت فشار خون سیستمیک) کاربرد دارد."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "بررسی آسیت."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "هپاتومگالی (بزرگی کبد) ناشی از احتقان وریدی شایع است."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "حساسیت در ربع فوقانی راست (RUQ) به دلیل کشیدگی کپسول کبد محتمل است."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "لمس لبه کبد و ضربان‌دار بودن آن (Pulsatile Liver) در نارسایی تری‌کوسپید شدید دیده می‌شود."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "کاربرد ندارد."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "بررسی اختلال هوشیاری ناشی از هیپوکسی یا کاهش برون‌ده قلبی."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "معمولاً نرمال است."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "ضعف عمومی (Asthenia) شایع است اما یافته فوکال عصبی نادر است."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "آستریکسی ممکن است در نارسایی کبدی یا هایپرکاپنیک دیده شود."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال است."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال است."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال است."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "تورم مفاصل در بیماری‌های بافت همبند (CTD) دیده می‌شود."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "تحلیل عضلات در موارد مزمن و کاکتیک."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "کاربرد کمی دارد."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "محدودیت حرکتی در اسکلرودرمی (سفتی پوست) مهم است."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "کاربرد کمی دارد."
       }
     }
@@ -574,55 +574,55 @@ PH_IDIOPATHIC_PAH_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "دایمر برای رد آمبولی حاد است. در بررسی PAH مزمن (برای رد CTEPH) دایمر کمک‌کننده نیست و باید از اسکن V/Q استفاده کرد."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "فقط در صورت شک به سل (TB) انجام می‌شود و تست روتین PAH نیست."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "این تست طلایی برای ارزیابی استرس دیواره بطن راست است. سطح آن با شدت بیماری و پروگنوز رابطه مستقیم دارد."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum analysis",
         "analysis": "در غیاب علائم عفونی، کاربردی ندارد."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "مربوط به آمفیزم (COPD) است و تست روتین برای IPAH نیست."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "تست HIV برای تمام بیماران با تشخیص جدید PAH توصیه می‌شود، زیرا HIV یکی از علل مهم و قابل درمان PAH است."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "ضروری است! بیماری‌های بافت همبند (مثل اسکلرودرمی) شایع‌ترین علت PAH همراه هستند و باید حتماً بررسی شوند."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "اولین قدم تصویربرداری است. بزرگی شریان‌های ریوی مرکزی و پاک بودن محیط ریه (Pruning) یافته‌های کلاسیک IPAH هستند."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "High-Resolution CT برای بررسی دقیق پارانشیم ریه و رد کردن بیماری‌های ریوی (گروه ۳) و همچنین بررسی عروق ریوی ضروری است."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "تست انتشار گازها (DLCO) در PAH کاهش می‌یابد اما در بیماری‌های پارانشیم ریه هم کم می‌شود. نرمال بودن حجم‌های ریوی همراه با کاهش DLCO الگوی کلاسیک بیماری عروقی ریه است."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "برای تشخیص آسم است و در PAH کاربرد ندارد."
       },
       "Spirometry": {
@@ -630,7 +630,7 @@ PH_IDIOPATHIC_PAH_DETAILED = {
         "analysis": "برای رد کردن بیماری‌های انسدادی (COPD) و محدودکننده ریه که علل شایع فشار خون ریوی هستند (گروه ۳) انجام می‌شود."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "برای اندازه‌گیری دقیق حجم‌های ریوی و رد کردن بیماری‌های محدودکننده (Restrictive) کاربرد دارد."
       }
     },
@@ -640,7 +640,7 @@ PH_IDIOPATHIC_PAH_DETAILED = {
         "analysis": "تست روتین نیست، مگر اینکه شک به توده یا بیماری‌های مجاری هوایی وجود داشته باشد."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Torachonthesis",
         "analysis": "فقط اگر افیوژن پلورال قابل توجه وجود داشته باشد انجام می‌شود، که در IPAH معمولاً کم‌حجم است و نیاز به تپ ندارد."
       }
     }
@@ -856,18 +856,18 @@ PH_IDIOPATHIC_PAH = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "true",
         "CRP": "false",
-        "VBG": { "pH": "false", "PCO2": "false", "HCO3": "false" },
-        "LFTs": { "ALT": "true", "AST": "true" }
+        "VBG": "false",
+        "LFTs": "true"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "true",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -884,17 +884,14 @@ PH_IDIOPATHIC_PAH = {
         "dlco": "false",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "false"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false" 
       }
     },
     "differential_diagnosis": {
@@ -1147,58 +1144,58 @@ PH_LUNG_DISEASE_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "ممکن است نرمال باشد، یا در صورت نارسایی شدید قلب راست کاهش یابد."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "معمولاً نرمال است."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی ناشی از هیپوکسی و مصرف برونکودیلاتورها (مثل سالبوتامول) شایع است."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه (تنفس سریع) علامت تلاش تنفسی برای جبران کمبود اکسیژن است."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "افت اشباع اکسیژن (Desaturation) به ویژه با فعالیت، نشانه اصلی بیماری پارانشیم ریه است."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "معمولاً هوشیار است، مگر در نارکوز CO2 شدید."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "اضطراب ناشی از تنگی نفس."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "آیا قفسه سینه بشکه‌ای (Barrel Chest) دارد؟ آیا لب‌ها را غنچه می‌کند (Pursed-lip breathing)؟ این‌ها نشانه‌های COPD هستند."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "معمولاً نشسته و خم شده به جلو (Tripod Position) برای استفاده بهتر از عضلات تنفسی."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "خواب‌آلودگی می‌تواند نشانه احتباس دی‌اکسید کربن باشد."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ادم اندام تحتانی نشانه نارسایی قلب راست است."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "استفاده از عضلات فرعی گردن هنگام تنفس."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "سیانوز مرکزی (کبودی لب و زبان) نشانه هیپوکسی شدید است."
         }
       }
@@ -1206,81 +1203,81 @@ PH_LUNG_DISEASE_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "پرخونی ملتحمه می‌تواند نشانه پلی‌سایتمی (غلظت خون) باشد."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "اتساع وریدهای گردن (JVD) مخصوصاً در بازدم، نشانه افزایش فشار داخل توراکس یا نارسایی قلب راست است."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "انحراف تراشه در فیبروز شدید یا پنوموتوراکس دیده می‌شود، اما یافته روتین نیست."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -1288,176 +1285,176 @@ PH_LUNG_DISEASE_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "استفاده از عضلات استرنوکلیدوماستوئید و بین‌دنده‌ای نشانه افزایش کار تنفس است."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "قفسه سینه بشکه‌ای (افزایش قطر قدامی-خلفی) در آمفیزم دیده می‌شود."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش قرینه انبساط قفسه سینه در بیماری‌های محدودکننده و انسدادی شدید."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "کاهش در آمفیزم (به دلیل هواگیری زیاد) و افزایش در پنومونی."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "صدای هیپررزونانس (توی خالی) در آمفیزم و COPD مشخصه است."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "کاهش صدای تنفسی در آمفیزم شایع است. بازدم طولانی (Prolonged Expiration) نشانه انسداد راه هوایی است."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "ویزینگ (خس‌خس) نشانه COPD/آسم و کراکل‌های ظریف (Fine crackles) در قاعده ریه نشانه فیبروز (ILD) است."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "افزایش فشار ورید ژوگولار نشانه نارسایی قلب راست است."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "لمس ضربان بطن راست در کنار جناغ (RV Heave) نشانه هیپرتروفی بطن راست ناشی از فشار بالای ریه است."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "ممکن است به دلیل آمفیزم و پرهوایی ریه، ضربان نوک قلب به سمت اپی‌گاستر جابجا شود یا اصلا لمس نشود."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "صدای دوم قلب (P2) بلند است. ممکن است صدای قلب در بیماران COPD به دلیل فاصله زیاد قلب از دیواره قفسه سینه، دور و ضعیف شنیده شود."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "سوفل نارسایی تری‌کوسپید (TR) در این بیماران شایع است."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "معمولاً نرمال است، مگر در موارد شدید."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "کلابینگ (چماقی شدن انگشتان) در COPD ناشایع است اما در فیبروز ریه (IPF) و برونشکتازی بسیار شایع است."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "ممکن است به دلیل کاهش برون‌ده قلبی سرد باشد."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "ادم محیطی نشانه کلاسیک کور-پولمونال (نارسایی قلب راست ثانویه به ریه) است."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "حرکت پارادوکس شکم (فرورفتن شکم در دم) نشانه خستگی دیافراگم و نارسایی تنفسی قریب‌الوقوع است."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "ممکن است کبد پایین‌تر از حد معمول لمس شود (نه به خاطر بزرگ شدن، بلکه به خاطر پایین رانده شدن توسط دیافراگم صاف شده در COPD)."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "لمس کبد پایین آمده."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "گیجی یا خواب‌آلودگی (Drowsiness) می‌تواند نشانه خطرناک احتباس CO2 (نارکوز) باشد."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "ضعف عمومی."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "آستریکسی (لرزش دست) در هایپرکاپنیک (CO2 بالا) دیده می‌شود."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "تحلیل عضلات (Sarcopenia) در COPD پیشرفته شایع است."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -1491,55 +1488,55 @@ PH_LUNG_DISEASE_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "دایمر برای رد آمبولی حاد است. در اینجا با بیماری مزمن ریه طرف هستیم. اگر شک به آمبولی مزمن (CTEPH) باشد، دایمر منفی ردکننده نیست."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "فقط در صورت شک به سل (TB) یا عفونت‌های مایکوباکتریایی انجام می‌شود."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "این «نالهِ قلب راست» است! وقتی بیماری ریوی فشار شریان ریه را بالا می‌برد، بطن راست تحت فشار قرار گرفته و BNP ترشح می‌کند. سطح آن پیش‌آگهی را مشخص می‌کند."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum analysis",
         "analysis": "آنالیز خلط برای تشخیص عفونت حاد (پنومونی) است، نه تشخیص علت زمینه‎ای فشار خون ریوی (مثل COPD یا فیبروز)."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "در بیماران جوان با آمفیزم یا کسانی که سابقه فامیلی دارند، برای تشخیص کمبود آلفا-۱ آنتی‌تریپسین (علت ژنتیکی COPD) چک نمی‌شود."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "معمولاً در PH ثانویه به بیماری ریوی (گروه ۳) چک نمی‌شود، مگر اینکه شک به بیماری زمینه‌ای دیگری (گروه ۱) وجود داشته باشد."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "در COPD خالص نیازی نیست، اما اگر شک به بیماری بافت همبند درگیرکننده ریه (مثل اسکلرودرمی با ILD) وجود داشته باشد، آنگاه لازم می‌شود. در اینجا اولویت ندارد."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "اولین و در دسترس‌ترین ابزار. پرهوایی ریه، صاف شدن دیافراگم (در COPD) یا نمای مشبک (در فیبروز) را نشان می‌دهد."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "HRCT استاندارد طلایی برای دیدن پارانشیم ریه است. میزان تخریب بافت ریه (آمفیزم یا فیبروز) را دقیقاً نشان می‌دهد و علت هیپوکسی را توجیه می‌کند."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "تست انتشار گاز (DLCO) در بیماری‌های عروقی و فیبروز ریه به شدت افت می‌کند. اگر DLCO خیلی پایین باشد اما حجم ریه نرمال، شک به بیماری عروقی بالا می‌رود."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "تست ساده‌ای برای آسم است و دقت کافی برای ارزیابی بیماری‌های پیچیده ریوی منجر به PH را ندارد."
       },
       "Spirometry": {
@@ -1547,7 +1544,7 @@ PH_LUNG_DISEASE_DETAILED = {
         "analysis": "حیاتی‌ترین تست! برای تشخیص COPD (الگوی انسدادی: کاهش FEV1/FVC) یا فیبروز (الگوی محدودکننده: کاهش FVC) ضروری است."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "برای اندازه‌گیری دقیق حجم‌های ریوی و هوای محبوس شده (Air Trapping) در COPD کاربرد دارد، اما معمولاً اسپیرومتری برای شروع کافی است."
       }
     },
@@ -1557,7 +1554,7 @@ PH_LUNG_DISEASE_DETAILED = {
         "analysis": "روش تهاجمی است و برای تشخیص اولیه PH کاربرد ندارد، مگر برای نمونه‌برداری از بافت در موارد مشکوک به تومور یا عفونت خاص."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Torachonthesis",
         "analysis": "در بیماری‌های مزمن ریوی معمولاً افیوژن پلورال نداریم. اگر باشد، باید علت دیگری (نارسایی قلب، بدخیمی) را جستجو کرد."
       }
     }
@@ -1768,18 +1765,18 @@ PH_LUNG_DISEASE = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "true",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -1796,17 +1793,14 @@ PH_LUNG_DISEASE = {
         "dlco": "false",
         "peak_flow": "false",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "false"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {

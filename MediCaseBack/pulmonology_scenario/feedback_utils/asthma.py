@@ -230,58 +230,58 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "نرمال."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "نرمال."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "نرمال (در حالت استراحت)."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "نرمال (در حالت استراحت)."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "نرمال."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "نرمال."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "نرمال. بیمار در حالت استراحت ظاهر کاملاً سالمی دارد."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نرمال."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ندارد."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "در حالت استراحت ندارد (اما در شرح حال ذکر شده)."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "ندارد."
         }
       }
@@ -289,81 +289,81 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "نرمال."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "نرمال."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نرمال."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "نرمال."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -371,176 +371,176 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "نرمال در حالت استراحت."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "نرمال."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "نرمال."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "نرمال."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "نرمال."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "**نکته مهم:** در آسم ورزشی، سمع ریه در حالت استراحت معمولاً کاملاً نرمال (Clear) است. ویزینگ فقط بعد از تست ورزش یا مانورهای تنفسی شنیده می‌شود."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "نرمال."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "نرمال."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "نرمال."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -856,18 +856,18 @@ ASTHMA_EXERCISE_INDUCED = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "false", "Hb": "true", "Plt": "false" },
+        "BMP": "true",
+        "CBC": "false",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "false", "PCO2": "false", "HCO3": "false" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "false",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -884,17 +884,14 @@ ASTHMA_EXERCISE_INDUCED = {
         "dlco": "false",
         "peak_flow": "true",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "true"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
@@ -1147,58 +1144,58 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "نرمال."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "نرمال."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "معمولاً نرمال است، مگر در حین حمله که تاکیکاردی خفیف دیده می‌شود."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "نرمال یا کمی افزایش یافته."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "نرمال (بالای ۹۷٪). در آسم خفیف، اکسیژن خون معمولاً افت نمی‌کند."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "نرمال."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "هوشیار و آرام، بدون دیسترس شدید."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "خوب. بیمار ممکن است کمی سرفه کند."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "نرمال (می‌تواند صاف دراز بکشد)."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ندارد."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "تنگی نفس خفیف یا متناوب."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "ندارد."
         }
       }
@@ -1206,81 +1203,81 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "ممکن است خط افقی روی بینی (Allergic Crease) ناشی از مالیدن مداوم بینی دیده شود."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "حساسیت سینوس‌ها در صورت سینوزیت آلرژیک."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "ممکن است پرخونی ملتحمه یا تیرگی زیر چشم (Allergic Shiners) وجود داشته باشد."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "ممکن است مایع پشت گوش (Effusion) ناشی از اختلال عملکرد شیپور استاش (در زمینه آلرژی) دیده شود."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "مخاط بینی رنگ‌پریده و متورم (Boggy Turbinates) و ترشحات شفاف، نشانه رینیت آلرژیک است."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "حساسیت."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "نمای سنگ‌فرشی (Cobblestoning) در ته حلق ناشی از ترشحات مزمن پشت حلق (Post-nasal drip) شایع است."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "نرمال."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -1288,176 +1285,176 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "معمولاً استفاده نمی‌شود (مگر در حین حمله)."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "نرمال."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "نرمال."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "نرمال."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "ممکن است نرمال باشد یا ویزینگ خفیف در انتهای بازدم شنیده شود."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "**ویزینگ (Wheezing):** صدای سوت‌مانند در بازدم، نشانه اصلی است. نکته مهم: در آسم خفیف، ممکن است در حالت استراحت ویزینگ شنیده نشود و فقط با بازدم اجباری (Forced Expiration) آشکار شود."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "نرمال."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "نرمال."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "نرمال."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "نرمال."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -1768,18 +1765,18 @@ ASTHMA_MILD_ALLERGIC = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false",
         "CRP": "false",
-        "VBG": { "pH": "false", "PCO2": "false", "HCO3": "false" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "false",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "false",
         "Sputum_AFB": "false",
         "BNP_NT_proBNP": "false",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": {
@@ -1796,17 +1793,14 @@ ASTHMA_MILD_ALLERGIC = {
         "dlco": "false",
         "peak_flow": "true",
         "Spirometry": {
-          "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" },
+          "Result": "true",
           "reversibility": "true"
         },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {
@@ -2059,58 +2053,58 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
   "physical_exam": {
     "vital_signs": {
       "BP": {
-        "question": "BP",
+        "question": "فشار خون(BP)",
         "analysis": "**پالس پارادوکس (Pulsus Paradoxus):** افت فشار سیستولیک بیش از ۱۰-۱۲ میلی‌متر جیوه در دم، نشان‌دهنده حمله بسیار شدید آسم و افزایش شدید فشار منفی داخل توراکس است."
       },
       "T": {
-        "question": "T",
+        "question": "دمای بدن(T)",
         "analysis": "معمولاً نرمال است، مگر عفونت وجود داشته باشد."
       },
       "PR": {
-        "question": "PR",
+        "question": "ضربان قلب(PR)",
         "analysis": "تاکیکاردی (>۱۱۰) نشانه شدت حمله و مصرف بتا-آگونیست‌هاست."
       },
       "RR": {
-        "question": "RR",
+        "question": "تعداد تنفس(RR)",
         "analysis": "تاکی‌پنه (>۳۰) نشانه دیسترس تنفسی است."
       },
       "SpO2": {
-        "question": "SpO2",
+        "question": "غلظت O2(SpO2)",
         "analysis": "در حملات شدید افت می‌کند. هدف درمان حفظ بالای ۹۳-۹۵٪ است."
       },
       "GCS": {
-        "question": "GCS",
+        "question": "سطح هوشیاری(GCS)",
         "analysis": "گیجی یا خواب‌آلودگی علامت خطرناک هیپوکسی شدید یا افزایش CO2 و نیاز به اینتوباسیون فوری است."
       }
     },
     "general_appearance": {
       "mood_and_behavior": {
-        "question": "mood_and_behavior",
+        "question": "مود و رفتار",
         "analysis": "بیمار بی‌قرار (Agitated) است و نمی‌تواند جملات کامل را بگوید (Speaking in phrases/words)."
       },
       "overall_appearance": {
-        "question": "overall_appearance",
+        "question": "ظاهر کلی",
         "analysis": "نشستن رو به جلو (Tripod) و تلاش تنفسی واضح."
       },
       "posture_and_position": {
-        "question": "posture_and_position",
+        "question": "پوزیشن و وضعیت بدن",
         "analysis": "ارتوپنه."
       },
       "level_of_consciousness": {
-        "question": "level_of_consciousness",
+        "question": "سطح هوشیاری",
         "analysis": "هشدار: سکوت و خواب‌آلودگی در بیمار آسمی نشانه خستگی تنفسی قریب‌الوقوع است."
       },
       "cardiopulmonary_and_circulatory_clues": {
         "edema": {
-          "question": "edema",
+          "question": "اِدم",
           "analysis": "ندارد."
         },
         "dyspnea": {
-          "question": "dyspnea",
+          "question": "تنگی نفس",
           "analysis": "شدید."
         },
         "cyanosis": {
-          "question": "cyanosis",
+          "question": "سیانوز",
           "analysis": "علامت دیررس و خطرناک."
         }
       }
@@ -2118,81 +2112,81 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
     "head_and_neck": {
       "head_and_face": {
         "symmetry_and_lesions": {
-          "question": "symmetry_and_lesions",
+          "question": "تقارن و ضایعات",
           "analysis": "نرمال."
         },
         "tenderness": {
-          "question": "tenderness",
+          "question": "Tenderness",
           "analysis": "حساسیت سینوس‌ها (سینوزیت)."
         }
       },
       "eyes": {
         "sclera_and_conjunctiva": {
-          "question": "sclera_and_conjunctiva",
+          "question": "صلبیه و ملتحمه",
           "analysis": "نرمال."
         },
         "pupils_reaction": {
-          "question": "pupils_reaction",
+          "question": "رفلکس مردمک‌ها",
           "analysis": "نرمال."
         },
         "extraocular_movements": {
-          "question": "extraocular_movements",
+          "question": "حرکت چشم‌های خارجی",
           "analysis": "نرمال."
         }
       },
       "ears": {
         "external_and_tenderness": {
-          "question": "external_and_tenderness",
+          "question": "حساسیت به لمس گوش خارجی",
           "analysis": "نرمال."
         },
         "eardrum_appearance": {
-          "question": "eardrum_appearance",
+          "question": "ظاهر پرده گوش",
           "analysis": "نرمال."
         }
       },
       "nose_and_sinuses": {
         "septum_and_discharge": {
-          "question": "septum_and_discharge",
+          "question": "سپتوم و ترشحات بینی",
           "analysis": "تورم شاخک‌های بینی و ترشحات شفاف در رینیت آلرژیک. پولیپ بینی هم باید بررسی شود."
         },
         "sinus_tenderness": {
-          "question": "sinus_tenderness",
+          "question": "حساسیت سینوسی",
           "analysis": "نرمال یا حساس."
         }
       },
       "mouth_and_pharynx": {
         "oral_mucosa_and_lesions": {
-          "question": "oral_mucosa_and_lesions",
+          "question": "دهان و ضایعات داخل دهان",
           "analysis": "نرمال."
         },
         "pharynx_and_tonsils": {
-          "question": "pharynx_and_tonsils",
+          "question": "حلق و لوزه‌ها",
           "analysis": "ترشحات پشت حلق (Post-nasal drip) که باعث تحریک سرفه می‌شود."
         }
       },
       "neck_and_lymphatics": {
         "inspection": {
-          "question": "inspection",
+          "question": "مشاهدات گردن",
           "analysis": "استفاده شدید از عضلات فرعی گردن (SCM) و فرو رفتن حفره بالای جناغ (Suprasternal retraction)."
         },
         "tracheal_position": {
-          "question": "tracheal_position",
+          "question": "موقعیت تراشه",
           "analysis": "نرمال. (باید پنوموتوراکس را رد کرد)."
         },
         "thyroid_gland": {
-          "question": "thyroid_gland",
+          "question": "غده تیروئید",
           "analysis": "نرمال."
         },
         "carotid_bruit": {
-          "question": "carotid_bruit",
+          "question": "صدای کاروتید",
           "analysis": "نرمال."
         },
         "lymph_nodes_size_consistency": {
-          "question": "lymph_nodes_size_consistency",
+          "question": "اندازه و همگنی گره‌های لنفاوی",
           "analysis": "نرمال."
         },
         "lymph_nodes_mobility_tenderness": {
-          "question": "lymph_nodes_mobility_tenderness",
+          "question": "حرکت و حساسیت گره‌های لنفاوی",
           "analysis": "نرمال."
         }
       }
@@ -2200,176 +2194,176 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
     "respiratory_system": {
       "inspection": {
         "accessory_muscles": {
-          "question": "accessory_muscles",
+          "question": "استفاده از عضلات کمکی",
           "analysis": "نشانه اصلی دیسترس تنفسی و انسداد شدید جریان هوا."
         },
         "chest_shape_and_symmetry": {
-          "question": "chest_shape_and_symmetry",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "ممکن است قفسه سینه پرهوا (Hyperinflated) به نظر برسد."
         }
       },
       "palpation": {
         "chest_expansion": {
-          "question": "chest_expansion",
+          "question": "گسترش قفسه سینه",
           "analysis": "کاهش یافته (به دلیل پرهوایی)."
         },
         "tactile_fremitus": {
-          "question": "tactile_fremitus",
+          "question": "Tactile Fremitus",
           "analysis": "معمولاً نرمال یا کاهش یافته."
         }
       },
       "percussion": {
-        "question": "percussion",
+        "question": "دق قفسه سینه",
         "analysis": "هیپررزونانس (به دلیل حبس هوا)."
       },
       "auscultation": {
         "breath_sounds_intensity": {
-          "question": "breath_sounds_intensity",
+          "question": "شدت صداهای تنفسی",
           "analysis": "**ویزینگ (Wheezing) منتشر:** معمولاً بازدمی است ولی در موارد شدید دمی هم می‌شود. \n**هشدار (Silent Chest):** اگر بیمار کبود و خواب‌آلود است و ویزینگ شنیده نمی‌شود، یعنی انسداد آنقدر شدید است که هوا جریان ندارد. این علامت نارسایی تنفسی قریب‌الوقوع است."
         },
         "adventitious_sounds": {
-          "question": "adventitious_sounds",
+          "question": "صداهای اضافی",
           "analysis": "ویزینگ پلی‌فونیک منتشر."
         }
       }
     },
     "cardiovascular_system": {
       "JVP_assessment": {
-        "question": "JVP_assessment",
+        "question": "فشار ورید ژوگولار",
         "analysis": "ممکن است در بازدم برجسته شود."
       },
       "palpation": {
         "precordial_palpation_heave_thrill": {
-          "question": "precordial_palpation_heave_thrill",
+          "question": "لمس قلب و بررسی Heave Thrill",
           "analysis": "نرمال."
         },
         "pmi_assessment": {
-          "question": "pmi_assessment",
+          "question": "بررسی PMI",
           "analysis": "نرمال."
         }
       },
       "auscultation": {
         "heart_sounds_s1_s2": {
-          "question": "heart_sounds_s1_s2",
+          "question": "صدای قلب S1 و S2",
           "analysis": "تاکیکاردی."
         },
         "extra_sounds_s3_s4_murmurs": {
-          "question": "extra_sounds_s3_s4_murmurs",
+          "question": "صدای اضافی S3 و S4",
           "analysis": "نرمال."
         }
       },
       "2_pulses_and_extremities": {
         "peripheral_pulses_symmetry_and_quality": {
-          "question": "peripheral_pulses_symmetry_and_quality",
+          "question": "کیفیت و تقارن نبض‌های محیطی",
           "analysis": "بررسی پالس پارادوکس."
         },
         "extremities_color_and_trophic_changes": {
-          "question": "extremities_color_and_trophic_changes",
+          "question": "رنگ و تغییر شکل اندام‌ها",
           "analysis": "نرمال."
         },
         "extremities_temperature_and_cap_refill": {
-          "question": "extremities_temperature_and_cap_refill",
+          "question": "دمای اندام‌ها و بازگشتی مویرگی",
           "analysis": "نرمال."
         },
         "extremities_edema": {
-          "question": "extremities_edema",
+          "question": "اِدم اندام‌ها",
           "analysis": "ندارد."
         }
       }
     },
     "abdominal_system": {
       "inspection": {
-        "question": "inspection",
+        "question": "مشاهده شکم",
         "analysis": "نرمال."
       },
       "auscultation": {
         "bowel_sounds": {
-          "question": "bowel_sounds",
+          "question": "صدای روده‌ها",
           "analysis": "نرمال."
         },
         "vascular_bruits": {
-          "question": "vascular_bruits",
+          "question": "برویی عروقی",
           "analysis": "نرمال."
         }
       },
       "percussion": {
         "general": {
-          "question": "general",
+          "question": "دق کلی شکم",
           "analysis": "نرمال."
         },
         "organ_borders": {
-          "question": "organ_borders",
+          "question": "حدود اندام‌ها",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "superficial_tenderness": {
-          "question": "superficial_tenderness",
+          "question": "Tenderness سطحی",
           "analysis": "نرمال."
         },
         "deep_masses_and_organs": {
-          "question": "deep_masses_and_organs",
+          "question": "ارگان ها و توده‌های عمقی",
           "analysis": "نرمال."
         }
       },
       "peritoneal_signs": {
-        "question": "peritoneal_signs",
+        "question": "علائم صفاقی",
         "analysis": "نرمال."
       }
     },
     "neurological": {
       "mental_status_and_LOC": {
-        "question": "mental_status_and_LOC",
+        "question": "وضعیت ذهنی و سطح هوشیاری",
         "analysis": "نرمال یا مضطرب."
       },
       "cranial_nerves": {
-        "question": "cranial_nerves",
+        "question": "اعصاب مغزی",
         "analysis": "نرمال."
       },
       "motor_strength_and_tone": {
-        "question": "motor_strength_and_tone",
+        "question": "قدرت حرکتی و تونوس",
         "analysis": "نرمال."
       },
       "involuntary_movements": {
-        "question": "involuntary_movements",
+        "question": "حرکات غیرارادی",
         "analysis": "نرمال."
       },
       "sensory_light_touch_and_pain": {
-        "question": "sensory_light_touch_and_pain",
+        "question": "لمس سطحی و درد",
         "analysis": "نرمال."
       },
       "deep_tendon_reflexes": {
-        "question": "deep_tendon_reflexes",
+        "question": "رفلکس های تاندونی عمیق",
         "analysis": "نرمال."
       },
       "coordination_and_gait": {
-        "question": "coordination_and_gait",
+        "question": "هماهنگی و Gait",
         "analysis": "نرمال."
       }
     },
     "musculoskeletal_system": {
       "inspection": {
         "joints": {
-          "question": "joints",
+          "question": "مفاصل",
           "analysis": "نرمال."
         },
         "muscles": {
-          "question": "muscles",
+          "question": "عضلات",
           "analysis": "نرمال."
         }
       },
       "palpation": {
         "tenderness_and_crepitus": {
-          "question": "tenderness_and_crepitus",
+          "question": "Tenderness and Crepitus",
           "analysis": "نرمال."
         }
       },
       "range_of_motion_active_passive": {
-        "question": "range_of_motion_active_passive",
+        "question": "محدوده حرکتی فعال و غیر فعال",
         "analysis": "نرمال."
       },
       "stability_and_function": {
-        "question": "stability_and_function",
+        "question": "ثبات و عملکرد",
         "analysis": "نرمال."
       }
     }
@@ -2600,15 +2594,15 @@ ASTHMA_SEVERE_UNCONTROLLED = {
     },
     "paraclinic": {
       "basic_blood_tests": {
-        "BMP": { "Na": "true", "BUN": "true", "Cr": "true" },
-        "CBC": { "WBC": "true", "Hb": "true", "Plt": "true" },
+        "BMP": "true",
+        "CBC": "true",
         "ESR": "false", "CRP": "true",
-        "VBG": { "pH": "true", "PCO2": "true", "HCO3": "true" },
-        "LFTs": { "ALT": "false", "AST": "false" }
+        "VBG": "true",
+        "LFTs": "false"
       },
       "specialized_lung_tests": {
         "D_dimer": "true", "Sputum_AFB": "false", "BNP_NT_proBNP": "true",
-        "Sputum_analysis": { "Gram_Stain": "false", "Sample_Quality": "false" },
+        "Sputum_analysis": "false",
         "a1_antitrypsin_level": "false"
       },
       "immunity_and_serology": { "HIV_test": "false", "Autoimmune_pannel_ANA_ANCA": "false" },
@@ -2616,15 +2610,12 @@ ASTHMA_SEVERE_UNCONTROLLED = {
       "advanced_imaging": { "Chest_CT_CTPA": { "Lung_Parenchyma_and_Pleura": "false" } },
       "functional_tests": {
         "dlco": "false", "peak_flow": "true",
-        "Spirometry": { "Result": { "FEV1": "true", "FVC": "true", "FEV1/FVC": "true" }, "reversibility": "true" },
+        "Spirometry": { "Result": "true", "reversibility": "true" },
         "plethysmography": "false"
       },
       "procedures": {
         "Bronchoscopy": "false",
-        "torachonthesis": {
-          "Serum": { "Protein": "false", "LDH": "false", "Albumin": "false" },
-          "Fluid": { "Protein": "false", "LDH": "false", "Albumin": "false" }
-        }
+        "torachonthesis": "false"
       }
     },
     "differential_diagnosis": {

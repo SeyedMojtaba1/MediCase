@@ -375,7 +375,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
           "analysis": "معمولاً استفاده نمی‌شود."
         },
         "chest_shape_and_symmetry": {
-          "question": "شکل و تقار گردن",
+          "question": "شکل و تقارن قفسه سینه",
           "analysis": "نرمال."
         }
       },
@@ -385,7 +385,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
           "analysis": "نرمال."
         },
         "tactile_fremitus": {
-          "question": "فریمیوس لمسی",
+          "question": "Tactile Fremitus",
           "analysis": "معمولاً نرمال است. چون درگیری ریه به صورت بینابینی (Interstitial) و تکه‌تکه (Patchy) است و تراکم یکدست (Consolidation) نداریم."
         }
       },
