@@ -3,11 +3,11 @@ FROM docker.arvancloud.ir/node:20-alpine AS build
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm config set registry https://registry.npmjs.org/
+RUN npm config set registry https://mirrors.kubarcloud.com/npm/
 RUN npm install
 
 COPY . .
-RUN npm_config_registry=https://registry.npmjs.org/ npm run build --configuration production
+RUN npm run build --configuration production
 
 FROM docker.arvancloud.ir/nginx:stable-perl
 
