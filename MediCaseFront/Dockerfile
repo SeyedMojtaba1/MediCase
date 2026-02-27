@@ -7,7 +7,7 @@ RUN npm config set registry https://mirrors.kubarcloud.com/npm/
 RUN npm install
 
 COPY . .
-RUN npm run build --configuration production
+RUN npm_config_registry=https://mirrors.kubarcloud.com/npm/ npm run build --configuration production
 
 FROM docker.arvancloud.ir/nginx:stable-perl
 
