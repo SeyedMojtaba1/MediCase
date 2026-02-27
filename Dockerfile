@@ -13,7 +13,7 @@ ENV PATH="/venv/bin:$PATH"
 
 COPY requirements.txt .
 RUN pip install --upgrade pip
-RUN pip install -i https://mirror-pypi.runflare.com/ -r requirements.txt
+RUN pip install -i https://mirror-npm.runflare.com/ -r requirements.txt
 
 COPY MediCaseBack/ .
 
