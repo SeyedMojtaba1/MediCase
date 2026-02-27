@@ -1,5 +1,8 @@
 services:
   nginx:
+    build:
+      context: ./MediCaseFront
+      dockerfile: Dockerfile
     image: docker.arvancloud.ir/nginx:stable-perl
     container_name: reverse_proxy
     ports:
