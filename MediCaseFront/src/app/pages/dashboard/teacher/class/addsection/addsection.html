@@ -1,0 +1,50 @@
+<p-dialog
+  (onHide)="onHide()"
+  (onShow)="onDialogShow()"
+  [(visible)]="visible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+  header="ایجاد کلاس"
+>
+  <span class="p-text-secondary text-sm block mb-8">جهت ایجاد کلاس درس، اطلاعات خواسته شده را به درستی تکمیل کنید</span>
+  <div class="flex items-center gap-4 justify-between mb-4 w-full">
+    <label class="font-semibold " for="username">نام کلاس</label>
+    <input [(ngModel)]="data.name" autocomplete="off" class=" w-60" id="username" pInputText/>
+  </div>
+  <div class="flex items-center gap-4 mb-8 w-full justify-between">
+    <label class="font-semibold " for="email">رشته</label>
+    <p-select [(ngModel)]="data.subject" [options]="subjectOptions" class="w-60 " optionLabel="persian_name"
+              optionValue="english_name"
+              placeholder="انتخاب رشته"/>
+  </div>
+  <div class="flex items-center gap-4 mb-8  w-full justify-between">
+    <label class="font-semibold " for="email">ترم تحصیلی</label>
+    <p-select [(ngModel)]="data.semester_code" [options]="semesters" class="w-60 " optionLabel="code" optionValue="code"
+              placeholder="انتخاب ترم"/>
+  </div>
+
+  <div class="flex items-center gap-4 mb-8  w-full justify-between">
+    <label class="font-semibold " for="email">تاریخ شروع کلاس</label>
+    <input [(ngModel)]="this.start_date" class="font-Vazirmatn w-60 " data-jdp pInputText/>
+
+  </div>
+
+  <div class="flex items-center gap-4 mb-8  w-full justify-between">
+    <label class="font-semibold" for="email">تاریخ پایان کلاس</label>
+    <input [(ngModel)]="this.end_date" class="font-Vazirmatn w-60 " data-jdp pInputText/>
+
+  </div>
+
+  <div class="flex items-center gap-4 mb-8 w-full justify-between">
+    <label class="font-semibold" for="desc">توضیحات</label>
+    <textarea [(ngModel)]="data.description" class="w-60" id="desc" pInputText placeholder="توضیحات کلاس"></textarea>
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <p-button (click)="visible = false" label="بازگشت" severity="secondary"/>
+    <p-button (click)="submitClick()" label="ایجاد"/>
+  </div>
+
+
+</p-dialog>

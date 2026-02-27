@@ -1,0 +1,22 @@
+.progress-wrapper {
+  width: 100%;
+}
+
+
+.video-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.video-bg video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover; /* کل صفحه رو پوشش بده بدون بهم خوردن نسبت تصویر */
+}
+
+
+.s {
+  z-index: 15;
+}

@@ -1,0 +1,69 @@
+<app-card>
+  <div class="flex flex-row items-center justify-between">
+    <p class="text-lg font-bold">
+      @if (!subject && mode) {
+        برترین های {{ mode }} روز گذشته
+      } @else if (mode && subject) {
+        برترین های {{ mode }} روز گذشته در {{ subject }}
+      } @else if (!mode && subject) {
+        برترین های {{ subject }}
+      } @else {
+        برترین ها
+      }
+    </p>
+    <p class="text-gray-500 text-xs">
+      مشاهده همه
+    </p>
+  </div>
+
+
+  <div class="w-full bg-[#DAEAEA] rounded-xl p-4">
+    <table class="w-full text-center border-separate border-spacing-y-2">
+      <thead>
+      <tr class="text-gray-600 text-sm">
+        <th>#</th>
+        <th>نام</th>
+        <th>مدیریت موفق بیمار</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <!-- نفرات برتر -->
+        @for (p of topPlayers; track p) {
+          <tr
+            [ngClass]="{
+            'bg-[#EAE28C]': p.rank === 1,
+            'bg-[#C4D4E2]': p.rank === 2,
+            'bg-[#C8A98E]': p.rank === 3,
+            'bg-[#6DC6E6]': p.rank > 3,
+          }"
+            class="rounded-lg text-black p-3 font-medium">
+            <td class="rounded-r-lg">{{ p.rank }}</td>
+            <td>{{ p.name }}</td>
+            <td class="rounded-l-lg">{{ p.score }}</td>
+          </tr>
+        }
+
+      <!-- سه نقطه جداکننده -->
+      <tr>
+        <td class="text-gray-500" colspan="3">...</td>
+      </tr>
+
+      <!-- ردیف کاربر خودت -->
+        @if (myPlayer) {
+          <tr class="bg-[#6DC6E6] font-semibold rounded-lg">
+            <td class="rounded-r-lg">{{ myPlayer.rank }}</td>
+            <td>{{ myPlayer.name }}</td>
+            <td class="rounded-l-lg">{{ myPlayer.score }}</td>
+          </tr>
+        }
+
+
+      <tr>
+        <td class="text-gray-500" colspan="3">...</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</app-card>

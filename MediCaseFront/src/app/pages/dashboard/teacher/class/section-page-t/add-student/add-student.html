@@ -1,0 +1,21 @@
+<p-dialog
+  (onHide)="onHide()"
+  [(visible)]="visible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+  header="افزودن دانشجو"
+>
+  <div class="flex items-center gap-4 justify-between mb-4 w-full">
+    <label class="font-semibold " for="username">شماره دانشجویی</label>
+    <input [(ngModel)]="this.code" autocomplete="off" class=" w-60" id="username" pInputText/>
+  </div>
+
+
+  <div class="flex justify-end gap-2">
+    <p-button (click)="visible = false" label="بازگشت" severity="secondary"/>
+    <p-button (click)="Confirm()" label="افزودن"/>
+  </div>
+
+
+</p-dialog>

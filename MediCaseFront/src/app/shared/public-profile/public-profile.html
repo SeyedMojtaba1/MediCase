@@ -1,0 +1,51 @@
+<div class="w-full flex flex-col gap-10 p-10">
+
+  <!--  بخش هدر-->
+  <app-dash-nav-t [welcome]="false" title="پروفایل کاربر مدیکیس"></app-dash-nav-t>
+
+
+  <!-- Header Cover -->
+  <div class="w-full h-50 bg-cover bg-center rounded-2xl"
+       style="background-image: url('https://www.psyoto.com/wp-content/uploads/2023/09/remover-banner-right.webp');"></div>
+
+  <!-- Profile Section -->
+  <div class=" w-full mx-auto -mt-20 p-4">
+    <div class="bg-white flex flex-col gap-5 p-5 rounded-xl">
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <!-- Profile Image -->
+        <img
+          alt="profile image"
+          class="w-40 h-40 rounded-full shadow-lg object-cover border-4 border-white -mt-30"
+          src="{{ user.profile_image }}"
+        />
+
+        <!-- Info -->
+        <div class="flex-1">
+          <h1 class="text-2xl font-bold">{{ user.first_name }} {{ user.last_name }}</h1>
+          <p class="text-gray-600 mt-1">دانشجوی {{ user.major }}</p>
+
+          <div class="flex items-center gap-5 text-gray-500 text-sm mt-2 flex-wrap">
+            <span class="flex flex-row items-center gap-2">
+               <i class="pi pi-user"></i>
+              <p>{{ user.username }}</p>
+            </span>
+            <span class="flex flex-row items-center gap-2">
+               <i class="pi pi-id-card"></i>
+              <p>{{ user.personal_number }}</p>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p-progress-bar [style]="{ height: '6px' }" mode="indeterminate"></p-progress-bar>
+
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+<!--<button (click)="fireConfetti()">پخش افکت موفقیت 🎉</button>-->
