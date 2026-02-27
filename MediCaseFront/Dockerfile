@@ -11,6 +11,5 @@ RUN npx ng build --configuration=production
 
 FROM docker.arvancloud.ir/nginx:stable-perl
 
-COPY --from=build /app/dist/medi-case-front/browser /usr/share/nginx/html
-
+COPY --from=build /app/dist/MediCaseFront/browser /usr/share/nginx/html
 EXPOSE 80
