@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-1">
+  @for (item of menu; track item) {
+    <a
+      [routerLink]="item.link"
+      class="group w-full text-[#148591]"
+      routerLinkActive="active-route text-white bg-gradient-to-l from-[#148691] to-[#216067] rounded-full"
+      [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+    >
+      <div
+        class="p-5 py-3 rounded-xl w-full  cursor-pointer transition-all duration-300"
+      >
+        <div class="flex flex-row justify-start gap-7 items-center">
+          <img
+            [src]="item.image"
+            class="h-8 transition-all duration-300
+                   group-[.active-route]:filter group-[.active-route]:brightness-0 group-[.active-route]:saturate-0 group-[.active-route]:invert"
+          />
+          <p>{{ item.name }}</p>
+        </div>
+      </div>
+    </a>
+  }
+</div>

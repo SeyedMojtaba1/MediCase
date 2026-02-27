@@ -1,0 +1,11 @@
+<app-card [ngClass]="{ 'opacity-50': active }">
+  <img [routerLink]="'/dashboard/s/hospital/intro/'+sub.english_name" [src]="sub.subject_image"
+       class="cursor-pointer rounded-lg">
+
+  <p [routerLink]="'/dashboard/s/hospital/intro/'+sub.english_name"
+     class="text-lg px-5 cursor-pointer">{{ sub.persian_name }} </p>
+
+
+  <p class="text-gray-500 text-justify font-light text-sm px-5">{{ sub.description.slice(0, 250) + ' ...' }}</p>
+
+</app-card>

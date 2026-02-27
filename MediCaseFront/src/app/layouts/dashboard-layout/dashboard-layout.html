@@ -1,0 +1,20 @@
+<div class="flex flex-row h-screen overflow-hidden">
+  <!-- سایدبار -->
+  <div class="w-1/5 h-full overflow-y-auto p-10 flex flex-col justify-start gap-5 border-l-2 border-l-gray-400/30">
+    <div class="flex flex-col gap-5 items-center">
+      <img [src]="APP_CONFIG.olomURL" alt="logo" class="h-20 w-auto object-contain">
+      <img [src]="APP_CONFIG.logoURL" alt="logo" class="h-15 object-contain">
+    </div>
+
+    @if (isTeacher) {
+      <app-t-side-bar></app-t-side-bar>
+    } @else {
+      <app-s-side-bar></app-s-side-bar>
+    }
+  </div>
+
+  <!-- محتوای اصلی -->
+  <div class="w-4/5 h-full overflow-y-auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="w-full flex flex-col gap-10 p-10">
+
+  <app-dash-nav [welcome]="false" title="بیمارستان"></app-dash-nav>
+
+  <p class="text-gray-500 text-sm text-justify">
+    اینجا بیمارستان مدیکیس است؛ جایی که بیماران گوناگون در انتظار رسیدگی و درمان هستند. هر بخش، ماجرای مخصوص به خود را
+    دارد و هر بیماری، چالشی برای مهارت و دانش شماست.
+
+    با انتخاب درس موردنظر، وارد بخش مربوطه شوید و روند درمان را آغاز کنید. در این مسیر، با موقعیت‌های متنوع روبه‌رو
+    می‌شوید، مهارت‌های خود را می‌سنجید و قدم‌به‌قدم به بهبود بیماران کمک می‌کنید.
+  </p>
+
+  <div class="grid grid-cols-3 gap-10 items-stretch">
+    @for (sub of subjects; track sub) {
+      <app-hospital-card [active]="!hasAccess(sub)" [sub]="sub" class="h-full"></app-hospital-card>
+    }
+  </div>
+</div>

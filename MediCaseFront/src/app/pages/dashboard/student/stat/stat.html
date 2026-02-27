@@ -1,0 +1,70 @@
+<div class="w-full flex flex-col gap-10 p-10">
+
+  <app-dash-nav [welcome]="false" title="گزارش عملکرد"></app-dash-nav>
+
+  <div class="w-full flex flex-row justify-between px-10 text-gray-400 text-sm items-center">
+    <p>{{ data?.length }} نتیجه یافت شد</p>
+    <app-action (click)="createScenrio()" icon="/images/svg/add-large-fill.svg" text="پذیرش بیمار"></app-action>
+  </div>
+
+  <app-card>
+    <table class="w-full text-sm text-center text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase">
+      <tr>
+        <th class="px-6 py-3" scope="col">#</th>
+        <th class="px-6 py-3" scope="col">کد پیگیری</th>
+        <th class="px-6 py-3" scope="col">وضعیت</th>
+        <th class="px-6 py-3" scope="col">عملیات</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (a of data; track a; let i = $index) {
+          <tr class="border-b border-b-black/30 hover:bg-white/50">
+            <td class="px-6 py-4 font-medium text-gray-900">{{ i + 1 }}</td>
+
+            <td class="px-6 py-4 font-mono">{{ a.tracking_code }}</td>
+
+            <td class="px-6 py-4">
+              @if (a.done) {
+                <span class="flex items-center justify-center text-green-600">
+                <span class="w-2 h-2 bg-green-600 rounded-full ml-2"></span>
+                انجام شده
+              </span>
+              } @else {
+                <span class="flex items-center justify-center text-amber-600">
+                <span class="w-2 h-2 bg-amber-600 rounded-full ml-2"></span>
+                در انتظار ویزیت
+              </span>
+              }
+            </td>
+
+            <td class="px-6 py-4">
+              <div class="flex justify-center items-center">
+                @if (a.done) {
+                  @let feedbackCode = getFeedbackCode(a.tracking_code);
+
+                  @if (feedbackCode) {
+                    <app-action
+                      class="w-fit"
+                      text="مشاهده گزارش"
+                      [url]="'/report/' + feedbackCode">
+                    </app-action>
+                  } @else {
+                    <span class="text-xs text-gray-400 italic">در حال تولید گزارش...</span>
+                  }
+
+                } @else {
+                  <app-action
+                    class="w-fit"
+                    text="ویزیت بیمار"
+                    [url]="'/scenario/' + a.tracking_code">
+                  </app-action>
+                }
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </app-card>
+</div>

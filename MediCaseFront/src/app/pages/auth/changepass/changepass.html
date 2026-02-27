@@ -1,0 +1,55 @@
+<div class="absolute inset-0 min-w-full min-h-full z-0">
+  <img class="w-full h-full object-cover opacity-50" src="images/jpg/bg.png"/>
+</div>
+
+<div class="relative flex flex-col items-center justify-center min-h-screen">
+  <div class="flex flex-row items-center justify-center z-10 w-200 h-130 rounded-2xl bg-white gap-20 p-20 shadow-xl">
+    <div class="flex flex-col gap-5 w-2/3 items-center">
+
+      <img [src]="APP_CONFIG.logoURL" class="w-1/2">
+
+      <div class="self-start flex flex-col gap-5 w-full">
+        <p class="text-sm text-[#148591]">تنظیم رمز عبور جدید</p>
+
+        <!-- ورودی نام کاربری -->
+        <div class="flex flex-col gap-2">
+          <label class=" text-gray-500 text-xs" for="username">رمز عبور</label>
+          <p-password [(ngModel)]="password" [feedback]="false" autocomplete="off" inputStyleClass="w-full"
+                      toggleMask="true"/>
+        </div>
+
+
+        <div class="flex flex-col gap-2">
+          <label class=" text-gray-500 text-xs" for="username">تکرار رمز عبور</label>
+          <p-password [(ngModel)]="verifypass" [feedback]="false" autocomplete="off" inputStyleClass="w-full"
+                      toggleMask="true"/>
+        </div>
+
+
+        <button
+          (click)="verifyCode()"
+          [class]="canVerify() ?
+                   'w-full text-center bg-gradient-to-l from-[#148691] to-[#216067] px-5 py-3 rounded-md text-white transition-all duration-300 flex items-center justify-center gap-2' :
+                   'w-full text-center bg-gray-400 px-5 py-3 rounded-md text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-not-allowed'"
+          [disabled]="!canVerify() || verifying()"
+          class="h-12 cursor-pointer">
+
+          @if (!verifying()) {
+            تایید کد
+          } @else {
+            <i class="pi pi-spin pi-spinner text-white text-sm"></i>
+          }
+        </button>
+
+
+        <!-- بازگشت -->
+        <div class="flex flex-row gap-3 mt-5">
+          <p class="text-xs cursor-pointer text-[#148591] underline" routerLink="/login">بازگشت</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

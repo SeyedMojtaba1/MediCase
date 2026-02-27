@@ -1,0 +1,26 @@
+<p-dialog
+  (onHide)="onHide()"
+  [(visible)]="visible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+  header="تغییر نمایه"
+>
+  <span class="p-text-secondary text-sm block mb-8">لطفا تصویری با نسبت 1*1 انتخاب کنید</span>
+
+  <p-fileupload
+    #fu
+    (uploadHandler)="onUpload($event)"
+    [customUpload]="true"
+    accept="image/*"
+    chooseLabel="انتخاب عکس"
+    mode="basic"
+    size="small"
+  ></p-fileupload>
+
+  <p-button (onClick)="fu.upload()" label="تایید" styleClass="mt-3"></p-button>
+
+
+</p-dialog>
+
+

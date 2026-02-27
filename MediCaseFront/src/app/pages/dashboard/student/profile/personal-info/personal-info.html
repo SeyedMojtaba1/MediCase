@@ -1,0 +1,64 @@
+<app-card class="w-full">
+
+  <div class="w-full justify-between items-center flex flex-row">
+    <p class="font-bold text-lg">اطلاعات کاربری</p>
+
+    <div class="flex flex-row items-center gap-5 text-xs ">
+      <p class=" cursor-pointer text-red-600">گزارش اشکال</p>
+      <p class=" cursor-pointer text-gray-500 ">ویرایش اطلاعات ورود</p>
+    </div>
+  </div>
+
+
+  <div class="grid-cols-2 grid gap-10 p-3">
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="firstname"> نام</label>
+      <input [value]="user.first_name" disabled id="firstname" pInputText pSize="small"/>
+    </div>
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="lastname"> نام خانوادگی</label>
+      <input [value]="user.last_name" disabled id="lastname" pInputText pSize="small"/>
+    </div>
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="ncode">کد ملی</label>
+      <input disabled id="ncode" pInputText pSize="small" value="12341624312"/>
+    </div>
+
+
+    <!--      نام-->
+    <div class="flex flex-col font-light text-sm gap-1">
+      <label class="text-xs font-light text-gray-400" for="username">نام کاربری</label>
+      <input [value]="user.username" disabled id="username" pInputText pSize="small"/>
+    </div>
+
+
+  </div>
+
+
+  <div class="grid grid-cols-2 gap-10 p-3">
+    <div class="flex flex-col gap-1">
+      <label class="text-gray-400 text-xs font-light">شماره موبایل</label>
+      <p-inputgroup>
+        <input [placeholder]="user.phone_number" disabled pInputText pSize="small"/>
+        <p-button label="تایید شده" severity="success" size="small"/>
+      </p-inputgroup>
+    </div>
+
+
+    <div class="flex flex-col gap-1">
+      <label class="text-gray-400 text-xs font-light">ایمیل</label>
+      <p-inputgroup>
+        <input [placeholder]="user.email" disabled pInputText pSize="small"/>
+        <p-button label=" تایید شده " severity="success" size="small"/>
+      </p-inputgroup>
+    </div>
+  </div>
+</app-card>
