@@ -237,6 +237,7 @@ export class Scenario {
 
     console.log("Log Saved:", this.log);
     this.showDifferentialDiagnosisModal = false;
+    console.log(this.log);
     this.master.pulmonologyScenarioFeedbackCreate(this.trackingCode, this.log).subscribe({
       next: data => {
         this.router.navigateByUrl('/dashboard/s/stat');
@@ -371,23 +372,26 @@ export class Scenario {
       this.playClick();
       return;
     }
+
     this.activeSection = section.id;
 
-    // نمایش مدیا بر اساس بخش انتخاب شده
+    // ۱. پیدا کردن مدیا بر اساس تنظیمات assets.ts
     this.setSectionMedia(section);
 
-    if (section.id === 1 || section.id === 4) {
-      // بخش 1 پروفایل و بخش 4 پاراکلینیک است
-      // در هر دو حالت، عکس پیش‌فرض کاراکتر انتخابی را نشان بده
-      this.mediaType = 'image';
-      this.mediaUrl = this.defaultCharacterImage;
-      this.changeDetectorRef.detectChanges()
+    // ۲. فقط اگر مدیایی پیدا نشد یا برای اطمینان از بخش‌های خاص، مقداردهی شود
+    // این بلوک را حذف یا اصلاح کنید تا ویدیوهای پروفایل (بخش ۱) حذف نشوند
+    if (!this.mediaUrl || this.mediaUrl === 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg') {
+      if (section.id === 1 || section.id === 4) {
+        this.mediaType = 'image';
+        this.mediaUrl = this.defaultCharacterImage;
+      }
     }
 
+    this.changeDetectorRef.detectChanges();
 
-    // اضافه کردن این بخش برای کنترل صدای ویدیوهای جدید
+    // کنترل صدای ویدیو
     setTimeout(() => {
-      if (this.videoElementRef && this.videoElementRef.nativeElement) {
+      if (this.videoElementRef?.nativeElement) {
         this.videoElementRef.nativeElement.muted = this.isMuted();
       }
     }, 100);
@@ -504,49 +508,47 @@ export class Scenario {
   }
 
   buildQuestions() {
-    const history = this.questionText["history_taking"]; // سؤالات (عنوان‌ها)
-    const answers = this.data.history_taking;            // پاسخ‌ها
-    const logs = this.log.history_taking;                // زمان مشاهده
+    const history = this.questionText["history_taking"];
+    const answers = this.data.history_taking;
+    const logs = this.log.history_taking;
 
-    this.questionsBySection = {}; // initialize
+    this.questionsBySection = {};
 
     for (const sectionName in history) {
-
       const sectionQuestions = history[sectionName];
       const aiSection = answers[sectionName];
-      const logSection = logs[sectionName];
+      const logSection = logs ? logs[sectionName] : null;
 
       this.questionsBySection[sectionName] = [];
 
       for (const key in sectionQuestions) {
         const title = sectionQuestions[key];
         const answer = aiSection ? aiSection[key] : '';
-        const log = logSection ? logSection[key] : 'False'; // 👈 استخراج لاگ برای سطح 2
+        const logValue = logSection ? logSection[key] : 'False';
 
         if (typeof answer === 'object' && answer !== null && !Array.isArray(answer)) {
-          // حالت تو در تو (مثل question1)
           for (const subKey in answer) {
             const subTitle = sectionQuestions[key][subKey];
-            // 👈 استخراج لاگ برای سطح 3
-            const subLog = (typeof log === 'object' && log !== null) ? log[subKey] : 'False';
+            // بررسی اینکه آیا لاگ هم ساختار درختی دارد یا در فایل جدید تخت شده است
+            const subLog = (typeof logValue === 'object' && logValue !== null)
+              ? logValue[subKey]
+              : logValue;
 
             this.questionsBySection[sectionName].push({
               id: `${key}-${subKey}`,
               title: subTitle,
               answer: answer[subKey],
-              answer_time: subLog, // استفاده از لاگ سطح 3
+              answer_time: subLog || 'False',
               open: false,
               visible: true
             });
           }
-
         } else {
-          // حالت تک سطحی (مثل question6 در Past Medical History)
           this.questionsBySection[sectionName].push({
             id: key,
             title: title,
             answer: Array.isArray(answer) ? answer.join(' | ') : answer,
-            answer_time: log, // استفاده از لاگ سطح 2
+            answer_time: typeof logValue === 'string' ? logValue : 'False',
             open: false,
             visible: true
           });
@@ -556,57 +558,50 @@ export class Scenario {
   }
 
   buildPhysicalExamQuestions() {
-    // بررسی وجود داده
     if (!this.data || !this.data.physical_exam || !this.log || !this.log.physical_exam) return;
 
-    const examText = this.questionText["physical_exam"]; // عناوین معاینه (از senario.json)
-    const examAnswers = this.data.physical_exam;        // پاسخ‌ها (از AI)
-    const examLogs = this.log.physical_exam;            // زمان مشاهده
+    const examText = this.questionText["physical_exam"];
+    const examAnswers = this.data.physical_exam;
+    const examLogs = this.log.physical_exam;
 
     this.physicalExamBySection = {};
 
     for (const systemName in examAnswers) {
-
       const systemText = examText[systemName];
       const systemAnswers = examAnswers[systemName];
-      const systemLogs = examLogs[systemName];
+      const systemLogs = examLogs ? examLogs[systemName] : null;
 
       this.physicalExamBySection[systemName] = [];
 
       for (const sectionKey in systemAnswers) {
-
         const answerL2 = systemAnswers[sectionKey];
-        const logL2 = systemLogs ? systemLogs[sectionKey] : 'False'; // لاگ در سطح 2
+        const logL2 = systemLogs ? systemLogs[sectionKey] : 'False';
 
         if (typeof answerL2 === 'object' && answerL2 !== null && !Array.isArray(answerL2)) {
-
           const textL2 = systemText[sectionKey];
-
           for (const itemKey in answerL2) {
-
             const titleL3 = textL2 ? textL2[itemKey] : itemKey;
             const answerL3 = answerL2[itemKey];
 
-            const logL3 = (typeof logL2 === 'object' && logL2 !== null) ? logL2[itemKey] : 'False';
+            // مدیریت ساختار جدید: اگر لاگ تخت شده باشد از همان logL2 استفاده می‌کند
+            const logL3 = (typeof logL2 === 'object' && logL2 !== null) ? logL2[itemKey] : logL2;
 
             this.physicalExamBySection[systemName].push({
               id: `${sectionKey}-${itemKey}`,
               title: titleL3,
               answer: Array.isArray(answerL3) ? answerL3.join(' | ') : answerL3,
-              answer_time: logL3,
+              answer_time: logL3 || 'False',
               open: false,
               visible: true
             });
           }
         } else {
-
-          const textL2 = systemText ? systemText[sectionKey] : sectionKey; // عنوان سطح 2
-
+          const textL2 = systemText ? systemText[sectionKey] : sectionKey;
           this.physicalExamBySection[systemName].push({
             id: sectionKey,
             title: textL2,
             answer: Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2,
-            answer_time: logL2,
+            answer_time: typeof logL2 === 'string' ? logL2 : 'False',
             open: false,
             visible: true
           });
@@ -618,72 +613,70 @@ export class Scenario {
   handleQuestionClick(question: Question, systemName: string, sectionCategory: 'history_taking' | 'physical_exam' | 'paraclinic') {
     this.playClick();
 
-    const defaultImageUrl = 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg';
+    // ۱. مدیریت مدیا (بدون تغییر نسبت به نسخه سالم قبلی شما)
     const currentCharacter = this.currentCharacter();
-    const mapping = VIDEO_MAPPING as any;
-    const characterMedia = mapping[currentCharacter];
+    const characterMedia = (VIDEO_MAPPING as any)[currentCharacter];
+    let media = characterMedia ? (characterMedia[`${systemName}-${question.id}`] || characterMedia[systemName]) : null;
+    if (media) {
+      this.mediaUrl = media.url;
+      this.mediaType = media.type || 'video';
+      if (this.mediaType === 'video' && this.videoElementRef) this.videoElementRef.nativeElement.load();
+    }
 
-    let media = null;
+    // ۲. اصلاح ثبت زمان در لاگ - منطق جدید و دقیق
+    if (question.answer_time === 'False' || question.answer_time === 'false') {
+      const currentTime = this.timer();
+      question.answer_time = currentTime;
 
-    if (characterMedia) {
-      // ۱. اولویت اول: ترکیب نام سیستم و آی‌دی سوال (مثلاً vital_signs-BP)
-      const specificKey = `${systemName}-${question.id}`;
-      if (characterMedia[specificKey]) {
-        media = characterMedia[specificKey];
-        console.log('Priority 1: Found specific sub-section media:', specificKey);
-      }
+      // پیدا کردن بخش مربوطه در فایل لاگ
+      const section = this.log[sectionCategory];
+      if (section && section[systemName]) {
+        const logTarget = section[systemName];
 
-      // ۲. اولویت دوم: اگر سوال خودش دارای خط تیره است (منطق قبلی شما برای بخش‌هایی مثل eyes-left)
-      if (!media && question.id.includes('-')) {
-        const mainSubSection = question.id.split('-')[0];
-        const subSectionKey = `${systemName}-${mainSubSection}`;
-        if (characterMedia[subSectionKey]) {
-          media = characterMedia[subSectionKey];
-          console.log('Priority 2: Found main sub-section media:', subSectionKey);
+        // الف) اگر ID سوال ترکیبی است (مثل torachonthesis-Fluid یا question1-question1a)
+        if (question.id.includes('-')) {
+          const parts = question.id.split('-');
+          let current = logTarget;
+
+          // پیمایش تا یک مرحله قبل از کلید نهایی
+          for (let i = 0; i < parts.length - 1; i++) {
+            if (current[parts[i]] && typeof current[parts[i]] === 'object') {
+              current = current[parts[i]];
+            }
+          }
+
+          // آپدیت کلید نهایی
+          const lastKey = parts[parts.length - 1];
+          if (current.hasOwnProperty(lastKey)) {
+            current[lastKey] = currentTime;
+          } else {
+            // اگر پیدا نشد، شاید آیدی سوال فقط شامل کلید نهایی بوده (مثل Fluid-LDH که LDH هدف است)
+            this.updateValueInObject(logTarget, lastKey, currentTime);
+          }
+        }
+        // ب) اگر ID ساده است
+        else {
+          if (logTarget.hasOwnProperty(question.id)) {
+            logTarget[question.id] = currentTime;
+          } else {
+            // جستجوی عمیق فقط در همان شاخه خاص برای اطمینان
+            this.updateValueInObject(logTarget, question.id, currentTime);
+          }
         }
       }
-
-      // ۳. اولویت سوم: چک کردن خودِ question.id به تنهایی
-      if (!media && characterMedia[question.id]) {
-        media = characterMedia[question.id];
-        console.log('Priority 3: Found media by question.id:', question.id);
-      }
-
-      // ۴. اولویت چهارم (Fallback): استفاده از ویدیوی پیش‌فرض کل بخش (مثلاً vital_signs)
-      if (!media && characterMedia[systemName]) {
-        media = characterMedia[systemName];
-        console.log('Priority 4: Falling back to default system media:', systemName);
-      }
     }
 
-    // باقی کدها برای اعمال ویدیو به المان...
-    const newMediaUrl = media ? media.url : defaultImageUrl;
-    const newMediaType = media ? (media.type || 'video') : 'image';
-
-    // ... (ادامه کد خودتان برای لود کردن ویدیو)
-    this.mediaType = newMediaType as 'image' | 'video';
-    const urlChanged = newMediaUrl !== this.mediaUrl;
-    this.mediaUrl = newMediaUrl;
-
-    if (newMediaType === 'video' && urlChanged) {
-      this.isVideoLoading.set(true);
-      this.changeDetectorRef.detectChanges();
-      if (this.videoElementRef) {
-        const video = this.videoElementRef.nativeElement;
-        video.load();
-        video.play().catch(() => this.isVideoLoading.set(false));
-      }
-    } else {
-      this.isVideoLoading.set(false);
-    }
-
-    // منطق لاگ و باز کردن سوال
-    if (!question.open) {
-      question.answer_time = this.timer();
-      // ... منطق لاگ
-    }
     question.open = true;
     this.changeDetectorRef.detectChanges();
+  }
+
+  getQuestionB(sectionName: string, currentId: string): Question | null {
+    if (!currentId.endsWith('a')) return null;
+
+    const baseId = currentId.slice(0, -1); // حذف 'a' از انتهای ID
+    const nextId = baseId + 'b';
+
+    return this.questionsBySection[sectionName]?.find(q => q.id === nextId) || null;
   }
 
   finishScenario() {
@@ -710,76 +703,45 @@ export class Scenario {
 
     this.paraclinicBySection = {};
 
-    // سطح ۱: دسته‌بندی‌ها
     for (const categoryName in paraclinicAnswers) {
       const categoryText = paraclinicText[categoryName];
       const categoryAnswers = paraclinicAnswers[categoryName];
-      const categoryLogs = paraclinicLogs[categoryName];
+      const categoryLogs = paraclinicLogs ? paraclinicLogs[categoryName] : null;
 
       this.paraclinicBySection[categoryName] = [];
 
-      // سطح ۲: تست‌های اصلی
       for (const testKey in categoryAnswers) {
         const answerL2 = categoryAnswers[testKey];
         const logL2 = categoryLogs ? categoryLogs[testKey] : 'False';
 
-        // استخراج متن عنوان
-        let textL2: any = '';
-        if (categoryText) {
-          textL2 = categoryText[testKey];
-        }
+        let finalTitle = (categoryText && categoryText[testKey]) ?
+          (typeof categoryText[testKey] === 'string' ? categoryText[testKey] : testKey) :
+          testKey.replace(/_/g, ' ');
 
-        let finalAnswer: any = '';
-        let finalTitle = '';
+        let finalAnswer: any;
 
-        // --- ۱. استخراج عنوان دکمه ---
-        if (typeof textL2 === 'object' && textL2 !== null && !Array.isArray(textL2)) {
-          finalTitle = testKey.replace('_', ' ');
-        } else if (typeof textL2 === 'string') {
-          finalTitle = textL2;
+        // تشخیص اینکه آیا داده باید به صورت جدولی نمایش داده شود یا خیر
+        if (typeof answerL2 === 'object' && answerL2 !== null) {
+          if (categoryName === 'basic_blood_tests') {
+            finalAnswer = this.processBasicBloodTests(answerL2, categoryText[testKey], testKey);
+          } else {
+            // برای سایر موارد تودرتو مثل Imaging و Procedures
+            finalAnswer = this.processFlattenedObject(answerL2, categoryText ? categoryText[testKey] : null);
+          }
         } else {
-          finalTitle = testKey.replace('_', ' ');
+          finalAnswer = answerL2;
         }
 
-        // --- ۲. منطق ساختاردهی پاسخ ---
-
-        // حالت خاص برای آزمایش‌های خون (چه آبجکت چه رشته ساده مثل CRP)
-        if (categoryName === 'basic_blood_tests') {
-          // لیست تست‌هایی که می‌خواهیم حتماً خروجی جدولی داشته باشند
-          const bloodTableTests = ['BMP', 'CBC', 'VBG', 'LFTs', 'CRP', 'ESR', 'FBS', 'crp', 'esr'];
-
-          if (bloodTableTests.includes(testKey) || (typeof answerL2 === 'object' && !Array.isArray(answerL2))) {
-            // ارسال ۳ آرگومان برای رفع خطای TS2554
-            finalAnswer = this.processBasicBloodTests(answerL2, textL2, testKey);
-          } else {
-            finalAnswer = Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2;
-          }
-        }
-        // سایر بخش‌ها (Spirometry و غیره)
-        else if (typeof answerL2 === 'object' && answerL2 !== null && !Array.isArray(answerL2)) {
-          if (categoryName === 'functional_tests' && testKey === 'Spirometry') {
-            finalAnswer = this.processSpirometryData(answerL2, textL2);
-          } else {
-            finalAnswer = this.processFlattenedObject(answerL2, textL2);
-          }
-        }
-        // پاسخ‌های رشته‌ای معمولی
-        else {
-          finalAnswer = Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2;
-        }
-
-        // تعریف آیتم اصلی (دکمه)
         this.paraclinicBySection[categoryName].push({
           id: testKey,
           title: finalTitle,
           answer: finalAnswer,
-          answer_time: logL2,
+          answer_time: typeof logL2 === 'string' ? logL2 : 'False',
           open: false,
           visible: true
         });
       }
     }
-
   }
 
   fireConfetti() {
@@ -816,6 +778,20 @@ export class Scenario {
 
   confirmExit() {
     this.router.navigate(['/dashboard/s/stat']);
+  }
+
+// تابع کمکی برای آپدیت مقدار در یک شاخه خاص
+  private updateValueInObject(obj: any, targetKey: string, newValue: string): boolean {
+    if (obj.hasOwnProperty(targetKey)) {
+      obj[targetKey] = newValue;
+      return true;
+    }
+    for (const key in obj) {
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        if (this.updateValueInObject(obj[key], targetKey, newValue)) return true;
+      }
+    }
+    return false;
   }
 
 // متد کمکی برای پردازش داده‌های Spirometry
@@ -894,24 +870,29 @@ export class Scenario {
   }
 
 // متد کمکی برای پردازش سایر اشیاء تودرتو
-  private processFlattenedObject(data: any, textL2: any): string {
-    let flattenedString = '';
+  private processFlattenedObject(data: any, textL2: any): ParaclinicResult[] {
+    const results: ParaclinicResult[] = [];
 
-    for (const itemKey in data) {
-      // پیدا کردن عنوان فارسی از فایل ترجمه (textL2)
-      let title = (textL2 && textL2[itemKey]) ? textL2[itemKey] : itemKey;
-      let value = data[itemKey];
+    const flatten = (obj: any, parentText: any) => {
+      for (const key in obj) {
+        const value = obj[key];
+        const title = (parentText && parentText[key]) ? parentText[key] : key.replace(/_/g, ' ');
 
-      if (typeof value === 'object' && !Array.isArray(value)) {
-        // اگر مقدار خودش آبجکت بود، دوباره همین تابع را صدا بزن
-        flattenedString += `${title}:\n${this.processFlattenedObject(value, textL2[itemKey])}\n`;
-      } else {
-        // اگر مقدار نهایی بود (رشته یا عدد)
-        flattenedString += `${title}: ${value}\n`;
+        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+          // اگر باز هم تودرتو بود (مثل torachonthesis -> Fluid -> LDH)
+          flatten(value, parentText ? parentText[key] : null);
+        } else {
+          results.push({
+            title: title,
+            answer: Array.isArray(value) ? value.join(' | ') : value.toString(),
+            normalValue: '-' // می‌توانید مقادیر نرمال را اینجا اضافه کنید
+          });
+        }
       }
-    }
+    };
 
-    return flattenedString;
+    flatten(data, textL2);
+    return results;
   }
 }
 
