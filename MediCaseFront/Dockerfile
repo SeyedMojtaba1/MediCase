@@ -3,7 +3,7 @@ FROM docker.arvancloud.ir/node:20-alpine AS build
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm config set registry https://registry.npmjs.org/
+RUN npm config set registry https://mirror-npm.runflare.com/
 RUN npm install
 
 COPY . .
