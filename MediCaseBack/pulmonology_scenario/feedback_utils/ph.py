@@ -586,7 +586,7 @@ PH_IDIOPATHIC_PAH_DETAILED = {
         "analysis": "این تست طلایی برای ارزیابی استرس دیواره بطن راست است. سطح آن با شدت بیماری و پروگنوز رابطه مستقیم دارد."
       },
       "Sputum_analysis": {
-        "question": "Sputum analysis",
+        "question": "Sputum Analysis",
         "analysis": "در غیاب علائم عفونی، کاربردی ندارد."
       },
       "a1_antitrypsin_level": {
@@ -640,7 +640,7 @@ PH_IDIOPATHIC_PAH_DETAILED = {
         "analysis": "تست روتین نیست، مگر اینکه شک به توده یا بیماری‌های مجاری هوایی وجود داشته باشد."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "فقط اگر افیوژن پلورال قابل توجه وجود داشته باشد انجام می‌شود، که در IPAH معمولاً کم‌حجم است و نیاز به تپ ندارد."
       }
     }
@@ -676,12 +676,12 @@ PH_IDIOPATHIC_PAH_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": ""
+      "question": "افیوژن دارد؟",
+      "analysis": "خیر. افزایش فشار خون ریوی به تنهایی (بدون نارسایی قلب راست شدید) معمولاً باعث افیوژن نمی‌شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": ""
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر"
     },
     "effusion_type": "none"
   }
@@ -1497,7 +1497,7 @@ PH_LUNG_DISEASE_DETAILED = {
         "analysis": "این «نالهِ قلب راست» است! وقتی بیماری ریوی فشار شریان ریه را بالا می‌برد، بطن راست تحت فشار قرار گرفته و BNP ترشح می‌کند. سطح آن پیش‌آگهی را مشخص می‌کند."
       },
       "Sputum_analysis": {
-        "question": "Sputum analysis",
+        "question": "Sputum Analysis",
         "analysis": "آنالیز خلط برای تشخیص عفونت حاد (پنومونی) است، نه تشخیص علت زمینه‎ای فشار خون ریوی (مثل COPD یا فیبروز)."
       },
       "a1_antitrypsin_level": {
@@ -1551,7 +1551,7 @@ PH_LUNG_DISEASE_DETAILED = {
         "analysis": "روش تهاجمی است و برای تشخیص اولیه PH کاربرد ندارد، مگر برای نمونه‌برداری از بافت در موارد مشکوک به تومور یا عفونت خاص."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "در بیماری‌های مزمن ریوی معمولاً افیوژن پلورال نداریم. اگر باشد، باید علت دیگری (نارسایی قلب، بدخیمی) را جستجو کرد."
       }
     }
@@ -1587,12 +1587,12 @@ PH_LUNG_DISEASE_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "بیماری‌های ریوی خالص (مثل COPD) معمولاً افیوژن نمی‌دهند. اگر افیوژن دیدید، به فکر نارسایی قلب راست یا چپ همزمان باشید."
+      "question": "افیوژن دارد؟",
+      "analysis": "خیر. افزایش فشار خون ریوی به تنهایی (بدون نارسایی قلب راست شدید) معمولاً باعث افیوژن نمی‌شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "چون افیوژن معمولاً ناشی از نارسایی قلب است (ترانسودا)، با درمان دارویی (دیورتیک) برطرف می‌شود و نیاز به کشیدن مایع (تپ) نیست."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر"
     },
     "effusion_type": "none"
   }

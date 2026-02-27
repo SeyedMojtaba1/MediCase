@@ -586,7 +586,7 @@ PTE_MASSIVE_PTE_DETAILED = {
         "analysis": "بسیار بالا. تروپونین و BNP بالا نشان‌دهنده اتساع حاد و آسیب شدید عضله بطن راست (RV Microinfarction) هستند و پیش‌آگهی را بدتر می‌کنند."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نامرتبط."
       },
       "a1_antitrypsin_level": {
@@ -640,7 +640,7 @@ PTE_MASSIVE_PTE_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "نامرتبط."
       }
     }
@@ -672,16 +672,16 @@ PTE_MASSIVE_PTE_DETAILED = {
     }
   },
   "final_diagnosis": {
-    "disease": "Massive PTE (Hemodynamically Unstable)"
+    "disease": "PTE"
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "ممکن است وجود داشته باشد اما یافته غالبی نیست."
+      "question": "افیوژن دارد؟",
+      "analysis": "در آمبولی‌های ریه ممکن است افیوژن پلورال واکنشی (Reactive) و معمولاً یک‌طرفه دیده شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "خیر. اولویت با احیای قلبی-ریوی و درمان ترومبولیتیک است."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis":  "خیر. معمولاً حجم مایع کم است و با درمان ضدانعقادی برطرف می‌شود. اولویت با پایدار کردن همودینامیک بیمار است."
     },
     "effusion_type": "exudative"
   }
@@ -1480,55 +1480,55 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "بسیار حساس (High Sensitivity). اگر منفی باشد، احتمال PTE بسیار کم است. در این سناریو انتظار داریم مثبت باشد."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "نرمال است! تفاوت کلیدی با آمبولی‌های بزرگ (Submassive/Massive) همین‌جاست. در نوع محیطی/انفارکتوس، لخته کوچک است و انسداد عمده‌ای در مسیر جریان خون ایجاد نمی‌کند، پس بطن راست تحت فشار (Strain) نیست و تروپونین یا BNP بالا نمی‌رود."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نامرتبط."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "در صورت شک به سندرم آنتی‌فسفولیپید (بیماری لخته‌ساز) یا لوپوس چک می‌شود."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "Hampton's Hump (یک تراکم گوه‌ای شکل در محیط ریه که قاعده آن به سمت پلور است) علامت کلاسیک رادیولوژیک برای انفارکتوس ریوی است. همچنین ممکن است بالا رفتن دیافراگم در سمت مبتلا دیده شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "استاندارد طلایی. نقص پرشدگی (Filling defect) در شریان‌های سگمنتال یا ساب‌سگمنتال (محیطی) دیده می‌شود."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "نامرتبط."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "نامرتبط."
       },
       "Spirometry": {
@@ -1536,7 +1536,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
         "analysis": "نامرتبط."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "نامرتبط."
       }
     },
@@ -1546,7 +1546,7 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "ممکن است افیوژن پلورال خفیف و خونی (Exudative/Bloody) دیده شود. معمولاً حجم آن کم است و نیاز به تخلیه ندارد، مگر برای رد کردن عفونت در موارد مشکوک."
       }
     }
@@ -1578,16 +1578,16 @@ PTE_PERIPHERAL_INFARCT_DETAILED = {
     }
   },
   "final_diagnosis": {
-    "disease": "Peripheral PTE with Infarction"
+    "disease": "PTE"
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "در حدود ۵۰٪ موارد انفارکتوس ریوی، افیوژن پلورال خفیف و واکنشی (معمولاً خونی) دیده می‌شود."
+      "question": "افیوژن دارد؟",
+      "analysis": "بله. در انفارکتوس ریوی به دلیل التهاب مستقیم پرده جنب (Pleura) در مجاورت بافت نکروزه، افیوژن پلورال (اغلب خونی) بسیار شایع است."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "معمولاً خیر. حجم مایع کم است و با درمان ضدانعقادی و جذب هماتوم برطرف می‌شود."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر. معمولاً نیاز به توراکوسنتز نیست مگر اینکه حجم مایع زیاد باشد یا شک به عفونت همزمان (پنومونی) وجود داشته باشد."
     },
     "effusion_type": "exudative"
   }
@@ -2387,55 +2387,55 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "تست غربالگری عالی. اگر منفی باشد، PTE تقریبا رد می‌شود (High Negative Predictive Value). اما اگر مثبت باشد، اختصاصی نیست و نیاز به تصویربرداری تاییدی دارد."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "حیاتی برای تعیین نوع ساب‌ماسیو. افزایش تروپونین و BNP نشان‌دهنده کشش و آسیب دیواره بطن راست (RV Strain) است. اگر فشار خون نرمال باشد ولی این مارکرها بالا باشند، تشخیص Submassive PE است که مانیتورینگ دقیق‌تری می‌طلبد."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نامرتبط."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "در موارد خاص برای سندرم آنتی‌فسفولیپید (بیماری لخته‌ساز) چک می‌شود."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "اغلب نرمال است! همین نرمال بودن عکس در برابر تنگی نفس شدید، شک به PTE را بالا می‌برد. گاهی علائم خاص مثل Hampton's Hump (مثلث ماتیته در محیط) یا Westermark Sign (کاهش مارکرهای عروقی) دیده می‌شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "استاندارد طلایی تشخیص (CT Angiography). نقص پرشدگی (Filling Defect) در شریان‌های ریوی را نشان می‌دهد. همچنین بزرگی بطن راست (RV Dilation) را برای تایید نوع ساب‌ماسیو می‌سنجد."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "نامرتبط در فاز حاد."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "نامرتبط."
       },
       "Spirometry": {
@@ -2443,7 +2443,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
         "analysis": "نامرتبط."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "نامرتبط."
       }
     },
@@ -2453,7 +2453,7 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "معمولاً نیاز نیست. افیوژن در PTE معمولاً کم‌حجم و خونی است. فقط در صورت شک به عفونت همزمان یا افیوژن حجیم انجام می‌شود."
       }
     }
@@ -2485,16 +2485,16 @@ PTE_SUBMASSIVE_PTE_DETAILED = {
     }
   },
   "final_diagnosis": {
-    "disease": "Submassive PTE"
+    "disease": "PTE"
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "ممکن است افیوژن پلورال خفیف (معمولاً خونی و اگزوداتیو) دیده شود (در حدود ۳۰ تا ۵۰ درصد موارد)."
+      "question": "افیوژن دارد؟",
+      "analysis": "در آمبولی‌های ریه ممکن است افیوژن پلورال واکنشی (Reactive) و معمولاً یک‌طرفه دیده شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "معمولاً خیر، مگر اینکه افیوژن حجیم باشد یا شک به عفونت (آمپیم) وجود داشته باشد. درمان ضدانعقادی باعث جذب آن می‌شود."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر. معمولاً حجم مایع کم است و با درمان ضدانعقادی برطرف می‌شود. اولویت با پایدار کردن همودینامیک بیمار است."
     },
     "effusion_type": "exudative"
   }

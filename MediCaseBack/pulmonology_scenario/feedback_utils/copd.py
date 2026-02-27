@@ -574,55 +574,55 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "نامرتبط."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "افزایش در صورت نارسایی قلب راست."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نوتروفیل فراوان."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "معمولاً نرمال."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "نامرتبط."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "ریه کثیف (Dirty Lungs): افزایش مارکرهای برونکوواسکولار و ضخیم شدن دیواره برونش‌ها. قلب ممکن است بزرگ باشد."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "ضخیم شدن دیواره برونش‌ها و ترشحات داخل لومن."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "نرمال: این یافته کلیدی برای افتراق از آمفیزم است. در برونشیت مزمن سطح بستر عروقی و آلوئولی سالم است، پس انتشار گاز نرمال است."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "کاهش یافته."
       },
       "Spirometry": {
@@ -630,7 +630,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
         "analysis": "الگوی انسدادی: کاهش FEV1/FVC به زیر ۷۰٪ که با اسپری برگشت‌پذیر نیست."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "حجم‌ها نرمال یا کمی افزایش یافته."
       }
     },
@@ -640,7 +640,7 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "نامرتبط."
       }
     }
@@ -676,11 +676,11 @@ COPD_CHRONIC_BRONCHITIS_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "خیر."
+      "question": "افیوژن دارد؟",
+      "analysis": "خیر. برونشیت مزمن به تنهایی باعث ایجاد افیوژن پلورال نمی‌شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
+      "question": "نیاز به aspiration دارد؟",
       "analysis": "خیر."
     },
     "effusion_type": "none"
@@ -1480,55 +1480,55 @@ COPD_COR_PULMONALE_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "برای رد آمبولی حاد به عنوان عامل decompensation چک می‌شود."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "بسیار بالا: اتساع بطن راست باعث ترشح BNP می‌شود. این تست برای تایید نارسایی قلبی و افتراق از تنگی نفس صرفاً ریوی کمک‌کننده است."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نامرتبط (مگر عفونت)."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "نامرتبط."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "بزرگی قلب راست: سایه قلب بزرگ شده (Cardiomegaly) و پرخونی عروق ریوی دیده می‌شود. همچنین علائم COPD (پرهوایی) وجود دارد."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "لازم نیست (مگر برای رد PE)."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "غیرقابل انجام در فاز حاد."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "غیرقابل انجام."
       },
       "Spirometry": {
@@ -1536,7 +1536,7 @@ COPD_COR_PULMONALE_DETAILED = {
         "analysis": "غیرقابل انجام (بیمار بدحال است). اما اگر انجام شود، الگوی انسدادی شدید نشان می‌دهد."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "غیرقابل انجام."
       }
     },
@@ -1546,7 +1546,7 @@ COPD_COR_PULMONALE_DETAILED = {
         "analysis": "نامرتبط."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "نامرتبط."
       }
     }
@@ -1582,12 +1582,12 @@ COPD_COR_PULMONALE_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "ممکن است دیده شود، اما معمولاً کم‌حجم است."
+      "question": "افیوژن دارد؟",
+      "analysis":  "بله. به دلیل نارسایی قلب راست (Cor Pulmonale) و افزایش فشار وریدی سیستمیک، ممکن است افیوژن پلورال (معمولاً دوطرفه) ایجاد شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "خیر. با درمان نارسایی قلب (دیورتیک) برطرف می‌شود."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر. این مایع ناشی از نارسایی قلبی است و خط اول درمان آن استفاده از دیورتیک‌ها (مثل فوروزماید) است، نه توراکوسنتز."
     },
     "effusion_type": "transudative"
   }
@@ -2386,55 +2386,55 @@ COPD_EMPHYSEMA_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "نامرتبط."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "نرمال."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نامرتبط."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "تست غربالگری: در تمام بیماران با تشخیص جدید COPD (به خصوص آمفیزم پان‌آسینار در لوب‌های تحتانی) باید چک شود."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "نامرتبط."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "علائم پرهوایی: دیافراگم صاف (Flat Diaphragm)، افزایش فضای رترواسترنال، قلب کوچک و عمودی (Drop Heart) و کاهش مارکرهای عروقی در محیط ریه."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "تخریب پارانشیم: وجود بول‌های هوایی (Bullae) و مناطق سیاه بدون بافت ریه، تشخیص آمفیزم را تایید و نوع آن (Centriacinar vs Panacinar) را مشخص می‌کند."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "کاهش یافته: این یافته کلیدی برای افتراق آمفیزم از برونشیت مزمن و آسم است. به دلیل تخریب سطح تبادل گاز (دیواره آلوئول‌ها)، ظرفیت انتشار گاز کم می‌شود."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "کاهش یافته."
       },
       "Spirometry": {
@@ -2442,7 +2442,7 @@ COPD_EMPHYSEMA_DETAILED = {
         "analysis": "الگوی انسدادی: کاهش FEV1/FVC به زیر ۷۰٪ که برگشت‌پذیر نیست."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "افزایش شدید حجم‌ها: افزایش TLC (ظرفیت کل ریه) و RV (حجم باقیمانده) نشان‌دهنده حبس هوا (Air Trapping) است."
       }
     },
@@ -2452,7 +2452,7 @@ COPD_EMPHYSEMA_DETAILED = {
         "analysis": "برای کاهش حجم ریه (Endobronchial Valve) در موارد پیشرفته ممکن است استفاده شود."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "نامرتبط."
       }
     }
@@ -2488,14 +2488,14 @@ COPD_EMPHYSEMA_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "خیر."
+      "question": "افیوژن دارد؟",
+      "analysis": "ممکن است به دلیل فشار روی عروق یا عوارض ثانویه قلبی-ریوی، افیوژن خفیف دیده شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "خیر."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر. در صورت وجود، معمولاً با درمان‌های نگهدارنده برطرف می‌شود."
     },
-    "effusion_type": "none"
+    "effusion_type": "transudate"
   }
 }
 
@@ -2712,6 +2712,6 @@ COPD_EMPHYSEMA = {
     "pleural_effusion_assessment": {
     "has_effusion": "false",
     "need_aspiration": "false",
-    "effusion_type": "none"
+    "effusion_type": "transudate"
 }
   }

@@ -586,7 +586,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
         "analysis": "نرمال."
       },
       "Sputum_analysis": {
-        "question": "Sputum analysis",
+        "question": "Sputum Analysis",
         "analysis": "نکته تشخیصی: رنگ‌آمیزی گرم خلط (Gram Stain) معمولاً تعداد زیادی گلبول سفید (WBC) را نشان می‌دهد اما هیچ باکتری‌ای دیده نمی‌شود! (چون مایکوپلاسما دیواره سلولی ندارد و کلامیدیا داخل سلولی است). این تناقض (WBC مثبت، باکتری منفی) نشانه پنومونی آتیپیک است."
       },
       "a1_antitrypsin_level": {
@@ -640,7 +640,7 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
         "analysis": "معمولاً لازم نیست."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "افیوژن پلورال در پنومونی آتیپیک ناشایع و معمولاً خفیف است و نیاز به تپ ندارد."
       }
     }
@@ -676,12 +676,12 @@ PNEUMENIA_ATYPICAL_WALKING_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "در پنومونی‌های آتیپیک (مایکوپلاسما/کلامیدیا) افیوژن پلورال بسیار نادر است (<۲۰٪) و اگر باشد، حجم آن کم است."
+      "question": "افیوژن دارد؟",
+      "analysis": "خیر. پنومونی‌های آتیپیک (مثل مایکوپلاسما) معمولاً درگیری بینابینی می‌دهند و افیوژن پلورال در آن‌ها نادر است."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "به دلیل حجم کم و سیر خوش‌خیم، معمولاً نیاز به اقدام تهاجمی (توراسنتز) نیست و با درمان آنتی‌بیوتیکی (ماکرولید/داکسی) جذب می‌شود."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر."
     },
     "effusion_type": "none"
   }
@@ -1492,7 +1492,7 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
         "analysis": "نرمال. اگر بالا باشد یعنی علت افیوژن قلبی (CHF) است، نه پنومونی."
       },
       "Sputum_analysis": {
-        "question": "Sputum analysis",
+        "question": "Sputum Analysis",
         "analysis": "رنگ‌آمیزی گرم و کشت خلط برای یافتن پاتوژن اصلی (استرپتوکوک، استافیلوکوک، بی‌هوازی‌ها) ضروری است."
       },
       "a1_antitrypsin_level": {
@@ -1546,7 +1546,7 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
         "analysis": "تنها در صورت شک به انسداد برونش (تومور/جسم خارجی) که مانع تخلیه ترشحات شده، انجام می‌شود."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "اقدام طلایی! هر افیوژن پاراپنومونیک قابل توجه (>10mm در سونو/گرافی) باید نمونه‌برداری (Tap) شود. آنالیز مایع (قند، pH، LDH، پروتئین و کشت) تعیین می‌کند که آیا نیاز به لوله‌گذاری (Chest Tube) هست یا خیر. \nمعیارهای Light برای تشخیص اگزودا استفاده می‌شود. \nعلائم افیوژن عارضه‌دار (نیاز به تخلیه): pH < 7.20، گلوکز < 60، LDH > 1000 یا مشاهده چرک/باکتری."
       }
     }
@@ -1582,12 +1582,12 @@ PNEUMENIA_COMPLICATED_EFFUSION_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "بله، وجود مایع در فضای پلور در معاینه (ماتیته) و گرافی (بلانتینگ زاویه) تایید شده است."
+      "question": "افیوژن دارد؟",
+      "analysis": "بله. مایع فراوان و لوکوله (حفره‌بندی شده) در فضای پلور دیده می‌شود که نشان‌دهنده افیوژن پاراپنومونیک عارضه‌دار یا آمپیم (Empyema) است."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "بله، حتماً. چون احتمال عفونی شدن مایع (آمپیم) وجود دارد و درمان آن با آنتی‌بیوتیک خالی متفاوت است (نیاز به تخلیه فیزیکی دارد). اگر مایع اگزوداتیو با pH پایین باشد، درناژ فوری لازم است."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "بله (حیاتی است!). کشیدن مایع (و معمولاً تعبیه چست‌تیوب) برای تخلیه چرک و جلوگیری از ایجاد بافت فیبروزه (پیل ریه) کاملاً اورژانسی و ضروری است."
     },
     "effusion_type": "exudative"
   }
@@ -2398,7 +2398,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
         "analysis": "برای افتراق پنومونی از نارسایی قلبی (CHF). اگر BNP نرمال باشد، تنگی نفس منشا قلبی ندارد."
       },
       "Sputum_analysis": {
-        "question": "Sputum analysis",
+        "question": "Sputum Analysis",
         "analysis": "رنگ‌آمیزی گرم خلط (Gram Stain) اگر نمونه باکیفیت باشد (سلول اپیتلیال < ۱۰، نوتروفیل > ۲۵)، می‌تواند دیپلوکوک‌های گرم مثبت (پنوموکوک) را نشان داده و آنتی‌بیوتیک را هدفمند کند."
       },
       "a1_antitrypsin_level": {
@@ -2452,7 +2452,7 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
         "analysis": "روشی تهاجمی است و فقط برای بیماران با نقص ایمنی، موارد مشکوک به جسم خارجی یا تومور، و پنومونی‌های مقاوم به درمان استفاده می‌شود."
       },
       "torachonthesis": {
-        "question": "Torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "تنها در صورتی انجام می‌شود که در عکس ریه، مایع پلور قابل توجه (Effusion) دیده شود. هدف، رد کردن عفونت فضای پلور (آمپیم) است."
       }
     }
@@ -2488,14 +2488,14 @@ PNEUMENIA_TYPICAL_LOBAR_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "ممکن است افیوژن پاراپنومونیک (Parapneumonic Effusion) خفیف و واکنشی در سمت درگیر دیده شود."
+      "question": "افیوژن دارد؟",
+      "analysis": "خیر. پنومونی‌های آتیپیک (مثل مایکوپلاسما) معمولاً درگیری بینابینی می‌دهند و افیوژن پلورال در آن‌ها نادر است."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "اگر ضخامت مایع در گرافی لترال دکوبیتوس کمتر از ۱۰ میلی‌متر باشد، نیاز به تپ (Thoracentesis) نیست و با آنتی‌بیوتیک جذب می‌شود. اما اگر حجیم باشد، باید برای رد آمپیم نمونه‌برداری شود."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "خیر."
     },
-    "effusion_type": "exudative"
+    "effusion_type": "none"
   }
 }
 

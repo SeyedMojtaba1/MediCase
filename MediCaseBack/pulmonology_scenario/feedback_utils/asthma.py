@@ -3,7 +3,7 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
     "present_illness": {
       "question1": {
         "question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟",
-        "analysis": "نکته کلیدی در این سناریو **ارتباط زمانی با فعالیت** است. بیمار ذکر می‌کند که علائم دقیقاً بعد از شروع ورزش (یا ۵ تا ۱۰ دقیقه بعد از توقف ورزش) شروع می‌شوند و در حالت استراحت مشکلی ندارد."
+        "analysis": "نکته کلیدی در این سناریو ارتباط زمانی با فعالیت است. بیمار ذکر می‌کند که علائم دقیقاً بعد از شروع ورزش (یا ۵ تا ۱۰ دقیقه بعد از توقف ورزش) شروع می‌شوند و در حالت استراحت مشکلی ندارد."
       },
       "question2": {
         "question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟",
@@ -11,7 +11,7 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
       },
       "question3": {
         "question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟",
-        "analysis": "تنگی نفس **موقتی و گذرا** است. معمولاً ۳۰ تا ۶۰ دقیقه بعد از قطع فعالیت خودبه‌خود (یا با اسپری) برطرف می‌شود. این برخلاف COPD یا نارسایی قلبی است که تنگی نفس در آن‌ها طولانی‌تر است."
+        "analysis": "تنگی نفس موقتی و گذرا است. معمولاً ۳۰ تا ۶۰ دقیقه بعد از قطع فعالیت خودبه‌خود (یا با اسپری) برطرف می‌شود. این برخلاف COPD یا نارسایی قلبی است که تنگی نفس در آن‌ها طولانی‌تر است."
       },
       "question4": {
         "question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟",
@@ -292,7 +292,7 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
         "breath_sounds_intensity": {"question": "شدت صداهای تنفسی", "analysis": "نرمال."},
         "adventitious_sounds": {
           "question": "صداهای اضافی",
-          "analysis": "**نکته مهم:** در آسم ورزشی، سمع ریه در حالت استراحت معمولاً کاملاً نرمال (Clear) است. ویزینگ فقط بعد از تست ورزش یا مانورهای تنفسی شنیده می‌شود."
+          "analysis": "نکته مهم: در آسم ورزشی، سمع ریه در حالت استراحت معمولاً کاملاً نرمال (Clear) است. ویزینگ فقط بعد از تست ورزش یا مانورهای تنفسی شنیده می‌شود."
         }
       }
     },
@@ -360,35 +360,35 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
       "LFTs": {"question": "LFTs", "analysis": "نرمال."}
     },
     "specialized_lung_tests": {
-      "D_dimer": {"question": "D_dimer", "analysis": "نامرتبط."},
-      "Sputum_AFB": {"question": "Sputum_AFB", "analysis": "نامرتبط."},
-      "BNP_NT_proBNP": {"question": "BNP_NT_proBNP", "analysis": "نرمال."},
-      "Sputum_analysis": {"question": "Sputum_analysis", "analysis": "نامرتبط."},
-      "a1_antitrypsin_level": {"question": "a1_antitrypsin_level", "analysis": "نامرتبط."}
+      "D_dimer": {"question": "D dimer", "analysis": "نامرتبط."},
+      "Sputum_AFB": {"question": "Sputum AFB", "analysis": "نامرتبط."},
+      "BNP_NT_proBNP": {"question": "BNP NT proBNP", "analysis": "نرمال."},
+      "Sputum_analysis": {"question": "Sputum Analysis", "analysis": "نامرتبط."},
+      "a1_antitrypsin_level": {"question": "a1 Antitrypsin Level", "analysis": "نامرتبط."}
     },
     "immunity_and_serology": {
-      "HIV_test": {"question": "HIV_test", "analysis": "نامرتبط."},
-      "Autoimmune_pannel_ANA_ANCA": {"question": "Autoimmune_pannel_ANA_ANCA", "analysis": "نامرتبط."}
+      "HIV_test": {"question": "HIV Test", "analysis": "نامرتبط."},
+      "Autoimmune_pannel_ANA_ANCA": {"question": "Autoimmune Pannel ANA ANCA", "analysis": "نامرتبط."}
     },
     "simple_imaging": {
-      "Chest_X_Ray": {"question": "Chest_X_Ray", "analysis": "معمولاً نرمال است."}
+      "Chest_X_Ray": {"question": "Chest X-Ray", "analysis": "معمولاً نرمال است."}
     },
     "advanced_imaging": {
-      "Chest_CT_CTPA": {"question": "Chest_CT_CTPA", "analysis": "لازم نیست."}
+      "Chest_CT_CTPA": {"question": "Chest CT CTPA", "analysis": "لازم نیست."}
     },
     "functional_tests": {
-      "dlco": {"question": "dlco", "analysis": "نرمال."},
-      "peak_flow": {"question": "peak_flow", "analysis": "**پایش PEF:** اندازه‌گیری پیک فلومتری قبل و بعد از ورزش می‌تواند افت جریان هوا را نشان دهد."},
-      "Spirometry": {"question": "Spirometry", "analysis": "**تست چالش ورزش (Exercise Challenge Test):** اسپیرومتری در حالت استراحت اغلب نرمال است. افت FEV1 بیش از ۱۰-۱۵٪ بعد از ۶-۸ دقیقه ورزش استاندارد، تشخیص EIB را قطعی می‌کند. تست برگشت‌پذیری با سالبوتامول هم معمولاً مثبت است."},
-      "plethysmography": {"question": "plethysmography", "analysis": "لازم نیست."}
+      "dlco": {"question": "DLCO", "analysis": "نرمال."},
+      "peak_flow": {"question": "Peak Flow", "analysis": "پایش PEF: اندازه‌گیری پیک فلومتری قبل و بعد از ورزش می‌تواند افت جریان هوا را نشان دهد."},
+      "Spirometry": {"question": "Spirometry", "analysis": "تست چالش ورزش (Exercise Challenge Test): اسپیرومتری در حالت استراحت اغلب نرمال است. افت FEV1 بیش از ۱۰-۱۵٪ بعد از ۶-۸ دقیقه ورزش استاندارد، تشخیص EIB را قطعی می‌کند. تست برگشت‌پذیری با سالبوتامول هم معمولاً مثبت است."},
+      "plethysmography": {"question": "Plethysmography", "analysis": "لازم نیست."}
     },
     "procedures": {
       "Bronchoscopy": {"question": "Bronchoscopy", "analysis": "لازم نیست."},
-      "torachonthesis": {"question": "torachonthesis", "analysis": "لازم نیست."}
+      "torachonthesis": {"question": "Thoracentesis", "analysis": "لازم نیست."}
     }
   },
   "differential_diagnosis": {
-    "disease1": {"question": "Asthma", "analysis": "**تشخیص قطعی.**"},
+    "disease1": {"question": "Asthma", "analysis": "تشخیص قطعی."},
     "disease2": {"question": "Pneumonia", "analysis": "علائم عفونی (تب، خلط) وجود ندارد."},
     "disease3": {"question": "COPD", "analysis": "سن بیمار و برگشت‌پذیری کامل علائم، COPD را رد می‌کند."},
     "disease4": {"question": "PTE", "analysis": "علائم فقط با ورزش ایجاد می‌شوند."},
@@ -396,11 +396,11 @@ ASTHMA_EXERCISE_INDUCED_DETAILED = {
     "disease6": {"question": "PH", "analysis": "نامرتبط."}
   },
   "final_diagnosis": {
-    "disease": "Exercise-Induced Asthma"
+    "disease": "Asthma"
   },
   "pleural_effusion_assessment": {
-    "has_effusion": {"question": "has_effusion", "analysis": "خیر."},
-    "need_aspiration": {"question": "need_aspiration", "analysis": "خیر."},
+    "has_effusion": {"question": "افیوژن دارد؟", "analysis": "خیر. آسم یک بیماری درگیرکننده راه‌های هوایی است و باعث ایجاد مایع در فضای پلور (افیوژن) نمی‌شود."},
+    "need_aspiration": {"question": "نیاز به aspiration دارد؟", "analysis": "خیر. مایعی وجود ندارد که نیاز به کشیدن داشته باشد."},
     "effusion_type": "none"
   }
 }
@@ -531,11 +531,11 @@ ASTHMA_EXERCISE_INDUCED = {
 ASTHMA_MILD_ALLERGIC_DETAILED = {
   "history_taking": {
     "present_illness": {
-      "question1": {"question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟", "analysis": "در آسم آلرژیک، علائم معمولاً **نوسانی (Episodic)** هستند. بیمار ممکن است بگوید در فصل بهار یا هنگام گردگیری خانه دچار تنگی نفس می‌شود و در بقیه اوقات کاملاً سالم است."},
-      "question2": {"question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟", "analysis": "شناسایی **محرک‌ها (Triggers)** کلید تشخیص است. تماس با گربه، گرده گیاهان، هوای سرد یا ورزش معمولاً به عنوان عامل شروع‌کننده ذکر می‌شود."},
+      "question1": {"question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟", "analysis": "در آسم آلرژیک، علائم معمولاً نوسانی (Episodic) هستند. بیمار ممکن است بگوید در فصل بهار یا هنگام گردگیری خانه دچار تنگی نفس می‌شود و در بقیه اوقات کاملاً سالم است."},
+      "question2": {"question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟", "analysis": "شناسایی محرک‌ها (Triggers) کلید تشخیص است. تماس با گربه، گرده گیاهان، هوای سرد یا ورزش معمولاً به عنوان عامل شروع‌کننده ذکر می‌شود."},
       "question3": {"question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟", "analysis": "در نوع خفیف، تنگی نفس موقتی است. اگر بیمار بگوید «همیشه تنگی نفس دارم»، تشخیص آسم خفیف زیر سوال می‌رود (باید به فکر COPD یا نارسایی قلبی بود)."},
       "question4": {"question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟", "analysis": "سرفه خشک یا با خلط اندک و شفاف، به خصوص در شب یا اوایل صبح، از علائم شایع است."},
-      "question5": {"question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟", "analysis": "**خس‌خس (Wheezing)** بازدمی علامت کلاسیک است، اما در آسم خفیف ممکن است فقط در زمان فعالیت شدید یا تماس با آلرژن شنیده شود."},
+      "question5": {"question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟", "analysis": "خس‌خس (Wheezing) بازدمی علامت کلاسیک است، اما در آسم خفیف ممکن است فقط در زمان فعالیت شدید یا تماس با آلرژن شنیده شود."},
       "question6": {"question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟", "analysis": "احساس فشردگی قفسه سینه (Chest Tightness) شکایت شایعی است، اما درد شدید پلوریتیک (تیز) معمولاً ندارد."},
       "question7": {"question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟", "analysis": "معمولاً منفی است. آسم به تنهایی تب نمی‌دهد. وجود تب یعنی عفونت ویروسی یا باکتریال اضافه شده است."},
       "question8": {"question": "آیا دچار تورم در پاها، تپش قلب یا سرگیجه شده‌اید؟", "analysis": "منفی است. این علائم مربوط به بیماری‌های قلبی است."},
@@ -544,7 +544,7 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
     },
     "past_medical_history": {
       "question1": {
-        "question1a": {"question": "آیا بیماری طولانی مدت (مزمن) مثل قند (دیابت)، فشار خون، آسم، مشکل تیروئید، یا بیماری جدی کلیوی/کبدی دارید؟", "analysis": "سابقه **اگزما (درماتیت آتوپیک)** در کودکی یا **رینیت آلرژیک** (تب یونجه) سه ضلع مثلث آتوپی را تکمیل می‌کند و قوی‌ترین پیش‌بینی‌کننده آسم است."},
+        "question1a": {"question": "آیا بیماری طولانی مدت (مزمن) مثل قند (دیابت)، فشار خون، آسم، مشکل تیروئید، یا بیماری جدی کلیوی/کبدی دارید؟", "analysis": "سابقه اگزما (درماتیت آتوپیک) در کودکی یا رینیت آلرژیک (تب یونجه) سه ضلع مثلث آتوپی را تکمیل می‌کند و قوی‌ترین پیش‌بینی‌کننده آسم است."},
         "question1b": {"question": "اگر بله، تشخیص این بیماری از چه موقع بوده است؟", "analysis": "آسم آلرژیک اغلب از کودکی یا نوجوانی شروع می‌شود."}
       },
       "question2": {
@@ -566,7 +566,7 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
     },
     "allergies": {
       "question1": {
-        "question1a": {"question": "آیا به دارو، غذا، یا ماده خاصی آلرژی (حساسیت) دارید؟", "analysis": "**این مهم‌ترین بخش است!** حساسیت به گرده، گرد و غبار، حیوانات خانگی یا غذاها (مثل بادام زمینی) ماهیت آلرژیک بیماری را تایید می‌کند."},
+        "question1a": {"question": "آیا به دارو، غذا، یا ماده خاصی آلرژی (حساسیت) دارید؟", "analysis": "این مهم‌ترین بخش است! حساسیت به گرده، گرد و غبار، حیوانات خانگی یا غذاها (مثل بادام زمینی) ماهیت آلرژیک بیماری را تایید می‌کند."},
         "question1b": {"question": "اگر بله، دقیقاً چه دارو یا ماده‌ای است؟ و واکنش شما (مثل کهیر یا تنگی نفس) چگونه بوده است؟", "analysis": "شدت واکنش‌های آلرژیک."}
       }
     },
@@ -595,10 +595,10 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
     },
     "ros": {
       "question1": {"question": "آیا اخیراً دچار تب، لرز، کاهش یا افزایش وزن ناخواسته، یا خستگی شدید و غیرمعمول شده‌اید؟", "analysis": "منفی است."},
-      "question2": {"question": "آیا سابقه راش، خارش، زخم‌های طولانی‌مدت، تغییر در رنگ یا بافت پوست/مو/ناخن، یا کبودی غیرعادی دارید؟", "analysis": "سابقه **اگزما (درماتیت)** در نواحی فلکسور (چین آرنج و زانو) بسیار شایع است."},
+      "question2": {"question": "آیا سابقه راش، خارش، زخم‌های طولانی‌مدت، تغییر در رنگ یا بافت پوست/مو/ناخن، یا کبودی غیرعادی دارید؟", "analysis": "سابقه اگزما (درماتیت) در نواحی فلکسور (چین آرنج و زانو) بسیار شایع است."},
       "question3": {"question": "آیا اخیراً دچار سردرد، سرگیجه، سفتی گردن، یا بزرگ شدن غدد لنفاوی در گردن شده‌اید؟", "analysis": "نامرتبط."},
-      "question4": {"question": "آیا دچار تاری دید، دوبینی، درد چشم، قرمزی، یا کاهش دید ناگهانی شده‌اید؟", "analysis": "**التهاب ملتحمه آلرژیک (Allergic Conjunctivitis):** خارش، قرمزی و اشک‌ریزش چشم اغلب همراه با علائم آسم تشدید می‌شود."},
-      "question5": {"question": "آیا دچار وزوز گوش، کاهش شنوایی، خونریزی بینی، گرفتگی مزمن بینی، گلودرد مزمن، مشکل در بلع (دیسفاژی)، یا آفت و زخم‌های دهانی مکرر هستید؟", "analysis": "**رینیت آلرژیک:** گرفتگی بینی، عطسه و خارش گلو در ۸۰٪ بیماران آسم آلرژیک دیده می‌شود (United Airway)."},
+      "question4": {"question": "آیا دچار تاری دید، دوبینی، درد چشم، قرمزی، یا کاهش دید ناگهانی شده‌اید؟", "analysis": "التهاب ملتحمه آلرژیک (Allergic Conjunctivitis): خارش، قرمزی و اشک‌ریزش چشم اغلب همراه با علائم آسم تشدید می‌شود."},
+      "question5": {"question": "آیا دچار وزوز گوش، کاهش شنوایی، خونریزی بینی، گرفتگی مزمن بینی، گلودرد مزمن، مشکل در بلع (دیسفاژی)، یا آفت و زخم‌های دهانی مکرر هستید؟", "analysis": "رینیت آلرژیک: گرفتگی بینی، عطسه و خارش گلو در ۸۰٪ بیماران آسم آلرژیک دیده می‌شود (United Airway)."},
       "question6": {"question": "آیا سابقه درد قفسه سینه، تپش قلب، تنگی نفس با فعالیت، تنگی نفس در حالت خوابیده (ارتوپنه)، یا تورم پاها (ادم) دارید؟", "analysis": "تنگی نفس و احساس سنگینی قفسه سینه."},
       "question7": {"question": "آیا سابقه سرفه، خس‌خس سینه، خلط خونی (هموپتیزی)، یا تنگی نفس (به جز تنگی نفس مرتبط با فعالیت شدید) دارید؟", "analysis": "سرفه و خس‌خس سینه علائم اصلی هستند."},
       "question8": {"question": "آیا دچار حالت تهوع، استفراغ، سوزش سر دل، درد شکم، تغییر در عادات اجابت مزاج (اسهال یا یبوست)، خونریزی از مقعد، یا زردی پوست و چشم (یرقان) هستید؟", "analysis": "نامرتبط."},
@@ -673,7 +673,7 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
       "percussion": {"question": "دق قفسه سینه", "analysis": "نرمال."},
       "auscultation": {
         "breath_sounds_intensity": {"question": "شدت صداهای تنفسی", "analysis": "ممکن است نرمال باشد یا ویزینگ خفیف در انتهای بازدم شنیده شود."},
-        "adventitious_sounds": {"question": "صداهای اضافی", "analysis": "**ویزینگ (Wheezing):** صدای سوت‌مانند در بازدم، نشانه اصلی است. نکته مهم: در آسم خفیف، ممکن است در حالت استراحت ویزینگ شنیده نشود و فقط با بازدم اجباری (Forced Expiration) آشکار شود."}
+        "adventitious_sounds": {"question": "صداهای اضافی", "analysis": "ویزینگ (Wheezing): صدای سوت‌مانند در بازدم، نشانه اصلی است. نکته مهم: در آسم خفیف، ممکن است در حالت استراحت ویزینگ شنیده نشود و فقط با بازدم اجباری (Forced Expiration) آشکار شود."}
       }
     },
     "cardiovascular_system": {
@@ -733,42 +733,42 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
   "paraclinic": {
     "basic_blood_tests": {
       "BMP": {"question": "BMP", "analysis": "نرمال."},
-      "CBC": {"question": "CBC", "analysis": "**ائوزینوفیلی:** افزایش خفیف ائوزینوفیل‌ها در خون، نشانگر آلرژی سیستمیک است و تشخیص آسم آلرژیک را تقویت می‌کند."},
+      "CBC": {"question": "CBC", "analysis": "ائوزینوفیلی: افزایش خفیف ائوزینوفیل‌ها در خون، نشانگر آلرژی سیستمیک است و تشخیص آسم آلرژیک را تقویت می‌کند."},
       "ESR": {"question": "ESR", "analysis": "نرمال."},
       "CRP": {"question": "CRP", "analysis": "نرمال."},
       "VBG": {"question": "VBG", "analysis": "معمولاً لازم نیست و نرمال است."},
       "LFTs": {"question": "LFTs", "analysis": "نرمال."}
     },
     "specialized_lung_tests": {
-      "D_dimer": {"question": "D_dimer", "analysis": "نامرتبط."},
-      "Sputum_AFB": {"question": "Sputum_AFB", "analysis": "نامرتبط."},
-      "BNP_NT_proBNP": {"question": "BNP_NT_proBNP", "analysis": "نرمال."},
-      "Sputum_analysis": {"question": "Sputum_analysis", "analysis": "ممکن است ائوزینوفیل در خلط دیده شود (در صورت بررسی)."},
-      "a1_antitrypsin_level": {"question": "a1_antitrypsin_level", "analysis": "نامرتبط."}
+      "D_dimer": {"question": "D dimer", "analysis": "نامرتبط."},
+      "Sputum_AFB": {"question": "Sputum AFB", "analysis": "نامرتبط."},
+      "BNP_NT_proBNP": {"question": "BNP NT proBNP", "analysis": "نرمال."},
+      "Sputum_analysis": {"question": "Sputum Analysis", "analysis": "ممکن است ائوزینوفیل در خلط دیده شود (در صورت بررسی)."},
+      "a1_antitrypsin_level": {"question": "a1 Antitrypsin Level", "analysis": "نامرتبط."}
     },
     "immunity_and_serology": {
-      "HIV_test": {"question": "HIV_test", "analysis": "نامرتبط."},
-      "Autoimmune_pannel_ANA_ANCA": {"question": "Autoimmune_pannel_ANA_ANCA", "analysis": "نامرتبط."}
+      "HIV_test": {"question": "HIV Test", "analysis": "نامرتبط."},
+      "Autoimmune_pannel_ANA_ANCA": {"question": "Autoimmune Pannel ANA ANCA", "analysis": "نامرتبط."}
     },
     "simple_imaging": {
-      "Chest_X_Ray": {"question": "Chest_X_Ray", "analysis": "معمولاً **نرمال** است. هدف اصلی از انجام عکس ریه، رد کردن سایر بیماری‌ها (مثل پنومونی، جسم خارجی یا توده) است، نه دیدن خودِ آسم."}
+      "Chest_X_Ray": {"question": "Chest X-Ray", "analysis": "معمولاً نرمال است. هدف اصلی از انجام عکس ریه، رد کردن سایر بیماری‌ها (مثل پنومونی، جسم خارجی یا توده) است، نه دیدن خودِ آسم."}
     },
     "advanced_imaging": {
-      "Chest_CT_CTPA": {"question": "Chest_CT_CTPA", "analysis": "لازم نیست."}
+      "Chest_CT_CTPA": {"question": "Chest CT CTPA", "analysis": "لازم نیست."}
     },
     "functional_tests": {
-      "dlco": {"question": "dlco", "analysis": "نرمال."},
-      "peak_flow": {"question": "peak_flow", "analysis": "**نوسان (Variability):** ویژگی مهم آسم این است که PEF (جریان بازدمی اوج) در طول روز تغییر می‌کند (صبح‌ها کمتر، عصرها بیشتر). تغییر بیش از ۲۰٪ در روز نشانه آسم کنترل نشده است."},
-      "Spirometry": {"question": "Spirometry", "analysis": "**استاندارد طلایی:** ممکن است در حالت عادی نرمال باشد. اما **تست برگشت‌پذیری (Reversibility Test)** مثبت است؛ یعنی بعد از استفاده از اسپری سالبوتامول، حجم تنفسی (FEV1) بیش از ۱۲٪ و ۲۰۰ سی‌سی افزایش می‌یابد. این یافته تشخیص آسم را قطعی می‌کند."},
-      "plethysmography": {"question": "plethysmography", "analysis": "معمولاً لازم نیست."}
+      "dlco": {"question": "DLCO", "analysis": "نرمال."},
+      "peak_flow": {"question": "Peak Flow", "analysis": "نوسان (Variability): ویژگی مهم آسم این است که PEF (جریان بازدمی اوج) در طول روز تغییر می‌کند (صبح‌ها کمتر، عصرها بیشتر). تغییر بیش از ۲۰٪ در روز نشانه آسم کنترل نشده است."},
+      "Spirometry": {"question": "Spirometry", "analysis": "استاندارد طلایی: ممکن است در حالت عادی نرمال باشد. اما تست برگشت‌پذیری (Reversibility Test) مثبت است؛ یعنی بعد از استفاده از اسپری سالبوتامول، حجم تنفسی (FEV1) بیش از ۱۲٪ و ۲۰۰ سی‌سی افزایش می‌یابد. این یافته تشخیص آسم را قطعی می‌کند."},
+      "plethysmography": {"question": "Plethysmography", "analysis": "معمولاً لازم نیست."}
     },
     "procedures": {
       "Bronchoscopy": {"question": "Bronchoscopy", "analysis": "لازم نیست."},
-      "torachonthesis": {"question": "torachonthesis", "analysis": "لازم نیست."}
+      "torachonthesis": {"question": "Thoracentesis", "analysis": "لازم نیست."}
     }
   },
   "differential_diagnosis": {
-    "disease1": {"question": "Asthma", "analysis": "**تشخیص قطعی.** وجود علائم نوسانی، سابقه آتوپی، معاینه فیزیکی منطبق (ویزینگ) و اسپیرومتری با الگوی برگشت‌پذیر."},
+    "disease1": {"question": "Asthma", "analysis": "تشخیص قطعی. وجود علائم نوسانی، سابقه آتوپی، معاینه فیزیکی منطبق (ویزینگ) و اسپیرومتری با الگوی برگشت‌پذیر."},
     "disease2": {"question": "Pneumonia", "analysis": "بیمار تب، لرز یا تراکم در عکس ریه ندارد."},
     "disease3": {"question": "COPD", "analysis": "بیمار جوان است و سابقه سیگار کشیدن طولانی ندارد. همچنین انسداد در COPD کاملاً برگشت‌پذیر نیست."},
     "disease4": {"question": "PTE", "analysis": "شروع علائم تدریجی و نوسانی است، نه ناگهانی. ریسک فاکتور لخته وجود ندارد."},
@@ -776,11 +776,11 @@ ASTHMA_MILD_ALLERGIC_DETAILED = {
     "disease6": {"question": "PH", "analysis": "نامرتبط."}
   },
   "final_diagnosis": {
-    "disease": "Mild Allergic Asthma"
+    "disease": "Asthma"
   },
   "pleural_effusion_assessment": {
-    "has_effusion": {"question": "has_effusion", "analysis": "خیر. آسم باعث ایجاد مایع در فضای پلور نمی‌شود."},
-    "need_aspiration": {"question": "need_aspiration", "analysis": "خیر."},
+    "has_effusion": {"question": "hافیوژن دارد؟n", "analysis": "خیر. آسم یک بیماری درگیرکننده راه‌های هوایی است و باعث ایجاد مایع در فضای پلور (افیوژن) نمی‌شود."},
+    "need_aspiration": {"question": "نیاز به aspiration دارد؟", "analysis": "خیر. مایعی وجود ندارد که نیاز به کشیدن داشته باشد."},
     "effusion_type": "none"
   }
 }
@@ -910,10 +910,10 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
     "present_illness": {
       "question1": {"question": "علائم از چه زمانی شروع شده و در این مدت چه تغییراتی داشته است؟", "analysis": "آسم یک بیماری مزمن است، اما در اینجا با تابلوی «کنترل نشده» روبرو هستیم. یعنی بیمار ذکر می‌کند که علائمش در هفته‌های اخیر تشدید شده، حملات مکرر دارد یا همیشه تنگی نفس دارد. سیر نوسانی (Variability) ویژگی اصلی آسم است."},
       "question2": {"question": "آیا شروع بیماری ناگهانی بود یا تدریجی، و آیا بعد از یک اتفاق خاص مانند عفونت یا ... شروع شد؟", "analysis": "اغلب بیماران یک عامل محرک (Trigger) را ذکر می‌کنند: عفونت ویروسی اخیر، تماس با آلرژن‌ها، هوای سرد یا قطع داروهای کنترل‌کننده (Inhaled Steroids). شروع حمله حاد می‌تواند ناگهانی باشد."},
-      "question3": {"question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟", "analysis": "در آسم کنترل نشده، تنگی نفس با کمترین فعالیت یا حتی در استراحت ایجاد می‌شود. **علائم شبانه** (بیدار شدن با سرفه یا تنگی نفس) یکی از مهم‌ترین معیارهای عدم کنترل بیماری است."},
+      "question3": {"question": "آیا تنگی نفس شما مداوم است یا موقتی است و آیا با فعالیت یا در حالت استراحت بدتر می‌شود؟", "analysis": "در آسم کنترل نشده، تنگی نفس با کمترین فعالیت یا حتی در استراحت ایجاد می‌شود. علائم شبانه (بیدار شدن با سرفه یا تنگی نفس) یکی از مهم‌ترین معیارهای عدم کنترل بیماری است."},
       "question4": {"question": "آیا سرفه دارید؟ اگر بله، آیا خشک است یا خلط‌ دار، و رنگ و مقدار خلط چقدر است؟", "analysis": "سرفه معمولاً خشک یا با خلط اندک، چسبناک و سفید (موکوئیدی) است. اگر خلط چرکی باشد، باید به فکر عفونت باکتریال (پنومونی/سینوزیت) به عنوان عامل تشدیدکننده بود."},
-      "question5": {"question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟", "analysis": "**خس‌خس (Wheezing)** علامت کاردینال آسم است که ناشی از تنگی راه‌های هوایی و توربولانس جریان هواست. معمولاً بازدمی است، اما در موارد شدید هم در دم و هم در بازدم شنیده می‌شود."},
-      "question6": {"question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟", "analysis": "احساس **سنگینی و فشار قفسه سینه (Chest Tightness)** شکایت شایع بیماران آسمی است که ناشی از افزایش کار تنفسی و هوای محبوس شده (Air Trapping) می‌باشد."},
+      "question5": {"question": "آیا خس خس سینه یا تنفس پر سر و صدا دارید؟", "analysis": "خس‌خس (Wheezing) علامت کاردینال آسم است که ناشی از تنگی راه‌های هوایی و توربولانس جریان هواست. معمولاً بازدمی است، اما در موارد شدید هم در دم و هم در بازدم شنیده می‌شود."},
+      "question6": {"question": "آیا درد یا گرفتگی قفسه سینه دارید؟ آیا با تنفس یا حرکت تغییر می‌کند؟", "analysis": "احساس سنگینی و فشار قفسه سینه (Chest Tightness) شکایت شایع بیماران آسمی است که ناشی از افزایش کار تنفسی و هوای محبوس شده (Air Trapping) می‌باشد."},
       "question7": {"question": "آیا اخیراً تب، لرز یا تعریق شبانه داشته‌اید؟", "analysis": "تب بالا معمولاً جزو علائم آسم خالص نیست. اگر باشد، نشانه عفونت ویروسی یا باکتریال (پنومونی) است که حمله آسم را شعله‌ور کرده است."},
       "question8": {"question": "آیا دچار تورم در پاها، تپش قلب یا سرگیجه شده‌اید؟", "analysis": "تپش قلب (تاکیکاردی) به دلیل مصرف مکرر اسپری‌های سالبوتامول (SABA) و اضطراب ناشی از تنگی نفس بسیار شایع است."},
       "question9": {"question": "آیا قبلاً هم مشکل مشابهی داشته‌اید و چه درمانی به شما کمک کرده است؟", "analysis": "سابقه آسم از کودکی یا حملات قبلی، تشخیص را قطعی می‌کند. سوال کلیدی این است: «آیا اخیراً نیازت به اسپری آبی (Reliever) بیشتر شده؟» استفاده بیش از ۲ بار در هفته یعنی آسم کنترل نیست."},
@@ -925,7 +925,7 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
         "question1b": {"question": "اگر بله، تشخیص این بیماری از چه موقع بوده است؟", "analysis": "بررسی شدت و مزمن بودن."}
       },
       "question2": {
-        "question2a": {"question": "آیا تا به حال عمل جراحی (بزرگ یا کوچک) داشته‌اید؟ و آیا تا به حال در بیمارستان بستری شده‌اید؟", "analysis": "سابقه **بستری در ICU** یا **اینتوباسیون** قبلی به دلیل آسم، مهم‌ترین ریسک فاکتور برای مرگ‌ومیر و حملات شدید بعدی است."},
+        "question2a": {"question": "آیا تا به حال عمل جراحی (بزرگ یا کوچک) داشته‌اید؟ و آیا تا به حال در بیمارستان بستری شده‌اید؟", "analysis": "سابقه بستری در ICU یا اینتوباسیون قبلی به دلیل آسم، مهم‌ترین ریسک فاکتور برای مرگ‌ومیر و حملات شدید بعدی است."},
         "question2b": {"question": "اگر بله، دلیلش چه بوده و در چه سالی؟ همچنین، آیا تا به حال انتقال خون داشته‌اید؟", "analysis": "نامرتبط."}
       },
       "question3": {"question": "آیا سابقه بیماری های قلبی، ریوی و مغزی را دارید؟", "analysis": "بسیار مهم! آسم قلبی (نارسایی قلب چپ) می‌تواند با ویزینگ تظاهر کند و باید در تشخیص افتراقی افراد مسن‌تر مد نظر باشد."},
@@ -943,7 +943,7 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
     },
     "allergies": {
       "question1": {
-        "question1a": {"question": "آیا به دارو، غذا، یا ماده خاصی آلرژی (حساسیت) دارید؟", "analysis": "**تریاد سامتر (Samter's Triad):** آسم + پولیپ بینی + حساسیت به آسپرین. این بیماران آسم شدید و دشواری دارند."},
+        "question1a": {"question": "آیا به دارو، غذا، یا ماده خاصی آلرژی (حساسیت) دارید؟", "analysis": "تریاد سامتر (Samter's Triad): آسم + پولیپ بینی + حساسیت به آسپرین. این بیماران آسم شدید و دشواری دارند."},
         "question1b": {"question": "اگر بله، دقیقاً چه دارو یا ماده‌ای است؟ و واکنش شما (مثل کهیر یا تنگی نفس) چگونه بوده است؟", "analysis": "شناسایی تریگرها."}
       }
     },
@@ -989,7 +989,7 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
   },
   "physical_exam": {
     "vital_signs": {
-      "BP": {"question": "فشار خون(BP)", "analysis": "**پالس پارادوکس (Pulsus Paradoxus):** افت فشار سیستولیک بیش از ۱۰-۱۲ میلی‌متر جیوه در دم، نشان‌دهنده حمله بسیار شدید آسم و افزایش شدید فشار منفی داخل توراکس است."},
+      "BP": {"question": "فشار خون(BP)", "analysis": "پالس پارادوکس (Pulsus Paradoxus): افت فشار سیستولیک بیش از ۱۰-۱۲ میلی‌متر جیوه در دم، نشان‌دهنده حمله بسیار شدید آسم و افزایش شدید فشار منفی داخل توراکس است."},
       "T": {"question": "دمای بدن(T)", "analysis": "معمولاً نرمال است، مگر عفونت وجود داشته باشد."},
       "PR": {"question": "ضربان قلب(PR)", "analysis": "تاکیکاردی (>۱۱۰) نشانه شدت حمله و مصرف بتا-آگونیست‌هاست."},
       "RR": {"question": "تعداد تنفس(RR)", "analysis": "تاکی‌پنه (>۳۰) نشانه دیسترس تنفسی است."},
@@ -1049,7 +1049,7 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
       },
       "percussion": {"question": "دق قفسه سینه", "analysis": "هیپررزونانس (به دلیل حبس هوا)."},
       "auscultation": {
-        "breath_sounds_intensity": {"question": "شدت صداهای تنفسی", "analysis": "**ویزینگ (Wheezing) منتشر:** معمولاً بازدمی است ولی در موارد شدید دمی هم می‌شود. \n**هشدار (Silent Chest):** اگر بیمار کبود و خواب‌آلود است و ویزینگ شنیده نمی‌شود، یعنی انسداد آنقدر شدید است که هوا جریان ندارد. این علامت نارسایی تنفسی قریب‌الوقوع است."},
+        "breath_sounds_intensity": {"question": "شدت صداهای تنفسی", "analysis": "ویزینگ (Wheezing) منتشر: معمولاً بازدمی است ولی در موارد شدید دمی هم می‌شود. \nهشدار (Silent Chest): اگر بیمار کبود و خواب‌آلود است و ویزینگ شنیده نمی‌شود، یعنی انسداد آنقدر شدید است که هوا جریان ندارد. این علامت نارسایی تنفسی قریب‌الوقوع است."},
         "adventitious_sounds": {"question": "صداهای اضافی", "analysis": "ویزینگ پلی‌فونیک منتشر."}
       }
     },
@@ -1110,38 +1110,38 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
   "paraclinic": {
     "basic_blood_tests": {
       "BMP": {"question": "BMP", "analysis": "ممکن است هایپوکالمی (پتاسیم پایین) به دلیل مصرف زیاد سالبوتامول دیده شود."},
-      "CBC": {"question": "CBC", "analysis": "**ائوزینوفیلی (Eosinophilia):** افزایش ائوزینوفیل خون، نشانه فنوتیپ آلرژیک آسم است و پاسخ خوب به کورتون را پیش‌بینی می‌کند."},
+      "CBC": {"question": "CBC", "analysis": "ائوزینوفیلی (Eosinophilia): افزایش ائوزینوفیل خون، نشانه فنوتیپ آلرژیک آسم است و پاسخ خوب به کورتون را پیش‌بینی می‌کند."},
       "ESR": {"question": "ESR", "analysis": "نرمال (مگر در موارد واسکولیت چرگ-اشتراوس)."},
       "CRP": {"question": "CRP", "analysis": "در آسم خالص بالا نمی‌رود. اگر بالا باشد، باید به فکر عفونت باکتریال همزمان بود."},
-      "VBG": {"question": "VBG", "analysis": "در حمله خفیف/متوسط آلکالوز تنفسی (CO2 پایین) داریم. **نرمال شدن یا بالا رفتن PCO2** در یک بیمار بدحال، علامت خطرناک خستگی عضلات تنفسی و نیاز به ونتیلاسیون است."},
+      "VBG": {"question": "VBG", "analysis": "در حمله خفیف/متوسط آلکالوز تنفسی (CO2 پایین) داریم. نرمال شدن یا بالا رفتن PCO2 در یک بیمار بدحال، علامت خطرناک خستگی عضلات تنفسی و نیاز به ونتیلاسیون است."},
       "LFTs": {"question": "LFTs", "analysis": "نرمال."}
     },
     "specialized_lung_tests": {
-      "D_dimer": {"question": "D_dimer", "analysis": "برای رد آمبولی ریه (که می‌تواند شبیه حمله آسم باشد) در موارد مشکوک لازم است."},
-      "Sputum_AFB": {"question": "Sputum_AFB", "analysis": "نامرتبط."},
-      "BNP_NT_proBNP": {"question": "BNP_NT_proBNP", "analysis": "برای افتراق از «آسم قلبی» (نارسایی قلب). در آسم برونکیال نرمال است."},
-      "Sputum_analysis": {"question": "Sputum_analysis", "analysis": "ائوزینوفیل یا نوتروفیل در خلط."},
-      "a1_antitrypsin_level": {"question": "a1_antitrypsin_level", "analysis": "در موارد مقاوم برای رد COPD/آمفیزم."}
+      "D_dimer": {"question": "D dimer", "analysis": "برای رد آمبولی ریه (که می‌تواند شبیه حمله آسم باشد) در موارد مشکوک لازم است."},
+      "Sputum_AFB": {"question": "Sputum AFB", "analysis": "نامرتبط."},
+      "BNP_NT_proBNP": {"question": "BNP NT proBNP", "analysis": "برای افتراق از «آسم قلبی» (نارسایی قلب). در آسم برونکیال نرمال است."},
+      "Sputum_analysis": {"question": "Sputum Analysis", "analysis": "ائوزینوفیل یا نوتروفیل در خلط."},
+      "a1_antitrypsin_level": {"question": "a1 Antitrypsin Level", "analysis": "در موارد مقاوم برای رد COPD/آمفیزم."}
     },
     "immunity_and_serology": {
-      "HIV_test": {"question": "HIV_test", "analysis": "نامرتبط."},
-      "Autoimmune_pannel_ANA_ANCA": {"question": "Autoimmune_pannel_ANA_ANCA", "analysis": "برای رد واسکولیت (EGPA) در آسم شدید و مقاوم."}
+      "HIV_test": {"question": "HIV Test", "analysis": "نامرتبط."},
+      "Autoimmune_pannel_ANA_ANCA": {"question": "Autoimmune Pannel ANA ANCA", "analysis": "برای رد واسکولیت (EGPA) در آسم شدید و مقاوم."}
     },
     "simple_imaging": {
-      "Chest_X_Ray": {"question": "Chest_X_Ray", "analysis": "**پرهوایی (Hyperinflation):** دیافراگم‌ها صاف و دنده‌ها افقی می‌شوند. مهم‌ترین کاربرد عکس ریه در حمله آسم، رد کردن عوارض مثل **پنوموتوراکس** یا پنومونی است."}
+      "Chest_X_Ray": {"question": "Chest X-Ray", "analysis": "پرهوایی (Hyperinflation): دیافراگم‌ها صاف و دنده‌ها افقی می‌شوند. مهم‌ترین کاربرد عکس ریه در حمله آسم، رد کردن عوارض مثل پنوموتوراکس یا پنومونی است."}
     },
     "advanced_imaging": {
-      "Chest_CT_CTPA": {"question": "Chest_CT_CTPA", "analysis": "معمولاً لازم نیست، مگر برای تشخیص افتراقی (مثل تومور، جسم خارجی یا آمبولی)."}
+      "Chest_CT_CTPA": {"question": "Chest CT CTPA", "analysis": "معمولاً لازم نیست، مگر برای تشخیص افتراقی (مثل تومور، جسم خارجی یا آمبولی)."}
     },
     "functional_tests": {
-      "dlco": {"question": "dlco", "analysis": "در آسم نرمال یا بالاست (برخلاف COPD که پایین است)."},
-      "peak_flow": {"question": "peak_flow", "analysis": "**PEF (جریان بازدمی اوج):** ابزار عالی برای ارزیابی شدت حمله و پاسخ به درمان در اورژانس. اگر PEF < 50% شخصی باشد، حمله شدید است."},
-      "Spirometry": {"question": "Spirometry", "analysis": "**الگوی انسدادی (Obstructive):** کاهش FEV1 و نسبت FEV1/FVC. ویژگی کلیدی آسم **برگشت‌پذیری (Reversibility)** است: افزایش FEV1 بیش از ۱۲٪ و ۲۰۰ سی‌سی بعد از اسپری برونکودیلاتور."},
-      "plethysmography": {"question": "plethysmography", "analysis": "افزایش حجم‌های ریوی (TLC, RV)."}
+      "dlco": {"question": "DLCO", "analysis": "در آسم نرمال یا بالاست (برخلاف COPD که پایین است)."},
+      "peak_flow": {"question": "Peak Flow", "analysis": "PEF (جریان بازدمی اوج): ابزار عالی برای ارزیابی شدت حمله و پاسخ به درمان در اورژانس. اگر PEF < 50% شخصی باشد، حمله شدید است."},
+      "Spirometry": {"question": "Spirometry", "analysis": "الگوی انسدادی (Obstructive): کاهش FEV1 و نسبت FEV1/FVC. ویژگی کلیدی آسم برگشت‌پذیری (Reversibility) است: افزایش FEV1 بیش از ۱۲٪ و ۲۰۰ سی‌سی بعد از اسپری برونکودیلاتور."},
+      "plethysmography": {"question": "Plethysmography", "analysis": "افزایش حجم‌های ریوی (TLC, RV)."}
     },
     "procedures": {
       "Bronchoscopy": {"question": "Bronchoscopy", "analysis": "برای رد اختلال تارهای صوتی (VCD) یا جسم خارجی."},
-      "torachonthesis": {"question": "torachonthesis", "analysis": "کاربرد ندارد."}
+      "torachonthesis": {"question": "Thoracentesis", "analysis": "کاربرد ندارد."}
     }
   },
   "differential_diagnosis": {
@@ -1153,11 +1153,11 @@ ASTHMA_SEVERE_UNCONTROLLED_DETAILED = {
     "disease6": {"question": "PH", "analysis": "علائم تدریجی نارسایی قلب راست دارد."}
   },
   "final_diagnosis": {
-    "disease": "Severe Uncontrolled Asthma"
+    "disease": "Asthma"
   },
   "pleural_effusion_assessment": {
-    "has_effusion": {"question": "has_effusion", "analysis": "آسم افیوژن نمی‌دهد."},
-    "need_aspiration": {"question": "need_aspiration", "analysis": "خیر."},
+    "has_effusion": {"question": "افیوژن دارد؟", "analysis": "خیر. آسم یک بیماری درگیرکننده راه‌های هوایی است و باعث ایجاد مایع در فضای پلور (افیوژن) نمی‌شود."},
+    "need_aspiration": {"question": "نیاز به aspiration دارد؟", "analysis": "خیر. مایعی وجود ندارد که نیاز به کشیدن داشته باشد."},
     "effusion_type": "none"
   }
 }

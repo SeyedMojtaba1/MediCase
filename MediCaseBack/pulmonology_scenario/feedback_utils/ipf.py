@@ -574,55 +574,55 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "برای رد آمبولی ریه (PE) به عنوان علت بدتر شدن علائم لازم است."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "جهت رد عفونت‌های فرصت‌طلب."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "برای رد نارسایی قلبی (CHF) به عنوان علت اصلی تنگی نفس چک می‌شود. در حمله خالص IPF ممکن است نرمال یا کمی بالا (به دلیل استرین راست) باشد."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "کشت خلط و بررسی ویروسی برای اطمینان از نبودن عفونت فعال ضروری است."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "نامرتبط (در این مرحله تشخیص زمینه ای IPF داده شده است)."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "ارتشاحات جدید: علاوه بر نمای مشبک (Reticular) قدیمی در قاعده‌ها، سایه‌های جدید دوطرفه (New Opacities) دیده می‌شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "نمای شیشه‌مات جدید (New Ground-Glass Opacity): این یافته کلیدی در HRCT است که روی زمینه فیبروز لانه زنبوری (Honeycombing) قدیمی سوار شده است و نشان‌دهنده آسیب حاد آلوئولی (DAD) است."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "غیرقابل انجام."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "غیرقابل انجام."
       },
       "Spirometry": {
@@ -630,7 +630,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
         "analysis": "الگوی محدودکننده شدید (Severe Restriction): اگر انجام شود (که معمولاً بیمار تحمل نمی‌کند)، کاهش شدید FVC نسبت به اسپیرومتری‌های قبلی دیده می‌شود."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "غیرقابل انجام."
       }
     },
@@ -640,7 +640,7 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
         "analysis": "گاهی برای شستشوی برونش (BAL) و رد کردن عفونت‌های قارچی/ویروسی یا خونریزی آلوئولی انجام می‌شود."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "معمولاً افیوژن وجود ندارد."
       }
     }
@@ -676,11 +676,11 @@ IPF_ACUTE_IPF_EXACERBATION_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "معمولاً ندارد."
+      "question": "افیوژن دارد؟",
+      "analysis":  "خیر. بیماری IPF (فیبروز ایدیوپاتیک) فضای پلور را درگیر نمی‌کند و افیوژن نمی‌دهد. در صورت وجود مایع باید به دنبال علل دیگر (مثل نارسایی قلبی یا سرطان) بود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
+      "question": "نیاز به aspiration دارد؟",
       "analysis": "خیر."
     },
     "effusion_type": "none"
@@ -1480,55 +1480,55 @@ IPF_RHEUMATOID_ILD_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "نرمال."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "نرمال."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نامرتبط."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "مثبت قوی: فاکتور روماتوئید (RF) و آنتی‌بادی ضد سیترولین (Anti-CCP) در اکثریت بیماران RA-ILD مثبت هستند. تیتر بالای این آنتی‌بادی‌ها با ریسک بالاتر درگیری ریه همراه است."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "نمای رتیکولار (Reticular): خطوط شبکه‌ای در قاعده‌ی ریه‌ها. ممکن است افیوژن پلورال یا ضخیم‌شدگی پلور هم دیده شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "الگوی UIP یا NSIP: شایع‌ترین الگو در RA، الگوی UIP (شبیه IPF) با نمای لانه زنبوری (Honeycombing) در قاعده و محیط ریه است. الگوی NSIP (شیشه‌مات + رتیکولار) هم ممکن است دیده شود."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "کاهش یافته: کاهش ظرفیت انتشار گاز (DLCO) حساس‌ترین تست برای تشخیص زودرس ILD است و حتی قبل از تغییرات اسپیرومتری رخ می‌دهد."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "نامرتبط."
       },
       "Spirometry": {
@@ -1536,7 +1536,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
         "analysis": "الگوی محدودکننده (Restrictive): کاهش FVC و FEV1 با نسبت FEV1/FVC نرمال یا بالا. این نشان‌دهنده کاهش حجم ریه به دلیل فیبروز و سفتی بافت است."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "کاهش TLC: تاییدکننده الگوی محدودکننده واقعی است."
       }
     },
@@ -1546,7 +1546,7 @@ IPF_RHEUMATOID_ILD_DETAILED = {
         "analysis": "برای رد کردن عفونت در بیماران ایمونوساپرسیو یا بررسی خونریزی آلوئولی استفاده می‌شود."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "اگر افیوژن پلورال وجود داشته باشد، آنالیز آن معمولاً گلوکز بسیار پایین (<30 mg/dL) و pH پایین را نشان می‌دهد که اختصاصی پلوریت روماتوئید است."
       }
     }
@@ -1582,12 +1582,12 @@ IPF_RHEUMATOID_ILD_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "ممکن است دیده شود (پلوریت روماتوئید)."
+      "question": "افیوژن دارد؟",
+      "analysis": "بله. درگیری پلور (Pleuritis) در آرتریت روماتوئید بسیار شایع است و می‌تواند با یا بدون درگیری پارانشیم ریه، باعث تجمع مایع شود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
-      "analysis": "بله، برای تایید ماهیت روماتوئید (قند پایین) و رد عفونت (آمپیم)."
+      "question": "نیاز به aspiration دارد؟",
+      "analysis": "بله. برای تایید ماهیت روماتوئید مایع (که معمولاً گلوکز بسیار پایین و pH پایین دارد) و مهم‌تر از همه، برای رد کردن عفونت (Ampyema) انجام توراکوسنتز تشخیصی لازم است."
     },
     "effusion_type": "exudative"
   }
@@ -2386,55 +2386,55 @@ IPF_STABLE_IPF_DETAILED = {
     },
     "specialized_lung_tests": {
       "D_dimer": {
-        "question": "D_dimer",
+        "question": "D dimer",
         "analysis": "نامرتبط."
       },
       "Sputum_AFB": {
-        "question": "Sputum_AFB",
+        "question": "Sputum AFB",
         "analysis": "نامرتبط."
       },
       "BNP_NT_proBNP": {
-        "question": "BNP_NT_proBNP",
+        "question": "BNP NT proBNP",
         "analysis": "نرمال."
       },
       "Sputum_analysis": {
-        "question": "Sputum_analysis",
+        "question": "Sputum Analysis",
         "analysis": "نامرتبط."
       },
       "a1_antitrypsin_level": {
-        "question": "a1_antitrypsin_level",
+        "question": "a1 Antitrypsin Level",
         "analysis": "نامرتبط."
       }
     },
     "immunity_and_serology": {
       "HIV_test": {
-        "question": "HIV_test",
+        "question": "HIV Test",
         "analysis": "نامرتبط."
       },
       "Autoimmune_pannel_ANA_ANCA": {
-        "question": "Autoimmune_pannel_ANA_ANCA",
+        "question": "Autoimmune Pannel ANA ANCA",
         "analysis": "منفی: برای تشخیص IPF، باید تمام مارکرهای بیماری‌های خودایمنی (ANA, RF, Anti-CCP) منفی باشند. اگر مثبت باشند، تشخیص به بیماری بافت همبند تغییر می‌کند."
       }
     },
     "simple_imaging": {
       "Chest_X_Ray": {
-        "question": "Chest_X_Ray",
+        "question": "Chest X-Ray",
         "analysis": "نمای رتیکولار (Reticular): خطوط شبکه‌ای در قاعده‌ی ریه‌ها و کاهش حجم ریه دیده می‌شود."
       }
     },
     "advanced_imaging": {
       "Chest_CT_CTPA": {
-        "question": "Chest_CT_CTPA",
+        "question": "Chest CT CTPA",
         "analysis": "الگوی UIP (استاندارد طلایی): وجود همزمان ۴ علامت: ۱. درگیری غالب در قاعده و زیر پلور ۲. نمای مشبک (Reticular) ۳. لانه زنبوری (Honeycombing) با یا بدون برونشکتازی کششی ۴. نبودن نماهای ناسازگار (مثل Ground glass وسیع)."
       }
     },
     "functional_tests": {
       "dlco": {
-        "question": "dlco",
+        "question": "DLCO",
         "analysis": "کاهش یافته: کاهش DLCO حساس‌ترین تست برای تشخیص زودرس و پیگیری پیشرفت بیماری است."
       },
       "peak_flow": {
-        "question": "peak_flow",
+        "question": "Peak Flow",
         "analysis": "نامرتبط."
       },
       "Spirometry": {
@@ -2442,7 +2442,7 @@ IPF_STABLE_IPF_DETAILED = {
         "analysis": "الگوی محدودکننده (Restrictive): کاهش FVC (ظرفیت حیاتی) و FEV1، با نسبت FEV1/FVC نرمال یا حتی افزایش یافته. این یعنی ریه کوچک و سفت شده است."
       },
       "plethysmography": {
-        "question": "plethysmography",
+        "question": "Plethysmography",
         "analysis": "کاهش TLC: کاهش ظرفیت کل ریه، تاییدکننده الگوی محدودکننده است."
       }
     },
@@ -2452,7 +2452,7 @@ IPF_STABLE_IPF_DETAILED = {
         "analysis": "برای رد کردن سایر تشخیص‌ها (مثل سارکوئیدوز یا عفونت) استفاده می‌شود، نه برای تایید IPF."
       },
       "torachonthesis": {
-        "question": "torachonthesis",
+        "question": "Thoracentesis",
         "analysis": "نامرتبط."
       }
     }
@@ -2488,11 +2488,11 @@ IPF_STABLE_IPF_DETAILED = {
   },
   "pleural_effusion_assessment": {
     "has_effusion": {
-      "question": "has_effusion",
-      "analysis": "خیر. IPF معمولاً افیوژن پلورال نمی‌دهد. اگر مایع دیده شود، باید به فکر علل دیگر (نارسایی قلب، سرطان، بیماری بافت همبند) بود."
+      "question": "افیوژن دارد؟",
+      "analysis":  "خیر. بیماری IPF (فیبروز ایدیوپاتیک) فضای پلور را درگیر نمی‌کند و افیوژن نمی‌دهد. در صورت وجود مایع باید به دنبال علل دیگر (مثل نارسایی قلبی یا سرطان) بود."
     },
     "need_aspiration": {
-      "question": "need_aspiration",
+      "question": "نیاز به aspiration دارد؟",
       "analysis": "خیر."
     },
     "effusion_type": "none"
