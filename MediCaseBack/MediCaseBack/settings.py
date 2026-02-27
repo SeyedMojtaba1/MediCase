@@ -165,6 +165,10 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(hour=1, minute=0), 
         "kwargs": {"count": 20}, 
     },
+    "generate-daily-scenarios-every-midnight": {
+        "task": "pulmonology_scenario.tasks.generate_daily_scenarios_task",
+        "schedule": crontab(hour=0, minute=30),
+    },
 }
 
 ROOT_URLCONF = 'MediCaseBack.urls'
