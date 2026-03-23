@@ -146,23 +146,17 @@ def clean_persian_text(data):
         return data.replace('\u200c', ' ')
     return data
 
-model = init_chat_model(
-    base_url="https://api.avalai.ir/v1", 
-    api_key="aa-o3nQicuKCc2ND0IuSOHDXouISJ0GQHvK1cqQmtGgBvORi2FH",
-    model="gpt-5-mini"
-)
-
-# os.environ["DEEPSEEK_API_KEY"] = "sk-15c9eff080484dcbb80d315cba3fefe4"
-
-# model = ChatDeepSeek(
-#     base_url="https://api.deepseek.com/deepseek-v3.2",
-#     model="deepseek-chat",
+# model = init_chat_model(
+#     base_url="https://api.avalai.ir/v1", 
+#     api_key="aa-o3nQicuKCc2ND0IuSOHDXouISJ0GQHvK1cqQmtGgBvORi2FH",
+#     model="gpt-5-mini"
 # )
 
-embedding_model = OpenAIEmbeddings(
-    api_key="aa-3merXIxJbKqFQqE69uVBXvWAJXVg1OAD7e1Tqq2BttJmJoVj",
-    base_url="https://api.avalai.ir/v1",
-)
+
+# embedding_model = OpenAIEmbeddings(
+#     api_key="aa-3merXIxJbKqFQqE69uVBXvWAJXVg1OAD7e1Tqq2BttJmJoVj",
+#     base_url="https://api.avalai.ir/v1",
+# )
 
 vector_store = Chroma.from_documents(documents, embedding_model)
 
