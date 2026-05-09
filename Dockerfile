@@ -2,10 +2,6 @@ FROM docker.arvancloud.ir/python:3.12-slim
 
 WORKDIR /app
 
-ENV DEBIAN_FRONTEND=noninteractive
-RUN sed -i 's/archive.ubuntu.com/ir.archive.ubuntu.com/g' /etc/apt/sources.list \
-    && sed -i 's/security.ubuntu.com/ir.archive.ubuntu.com/g' /etc/apt/sources.list
-    
 RUN apt-get update && apt-get install -y \
     gcc \
     default-libmysqlclient-dev \
