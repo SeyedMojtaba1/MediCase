@@ -9,13 +9,15 @@ RUN if [ -f /etc/apt/sources.list.d/debian.sources ]; then \
         sed -i 's/deb.debian.org/mirror.iranserver.com/g' /etc/apt/sources.list; \
     fi
 
-# 2. Tell apt to ignore expired release files
+# 2. Tell apt to ignore expired release files (keeping this for Iran mirror stability)
 RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99ignore-expiry
 
-# 3. Clean, update (with the bypass flag just to be sure), and install
+# 3. Explicitly install libc6-dev and build-essential first to satisfy the compiler dependencies
 RUN apt-get clean && \
     apt-get -o Acquire::Check-Valid-Until=false update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
+        libc6-dev \
+        build-essential \
         gcc \
         default-libmysqlclient-dev \
         pkg-config \
