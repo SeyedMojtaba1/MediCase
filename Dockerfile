@@ -2,6 +2,9 @@ FROM docker.arvancloud.ir/python:3.12-slim
 
 WORKDIR /app
 
+RUN sed -i 's/deb.debian.org/mirror.arvancloud.ir/g' /etc/apt/sources.list.d/debian.sources || \
+    sed -i 's/deb.debian.org/mirror.arvancloud.ir/g' /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -y \
     gcc \
     default-libmysqlclient-dev \
