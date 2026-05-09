@@ -50,6 +50,7 @@ services:
     build: .
     container_name: django_medicase
     restart: unless-stopped
+    network: host
     command: >
       sh -c "if [ -f /app/MediCaseBack/manage.py ]; then cd /app/MediCaseBack; fi &&
       if [ -f /app/manage.py ]; then echo 'Found manage.py in root'; else echo 'ERROR: manage.py not found in /app' && ls -R /app; fi &&
@@ -78,6 +79,7 @@ services:
     build: .
     container_name: celery_worker
     restart: unless-stopped
+    network: host
     command: >
       sh -c "cd MediCaseBack/ &&
              celery -A MediCaseBack worker -l info -P solo"
