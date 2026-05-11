@@ -3,6 +3,7 @@ services:
     build:
       context: ./MediCaseFront
       dockerfile: Dockerfile
+      network: host
     image: docker.arvancloud.ir/nginx:stable-perl
     container_name: reverse_proxy
     ports:
@@ -15,7 +16,9 @@ services:
       medicase:
         condition: service_started
   celery-beat:
-    build: .
+    build:
+      context: .
+      network: host
     container_name: celery_beat
     restart: unless-stopped
     command: >
@@ -48,8 +51,8 @@ services:
 
   medicase:
     build:
-      network: host
       context: .
+      network: host
     container_name: django_medicase
     restart: unless-stopped
     command: >
@@ -78,8 +81,8 @@ services:
 
   celery:
     build:
-      network: host
       context: .
+      network: host
     container_name: celery_worker
     restart: unless-stopped
     command: >
