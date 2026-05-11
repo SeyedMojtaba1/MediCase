@@ -2,40 +2,37 @@ FROM docker.arvancloud.ir/python:3.12-slim
 
 WORKDIR /app
 
-# Completely replace apt sources with Iran Server mirror
-RUN rm -f /etc/apt/sources.list /etc/apt/sources.list.d/debian.sources && \
+# Configure mirrors
+RUN rm -f /etc/apt/sources.list.d/debian.sources && \
     echo 'deb https://mirror.iranserver.com/debian/ bookworm main contrib non-free' > /etc/apt/sources.list && \
     echo 'deb https://mirror.iranserver.com/debian/ bookworm-updates main contrib non-free' >> /etc/apt/sources.list && \
-    echo 'deb https://mirror.iranserver.com/debian-security/ bookworm-security main contrib non-free' >> /etc/apt/sources.list && \
-    echo 'deb https://mirror.iranserver.com/debian/ bookworm-backports main contrib non-free' >> /etc/apt/sources.list
+    echo 'deb https://mirror.iranserver.com/debian-security/ bookworm-security main contrib non-free' >> /etc/apt/sources.list
 
-# Ignore expired metadata (for mirrors that aren't perfectly synced)
-RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99ignore-expiry
+# Configure apt for better performance with local mirror
+RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99ignore-expiry && \
+    echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90assume-yes
 
-# Install system dependencies
-RUN apt-get clean && \
-    apt-get update && \
+# Install system deps (cached unless this layer changes)
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         gcc \
         default-libmysqlclient-dev \
         pkg-config \
-        && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Python virtual environment
+# Python deps (cached unless requirements.txt changes)
+COPY requirements.txt .
 RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Install Python packages
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application
+# App code (changes most frequently, placed last)
 COPY MediCaseBack/ .
 
-# Health check (optional but recommended)
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+# Create non-root user for security (optional)
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+USER appuser
 
-# Run
 CMD ["gunicorn", "MediCaseBack.asgi:application", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
