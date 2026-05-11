@@ -91,6 +91,7 @@ INSTALLED_APPS = [
     'tutorial',
     'notification',
     'drf_spectacular',
+    'drf_spectacular_sidecar',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,15 @@ REST_FRAMEWORK = {
         'login': '5/min',
         'anon': '100/day',
     }
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'MediCase APIs',
+    'DESCRIPTION': '',
+    'VERSION': '1.0.0',
+    'SWAGGER_UI_DIST': 'SIDECAR',  # Use local sidecar files
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',  # Use local favicon
+    'REDOC_DIST': 'SIDECAR',  # Optional: for Redoc if you use it
 }
 
 AUTH_USER_MODEL = 'registery.User'
