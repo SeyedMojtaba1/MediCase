@@ -2,12 +2,8 @@ FROM docker.arvancloud.ir/python:3.12-slim
 
 WORKDIR /app
 
-RUN if [ -f /etc/apt/sources.list.d/debian.sources ]; then \
-        sed -i 's/deb.debian.org/mirror.iranserver.com/g' /etc/apt/sources.list.d/debian.sources; \
-    fi && \
-    if [ -f /etc/apt/sources.list ]; then \
-        sed -i 's/deb.debian.org/mirror.iranserver.com/g' /etc/apt/sources.list; \
-    fi
+RUN sed -i 's|deb.debian.org|mirror.iranserver.com/debian|g' /etc/apt/sources.list.d/debian.sources && \
+    sed -i 's|security.debian.org|mirror.iranserver.com/debian-security|g' /etc/apt/sources.list.d/debian.sources
 
 # 2. Tell apt to ignore expired repository metadata timestamps (crucial for local mirror syncs)
 RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99ignore-expiry
