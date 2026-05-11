@@ -1,4 +1,4 @@
-FROM docker.arvancloud.ir/python:3.12-slim
+FROM docker.arvancloud.ir/python:3.12-slim-bookworm
 
 WORKDIR /app
 
