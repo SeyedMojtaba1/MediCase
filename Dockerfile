@@ -2,24 +2,27 @@ FROM docker.arvancloud.ir/python:3.12-slim
 
 WORKDIR /app
 
-# Configure mirrors
-RUN rm -f /etc/apt/sources.list.d/debian.sources && \
+# Configure mirrors with specific bookworm release
+RUN rm -f /etc/apt/sources.list /etc/apt/sources.list.d/debian.sources && \
     echo 'deb https://mirror.iranserver.com/debian/ bookworm main contrib non-free' > /etc/apt/sources.list && \
     echo 'deb https://mirror.iranserver.com/debian/ bookworm-updates main contrib non-free' >> /etc/apt/sources.list && \
     echo 'deb https://mirror.iranserver.com/debian-security/ bookworm-security main contrib non-free' >> /etc/apt/sources.list
 
-# Configure apt for better performance with local mirror
-RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99ignore-expiry && \
-    echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90assume-yes
+# IMPORTANT: Don't add bookworm-backports to avoid version conflicts
+# If you need backports, install them separately with explicit versions
 
-# Install system deps (cached unless this layer changes)
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+# Force apt to prefer stable versions and avoid mixed releases
+RUN echo 'APT::Default-Release "bookworm";' > /etc/apt/apt.conf.d/01default-release && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99ignore-expiry
+
+# Update and install packages with explicit bookworm release
+RUN apt-get clean && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends -t bookworm \
         gcc \
         default-libmysqlclient-dev \
         pkg-config \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        && rm -rf /var/lib/apt/lists/*
 
 # Python deps (cached unless requirements.txt changes)
 COPY requirements.txt .
