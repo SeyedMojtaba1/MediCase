@@ -12,14 +12,13 @@ RUN npm config set registry https://registry.npmmirror.com
 # Copy package files first (better caching)
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+RUN npm ci
 
-# Copy source code
+# Copy project files
 COPY . .
 
-# Build the application
-RUN npx ng build --configuration=production
+# Build Angular app
+RUN npm run build -- --configuration=production
 
 # Production stage
 FROM docker.arvancloud.ir/nginx:stable-perl
