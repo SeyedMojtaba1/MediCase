@@ -8,7 +8,8 @@ WORKDIR /app
 # RUN npm config set registry https://mirror.iranserver.com/npm/
 # RUN npm config set registry https://npm.irannode.com/
 # RUN npm config set registry https://mirror-npm.runflare.com
-
+RUN npm config set registry https://mirror-npm.runflare.com
+RUN npm config set strict-ssl false
 # Copy package files first (better caching)
 COPY package*.json ./
 
