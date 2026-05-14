@@ -3,9 +3,9 @@ FROM docker.arvancloud.ir/node:20-alpine AS build
 WORKDIR /app
 
 # Use Iranian npm mirror for faster access
-RUN npm config set registry https://registry.npmmirror.com
+# RUN npm config set registry https://registry.npmmirror.com
 # Alternative Iranian mirrors if the above doesn't work:
-# RUN npm config set registry https://mirror.iranserver.com/npm/
+RUN npm config set registry https://mirror.iranserver.com/npm/
 # RUN npm config set registry https://npm.irannode.com/
 # RUN npm config set registry https://mirror-npm.runflare.com
 
