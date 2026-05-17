@@ -66,6 +66,7 @@ services:
       - .:/app
       - static_volume:/app/static
       - media_volume:/app/MediCaseBack/media
+      - chroma_data:/app/chroma_db
     depends_on:
       db:
         condition: service_healthy
@@ -100,3 +101,4 @@ volumes:
   db_data:
   static_volume:
   media_volume:
+  chroma_data:

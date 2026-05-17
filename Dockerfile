@@ -6,9 +6,10 @@ WORKDIR /app
 RUN rm -f /etc/pip.conf /root/.pip/pip.conf
 
 # Configure pip to use Iran Server mirror
-RUN pip config set global.index-url https://pypi.iranserver.com/repository/pypi/simple && \
-    pip config set global.trusted-host pypi.iranserver.com && \
-    pip config set global.timeout 60
+# RUN pip config set global.index-url https://pypi.iranserver.com/repository/pypi/simple && \
+# RUN pip config set global.index-url https://mirror-pypi.runflare.com/simple && \
+#     pip config set global.trusted-host pypi.iranserver.com && \
+#     pip config set global.timeout 60
 
 # Configure apt to use Iran Server mirror
 RUN rm -f /etc/apt/sources.list && \
@@ -32,8 +33,12 @@ ENV PATH="/venv/bin:$PATH"
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip -i https://pypi.iranserver.com/repository/pypi/simple
+RUN pip install -r requirements.txt \
+    -i https://pypi.iranserver.com/repository/pypi/simple \
+    --extra-index-url https://mirror-pypi.runflare.com/simple \
+    --extra-index-url https://icodeacademy.ir/python-packages \
+    --extra-index-url https://archive.ito.gov.ir/mirror2/python/simple
 
 COPY MediCaseBack/ .
 

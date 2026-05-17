@@ -152,21 +152,41 @@ model = init_chat_model(
     model="gpt-5-mini"
 )
 
-
 embedding_model = OpenAIEmbeddings(
     api_key="aa-3merXIxJbKqFQqE69uVBXvWAJXVg1OAD7e1Tqq2BttJmJoVj",
     base_url="https://api.avalapis.ir/v1",
 )
 
-vector_store = Chroma.from_documents(documents, embedding_model)
+_vector_store = None
+_retriever = None
 
-retriever = vector_store.as_retriever(
-    search_kwargs={
-        "k": 2,
-    }
-)
+
+def get_retriever():
+    global _vector_store, _retriever
+
+    if _retriever is None:
+
+        if not os.path.exists("/app/chroma_db"):
+            _vector_store = Chroma.from_documents(
+                documents,
+                embedding_model,
+                persist_directory="/app/chroma_db"
+            )
+        else:
+            _vector_store = Chroma(
+                persist_directory="/app/chroma_db",
+                embedding_function=embedding_model
+            )
+
+        _retriever = _vector_store.as_retriever(
+            search_kwargs={"k": 2}
+        )
+
+    return _retriever
 
 def history_taking_creator(target_disease):
+    retriever = get_retriever()
+
     retrieved_docs = retriever.invoke(
         f"اطلاعات مورد نیاز برای سناریوی کامل بیماری {target_disease}"
     )

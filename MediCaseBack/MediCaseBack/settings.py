@@ -125,9 +125,8 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'MediCase APIs',
     'DESCRIPTION': '',
     'VERSION': '1.0.0',
-    'SWAGGER_UI_DIST': 'SIDECAR',  # Use local sidecar files
-    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',  # Use local favicon
-    'REDOC_DIST': 'SIDECAR',  # Optional: for Redoc if you use it
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
 }
 
 AUTH_USER_MODEL = 'registery.User'
@@ -319,7 +318,3 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-
-
-SPECTACULAR_SETTINGS = {"TITLE": "MediCase Project APIs"}
-
