@@ -20,10 +20,12 @@ from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import swagger_asset
 
 router = DefaultRouter()
 
 urlpatterns = [
+    path("swagger-assets/<str:filename>", swagger_asset),
     path('admin/', admin.site.urls),
     path("api/registery/", include(router.urls)),
     path("api/registery/", include("registery.urls")),

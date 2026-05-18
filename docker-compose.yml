@@ -10,7 +10,7 @@ services:
       - '80:80'
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - static_volume:/app/static
+      - static_volume:/app/MediCaseBack/staticfiles
       - ./MediCaseBack/media:/app/MediCaseBack/media
     depends_on:
       medicase:
@@ -58,13 +58,14 @@ services:
     command: >
       sh -c "if [ -f /app/MediCaseBack/manage.py ]; then cd /app/MediCaseBack; fi &&
       if [ -f /app/manage.py ]; then echo 'Found manage.py in root'; else echo 'ERROR: manage.py not found in /app' && ls -R /app; fi &&
+      python manage.py collectstatic --noinput -i https://pypi.iranserver.com/repository/pypi/simple &&
       python manage.py migrate &&
       gunicorn MediCaseBack.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000"
     ports:
       - '8000:8000'
     volumes:
       - .:/app
-      - static_volume:/app/static
+      - static_volume:/app/MediCaseBack/staticfiles/
       - media_volume:/app/MediCaseBack/media
       - chroma_data:/app/chroma_db
     depends_on:
