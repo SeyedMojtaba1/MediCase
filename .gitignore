@@ -3,3 +3,4 @@ MediCaseBack/secrets
 /data/*
 MediCaseBack/media/*
 MediCaseBack/*.log
+chroma_db/*
