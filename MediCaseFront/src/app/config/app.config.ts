@@ -31,7 +31,7 @@ export interface AppConfig {
 // می‌تونی رنگ‌ها و فونت‌ها رو بعدا تغییر بدی
 // ------------------------------
 export const APP_CONFIG: AppConfig = {
-  baseURL: 'https://medicase-isfahan.ir/',
+  baseURL: 'https://medicase-isfahan.ir/api/',
   timeout: 5000,
   logoURL: 'images/logo/medicase.png',
   olomURL: 'images/logo/olom.png',
