@@ -41,7 +41,6 @@
           </button>
 
         } @else {
-          @let isSectionDisabled = false;
 
           <button (click)="playClick(); selectSection(section)"
                   [ngClass]="activeSection==section.id ? 'bg-[#148591]/50' : 'bg-[#148591]'  "

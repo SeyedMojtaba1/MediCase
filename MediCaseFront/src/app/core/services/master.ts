@@ -253,7 +253,7 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.get<any>(this.BASE_URL + '/class/sectionretrieve/' + id + '/', {
+    return this.http.get<any>(this.BASE_URL + 'class/sectionretrieve/' + id + '/', {
       headers,
       observe: 'response',
       withCredentials: true
@@ -280,7 +280,7 @@ export class Master {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     });
 
-    return this.http.post<any>(this.BASE_URL + '/class/studentsectioncreate/', {
+    return this.http.post<any>(this.BASE_URL + 'class/studentsectioncreate/', {
       section: section,
       student: student,
       student_status: "Active"

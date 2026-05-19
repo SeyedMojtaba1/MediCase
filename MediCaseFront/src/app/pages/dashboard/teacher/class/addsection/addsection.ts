@@ -59,7 +59,7 @@ export class Addsection implements AfterViewInit {
     // شروع کار datepicker
     jalaliDatepicker.startWatch({
       // تنظیمات اختیاری
-      minDate: "attr",
+      minDate: "today",
       maxDate: "attr",
       date: {
         // تاریخ پیش‌فرض
@@ -144,8 +144,8 @@ export class Addsection implements AfterViewInit {
       !this.data.subject ||
       !this.data.semester_code ||
       !this.start_date ||
-      !this.end_date ||
-      !this.data.description) {
+      !this.end_date
+    ) {
 
       this.toast.showError("لطفاً تمام فیلدها را تکمیل کنید");
       return;

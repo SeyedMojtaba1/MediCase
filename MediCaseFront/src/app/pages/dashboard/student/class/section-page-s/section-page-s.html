@@ -107,10 +107,12 @@
             "
               /></td>
 
-              <td [routerLink]="'/user/' + member.personal_number" class="cursor-pointer"
-                  style="text-align:center;">{{ member.first_name + ' ' + member.last_name }}
+              <td [class.font-bold]="member.main_role === 'teacher'"
+                  [routerLink]="'/user/' + member.personal_number"
+                  class="cursor-pointer"
+                  style="text-align:center;">
+                {{ member.main_role === 'teacher' ? 'استاد ' : '' }}{{ member.first_name + ' ' + member.last_name }}
               </td>
-
               <td class="justify-center" style="text-align:center;">
                 <p [routerLink]="'/user/' + member.personal_number" class="cursor-pointer">{{ member.username }}</p>
               </td>
