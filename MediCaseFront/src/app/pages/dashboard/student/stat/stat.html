@@ -2,9 +2,38 @@
 
   <app-dash-nav [welcome]="false" title="گزارش عملکرد"></app-dash-nav>
 
+  <div class="w-full flex flex-col gap-4 px-10">
+
+
+    <!--    <div-->
+    <!--      class="bg-amber-50/50 border-r-4 border-amber-500 p-4 rounded-lg transition-all shadow-sm">-->
+    <!--      <div class="flex items-center justify-between">-->
+    <!--        <div class="flex items-start">-->
+    <!--          <span class="w-2 h-2 mt-2 bg-amber-500 rounded-full ml-3"></span>-->
+    <!--          <div class="flex flex-col">-->
+    <!--            <span class="font-bold text-amber-900">توجه : پس از پذیرش بیمار، آماده سازی مقدمات پذیرش در حدود 30-60 ثانیه به طول می انجامد. پس از پایان این زمان، لیست را refresh کنید</span>-->
+    <!--            <br>-->
+
+    <!--            <span class=" text-amber-900">در صورتی که بیمار خود را پذیرش و معاینه کرده اید، حدود 10 ثانیه صبر کرده و مجددا صفحه را به روز رسانی کنید تا نتیجه ویزیت بیمار را مشاهده کنید</span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+
+    <!--      </div>-->
+
+    <!--    </div>-->
+
+  </div>
+
   <div class="w-full flex flex-row justify-between px-10 text-gray-400 text-sm items-center">
-    <p>{{ data?.length }} نتیجه یافت شد</p>
-    <app-action (click)="createScenrio()" icon="/images/svg/add-large-fill.svg" text="پذیرش بیمار"></app-action>
+    <div class="flex flex-row items-center gap-5">
+      <p>{{ data?.length }} نتیجه یافت شد</p>
+      <p>اعتبار شما: {{ this.credit() }} بیمار </p>
+    </div>
+    <div class="flex flex-row gap-5 items-center">
+      <app-action (click)="createScenrio()" icon="images/svg/add-large-fill.svg" text="پذیرش بیمار"></app-action>
+      <app-action (click)="this.getList()" icon="images/svg/refresh-line.svg"></app-action>
+    </div>
+
   </div>
 
   <app-card>
@@ -12,7 +41,10 @@
       <thead class="text-xs text-gray-700 uppercase">
       <tr>
         <th class="px-6 py-3" scope="col">#</th>
-        <th class="px-6 py-3" scope="col">کد پیگیری</th>
+        <th class="px-6 py-3" scope="col">نام بیمار</th>
+        <th class="px-6 py-3" scope="col">تاریخ ویزیت بیمار</th>
+        <th class="px-6 py-3" scope="col">بیماری</th>
+        <th class="px-6 py-3" scope="col">نمره</th>
         <th class="px-6 py-3" scope="col">وضعیت</th>
         <th class="px-6 py-3" scope="col">عملیات</th>
       </tr>
@@ -22,10 +54,43 @@
           <tr class="border-b border-b-black/30 hover:bg-white/50">
             <td class="px-6 py-4 font-medium text-gray-900">{{ i + 1 }}</td>
 
-            <td class="px-6 py-4 font-mono">{{ a.tracking_code }}</td>
+            <td class="px-6 py-4 font-medium">
+              @let patient = getPatientInfo(a.tracking_code);
+              @if (patient) {
+                <button
+                  (click)="showPatientDetails(patient)"
+                  class="text-blue-600 hover:underline transition-all cursor-pointer">
+                  {{ patient.personal_information.first_name }} {{ patient.personal_information.last_name }}
+                </button>
+              } @else {
+                <span class="text-gray-400 italic text-xs">در انتظار تخصیص...</span>
+              }
+            </td>
+
+            <td>
+              @if (a.is_done) {
+                {{ formatDate(a.start_time) }}
+              } @else {
+                <span class="text-gray-400 text-xs">—</span>
+              }
+            </td>
+            <td>
+              @if (a.is_done) {
+                {{ a.disease_name }}
+              } @else {
+                <span class="text-gray-400 text-xs">—</span>
+              }
+            </td>
+            <td>
+              @if (a.is_done) {
+                {{ a.score }}
+              } @else {
+                <span class="text-gray-400 text-xs">—</span>
+              }
+            </td>
 
             <td class="px-6 py-4">
-              @if (a.done) {
+              @if (a.is_done) {
                 <span class="flex items-center justify-center text-green-600">
                 <span class="w-2 h-2 bg-green-600 rounded-full ml-2"></span>
                 انجام شده
@@ -40,7 +105,7 @@
 
             <td class="px-6 py-4">
               <div class="flex justify-center items-center">
-                @if (a.done) {
+                @if (a.is_done) {
                   @let feedbackCode = getFeedbackCode(a.tracking_code);
 
                   @if (feedbackCode) {
@@ -50,7 +115,9 @@
                       [url]="'/report/' + feedbackCode">
                     </app-action>
                   } @else {
-                    <span class="text-xs text-gray-400 italic">در حال تولید گزارش...</span>
+                    <span class="text-xs text-gray-400 italic">
+    در حال تولید گزارش...
+  </span>
                   }
 
                 } @else {
@@ -68,3 +135,41 @@
     </table>
   </app-card>
 </div>
+
+
+
+@if (selectedPatient) {
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+       (click)="closeModal()">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden" (click)="$event.stopPropagation()">
+      <div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
+        <h3 class="font-bold text-gray-800 text-lg">مشخصات بیمار</h3>
+        <button (click)="closeModal()" class="text-gray-400 cursor-pointer hover:text-gray-600">✕</button>
+      </div>
+      <div class="p-6 space-y-4 text-right" dir="rtl">
+        <div>
+          <p class="text-gray-400">شکایت اصلی:</p>
+          <p class="font-medium text-gray-900">{{ selectedPatient.chief_complaint }}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p class="text-gray-400">سن:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.age }}</p>
+          </div>
+          <div>
+            <p class="text-gray-400">جنسیت:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.gender }}</p>
+          </div>
+          <div>
+            <p class="text-gray-400">شغل:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.occupation }}</p>
+          </div>
+          <div>
+            <p class="text-gray-400">محل سکونت:</p>
+            <p class="font-medium text-gray-900">{{ selectedPatient.personal_information.place_of_residence }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

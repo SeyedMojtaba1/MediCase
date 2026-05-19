@@ -45,13 +45,16 @@
       </div>
     </div>
 
-    <app-personal-info [user]="user" class="w-2/3"></app-personal-info>
-
+    @if (user) {
+      <app-personal-info [user]="user" class="w-2/3"></app-personal-info>
+    }
   </div>
 
   <!--  بخش دوم : اطلاعات تحصیلی-->
   <div class="flex w-full">
-    <app-eduction-info [user]="user" class="w-full"></app-eduction-info>
+    @if (user) {
+      <app-eduction-info [user]="user" class="w-full"></app-eduction-info>
+    }
   </div>
 </div>
 
@@ -60,3 +63,5 @@
   (close)="isModalOpen = false"
   [show]="isModalOpen"
 ></app-set-profile-image>
+
+

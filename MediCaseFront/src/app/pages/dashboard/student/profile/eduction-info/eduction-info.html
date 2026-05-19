@@ -14,7 +14,7 @@
       <!--      نام-->
       <div class="flex flex-col font-light text-sm gap-1">
         <label class="text-xs font-light text-gray-400" for="studentnum">شماره دانشجویی</label>
-        <input disabled id="studentnum" pInputText pSize="small" value="123512434"/>
+        <input [value]="user.personal_number" disabled id="studentnum" pInputText pSize="small"/>
       </div>
 
       <!--      نام-->
@@ -41,7 +41,7 @@
       <!--      نام-->
       <div class="flex flex-col font-light text-sm gap-1">
         <label class="text-xs font-light text-gray-400" for="credit">اعتبار</label>
-        <input disabled id="credit" pInputText pSize="small" value="32"/>
+        <input [value]="user.scenario_credit" disabled id="credit" pInputText pSize="small"/>
       </div>
 
 

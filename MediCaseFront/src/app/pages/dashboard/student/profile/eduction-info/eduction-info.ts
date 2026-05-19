@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Card} from '../../../../../layouts/card/card';
 import {InputText} from 'primeng/inputtext';
 
@@ -13,4 +13,14 @@ import {InputText} from 'primeng/inputtext';
 })
 export class EductionInfo {
   @Input() user: any
+
+  constructor(public changeDetector: ChangeDetectorRef) {
+
+
+  }
+
+  ngOnInit() {
+    console.log(this.user);
+    this.changeDetector.detectChanges()
+  }
 }

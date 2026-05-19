@@ -25,8 +25,13 @@
         <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'بخش بیماری ها'"
                     [url]="'/dashboard/s/hospital'"></app-action>
 
-        <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'درسنامه'"
-                    [url]="'/blog'"></app-action>
+        @if (localStorage.getItem('role') == 'student') {
+          <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'درسنامه'"
+                      [url]="'/dashboard/s/blog'"></app-action>
+        } @else {
+          <app-action [icon]="'images/svg/arrow-left-line.svg'" [text]="'درسنامه'"
+                      [url]="'/dashboard/t/blog'"></app-action>
+        }
       </div>
 
     </div>

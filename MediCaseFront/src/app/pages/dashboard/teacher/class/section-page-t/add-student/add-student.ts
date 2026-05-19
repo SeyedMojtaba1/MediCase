@@ -51,10 +51,13 @@ export class AddStudent {
         this.toast.showSuccess('دانشجو با موفقیت به کلاس افزوده شد')
         setTimeout(() => {
             window.location.reload();
-          }, 200
+          }, 500
         )
       },
       error: err => {
+        this.toast.showError(err.error.student[0])
+        this.code = ''
+
       },
       complete: () => {
       }

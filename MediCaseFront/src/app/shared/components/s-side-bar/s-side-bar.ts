@@ -20,11 +20,11 @@ export class SSideBar {
     {
       name: 'کلاس', image: 'images/svg/book-shelf-line.svg', link: '/dashboard/s/class', exact: false,
     },
+    // {
+    //   name: 'بیمارستان', image: 'images/svg/hospital.svg', link: '/dashboard/s/hospital', exact: false
+    // },
     {
-      name: 'بیمارستان', image: 'images/svg/hospital.svg', link: '/dashboard/s/hospital', exact: false
-    },
-    {
-      name: 'پایگاه دانش', image: 'images/svg/sutdents.svg', link: '/blog', exact: false
+      name: 'پایگاه دانش', image: 'images/svg/sutdents.svg', link: '/dashboard/s/blog', exact: false
     },
     {
       name: 'حساب کاربری', image: 'images/svg/profile.svg', link: '/dashboard/s/profile', exact: false

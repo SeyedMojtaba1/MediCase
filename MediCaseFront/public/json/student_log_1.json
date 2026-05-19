@@ -1,0 +1,280 @@
+{
+  "paraclinic": {
+    "procedures": {
+      "Bronchoscopy": "false",
+      "torachonthesis": {
+        "Fluid": {
+          "LDH": "false",
+          "Albumin": "false",
+          "Protein": "false"
+        },
+        "Serum": {
+          "LDH": "false",
+          "Albumin": "false",
+          "Protein": "false"
+        }
+      }
+    },
+    "simple_imaging": {
+      "Chest_X_Ray": {
+        "PA_Lateral_Findings_and_Effusion": "false"
+      }
+    },
+    "advanced_imaging": {
+      "Chest_CT_CTPA": {
+        "Lung_Parenchyma_and_Pleura": "false"
+      }
+    },
+    "functional_tests": {
+      "dlco": "false",
+      "peak_flow": "false",
+      "Spirometry": {
+        "result": {
+          "FVC": "false",
+          "FEV1": "false",
+          "FEV1/FVC_Ratio": "false"
+        },
+        "reversibility": "false"
+      },
+      "plethysmography": "false"
+    },
+    "basic_blood_tests": {
+      "BMP": {
+        "Cr": "false",
+        "Na": "false",
+        "BUN": "false"
+      },
+      "CBC": {
+        "Hb": "false",
+        "Plt": "false",
+        "WBC": "false"
+      },
+      "CRP": "false",
+      "ESR": "false",
+      "VBG": {
+        "pH": "false",
+        "HCO3": "false",
+        "PCO2": "false"
+      },
+      "LFTs": {
+        "ALT": "false",
+        "AST": "false"
+      }
+    },
+    "immunity_and_serology": {
+      "HIV_test": "false",
+      "Autoimmune_pannel_ANA_ANCA": "false"
+    },
+    "specialized_lung_tests": {
+      "D_dimer": "false",
+      "Sputum_AFB": "false",
+      "BNP_NT_proBNP": "false",
+      "Sputum_analysis": {
+        "Gram_Stain": "false",
+        "Sample_Quality": "false"
+      },
+      "a1_antitrypsin_level": "false"
+    }
+  },
+  "physical_exam": {
+    "vital_signs": {
+      "T": "false",
+      "BP": "false",
+      "PR": "false",
+      "RR": "false",
+      "GCS": "false",
+      "SpO2": "false"
+    },
+    "neurological": {
+      "cranial_nerves": "false",
+      "deep_tendon_reflexes": "false",
+      "coordination_and_gait": "false",
+      "involuntary_movements": "false",
+      "mental_status_and_LOC": "false",
+      "motor_strength_and_tone": "false",
+      "sensory_light_touch_and_pain": "false"
+    },
+    "head_and_neck": {
+      "ears": {
+        "eardrum_appearance": "false",
+        "external_and_tenderness": "false"
+      },
+      "eyes": {
+        "pupils_reaction": "false",
+        "extraocular_movements": "false",
+        "sclera_and_conjunctiva": "false"
+      },
+      "head_and_face": {
+        "tenderness": "false",
+        "symmetry_and_lesions": "false"
+      },
+      "nose_and_sinuses": {
+        "sinus_tenderness": "false",
+        "septum_and_discharge": "false"
+      },
+      "mouth_and_pharynx": {
+        "pharynx_and_tonsils": "false",
+        "oral_mucosa_and_lesions": "false"
+      },
+      "neck_and_lymphatics": {
+        "inspection": "false",
+        "carotid_bruit": "false",
+        "thyroid_gland": "false",
+        "tracheal_position": "false",
+        "lymph_nodes_size_consistency": "false",
+        "lymph_nodes_mobility_tenderness": "false"
+      }
+    },
+    "abdominal_system": {
+      "palpation": {
+        "deep_masses_and_organs": "false",
+        "superficial_tenderness": "false"
+      },
+      "inspection": "false",
+      "percussion": {
+        "general": "false",
+        "organ_borders": "false"
+      },
+      "auscultation": {
+        "bowel_sounds": "false",
+        "vascular_bruits": "false"
+      },
+      "peritoneal_signs": "false"
+    },
+    "general_appearance": {
+      "mood_and_behavior": "false",
+      "overall_appearance": "false",
+      "posture_and_position": "false",
+      "level_of_consciousness": "false",
+      "cardiopulmonary_and_circulatory_clues": {
+        "edema": "false",
+        "dyspnea": "false",
+        "cyanosis": "false"
+      }
+    },
+    "respiratory_system": {
+      "palpation": {
+        "chest_expansion": "false",
+        "tactile_fremitus": "false"
+      },
+      "inspection": {
+        "accessory_muscles": "false",
+        "chest_shape_and_symmetry": "false"
+      },
+      "percussion": "false",
+      "auscultation": {
+        "adventitious_sounds": "false",
+        "breath_sounds_intensity": "false"
+      }
+    },
+    "cardiovascular_system": {
+      "palpation": {
+        "pmi_assessment": "false",
+        "precordial_palpation_heave_thrill": "false"
+      },
+      "auscultation": {
+        "heart_sounds_s1_s2": "false",
+        "extra_sounds_s3_s4_murmurs": "false"
+      },
+      "JVP_assessment": "false",
+      "peripheral_pulses_and_extremities": {
+        "extremities_edema": "false",
+        "extremities_color_and_trophic_changes": "false",
+        "extremities_temperature_and_cap_refill": "false",
+        "peripheral_pulses_symmetry_and_quality": "false"
+      }
+    },
+    "musculoskeletal_system": {
+      "palpation": {
+        "tenderness_and_crepitus": "false"
+      },
+      "inspection": {
+        "joints": "false",
+        "muscles": "false"
+      },
+      "stability_and_function": "false",
+      "range_of_motion_active_passive": "false"
+    }
+  },
+  "history_taking": {
+    "ros": {
+      "question1": "false",
+      "question2": "false",
+      "question3": "false",
+      "question4": "false",
+      "question5": "false",
+      "question6": "false",
+      "question7": "false",
+      "question8": "false",
+      "question9": "false",
+      "question10": "false",
+      "question11": "false",
+      "question12": "false",
+      "question13": "false",
+      "question14": "false"
+    },
+    "allergies": {
+      "question1": {
+        "question1a": "false",
+        "question1b": "false"
+      }
+    },
+    "drug_history": {
+      "question1": {
+        "question1a": "false",
+        "question1b": "false",
+        "question1c": "false"
+      },
+      "question2": "false"
+    },
+    "family_history": {
+      "question1": {
+        "question1a": "false",
+        "question1b": "false"
+      },
+      "question2": "false",
+      "question3": {
+        "question3a": "false",
+        "question3b": "false"
+      }
+    },
+    "social_history": {
+      "question1": {
+        "question1a": "false",
+        "question1b": "false"
+      },
+      "question2": "false",
+      "question3": {
+        "question3a": "false",
+        "question3b": "false"
+      },
+      "question4": "false"
+    },
+    "present_illness": {
+      "question1": "false",
+      "question2": "false",
+      "question3": "false",
+      "question4": "false",
+      "question5": "false",
+      "question6": "false",
+      "question7": "false",
+      "question8": "false",
+      "question9": "false",
+      "question10": "false"
+    },
+    "past_medical_history": {
+      "question1": {
+        "question1a": "false",
+        "question1b": "false"
+      },
+      "question2": {
+        "question2a": "false",
+        "question2b": "false"
+      },
+      "question3": "false",
+      "question4": "false",
+      "question5": "false",
+      "question6": "false"
+    }
+  }
+}

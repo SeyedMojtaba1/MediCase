@@ -5,7 +5,8 @@
 
     <div class="flex flex-row items-center gap-5 text-xs ">
       <p class=" cursor-pointer text-red-600">گزارش اشکال</p>
-      <p class=" cursor-pointer text-gray-500 ">ویرایش اطلاعات ورود</p>
+      <p (click)="openChangeLogin()"
+         class=" cursor-pointer text-gray-500 ">ویرایش اطلاعات ورود</p>
     </div>
   </div>
 
@@ -47,7 +48,7 @@
     <div class="flex flex-col gap-1">
       <label class="text-gray-400 text-xs font-light">شماره موبایل</label>
       <p-inputgroup>
-        <input [placeholder]="user.phone_number" disabled pInputText pSize="small"/>
+        <input [placeholder]="user.phone" disabled pInputText pSize="small"/>
         <p-button label="تایید شده" severity="success" size="small"/>
       </p-inputgroup>
     </div>
@@ -62,3 +63,12 @@
     </div>
   </div>
 </app-card>
+
+
+<app-change-login
+
+  (close)="isChangeOpen.set(false)"
+  [show]="isChangeOpen()">
+</app-change-login>
+
+

@@ -54,10 +54,10 @@ export class Addsection implements AfterViewInit {
   constructor(public router: Router, public master: Master, public toast: ToastService, public changeDetectorRef: ChangeDetectorRef) {
   }
 
-
   ngAfterViewInit() {
-    // شروع کار datepicker
+    // تنظیم کلی: هر اینپوت محدودیت را از اتریبیوت خودش بخواند
     jalaliDatepicker.startWatch({
+<<<<<<< HEAD
       // تنظیمات اختیاری
       minDate: "today",
       maxDate: "attr",
@@ -67,7 +67,23 @@ export class Addsection implements AfterViewInit {
         month: 1,
         day: 1
       }
+=======
+      minDate: "attr",
+      autoHide: true
+>>>>>>> FrontEnd
     });
+  }
+
+  updateMinEndDate(newStartDate: string) {
+    const endDateElement = document.getElementById('end-date-input');
+
+    if (endDateElement && newStartDate) {
+      endDateElement.setAttribute('data-jdp-min-date', newStartDate);
+
+      if (this.end_date && this.end_date < newStartDate) {
+        this.end_date = "";
+      }
+    }
   }
 
   ngOnInit() {
@@ -77,15 +93,19 @@ export class Addsection implements AfterViewInit {
     this.master.semesters().subscribe({
       next: data => {
         this.semesters = data.body
+        this.semesters = data.body.sort((a: any, b: any) => {
+          return Number(a.code) - Number(b.code);
+        });
+
         this.master.subjectList().subscribe({
           next: data => {
             this.subjects = data.body
+
             this.subjectOptions = this.subjects.map((s: any) => ({
               ...s,
               label: s["persian-name"],
               value: s.id
             }));
-            console.log(this.subjectOptions);
           },
           error: err => {
             this.toast.showError('خطایی در دریافت اطلاعات وجود دارد')
@@ -114,11 +134,6 @@ export class Addsection implements AfterViewInit {
 
   }
 
-  Confirm() {
-
-    this.master.createSection(this.data)
-    this.close.emit();
-  }
 
   Back() {
     this.close.emit();
@@ -151,6 +166,7 @@ export class Addsection implements AfterViewInit {
       return;
     }
 
+    if (!this.data.description) this.data.description = "";
     // تبدیل تاریخ‌ها
     this.data.start_date = this.jalaliToTimestamp(this.start_date)
     this.data.end_date = this.jalaliToTimestamp(this.end_date)

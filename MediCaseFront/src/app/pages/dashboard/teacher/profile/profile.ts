@@ -43,14 +43,16 @@ export class PProfile {
         this.user = {
           first_name: data.body.first_name,
           last_name: data.body.last_name,
-          major: 'پزشکی',
+          major: data.body.major,
           role: data.body.main_role,
           university: 'علوم پزشکی اصفهان',
           profile: data.body.profile_image,
-          phone_number: data.body.phone_number,
+          personal_number: data.body.personal_number,
+          phone: data.body.phone_number,
           email: data.body.email,
           national_code: '',
           username: data.body.username,
+          scenario_credit: data.body.scenario_credit
         };
       },
       complete: () => {

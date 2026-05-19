@@ -6,7 +6,9 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Master} from '../../core/services/master';
 import Questions from '../../../../public/json/senario.json'
 import Log from '../../../../public/json/student_log.json'
+import Data from '../../../../public/json/t.json'
 import confetti from 'canvas-confetti';
+import {VIDEO_MAPPING} from './assets'
 
 interface Disease {
   name: string;
@@ -25,7 +27,6 @@ interface ParaclinicResult {
   normalValue?: string;
 }
 
-
 interface Question {
   id: string;
   title: string;
@@ -34,7 +35,6 @@ interface Question {
   visible: boolean;
   answer_time: string;
 }
-
 
 @Component({
   selector: 'app-scenario',
@@ -58,8 +58,6 @@ export class Scenario {
     "PTE": "disease4",
     "IPF": "disease5",
     "PH": "disease6",
-    "Pleural_Effusion": "disease7",
-    "ARDS": "disease8"
   };
   @ViewChild('videoPlayer') videoElementRef!: ElementRef<HTMLVideoElement>;
   imageUrl = signal('https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg')
@@ -74,203 +72,47 @@ export class Scenario {
   successSound = new Audio('sounds/success.mp3');
   bgsound = new Audio('sounds/bg.mp3');
   isVideoLoading = signal(false)
-  previousMediaUrl: string = "https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg";
   sectionOpenState: Record<string, boolean> = {};
-  questions: Question[] = [];
-  // لیست متن سوالا
   questionText: any = Questions
-  //لیست دیتا های ai
   data: any
-  //لیست دیتایی که قراره بفرستیم
   log: any = Log
   physicalExamBySection: Record<string, Question[]> = {};
   questionsBySection: Record<string, Question[]> = {};
   paraclinicBySection: Record<string, Question[]> = {};
-  showDifferentialDiagnosisModal: boolean = false;
-  differentialDiagnosisStage: number = 1;
-  selectedDifferentialDiseases: Disease[] = [];
-  finalDiagnosis: string | null = null;
-  scenarioData: any = Questions;
-// در کلاس Scenario
-  sectionMedia: any = {
-
-    patient_profile: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Realistic_Clinical_Video_Generation.mp4'
-    },
-
-    history_taking: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/سخنگو.mp4'
-    },
-    present_illness: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-    },
-    past_medical_history: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-    },
-
-    drug_history: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-    },
-
-    allergies: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-    },
-    family_history: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-    },
-    social_history: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-    },
-    ros: {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-
-    },
-
-
-    'general_appearance': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Patient_Cough_Animation_Generation.mp4'
-    },
-
-    'vital_signs': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Realistic_Clinical_Video_Generation2.mp4'
-    },
-    'vital_signs-PR': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Camera_angle_fixed_202512232146_6acpt.mp4'
-    },
-    'vital_signs-SpO2': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/video_1766436318100.mp4',
-    },
-    'vital_signs-T': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/video_1766436280215.mp4',
-    },
-    'vital_signs-BP': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/video_1766436259968.mp4',
-    },
-
-    'head_and_neck': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/تبدیل_عکس_به_ویدیو_با_صدا.mp4'
-    },
-    'head_and_neck-eyes': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Camera_angle_closeup_202512232155_m32tj.mp4'
-    },
-
-    'respiratory_system': {
-      type: 'image',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/11/respiratory_system.jpg'
-    },
-
-    'respiratory_system-inspection': {
-      type: 'video',
-      url: "https://elmkhah.ir/wp-content/uploads/2025/12/Video_Editing_Camera_and_Posture.mp4"
-    },
-
-    'respiratory_system-palpation': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/A_highly_detailed_202512022024_vusw2.mp4'
-    },
-
-    'respiratory_system-percussion': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Animated_Chest_Percussion_Video_Generation.mp4'
-    },
-
-    'respiratory_system-auscultation': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Create_a_short_202512021949_v8jz2.mp4'
-    },
-
-    'cardiovascular_system': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Create_a_short_202512022036_dk5kc.mp4'
-    },
-
-    'cardiovascular_system-auscultation': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/202512022051_zdina.mp4'
-    },
-
-    'abdominal_system': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/202512022225_hew7q.mp4'
-    },
-
-    'abdominal_system-inspection': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Create_a_short_202512022036_dk5kc.mp4'
-    },
-    'abdominal_system-auscultation': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Camera_angle_topdown_202512022238_n3vt0.mp4'
-    },
-    'abdominal_system-percussion': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/202512022225_hew7q.mp4'
-    },
-    'abdominal_system-palpation': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Create_a_short_202512022036_dk5kc.mp4'
-    },
-
-
-    'neurological': {
-      type: 'video',
-      url: "https://elmkhah.ir/wp-content/uploads/2025/12/Facial_Nerve_Exam_Animation.mp4"
-    },
-    "neurological-motor_strength_and_DTRs": {
-      type: 'video',
-      url: "https://elmkhah.ir/wp-content/uploads/2025/12/Generate_Looping_Medical_Animation_Video.mp4"
-    },
-    "neurological-cranial_nerves": {
-      type: 'video',
-      url: "https://elmkhah.ir/wp-content/uploads/2025/12/Facial_Nerve_Exam_Animation.mp4"
-    },
-
-    "musculoskeletal_system": {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Generate_Looping_Medical_Animation_Video.mp4'
-    },
-    "musculoskeletal_system-range_of_motion": {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Camera_angle_topdown_202512022252_whtlj.mp4'
-    },
-
-    'differential_diagnosis': {
-      type: 'video',
-      url: 'https://elmkhah.ir/wp-content/uploads/2025/12/Reference_image_usage_202512162300_seewl.mp4',
-    }
-
-  };
+  showExitModal: boolean = false;
+  sectionMedia: any = VIDEO_MAPPING
   mediaType: 'image' | 'video' = 'image';
   mediaUrl: string = "https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg";
   public code: any;
   public trackingCode: any;
+  currentCharacter = signal('young_male');
+
+  showDifferentialDiagnosisModal: boolean = false;
+  differentialDiagnosisStage: number = 1;
+  finalDiagnosis: string | null = null;
+  selectedDifferentialDiseases: any[] = []; // لیستی که بیماری‌های مرحله اول در آن ذخیره می‌شوند
+  pleuralAssessmentData = {
+    has_effusion: 'false',
+    need_aspiration: 'false',
+    effusion_type: 'none'
+  };
   protected readonly APP_CONFIG = APP_CONFIG;
   protected readonly sessionStorage = sessionStorage;
-  protected readonly Log = Log;
-  protected readonly console = console;
-  private timeLeft = 15 * 60;
+  protected readonly localStorage = localStorage;
+  private timeLeft = 60 * 15;
   private intervalId: any;
 
   constructor(public router: Router, public changeDetectorRef: ChangeDetectorRef, public master: Master, public route: ActivatedRoute) {
   }
 
+  get filteredInitialDiseases() {
+    return this.diseases.filter(d => d.name !== 'Pleural_Effusion');
+  }
+
+  get defaultCharacterImage(): string {
+    const character = this.currentCharacter();
+    return this.sectionMedia[character]?.default_image || 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg';
+  }
 
   ngOnInit() {
 
@@ -297,6 +139,15 @@ export class Scenario {
     this.master.pulmonologyScenarioRetrieve(this.trackingCode).subscribe({
       next: data => {
         localStorage.setItem('data', JSON.stringify(data));
+        this.updateCharacterType(data);
+      },
+      error: err => {
+        this.data = Data
+        console.log(this.data);
+        this.buildQuestions()
+        this.buildPhysicalExamQuestions()
+        this.buildParaclinicQuestions()
+        this.changeDetectorRef.detectChanges();
       },
       complete: () => {
         const raw = localStorage.getItem('data');
@@ -308,12 +159,114 @@ export class Scenario {
           this.data = '';
         }
 
+
         this.buildQuestions()
         this.buildPhysicalExamQuestions()
         this.buildParaclinicQuestions()
         this.changeDetectorRef.detectChanges();
       }
     })
+  }
+
+  updateCharacterType(apiData: any) {
+    const profile = apiData.scenario.patient_profile.personal_information;
+
+    // ۱. استخراج عدد از رشته سن (مثلا تبدیل "39 ساله" به 39)
+    const ageNumber = parseInt(profile.age.replace(/[^0-9]/g, ''));
+
+    // ۲. تشخیص جنسیت (مرد یا زن)
+    const gender = profile.gender; // "مرد" یا "زن"
+
+    let type = '';
+
+    if (gender === 'مرد') {
+      type = ageNumber < 50 ? 'young_male' : 'old_male';
+    } else if (gender === 'زن') {
+      type = ageNumber < 50 ? 'young_female' : 'old_female';
+    } else {
+      // مقدار پیش‌فرض در صورت بروز خطا
+      type = 'young_male';
+    }
+
+    // ۳. آپدیت کردن وضعیت برنامه
+    this.currentCharacter.set(type);
+
+
+    this.mediaUrl = this.defaultCharacterImage;
+    this.mediaType = 'image';
+    this.changeDetectorRef.detectChanges();
+
+    console.log(`Character set to: ${type} based on Age: ${ageNumber} and Gender: ${gender}`);
+  }
+
+  setHasEffusion(value: boolean) {
+    this.pleuralAssessmentData.has_effusion = value ? 'true' : 'false';
+    if (value) {
+      this.differentialDiagnosisStage = 4;
+    } else {
+      this.pleuralAssessmentData.need_aspiration = 'false';
+      this.pleuralAssessmentData.effusion_type = 'none';
+      this.finishAndSaveLog();
+    }
+  }
+
+  setNeedAspiration(value: boolean) {
+    this.pleuralAssessmentData.need_aspiration = value ? 'true' : 'false';
+    if (value) {
+      this.differentialDiagnosisStage = 5;
+    } else {
+      this.pleuralAssessmentData.effusion_type = 'none';
+      this.finishAndSaveLog();
+    }
+  }
+
+  setEffusionType(type: string) {
+    this.pleuralAssessmentData.effusion_type = type;
+    this.finishAndSaveLog();
+  }
+
+  finishAndSaveLog() {
+    this.log.final_diagnosis = {
+      "disease": this.finalDiagnosis
+    };
+    this.log.pleural_effusion_assessment = {
+      "has_effusion": this.pleuralAssessmentData.has_effusion,
+      "need_aspiration": this.pleuralAssessmentData.need_aspiration,
+      "effusion_type": this.pleuralAssessmentData.effusion_type
+    };
+
+    console.log("Log Saved:", this.log);
+    this.showDifferentialDiagnosisModal = false;
+    console.log(this.log);
+    this.master.pulmonologyScenarioFeedbackCreate(this.trackingCode, this.log).subscribe({
+      next: data => {
+        this.router.navigateByUrl('/dashboard/s/stat');
+      },
+      error: err => {
+        alert("خطایی وجود داشت. مجددا تلاش کنید")
+      }
+    })
+  }
+
+  closeDifferentialDiagnosisModal() {
+    this.showDifferentialDiagnosisModal = false;
+    this.differentialDiagnosisStage = 1;
+  }
+
+  selectFinalAndNext(diseaseName: string) {
+    this.finalDiagnosis = diseaseName;
+    this.differentialDiagnosisStage = 3; // مرحله ۳: سوال "آیا افیوژن دارد؟"
+  }
+
+  toggleDisease(disease: any) {
+    const index = this.selectedDifferentialDiseases.indexOf(disease);
+    if (index > -1) {
+      this.selectedDifferentialDiseases.splice(index, 1);
+    } else {
+      if (this.selectedDifferentialDiseases.length < 4) {
+        this.selectedDifferentialDiseases.push(disease);
+      }
+    }
   }
 
   playClick() {
@@ -324,34 +277,6 @@ export class Scenario {
 
   isArray(obj: any): boolean {
     return Array.isArray(obj);
-  }
-
-// در فایل scenario.ts متد setQuestion را پیدا و به این صورت اصلاح کنید:
-
-  setQuestion(q: any) {
-    this.playClick();
-    q.visible = true;
-    q.answer_time = new Date().toLocaleTimeString('fa-IR');
-
-    const paraclinics = this.scenarioData.patient_info.paraclinic; // نام فیلد را طبق سناریو چک کنید
-    const textL2 = this.scenarioData.text_l2.paraclinics;
-
-    // ۱. فیلتر تست‌های خون
-    if (q.id === 'crp' || q.id === 'esr' || q.id.includes('blood')) {
-      q.answer = this.processBasicBloodTests(q.answer, textL2, q.id);
-    }
-    // ۲. مدیریت Thorachocentesis و سایر پروسیجرها که آبجکت هستند
-    else if (q.id === 'thorachocentesis' || typeof q.answer === 'object') {
-      const data = paraclinics[q.id];
-      if (data && typeof data === 'object' && !Array.isArray(data)) {
-        // استفاده از متد بازگشتی برای تبدیل آبجکت به متن خوانا
-        q.answer = this.processFlattenedObject(data, textL2[q.id]);
-      } else {
-        q.answer = data;
-      }
-    } else {
-      q.answer = paraclinics[q.id];
-    }
   }
 
   playSuccess() {
@@ -406,8 +331,6 @@ export class Scenario {
       {name: 'PTE', checked: false},
       {name: 'IPF', checked: false},
       {name: 'PH', checked: false},
-      {name: 'Pleural_Effusion', checked: false},
-      {name: 'ARDS', checked: false},
     ];
   }
 
@@ -419,9 +342,10 @@ export class Scenario {
       {id: 4, title: 'پاراکلینیک', icon: 'pi pi-folder'},
       {id: 5, title: 'تشخیص افتراقی', icon: 'pi pi-pencil'},
       {id: 6, title: 'درمان', icon: 'pi pi-lock'},
+      {id: 7, title: 'بازگشت', icon: 'pi pi-sign-out'}
+
     ];
   }
-
 
   toggleMute() {
     this.isMuted.set(!this.isMuted());
@@ -437,31 +361,44 @@ export class Scenario {
     }
   }
 
-// ...
-// در کلاس Scenario
   selectSection(section: Section) {
     if (section.id === 5) {
       this.showDifferentialDiagnosisModal = true;
       this.differentialDiagnosisStage = 1;
       this.playClick();
       return;
+    } else if (section.id === 7) {
+      this.showExitModal = true;
+      this.playClick();
+      return;
     }
 
     this.activeSection = section.id;
 
-    // نمایش مدیا بر اساس بخش انتخاب شده
+    // ۱. پیدا کردن مدیا بر اساس تنظیمات assets.ts
     this.setSectionMedia(section);
 
-    // اضافه کردن این بخش برای کنترل صدای ویدیوهای جدید
+    // ۲. فقط اگر مدیایی پیدا نشد یا برای اطمینان از بخش‌های خاص، مقداردهی شود
+    // این بلوک را حذف یا اصلاح کنید تا ویدیوهای پروفایل (بخش ۱) حذف نشوند
+    if (!this.mediaUrl || this.mediaUrl === 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg') {
+      if (section.id === 1 || section.id === 4) {
+        this.mediaType = 'image';
+        this.mediaUrl = this.defaultCharacterImage;
+      }
+    }
+
+    this.changeDetectorRef.detectChanges();
+
+    // کنترل صدای ویدیو
     setTimeout(() => {
-      if (this.videoElementRef && this.videoElementRef.nativeElement) {
+      if (this.videoElementRef?.nativeElement) {
         this.videoElementRef.nativeElement.muted = this.isMuted();
       }
     }, 100);
   }
 
-// متد جدید برای تنظیم مدیا بر اساس بخش
   setSectionMedia(section: Section) {
+
     let media;
     const defaultImageUrl = 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg';
 
@@ -478,9 +415,11 @@ export class Scenario {
     // برای بخش‌هایی که مدیا ندارند از پیش‌فرض استفاده کن
     const mediaKey = sectionMediaMap[section.id];
 
-    if (mediaKey) {
-      media = this.sectionMedia[mediaKey];
+    const characterMedia = this.sectionMedia[this.currentCharacter()];
+    if (characterMedia && mediaKey) {
+      media = characterMedia[mediaKey];
     }
+
 
     // --- مدیریت URL و نوع مدیا ---
     let newMediaUrl = media ? media.url : defaultImageUrl;
@@ -510,7 +449,6 @@ export class Scenario {
     this.playSuccess();
   }
 
-  // مدیریت انتخاب/حذف بیماری در مرحله ۱
   toggleDiseaseSelection(disease: Disease) {
     const index = this.selectedDifferentialDiseases.findIndex(d => d.name === disease.name);
 
@@ -523,7 +461,6 @@ export class Scenario {
     }
   }
 
-  // رفتن از مرحله ۱ به مرحله ۲
   goToFinalDiagnosisStage() {
     if (this.selectedDifferentialDiseases.length >= 2 && this.selectedDifferentialDiseases.length <= 4) {
       this.differentialDiagnosisStage = 2;
@@ -533,28 +470,26 @@ export class Scenario {
     }
   }
 
-  // انتخاب تشخیص نهایی در مرحله ۲
   setFinalDiagnosis(diseaseName: string) {
     this.finalDiagnosis = diseaseName;
     this.playClick();
   }
 
-// ...
-
-  // بستن پاپ‌آپ (به همراه ریست کردن مرحله)
-  closeDifferentialDiagnosisModal() {
-    this.showDifferentialDiagnosisModal = false;
-    this.differentialDiagnosisStage = 1;
-    this.selectedDifferentialDiseases = [];
-    this.finalDiagnosis = null;
+  closeExitModal() {
+    this.showExitModal = false;
     this.playClick();
   }
 
   startTimer() {
     this.intervalId = setInterval(() => {
+
       if (this.timeLeft <= 0) {
         clearInterval(this.intervalId);
-        this.timer.set('00:00')
+        this.timeLeft = 0;
+        this.timer.set('00:00');
+
+        this.showDifferentialDiagnosisModal = true;
+        this.changeDetectorRef.detectChanges();
         return;
       }
 
@@ -564,12 +499,8 @@ export class Scenario {
       const seconds = this.timeLeft % 60;
 
       this.timer.set(`${this.pad(minutes)}:${this.pad(seconds)}`);
-    }, 1000);
-  }
 
-  setTime(path: any) {
-    path = this.timer();
-    this.playClick()
+    }, 1000);
   }
 
   pad(val: number) {
@@ -577,49 +508,47 @@ export class Scenario {
   }
 
   buildQuestions() {
-    const history = this.questionText["history_taking"]; // سؤالات (عنوان‌ها)
-    const answers = this.data.history_taking;            // پاسخ‌ها
-    const logs = this.log.history_taking;                // زمان مشاهده
+    const history = this.questionText["history_taking"];
+    const answers = this.data.history_taking;
+    const logs = this.log.history_taking;
 
-    this.questionsBySection = {}; // initialize
+    this.questionsBySection = {};
 
     for (const sectionName in history) {
-
       const sectionQuestions = history[sectionName];
       const aiSection = answers[sectionName];
-      const logSection = logs[sectionName];
+      const logSection = logs ? logs[sectionName] : null;
 
       this.questionsBySection[sectionName] = [];
 
       for (const key in sectionQuestions) {
         const title = sectionQuestions[key];
         const answer = aiSection ? aiSection[key] : '';
-        const log = logSection ? logSection[key] : 'False'; // 👈 استخراج لاگ برای سطح 2
+        const logValue = logSection ? logSection[key] : 'False';
 
         if (typeof answer === 'object' && answer !== null && !Array.isArray(answer)) {
-          // حالت تو در تو (مثل question1)
           for (const subKey in answer) {
             const subTitle = sectionQuestions[key][subKey];
-            // 👈 استخراج لاگ برای سطح 3
-            const subLog = (typeof log === 'object' && log !== null) ? log[subKey] : 'False';
+            // بررسی اینکه آیا لاگ هم ساختار درختی دارد یا در فایل جدید تخت شده است
+            const subLog = (typeof logValue === 'object' && logValue !== null)
+              ? logValue[subKey]
+              : logValue;
 
             this.questionsBySection[sectionName].push({
               id: `${key}-${subKey}`,
               title: subTitle,
               answer: answer[subKey],
-              answer_time: subLog, // استفاده از لاگ سطح 3
+              answer_time: subLog || 'False',
               open: false,
               visible: true
             });
           }
-
         } else {
-          // حالت تک سطحی (مثل question6 در Past Medical History)
           this.questionsBySection[sectionName].push({
             id: key,
             title: title,
             answer: Array.isArray(answer) ? answer.join(' | ') : answer,
-            answer_time: log, // استفاده از لاگ سطح 2
+            answer_time: typeof logValue === 'string' ? logValue : 'False',
             open: false,
             visible: true
           });
@@ -629,57 +558,50 @@ export class Scenario {
   }
 
   buildPhysicalExamQuestions() {
-    // بررسی وجود داده
     if (!this.data || !this.data.physical_exam || !this.log || !this.log.physical_exam) return;
 
-    const examText = this.questionText["physical_exam"]; // عناوین معاینه (از senario.json)
-    const examAnswers = this.data.physical_exam;        // پاسخ‌ها (از AI)
-    const examLogs = this.log.physical_exam;            // زمان مشاهده
+    const examText = this.questionText["physical_exam"];
+    const examAnswers = this.data.physical_exam;
+    const examLogs = this.log.physical_exam;
 
     this.physicalExamBySection = {};
 
     for (const systemName in examAnswers) {
-
       const systemText = examText[systemName];
       const systemAnswers = examAnswers[systemName];
-      const systemLogs = examLogs[systemName];
+      const systemLogs = examLogs ? examLogs[systemName] : null;
 
       this.physicalExamBySection[systemName] = [];
 
       for (const sectionKey in systemAnswers) {
-
         const answerL2 = systemAnswers[sectionKey];
-        const logL2 = systemLogs ? systemLogs[sectionKey] : 'False'; // لاگ در سطح 2
+        const logL2 = systemLogs ? systemLogs[sectionKey] : 'False';
 
         if (typeof answerL2 === 'object' && answerL2 !== null && !Array.isArray(answerL2)) {
-
           const textL2 = systemText[sectionKey];
-
           for (const itemKey in answerL2) {
-
             const titleL3 = textL2 ? textL2[itemKey] : itemKey;
             const answerL3 = answerL2[itemKey];
 
-            const logL3 = (typeof logL2 === 'object' && logL2 !== null) ? logL2[itemKey] : 'False';
+            // مدیریت ساختار جدید: اگر لاگ تخت شده باشد از همان logL2 استفاده می‌کند
+            const logL3 = (typeof logL2 === 'object' && logL2 !== null) ? logL2[itemKey] : logL2;
 
             this.physicalExamBySection[systemName].push({
               id: `${sectionKey}-${itemKey}`,
               title: titleL3,
               answer: Array.isArray(answerL3) ? answerL3.join(' | ') : answerL3,
-              answer_time: logL3,
+              answer_time: logL3 || 'False',
               open: false,
               visible: true
             });
           }
         } else {
-
-          const textL2 = systemText ? systemText[sectionKey] : sectionKey; // عنوان سطح 2
-
+          const textL2 = systemText ? systemText[sectionKey] : sectionKey;
           this.physicalExamBySection[systemName].push({
             id: sectionKey,
             title: textL2,
             answer: Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2,
-            answer_time: logL2,
+            answer_time: typeof logL2 === 'string' ? logL2 : 'False',
             open: false,
             visible: true
           });
@@ -691,77 +613,55 @@ export class Scenario {
   handleQuestionClick(question: Question, systemName: string, sectionCategory: 'history_taking' | 'physical_exam' | 'paraclinic') {
     this.playClick();
 
-    let media;
-    const defaultImageUrl = 'https://elmkhah.ir/wp-content/uploads/2025/11/photo_2025-11-28_16-52-45.jpg';
-
-    // ابتدا سعی کنید مدیا را بر اساس systemName و question.id پیدا کنید
-    const specificKey = `${systemName}-${question.id}`;
-    media = this.sectionMedia[specificKey];
-
-    // اگر پیدا نشد، سعی کنید بر اساس systemName و بخش‌های question.id پیدا کنید
-    if (!media) {
-      // برای سوالاتی که id آنها شامل "-" است (مثلاً inspection-accessory_muscles)
-      if (question.id.includes('-')) {
-        const parts = question.id.split('-');
-        if (parts.length >= 2) {
-          const potentialKey = `${systemName}-${parts[0]}`;
-          media = this.sectionMedia[potentialKey];
-        }
-      }
+    // ۱. مدیریت مدیا (بدون تغییر نسبت به نسخه سالم قبلی شما)
+    const currentCharacter = this.currentCharacter();
+    const characterMedia = (VIDEO_MAPPING as any)[currentCharacter];
+    let media = characterMedia ? (characterMedia[`${systemName}-${question.id}`] || characterMedia[systemName]) : null;
+    if (media) {
+      this.mediaUrl = media.url;
+      this.mediaType = media.type || 'video';
+      if (this.mediaType === 'video' && this.videoElementRef) this.videoElementRef.nativeElement.load();
     }
 
-    // اگر هنوز پیدا نشد، از systemName استفاده کنید
-    if (!media) {
-      media = this.sectionMedia[systemName];
-    }
-
-    // --- مدیریت URL و نوع مدیا ---
-    let newMediaUrl = media ? media.url : defaultImageUrl;
-    let newMediaType = media ? media.type : 'image';
-
-    // منطق لودینگ برای ویدیو
-    const mediaIsChangingToNewVideo = (newMediaType === 'video' && newMediaUrl !== this.mediaUrl);
-
-    if (newMediaType === 'video') {
-      if (mediaIsChangingToNewVideo) {
-        this.isVideoLoading.set(true);
-      }
-    } else {
-      this.isVideoLoading.set(false);
-    }
-
-    // به‌روزرسانی پراپرتی‌ها
-    this.mediaType = newMediaType as 'image' | 'video';
-    this.mediaUrl = newMediaUrl;
-
-    // مدیریت ویدیو
-    if (mediaIsChangingToNewVideo && this.videoElementRef) {
-      this.changeDetectorRef.detectChanges();
-      this.videoElementRef.nativeElement.load();
-    }
-
-    // منطق لاگ و باز کردن سوال (همانند قبل)
-    if (!question.open) {
+    // ۲. اصلاح ثبت زمان در لاگ - منطق جدید و دقیق
+    if (question.answer_time === 'False' || question.answer_time === 'false') {
       const currentTime = this.timer();
       question.answer_time = currentTime;
 
-      const logCategory = this.log[sectionCategory];
+      // پیدا کردن بخش مربوطه در فایل لاگ
+      const section = this.log[sectionCategory];
+      if (section && section[systemName]) {
+        const logTarget = section[systemName];
 
-      if (logCategory && !logCategory[systemName]) {
-        logCategory[systemName] = {};
-      }
+        // الف) اگر ID سوال ترکیبی است (مثل torachonthesis-Fluid یا question1-question1a)
+        if (question.id.includes('-')) {
+          const parts = question.id.split('-');
+          let current = logTarget;
 
-      const logSection = logCategory[systemName];
-      const [key, subKey] = question.id.split('-');
+          // پیمایش تا یک مرحله قبل از کلید نهایی
+          for (let i = 0; i < parts.length - 1; i++) {
+            if (current[parts[i]] && typeof current[parts[i]] === 'object') {
+              current = current[parts[i]];
+            }
+          }
 
-      if (subKey) {
-        if (!logSection[key] || typeof logSection[key] !== 'object') {
-          logSection[key] = {};
+          // آپدیت کلید نهایی
+          const lastKey = parts[parts.length - 1];
+          if (current.hasOwnProperty(lastKey)) {
+            current[lastKey] = currentTime;
+          } else {
+            // اگر پیدا نشد، شاید آیدی سوال فقط شامل کلید نهایی بوده (مثل Fluid-LDH که LDH هدف است)
+            this.updateValueInObject(logTarget, lastKey, currentTime);
+          }
         }
-        logSection[key][subKey] = currentTime;
-      } else {
-        if (logSection) {
-          logSection[key] = currentTime;
+        // ب) اگر ID ساده است
+        else {
+          if (logTarget.hasOwnProperty(question.id)) {
+            logTarget[question.id] = currentTime;
+          } else {
+            // جستجوی عمیق فقط در همان شاخه خاص برای اطمینان
+            this.updateValueInObject(logTarget, question.id, currentTime);
+          }
         }
       }
     }
@@ -770,61 +670,25 @@ export class Scenario {
     this.changeDetectorRef.detectChanges();
   }
 
+  getQuestionB(sectionName: string, currentId: string): Question | null {
+    if (!currentId.endsWith('a')) return null;
+
+    const baseId = currentId.slice(0, -1); // حذف 'a' از انتهای ID
+    const nextId = baseId + 'b';
+
+    return this.questionsBySection[sectionName]?.find(q => q.id === nextId) || null;
+  }
+
   finishScenario() {
     if (!this.finalDiagnosis) {
       alert('لطفاً تشخیص نهایی را انتخاب کنید.');
       return;
     }
 
-    const currentTime = this.timer(); // زمان فعلی سناریو
-
-    // --- ۱. Differential Diagnosis با ۸ کلید ثابت ---
-    this.log.differential_diagnosis = {};
-
-    // اول همه ۸ بیماری را به false مقداردهی کن
-    Object.values(this.diseaseCodeMap).forEach(code => {
-      this.log.differential_diagnosis[code] = false;
-    });
-
-    // برای بیماری‌هایی که انتخاب شده‌اند → زمان درج کن
-    this.selectedDifferentialDiseases.forEach(disease => {
-      const code = this.diseaseCodeMap[disease.name];
-      if (code) {
-        this.log.differential_diagnosis[code] = currentTime;
-      }
-    });
-
-// --- ۲. Final Diagnosis ---
-    this.log.final_diagnosis = {};
-
-    const finalCode = this.diseaseCodeMap[this.finalDiagnosis];
-
-    if (finalCode) {
-      this.log.final_diagnosis[finalCode] = currentTime;
-    }
-
-    // --- ۳. اقدامات بعد ---
-    alert(`سناریو به پایان رسید. تشخیص نهایی: ${this.finalDiagnosis}`);
-
-    const treatmentSection = this.sections.find(s => s.id === 6);
-    if (treatmentSection) {
-      treatmentSection.title = 'درمان (پایان یافته)';
-      this.activeSection = 5;
-    }
-
-    this.master.pulmonologyScenarioFeedbackCreate(this.trackingCode, this.log).subscribe({
-      next: (data) => {
-        console.log(data)
-      }
-    });
-
-    this.showDifferentialDiagnosisModal = false;
-    this.fireConfetti();
-    this.router.navigateByUrl('/stat');
-    this.playSuccess();
+    this.playClick();
     this.changeDetectorRef.detectChanges();
-  }
 
+  }
 
   isAnswerArray(answer: any): answer is ParaclinicResult[] {
     return Array.isArray(answer);
@@ -839,76 +703,45 @@ export class Scenario {
 
     this.paraclinicBySection = {};
 
-    // سطح ۱: دسته‌بندی‌ها
     for (const categoryName in paraclinicAnswers) {
       const categoryText = paraclinicText[categoryName];
       const categoryAnswers = paraclinicAnswers[categoryName];
-      const categoryLogs = paraclinicLogs[categoryName];
+      const categoryLogs = paraclinicLogs ? paraclinicLogs[categoryName] : null;
 
       this.paraclinicBySection[categoryName] = [];
 
-      // سطح ۲: تست‌های اصلی
       for (const testKey in categoryAnswers) {
         const answerL2 = categoryAnswers[testKey];
         const logL2 = categoryLogs ? categoryLogs[testKey] : 'False';
 
-        // استخراج متن عنوان
-        let textL2: any = '';
-        if (categoryText) {
-          textL2 = categoryText[testKey];
-        }
+        let finalTitle = (categoryText && categoryText[testKey]) ?
+          (typeof categoryText[testKey] === 'string' ? categoryText[testKey] : testKey) :
+          testKey.replace(/_/g, ' ');
 
-        let finalAnswer: any = '';
-        let finalTitle = '';
+        let finalAnswer: any;
 
-        // --- ۱. استخراج عنوان دکمه ---
-        if (typeof textL2 === 'object' && textL2 !== null && !Array.isArray(textL2)) {
-          finalTitle = testKey.replace('_', ' ');
-        } else if (typeof textL2 === 'string') {
-          finalTitle = textL2;
+        // تشخیص اینکه آیا داده باید به صورت جدولی نمایش داده شود یا خیر
+        if (typeof answerL2 === 'object' && answerL2 !== null) {
+          if (categoryName === 'basic_blood_tests') {
+            finalAnswer = this.processBasicBloodTests(answerL2, categoryText[testKey], testKey);
+          } else {
+            // برای سایر موارد تودرتو مثل Imaging و Procedures
+            finalAnswer = this.processFlattenedObject(answerL2, categoryText ? categoryText[testKey] : null);
+          }
         } else {
-          finalTitle = testKey.replace('_', ' ');
+          finalAnswer = answerL2;
         }
 
-        // --- ۲. منطق ساختاردهی پاسخ ---
-
-        // حالت خاص برای آزمایش‌های خون (چه آبجکت چه رشته ساده مثل CRP)
-        if (categoryName === 'basic_blood_tests') {
-          // لیست تست‌هایی که می‌خواهیم حتماً خروجی جدولی داشته باشند
-          const bloodTableTests = ['BMP', 'CBC', 'VBG', 'LFTs', 'CRP', 'ESR', 'FBS', 'crp', 'esr'];
-
-          if (bloodTableTests.includes(testKey) || (typeof answerL2 === 'object' && !Array.isArray(answerL2))) {
-            // ارسال ۳ آرگومان برای رفع خطای TS2554
-            finalAnswer = this.processBasicBloodTests(answerL2, textL2, testKey);
-          } else {
-            finalAnswer = Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2;
-          }
-        }
-        // سایر بخش‌ها (Spirometry و غیره)
-        else if (typeof answerL2 === 'object' && answerL2 !== null && !Array.isArray(answerL2)) {
-          if (categoryName === 'functional_tests' && testKey === 'Spirometry') {
-            finalAnswer = this.processSpirometryData(answerL2, textL2);
-          } else {
-            finalAnswer = this.processFlattenedObject(answerL2, textL2);
-          }
-        }
-        // پاسخ‌های رشته‌ای معمولی
-        else {
-          finalAnswer = Array.isArray(answerL2) ? answerL2.join(' | ') : answerL2;
-        }
-
-        // تعریف آیتم اصلی (دکمه)
         this.paraclinicBySection[categoryName].push({
           id: testKey,
           title: finalTitle,
           answer: finalAnswer,
-          answer_time: logL2,
+          answer_time: typeof logL2 === 'string' ? logL2 : 'False',
           open: false,
           visible: true
         });
       }
     }
-
   }
 
   fireConfetti() {
@@ -943,10 +776,26 @@ export class Scenario {
     });
   }
 
+  confirmExit() {
+    this.router.navigate(['/dashboard/s/stat']);
+  }
+
+// تابع کمکی برای آپدیت مقدار در یک شاخه خاص
+  private updateValueInObject(obj: any, targetKey: string, newValue: string): boolean {
+    if (obj.hasOwnProperty(targetKey)) {
+      obj[targetKey] = newValue;
+      return true;
+    }
+    for (const key in obj) {
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        if (this.updateValueInObject(obj[key], targetKey, newValue)) return true;
+      }
+    }
+    return false;
+  }
 
 // متد کمکی برای پردازش داده‌های Spirometry
   private processSpirometryData(spirometryData: any, textL2: any): string | ParaclinicResult[] {
-    // spirometryData ساختار: { result: {...}, reversibility: "..." }
 
     if (!spirometryData.result && !spirometryData.reversibility) {
       return 'داده‌ای موجود نیست';
@@ -954,7 +803,6 @@ export class Scenario {
 
     let resultString = '';
 
-    // پردازش بخش result
     if (spirometryData.result && typeof spirometryData.result === 'object') {
       resultString += 'نتایج اسپیرومتری:\n';
       for (const key in spirometryData.result) {
@@ -1022,23 +870,31 @@ export class Scenario {
   }
 
 // متد کمکی برای پردازش سایر اشیاء تودرتو
-  private processFlattenedObject(data: any, textL2: any): string {
-    let flattenedString = '';
+  private processFlattenedObject(data: any, textL2: any): ParaclinicResult[] {
+    const results: ParaclinicResult[] = [];
 
-    for (const itemKey in data) {
-      // پیدا کردن عنوان فارسی از فایل ترجمه (textL2)
-      let title = (textL2 && textL2[itemKey]) ? textL2[itemKey] : itemKey;
-      let value = data[itemKey];
+    const flatten = (obj: any, parentText: any) => {
+      for (const key in obj) {
+        const value = obj[key];
+        const title = (parentText && parentText[key]) ? parentText[key] : key.replace(/_/g, ' ');
 
-      if (typeof value === 'object' && !Array.isArray(value)) {
-        // اگر مقدار خودش آبجکت بود، دوباره همین تابع را صدا بزن
-        flattenedString += `${title}:\n${this.processFlattenedObject(value, textL2[itemKey])}\n`;
-      } else {
-        // اگر مقدار نهایی بود (رشته یا عدد)
-        flattenedString += `${title}: ${value}\n`;
+        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+          // اگر باز هم تودرتو بود (مثل torachonthesis -> Fluid -> LDH)
+          flatten(value, parentText ? parentText[key] : null);
+        } else {
+          results.push({
+            title: title,
+            answer: Array.isArray(value) ? value.join(' | ') : value.toString(),
+            normalValue: '-' // می‌توانید مقادیر نرمال را اینجا اضافه کنید
+          });
+        }
       }
-    }
+    };
 
-    return flattenedString;
+    flatten(data, textL2);
+    return results;
   }
 }
+
+
+

@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {Action} from '../../../shared/components/button/action/action';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Master} from '../../../core/services/master';
+import {ToastService} from '../../../core/services/toast';
 
 @Component({
   selector: 'app-scenario-start',
@@ -23,12 +24,13 @@ export class ScenarioStart implements OnInit, OnDestroy {
     'با انجام کامل روند ویزیت و تشخیص بیماری، در انتها گزارشی از وضعیت عملکرد شما توسط هوش مصنوعی تهیه می شود.'
   ];
   tracking_code = signal('')
+  id = ''
 
-
-  constructor(public master: Master) {
+  constructor(public route: ActivatedRoute, public master: Master, public Toast: ToastService, public router: Router) {
   }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id')!;
     this.selectRandomText();
     this.setTimer();
 
@@ -42,15 +44,23 @@ export class ScenarioStart implements OnInit, OnDestroy {
         const list = Array.isArray(data) ? data : (data?.body || []);
 
         if (list.length > 0) {
-          const firstPendingTask = list.find((item: any) => item.done === false);
+          const firstPendingTask = list.find((item: any) => item.is_done === false);
 
           if (firstPendingTask) {
             this.tracking_code.set(firstPendingTask.tracking_code);
           } else {
-            console.warn('تسک انجام نشده‌ای یافت نشد.');
+            this.master.pulmonologyScenarioCreate(this.id).subscribe({
+              next: (data: any) => {
+                this.tracking_code.set(data.body.tracking_code);
+              }
+            })
           }
         } else {
-          console.warn('لیست دریافتی خالی است یا آرایه نیست.');
+          setTimeout(() => {
+              this.Toast.showError('ابتدا نیاز است یک بیمار را پذیرش کنید')
+            }, 2000
+          )
+          this.router.navigateByUrl("dashboard/s/stat");
         }
       },
       error: err => {
@@ -78,7 +88,7 @@ export class ScenarioStart implements OnInit, OnDestroy {
   }
 
   setTimer() {
-    const duration = 10000; // ۱۰ ثانیه
+    const duration = 20000; // ۱۰ ثانیه
     const steps = 100;
     const stepTime = duration / steps;
 

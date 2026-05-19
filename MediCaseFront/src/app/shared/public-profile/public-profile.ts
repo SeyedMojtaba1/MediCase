@@ -36,7 +36,6 @@ export class PublicProfile {
 
     this.master.user(this.id).subscribe({
       next: (result: any) => {
-        console.log(result);
         this.user = result.body;
       },
       complete: () => {

@@ -1,0 +1,39 @@
+<p-dialog
+  (onHide)="onHide()"
+  [(visible)]="visible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+  header="ویرایش اطلاعات ورود"
+>
+  <div class="flex flex-col gap-5 px-5">
+    <div class="flex flex-col gap-1">
+      <p class="text-xs text-gray-500">رمز عبور فعلی</p>
+      <p-password [(ngModel)]="password" [feedback]="false" autocomplete="off" inputStyleClass="w-full"
+                  toggleMask="true"/>
+    </div>
+
+
+    <div class="flex flex-col gap-1">
+      <p class="text-xs text-gray-500">رمز عبور جدید</p>
+      <p-password [(ngModel)]="new_password" [feedback]="false" autocomplete="off" inputStyleClass="w-full"
+                  toggleMask="true"/>
+    </div>
+
+
+    <div class="flex flex-col gap-1">
+      <p class="text-xs text-gray-500">تکرار رمز عبور جدید</p>
+      <p-password [(ngModel)]="new_password2" [feedback]="false" autocomplete="off" inputStyleClass="w-full"
+                  toggleMask="true"/>
+    </div>
+
+
+    <div class="flex justify-end gap-2">
+      <p-button (click)="visible = false" label="بازگشت" severity="secondary"/>
+      <p-button (click)="submit()" label="تایید"/>
+    </div>
+  </div>
+
+</p-dialog>
+
+

@@ -25,6 +25,8 @@ import {SectionPageS} from './pages/dashboard/student/class/section-page-s/secti
 import {Scenario} from './pages/scenario/scenario';
 import {ScenarioIntro} from './pages/scenario/scenario-intro/scenario-intro';
 import {ScenarioStart} from './pages/scenario/scenario-start/scenario-start';
+import {Single} from './pages/blog/single/single';
+import {Blog} from './pages/blog/blog';
 
 export const routes: Routes = [
 
@@ -54,7 +56,7 @@ export const routes: Routes = [
     data: {role: 'student'}
   },
   {
-    path: 'scenariostart',
+    path: 'scenariostart/:id',
     component: ScenarioStart,
     canActivate: [AuthGuard, RoleGuard],
     data: {role: 'student'}
@@ -67,6 +69,12 @@ export const routes: Routes = [
     data: {role: 'student'},
     children: [
       {path: '', component: SDashboard},
+      {
+        path: 'blog', children: [
+          {path: '', component: Blog},
+          {path: ':id', component: Single},
+        ]
+      },
       {
         path: 'hospital', children: [
           {path: '', component: Hospital},
@@ -93,6 +101,12 @@ export const routes: Routes = [
     data: {role: 'teacher'},
     children: [
       {path: '', component: TDashboard},
+      {
+        path: 'blog', children: [
+          {path: '', component: Blog},
+          {path: ':id', component: Single},
+        ]
+      },
       {path: 'profile', component: PProfile},
       {path: 'stat', component: Statt},
       {
@@ -114,7 +128,7 @@ export const routes: Routes = [
   {path: 'forget', component: Forget},
   {path: 'dashboard', redirectTo: 'dashboard/s', pathMatch: 'full'},
   {path: '', redirectTo: 'dashboard/s', pathMatch: 'full'},
-  {path: '**', redirectTo: '404'},
+  // {path: '**', redirectTo: '404'},
   {
     path: '404', component: DashboardLayout, children: [
       {path: '', component: NotFound404},

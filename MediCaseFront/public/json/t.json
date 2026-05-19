@@ -1,0 +1,250 @@
+{
+  "patient_profile": {
+    "personal_information": {
+      "first_name": "کوروش",
+      "last_name": "مرادی",
+      "age": "63 ساله",
+      "gender": "مرد",
+      "occupation": "کارمند",
+      "place_of_birth": "ارومیه",
+      "place_of_residence": "ارومیه",
+      "marital_status": "متاهل"
+    },
+    "chief_complaint": "تنگی نفس پیشرونده"
+  },
+  "history_taking": {
+    "present_illness": {
+      "question1": "علائم از چند ماه قبل شروع شدهاند و به صورت تدریجی بدتر شدهاند. در ابتدا احساس خفیفی از خستگی داشتم و کمکم نفس کشیدن برام سختتر شد.",
+      "question2": "به صورت تدریجی و بدون هیچ اتفاق خاصی شروع شد. فکر میکردم فقط خستهام ولی بعد از مدتی فهمیدم که مشکل جدیتری دارم.",
+      "question3": "بله، نفس کشیدنم با فعالیت بدتر میشه، حتی گاهی در حالت استراحت هم احساس نفستنگی میکنم.",
+      "question4": "گاهی سرفه دارم، اما خشکه و هیچ خلطی ندارم.",
+      "question5": "تا حالا صدای غیرعادی در تنفسم نشنیدم.",
+      "question6": "بله، گاهی احساس فشار مبهمی در قفسه سینه دارم، اما معمولاً با حرکت یا تنفس تغییر خاصی نمیکنه.",
+      "question7": "نه، هیچ وقت تب یا لرز نداشتم و شبها هم عرق نکردم.",
+      "question8": "بله،، پاهایم ورم کرده و گاهی احساس تپش قلب دارم. بعضی وقتها احساس میکنم سرم گیجه.",
+      "question9": "نه، قبلاً هیچ وقت چنین حملهای نداشتم.",
+      "question10": "بله، خیلی خستهام و  حتی بدون فعالیت خیلی زود خسته میشم. وزنم کم نشده، اما احساس ضعف میکنم."
+    },
+    "past_medical_history": {
+      "question1": {
+        "question1a": "سابقه مشکلات قلبی مثل نارسایی قلب چپ دارم.",
+        "question1b": "چند سالی است که این مشکل را دارم."
+      },
+      "question2": {
+        "question2a": "سابقه بستری برای نارسایی قلب داشتم.",
+        "question2b": "تقریباً یک سال پیش به خاطر  تشدید علائم بستری شدم."
+      },
+      "question3": "سابقه مشکلات قلبی مانند نارسایی دریچه میترال دارم.",
+      "question4": "خیر، سابقهای از سرطان فعال ندارم.",
+      "question5": "در کودکی هیچ بیماری خاصی نداشتم.",
+      "question6": "وضعیت واکسیناسیونم کامل است."
+    },
+    "drug_history": {
+      "question1": {
+        "question1a": "دیورتیکها (فوروزماید)، سیلدنافیل و اسپیرونولاکتون مصرف میکنم.",
+        "question1b": "مصرف مرتب دارم و داروهایم را سر وقت میخورم.",
+        "question1c": "دوز دیورتیک مدام و به تازگی افزایش داشته، ولی سایر داروها تغییری نکردهاند."
+      },
+      "question2": "گاهی مکملهای مولتیویتامین مصرف میکنم."
+    },
+    "allergies": {
+      "question1": {
+        "question1a": "به هیچ دارو یا ماده خاصی آلرژی ندارم.",
+        "question1b": "بدون واکنش حساسیتی هستم."
+      }
+    },
+    "family_history": {
+      "question1": {
+        "question1a": "فشار خون ریوی ارثی در خانواده ندارم.",
+        "question1b": "بدون وجود سابقه خانوادگی هستم."
+      },
+      "question2": "بله، والدینم سابقه نارسایی قلبی داشتند.",
+      "question3": {
+        "question3a": "هیچکس در خانوادهام سرطان ندارد.",
+        "question3b": "بدون سابقه سرطان در خانواده هستم."
+      }
+    },
+    "social_history": {
+      "question1": {
+        "question1a": "سیگار نمیکشم.",
+        "question1b": "هیچ وقت سیگار نکشیدهام."
+      },
+      "question2": "الکل مصرف نمیکنم.",
+      "question3": {
+        "question3a": "مواد مخدر مصرف نمیکنم.",
+        "question3b": "زندگی سالم دارم."
+      },
+      "question4": "با خانوادهام زندگی میکنم."
+    },
+    "ros": {
+      "question1": "احساس ضعف و خستگی دارم.",
+      "question2": "هیچ تغییر خاصی در پوست یا رنگ آن نداشتهام.",
+      "question3": "گاهی احساس سردرد دارم.",
+      "question4": "مشکل خاصی ندارم و دید چشمهایم طبیعی است.",
+      "question5": "مشکل خاصی در حلق یا گوش یا بینی ندارم.",
+      "question6": "نفس کشیدن برایم سخت است و پاهایم ورم کرده.",
+      "question7": "سرفه خشک دارم و گاهی نفستنگیام بدتر میشود.",
+      "question8": "مشکلی در سیستم گوارشی ندارم.",
+      "question9": "مشکل خاصی در دفع ادرارم ندارم.",
+      "question10": "گاهی کمی احساس ضعف عضلانی میکنم.",
+      "question11": "گاهی احساس سبکی سر دارم.",
+      "question12": "به خاطر تنگی نفس احساس اضطراب میکنم.",
+      "question13": "مشکلی در غدد داخلی ندارم.",
+      "question14": "هیچ مشکلی در خون و لنفم ندارم."
+    }
+  },
+  "physical_exam": {
+    "vital_signs": {
+      "BP": "85/65 mmHg",
+      "T": "36.6 °C",
+      "PR": "117 bpm",
+      "RR": "24 breaths/min",
+      "SpO2": "85% (Room Air)",
+      "GCS": "15"
+    },
+    "general_appearance": {
+      "level_of_consciousness_mood_and_behavior": {
+        "level_of_consciousness": "Alert and Oriented.",
+        "mood": "Anxious or Distressed.",
+        "behavior": "Cooperative."
+      },
+      "posture_and_position": {
+        "position_of_comfort": "Orthopnea/Semi-Fowler's position may be preferred."
+      },
+      "overall_appearance": {
+        "nutritional_status": "Normal."
+      },
+      "cardiopulmonary_and_circulatory_clues": {
+        "cyanosis": "Central Cyanosis Present.",
+        "dyspnea": "Dyspnea at rest or minimal exertion.",
+        "edema": "Pitting Edema (Bilateral, Dependent)."
+      }
+    },
+    "head_and_neck": {
+      "head_and_face": {
+        "symmetry_and_lesions": "Normal."
+      },
+      "eyes": {
+        "sclera_and_conjunctiva": "Normal."
+      },
+      "ears": {
+        "external_and_tenderness": "Normal."
+      },
+      "nose_and_sinuses": {
+        "septum_and_discharge": "Normal."
+      },
+      "mouth_and_pharynx": {
+        "oral_mucosa_and_lesions": "Normal."
+      },
+      "neck_and_lymphatics": {
+        "inspection": "Supple.",
+        "tracheal_position": "Midline.",
+        "carotid_bruit": "No Bruit.",
+        "lymph_nodes_size_consistency": "Not Palpable.",
+        "JVP_assessment": "Elevated JVP (> 4 cm above sternal angle)."
+      }
+    },
+    "respiratory_system": {
+      "inspection": {
+        "accessory_muscles": "Accessory Muscle Use.",
+        "chest_shape_and_symmetry": "Symmetrical, Normal AP Diameter."
+      },
+      "palpation": {
+        "chest_expansion": "Normal."
+      },
+      "percussion": "Normal Resonance.",
+      "auscultation": {
+        "breath_sounds_intensity": "Normal Intensity.",
+        "adventitious_sounds": "Clear to Auscultation."
+      }
+    },
+    "cardiovascular_system": {
+      "palpation": {
+        "precordial_palpation_heave_thrill": "Right Ventricular Heave Palpable.",
+        "pmi_assessment": "PMI Non-displaced."
+      },
+      "auscultation": {
+        "heart_sounds_s1_s2": "Loud P2 component of S2 at the left sternal border.",
+        "extra_sounds_s3_s4_murmurs": "Holosystolic Murmur (Tricuspid Regurgitation)."
+      },
+      "peripheral_pulses_and_extremities": {
+        "peripheral_pulses_symmetry_and_quality": "Weak and Thready",
+        "extremities_color_and_trophic_changes": "Normal color.",
+        "extremities_temperature_and_cap_refill": "Cool and Pale with Capillary Refill > 2 seconds.",
+        "extremities_edema": "See General Appearance Section."
+      }
+    },
+    "abdominal_system": {
+      "inspection": "Abdomen Flat and Symmetric.",
+      "auscultation": {
+        "bowel_sounds": "Normoactive Bowel Sounds."
+      },
+      "percussion": {
+        "organ_borders": "Hepatomegaly (Tender, Pulsatile Liver) due to congestion."
+      },
+      "palpation": {
+        "superficial_tenderness": "No Superficial Tenderness."
+      }
+    },
+    "neurological": {
+      "mental_status_and_LOC": "Mental Status: Alert and Oriented.",
+      "motor_strength_and_tone": "Motor Strength 5/5 Bilaterally."
+    },
+    "musculoskeletal_system": {
+      "inspection": {
+        "joints": "No Digital Clubbing."
+      },
+      "palpation": {
+        "tenderness_and_crepitus": "No tenderness."
+      },
+      "range_of_motion_active_passive": "Full ROM."
+    }
+  },
+  "paraclinic": {
+    "basic_blood_tests": {
+      "CBC": {
+        "Hb": "14.0 g/dL.",
+        "WBC": "9000 /uL",
+        "Plt": "250,000 /uL"
+      },
+      "BMP": {
+        "Na": "138",
+        "BUN": "20",
+        "Cr": "1.1"
+      },
+      "VBG": {
+        "pH": "7.47",
+        "PaCO2": "32 mmHg",
+        "HCO3": "24 mEq/L"
+      }
+    },
+    "specialized_lung_tests": {
+      "D_dimer": "Normal",
+      "BNP_NT_proBNP": "Severely Elevated.",
+      "Troponin": "Borderline/Positive Troponin."
+    },
+    "simple_imaging": {
+      "Chest_X_Ray": {
+        "PA_Lateral_Findings_and_Effusion": "Prominent Main Pulmonary Arteries and Enlarged Right Heart Border."
+      }
+    },
+    "advanced_imaging": {
+      "Chest_CT_CTPA": {
+        "Lung_Parenchyma_and_Pleura": "PA diameter > Aorta diameter"
+      }
+    },
+    "procedures": {
+      "Bronchoscopy": "Not Indicated.",
+      "torachonthesis": "Not Indicated."
+    },
+    "functional_tests": {
+      "dlco": "46% predicted",
+      "peak_flow": "Normal PEF",
+      "Spirometry": {
+        "result": "FEV1: Measured: 4.13 L, Predicted: 3.79 L, %Predicted: 80-120%,FVC: Measured: 3.63 L, Predicted: 4.61 L, %Predicted: 80-120%, FEV1/FVC_Ratio = Measured: 0.80, Predicted: 0.80, %Predicted: 100%",
+        "reversibility": "FEV1 increase < 12% AND < 200 mL"
+      },
+      "plethysmography": "Normal Lung Volumes"
+    }
+  }
+}
