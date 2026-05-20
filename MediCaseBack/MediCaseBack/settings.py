@@ -38,6 +38,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://medicase.local:4200",
     "http://medicase.local:8000",
+    'https://medicase-isfahan.com',
+    'https://www.medicase-isfahan.com',
+    'https://medicase-isfahan.ir',
+    'https://www.medicase-isfahan.ir',
 ]
 
 ALLOWED_HOSTS = [
